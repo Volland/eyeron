@@ -6,6 +6,18 @@
 > `eyeron --check-proof` runs it. For how a proof is *written*, see
 > [`n3.md`](n3.md).
 
+Generate and check a proof in one command:
+
+```bash
+eyeron -c examples/dog-license.n3
+# Long form: eyeron --prove-and-check examples/dog-license.n3
+```
+
+This generates the proof in memory and passes it to the same checker as
+`--check-proof FILE`, using the parsed input program. It prints the checking
+report, including any trust obligations. Use `--proof` to write a proof
+document for later checking.
+
 ## 1. Why this document exists
 
 eyeron writes a proof in one shape:
@@ -192,6 +204,28 @@ failure it MUST report the failing condition and the step.
 A checker SHOULD report counts per justification kind, because the ratio of
 checked to trusted steps is the honest measure of how much a proof
 establishes.
+
+The CLI names the proof document and source program, then reports the total
+steps, verified justifications, and trusted obligations:
+
+```console
+$ eyeron --check-proof examples/proof/socrates.n3 examples/socrates.n3
+Proof: examples/proof/socrates.n3
+Source program: examples/socrates.n3
+checked: 3 steps, 3 verified, 0 trusted
+Step kinds:
+  source facts: 2
+  rule applications: 1
+All premises and claims are supported; no circular dependencies.
+```
+
+`checked with obligations` lists every trusted conclusion under
+“Trust obligations (accepted without verifying their truth)”. Such steps
+are accepted assumptions, rather than verified justifications. An invalid
+proof lists each failure with its condition code, a description of that
+condition, and the affected conclusion. Verified counts concern step
+justifications; a proof can still be invalid because a premise is missing,
+a dependency is circular, or a claim is unsupported.
 
 ## 10. What eyeron's own proofs establish
 

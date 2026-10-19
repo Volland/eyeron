@@ -20,6 +20,7 @@ const VERSION: &str = env!("CARGO_PKG_VERSION");
 struct CliOptions {
     ast: bool,
     proof: bool,
+    prove_and_check: bool,
     rdf: bool,
     stream: bool,
     stream_messages: bool,
@@ -49,6 +50,11 @@ fn run() -> Result<()> {
         return Ok(());
     }
     let opt = parse_args(args)?;
+    if opt.prove_and_check && (opt.ast || opt.check_proof.is_some() || opt.stream_messages) {
+        return Err(EyeronError::new(
+            "--prove-and-check cannot be combined with --ast, --check-proof, or --stream-messages",
+        ));
+    }
 
     if opt.stream {
         eprintln!(
@@ -64,6 +70,7 @@ fn run() -> Result<()> {
         return run_check_proof(path, &sources);
     }
 
+    let capture_proof = opt.proof || opt.prove_and_check;
     let mut merged = Document::new();
     for (label, text) in &sources {
         let path_base = if label == "<stdin>" {
@@ -78,7 +85,7 @@ fn run() -> Result<()> {
             parse_rdf_message_log(text, base)
         } else if let Some(format) = rdf_format_for_source(label, opt.rdf)? {
             parse_rdf12(text, base, format)
-        } else if opt.proof {
+        } else if capture_proof {
             parse_n3_with_source(text, base, Some(label))
         } else {
             parse_n3(text, base)
@@ -94,7 +101,7 @@ fn run() -> Result<()> {
         return Ok(());
     }
 
-    let reasoner_options = cli_reasoner_options(&opt, opt.proof);
+    let reasoner_options = cli_reasoner_options(&opt, capture_proof);
     let result = reason(&merged, &reasoner_options);
     // A fired fuse is the answer: the rules forbade a situation and the data
     // made it provable. Report which rule, and leave with sysexits' EX_DATAERR
@@ -105,6 +112,11 @@ fn run() -> Result<()> {
     }
     if let Some(summary) = result.incomplete_summary() {
         return Err(EyeronError::new(summary));
+    }
+    if opt.prove_and_check {
+        let proof = proof_to_n3(&merged.prefixes, &result);
+        let report = eyeron::proof_check_n3::check_proof_document(&merged, &proof)?;
+        return report_proof_check("<generated>", &sources, &report);
     }
     if opt.proof {
         print!("{}", proof_to_n3(&merged.prefixes, &result));
@@ -338,16 +350,56 @@ fn run_check_proof(path: &str, sources: &[(String, String)]) -> Result<()> {
     let label = sources.first().map(|(label, _)| label.clone()).unwrap_or_else(|| "<input>".to_string());
 
     let report = eyeron::proof_check_n3::check_proof(&source, &proof, &label)?;
+    report_proof_check(path, sources, &report)
+}
 
+fn report_proof_check(path: &str, sources: &[(String, String)], report: &eyeron::proof_check::Report) -> Result<()> {
+    println!("Proof: {}", path);
+    println!("Source program: {}", sources.iter().map(|(label, _)| label.as_str()).collect::<Vec<_>>().join(", "));
     println!("{}", report.verdict());
+    if !report.counts.is_empty() {
+        println!("Step kinds:");
+    }
     for (kind, count) in &report.counts {
-        println!("  {} {}", count, kind);
+        let description = match *kind {
+            "rule" => "rule applications",
+            "fact" => "source facts",
+            "builtin" => "built-ins",
+            "absent" => "absence checks",
+            "collected" => "collections",
+            "unproven" => "unproven steps",
+            other => other,
+        };
+        println!("  {}: {}", description, count);
+    }
+    if report.valid() {
+        println!("All premises and claims are supported; no circular dependencies.");
+    }
+    if !report.obligations.is_empty() {
+        println!("Trust obligations (accepted without verifying their truth):");
     }
     for obligation in &report.obligations {
-        println!("  trusted ({}): {}", obligation.kind, obligation.conclusion);
+        println!("  {}:", obligation.kind);
+        for line in obligation.conclusion.lines() {
+            println!("    {}", line);
+        }
+    }
+    if !report.failures.is_empty() {
+        println!("Failures:");
     }
     for failure in &report.failures {
-        println!("  [{}] {} -- {}", failure.condition, failure.conclusion, failure.detail);
+        let condition = match failure.condition {
+            "C1" => "C1: premise resolution",
+            "C2" => "C2: circular dependencies",
+            "C3" => "C3: step justification",
+            "C4" => "C4: claim coverage",
+            other => other,
+        };
+        println!("  [{}]", condition);
+        for line in failure.conclusion.lines() {
+            println!("    {}", line);
+        }
+        println!("    {}", failure.detail);
     }
     if !report.valid() {
         return Err(EyeronError::new(format!("{} is not a valid proof for the given program", path)));
@@ -381,6 +433,7 @@ fn parse_args(args: Vec<String>) -> Result<CliOptions> {
             }
             "-a" | "--ast" => opt.ast = true,
             "-p" | "--proof" | "--proof-comments" => opt.proof = true,
+            "-c" | "--prove-and-check" => opt.prove_and_check = true,
             "-r" | "--rdf" => opt.rdf = true,
             "-s" | "--stream" => opt.stream = true,
             "--max-backward-depth" => {
@@ -533,6 +586,7 @@ fn print_help() {
     println!("Options:");
     println!("  -a, --ast                     Print parsed AST/debug form and exit");
     println!("  -p, --proof                   Enable N3 proof explanations");
+    println!("  -c, --prove-and-check         Generate a proof and check it against the input program");
     println!("  -r, --rdf                     Enable RDF/TriG input/output compatibility");
     println!("  -s, --stream                  Output is emitted after fixpoint");
     println!(

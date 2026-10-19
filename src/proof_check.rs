@@ -85,13 +85,14 @@ impl Report {
 
     /// The verdict line the specification's §9 requires.
     pub fn verdict(&self) -> String {
+        let steps = format!("{} steps, {} verified, {} trusted", self.steps, self.verified, self.obligations.len());
         if !self.valid() {
-            return format!("invalid: {} failure(s)", self.failures.len());
+            return format!("invalid: {} failure(s); {}", self.failures.len(), steps);
         }
         if self.obligations.is_empty() {
-            format!("checked: {} steps", self.steps)
+            format!("checked: {}", steps)
         } else {
-            format!("checked with obligations: {} steps, {} trusted", self.steps, self.obligations.len())
+            format!("checked with obligations: {}", steps)
         }
     }
 }

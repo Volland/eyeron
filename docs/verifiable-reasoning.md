@@ -63,9 +63,13 @@ eyeron --check-proof proof.n3 examples/verifiable-decision.n3
 ```
 
 ```
-checked: 11 steps
-  7 fact
-  4 rule
+Proof: proof.n3
+Source program: examples/verifiable-decision.n3
+checked: 11 steps, 11 verified, 0 trusted
+Step kinds:
+  source facts: 7
+  rule applications: 4
+All premises and claims are supported; no circular dependencies.
 ```
 
 This does not reason. It re-performs the steps the document records and

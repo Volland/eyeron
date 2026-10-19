@@ -16,12 +16,25 @@ The executable chooses a syntax by file extension or by content sniffing for std
 
 `--proof` writes a proof as an N3 document: its claims, followed by steps that record the conclusion, why it holds, the bindings used, and its premises.
 
+To generate and check a proof in one invocation, use `-c` / `--prove-and-check`:
+
+```bash
+eyeron -c examples/dog-license.n3
+```
+
+This prints the checking report. The generated proof stays in memory and is
+checked against the same parsed program, including merged input files and
+base IRIs. Exit status is 0 for a valid proof (including one with listed
+trust obligations) and 1 for an invalid proof or an error.
+
 | One step | Written as |
 | --- | --- |
 | Conclusion | `{ s p o }` as subject |
 | Reason | `pe:rule N`, `pe:fact`, `pe:builtin`, or `pe:unproven` |
 | Bindings | `pe:binding [ pe:var "X"; pe:value V ]` |
 | Premises | `pe:uses { s p o }` |
+
+To save the proof for a separate check, use `--proof` and `--check-proof`:
 
 ```bash
 cargo run --release -- --proof examples/socrates.n3 > socrates.why.n3
