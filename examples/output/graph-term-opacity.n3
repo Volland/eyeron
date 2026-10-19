@@ -1,0 +1,5 @@
+@prefix : <http://example.org/> .
+
+:loisLane :knows {
+    :clarkKent :can :fly .
+} .

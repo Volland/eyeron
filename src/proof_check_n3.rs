@@ -73,7 +73,7 @@ struct Step {
     rule: Option<usize>,
     /// A rule the engine generated while reasoning, carried by the step
     /// because no document contains it (§5.1).
-    carried: Option<(Vec<Triple>, Vec<Triple>, Triple)>,
+    carried: Option<(crate::ast::Graph, crate::ast::Graph, Triple)>,
     builtin: Option<Term>,
     bindings: Vec<(String, Term)>,
     uses: Vec<Triple>,
@@ -147,6 +147,13 @@ impl N3Proof {
         if let Some(position) = self.index.get(statement) {
             return Resolution::Step(*position);
         }
+        // Closed graph terms keep their identity under consistent local
+        // quantifier renaming, including between separately printed steps.
+        if statement.is_ground() {
+            if let Some(position) = self.steps.iter().position(|step| ground_statements_equal(&step.conclusion, statement)) {
+                return Resolution::Step(position);
+            }
+        }
         if self.given.contains(statement) || self.gives_rule(statement) {
             return Resolution::Given;
         }
@@ -164,10 +171,24 @@ impl N3Proof {
             .iter()
             .map(|step| &step.conclusion)
             .chain(self.given.iter())
-            .filter(|candidate| candidate.p == statement.p);
+            .chain(self.rule_statements.iter());
         for candidate in candidates {
-            if match_triple(candidate, statement, &mut Bindings::new()) {
+            if candidate.p == statement.p && match_triple(candidate, statement, &mut Bindings::new()) {
                 return true;
+            }
+            // Forward and backward implication assert the same rule with
+            // their subject and object reversed. Quantified assertions are
+            // registered as empty-premise backward rules for goal search.
+            let reversed = match &candidate.p {
+                Term::Iri(iri) if iri.as_str() == crate::ast::LOG_IMPLIES => Some(crate::ast::LOG_IMPLIED_BY),
+                Term::Iri(iri) if iri.as_str() == crate::ast::LOG_IMPLIED_BY => Some(crate::ast::LOG_IMPLIES),
+                _ => None,
+            };
+            if let Some(predicate) = reversed {
+                let equivalent = Triple::new(candidate.o.clone(), Term::iri(predicate), candidate.s.clone());
+                if equivalent.p == statement.p && match_triple(&equivalent, statement, &mut Bindings::new()) {
+                    return true;
+                }
             }
         }
         false
@@ -237,6 +258,7 @@ impl N3Proof {
             .iter()
             .chain(self.general.iter())
             .any(|candidate| candidate.p == statement.p && match_triple(candidate, statement, &mut Bindings::new()))
+            || self.given.iter().any(|candidate| ground_statements_equal(candidate, statement))
     }
 
     fn check_fact(&self, step: &Step) -> Verdict {
@@ -263,6 +285,14 @@ impl N3Proof {
     }
 }
 
+/// Ground statements compare their closed graph terms modulo local renaming.
+fn ground_statements_equal(left: &Triple, right: &Triple) -> bool {
+    left.is_ground() && right.is_ground()
+        && crate::reasoner::terms_equal_semantic(&left.s, &right.s)
+        && crate::reasoner::terms_equal_semantic(&left.p, &right.p)
+        && crate::reasoner::terms_equal_semantic(&left.o, &right.o)
+}
+
 /// One-way matching of a rule's pattern against a recorded statement.
 /// Only the pattern's variables bind. A blank node in a rule head is an
 /// existential, which the engine skolemizes, so it binds too — under a
@@ -287,7 +317,48 @@ pub(crate) fn match_term(pattern: &Term, target: &Term, bindings: &mut Bindings)
             left.len() == right.len() && left.iter().zip(right.iter()).all(|(l, r)| match_term(l, r, bindings))
         }
         (Term::Formula(left), Term::Formula(right)) => {
-            left.len() == right.len() && left.iter().zip(right.iter()).all(|(l, r)| match_triple(l, r, bindings))
+            // Free existential placeholders belong to the enclosing rule;
+            // let them bind just as blank patterns in ordinary triples do.
+            // Locally quantified blanks remain rigid alpha variables.
+            let mapping = left.free_variables().into_iter().filter_map(|term| {
+                if let Term::Blank(name) = &term {
+                    Some((term.clone(), Term::var(format!("_:{}", name))))
+                } else {
+                    None
+                }
+            }).collect();
+            let left = left.substitute(&mapping);
+            // A recorded use substitutes the rule's free variables. Its
+            // blank values are identities from the recorded environment,
+            // even when the proof's quoted syntax locally binds their labels.
+            let mut captured = BTreeSet::new();
+            fn blanks(term: &Term, out: &mut BTreeSet<crate::ast::Name>) {
+                match term {
+                    Term::Blank(n) => { out.insert(n.clone()); }
+                    Term::List(items) => for item in items { blanks(item,out); },
+                    Term::Formula(g) => for free in g.free_variables() { blanks(&free,out); },
+                    _ => {}
+                }
+            }
+            for free in left.free_variables() {
+                if let Term::Var(n) = free {
+                    if let Some(value) = bindings.get(&n) { blanks(value,&mut captured); }
+                }
+            }
+            fn recorded_term(term: &Term, captured: &BTreeSet<crate::ast::Name>) -> Term {
+                match term {
+                    Term::Formula(g) => Term::Formula(recorded_graph(g,captured)),
+                    Term::List(items) => Term::List(items.iter().map(|t|recorded_term(t,captured)).collect()),
+                    _ => term.clone(),
+                }
+            }
+            fn recorded_graph(graph: &crate::ast::Graph, captured: &BTreeSet<crate::ast::Name>) -> crate::ast::Graph {
+                let mut out=graph.map_triples(|t|Triple::new(recorded_term(&t.s,captured),recorded_term(&t.p,captured),recorded_term(&t.o,captured)));
+                out.existentials.retain(|n|!captured.contains(n));
+                out
+            }
+            let recorded = recorded_graph(right,&captured);
+            crate::reasoner::unify_term(&Term::Formula(left.clone()), &Term::Formula(recorded), bindings)
         }
         _ => pattern == target,
     }
@@ -300,7 +371,7 @@ pub(crate) fn match_triple(pattern: &Triple, target: &Triple, bindings: &mut Bin
 /// The triples a rule concludes when its conclusion is not written out but
 /// resolved from a term at firing time. `None` when the rule states its
 /// conclusion in the ordinary way.
-fn unquoted_conclusion(conclusion: &[Triple], bindings: &Bindings) -> Option<Vec<Triple>> {
+fn unquoted_conclusion(conclusion: &[Triple], bindings: &Bindings) -> Option<crate::ast::Graph> {
     let [only] = conclusion else { return None };
     let unquote = Term::Iri(crate::ast::EYERON_UNQUOTE.to_string().into());
     if only.s != unquote || only.p != unquote {
@@ -410,7 +481,7 @@ fn read_steps(body: &[Triple]) -> Vec<Step> {
 /// A `pe:rule { {premises} => {conclusion} }` object: the generated rule
 /// the step carries, plus the statement asserting it, which a checker holds
 /// the step to.
-fn carried_rule(term: &Term) -> Option<(Vec<Triple>, Vec<Triple>, Triple)> {
+fn carried_rule(term: &Term) -> Option<(crate::ast::Graph, crate::ast::Graph, Triple)> {
     let statement = formula_triple(term)?;
     // A forward rule reads `{premises} => {conclusion}`, a backward one
     // `{conclusion} <= {premises}`.

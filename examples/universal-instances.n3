@@ -1,0 +1,12 @@
+# Universals precede existentials declared in the same graph.
+@prefix : <http://example.org/>.
+
+@forAll :x.
+@forSome :y.
+:x :p :o.
+:x :hasMother :y.
+
+{ :s :p :o } => { :universalInstance :holds true }.
+{ :bob :hasMother ?mother } => { :bob :mother ?mother }.
+{ :liz :hasMother ?mother } => { :liz :mother ?mother }.
+# The witnesses for Bob's and Liz's mothers may differ.

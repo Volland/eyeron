@@ -420,7 +420,7 @@ pub(crate) fn rule_reference(rule: &Rule, numbering: &RuleNumbering, prefixes: &
 /// `{conclusion} <= {premises}`. Writing it the way the engine derived it
 /// is what lets a checker find the step that derived it.
 pub(crate) fn generated_rule_term(rule: &Rule) -> Term {
-    Term::Formula(vec![rule_statement(rule)])
+    Term::formula(vec![rule_statement(rule)])
 }
 
 /// The triple a rule *is*, which N3 can match like any other: `{premises}
@@ -452,30 +452,8 @@ fn source_key(source: Option<&SourceRef>) -> String {
 }
 
 pub(crate) fn vars_in_rule(rule: &Rule) -> BTreeSet<String> {
-    let mut out = BTreeSet::new();
-    for triple in rule.premise.iter().chain(rule.conclusion.iter()) {
-        collect_vars_triple(triple, &mut out);
-    }
-    out
-}
-
-fn collect_vars_triple(triple: &Triple, out: &mut BTreeSet<String>) {
-    collect_vars_term(&triple.s, out);
-    collect_vars_term(&triple.p, out);
-    collect_vars_term(&triple.o, out);
-}
-
-fn collect_vars_term(term: &Term, out: &mut BTreeSet<String>) {
-    match term {
-        Term::Var(name) => { out.insert(name.clone().to_string()); }
-        Term::List(items) => {
-            for item in items { collect_vars_term(item, out); }
-        }
-        Term::Formula(triples) => {
-            for triple in triples { collect_vars_triple(triple, out); }
-        }
-        _ => {}
-    }
+    rule.premise.free_variables().into_iter().chain(rule.conclusion.free_variables())
+        .filter_map(|term| if let Term::Var(n)=term { Some(n.to_string()) } else { None }).collect()
 }
 
 fn is_builtin_premise(triple: &Triple) -> bool {

@@ -1,0 +1,9 @@
+# There exists someone who is loved by everyone.
+@prefix : <http://example.org/>.
+
+@forSome :y.
+{} => { @forAll :x. :x :loves :y }.
+
+{ :bob :loves ?beloved } => { :bob :beloved ?beloved }.
+{ :liz :loves ?beloved } => { :liz :beloved ?beloved }.
+# Both conclusions refer to the same existential witness.

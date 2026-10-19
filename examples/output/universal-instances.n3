@@ -1,0 +1,6 @@
+@prefix : <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:universalInstance :holds true .
+:bob :mother _:__q2_30797a27509bec94 .
+:liz :mother _:__q2_2745a2109baeb890 .

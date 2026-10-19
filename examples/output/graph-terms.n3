@@ -1,0 +1,7 @@
+@prefix : <http://example.org/> .
+
+:alice :likes :spaghetti .
+:alice :likes :pizza .
+_:x :likes :pizza .
+_:x :likes :pasta .
+_:x :likes :spaghetti .

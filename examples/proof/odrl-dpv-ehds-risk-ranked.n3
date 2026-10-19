@@ -342,8 +342,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -502,8 +502,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
       _:b3 odrl:action :removeDirectIdentifiers .
       :PermProvidePseudonymisedData :clause :ClauseH4 .
   } log:notIncludes {
-      :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-      ?_:b4 odrl:leftOperand :hasDataPermit .
+      :PermSecondaryUseDUA odrl:constraint _:b4 .
+      _:b4 odrl:leftOperand :hasDataPermit .
   } .
 }
   pe:builtin log:notIncludes.
@@ -717,8 +717,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -923,8 +923,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -1129,8 +1129,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -1335,8 +1335,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -1541,8 +1541,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -1747,8 +1747,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -1953,8 +1953,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -2159,8 +2159,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -2365,8 +2365,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -2571,8 +2571,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -2777,8 +2777,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -2983,8 +2983,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -3189,8 +3189,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -3395,8 +3395,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -3601,8 +3601,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -3807,8 +3807,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -4013,8 +4013,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -4219,8 +4219,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -4435,8 +4435,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -4641,8 +4641,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseDUA odrl:constraint ?_:b4 .
-            ?_:b4 odrl:leftOperand :hasDataPermit .
+            :PermSecondaryUseDUA odrl:constraint _:b4 .
+            _:b4 odrl:leftOperand :hasDataPermit .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -4847,8 +4847,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -4959,8 +4959,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
       _:b3 odrl:action :removeDirectIdentifiers .
       :PermProvidePseudonymisedData :clause :ClauseH4 .
   } log:notIncludes {
-      :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-      ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+      :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+      _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
   } .
 }
   pe:builtin log:notIncludes.
@@ -5174,8 +5174,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -5380,8 +5380,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -5586,8 +5586,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -5792,8 +5792,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -5998,8 +5998,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -6204,8 +6204,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -6410,8 +6410,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -6616,8 +6616,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -6822,8 +6822,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -7028,8 +7028,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -7234,8 +7234,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -7440,8 +7440,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -7646,8 +7646,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -7852,8 +7852,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -8058,8 +8058,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -8264,8 +8264,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -8470,8 +8470,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -8676,8 +8676,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -8890,8 +8890,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -9096,8 +9096,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermSecondaryUseAllPatients odrl:constraint ?_:b6 .
-            ?_:b6 odrl:leftOperand :respectOptOutSecondaryUse .
+            :PermSecondaryUseAllPatients odrl:constraint _:b6 .
+            _:b6 odrl:leftOperand :respectOptOutSecondaryUse .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -9302,8 +9302,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -9414,8 +9414,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
       _:b3 odrl:action :removeDirectIdentifiers .
       :PermProvidePseudonymisedData :clause :ClauseH4 .
   } log:notIncludes {
-      :PermDownloadLocalCopy odrl:duty ?_:b8 .
-      ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+      :PermDownloadLocalCopy odrl:duty _:b8 .
+      _:b8 odrl:action :processOnlyInSecureEnvironment .
   } .
 }
   pe:builtin log:notIncludes.
@@ -9629,8 +9629,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -9835,8 +9835,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -10041,8 +10041,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -10247,8 +10247,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -10453,8 +10453,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -10659,8 +10659,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -10865,8 +10865,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -11071,8 +11071,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -11277,8 +11277,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -11483,8 +11483,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -11689,8 +11689,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -11895,8 +11895,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -12101,8 +12101,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -12307,8 +12307,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -12513,8 +12513,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -12719,8 +12719,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -12925,8 +12925,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -13131,8 +13131,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -13347,8 +13347,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -13553,8 +13553,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermDownloadLocalCopy odrl:duty ?_:b8 .
-            ?_:b8 odrl:action :processOnlyInSecureEnvironment .
+            :PermDownloadLocalCopy odrl:duty _:b8 .
+            _:b8 odrl:action :processOnlyInSecureEnvironment .
         } .
     },
     { :ClauseH3 :clauseId "H3" . },
@@ -13759,8 +13759,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -13871,8 +13871,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
       _:b3 odrl:action :removeDirectIdentifiers .
       :PermProvidePseudonymisedData :clause :ClauseH4 .
   } log:notIncludes {
-      :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-      ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+      :PermProvidePseudonymisedData odrl:constraint _:b9 .
+      _:b9 odrl:leftOperand :statisticallyAnonymised .
   } .
 }
   pe:builtin log:notIncludes.
@@ -14086,8 +14086,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -14292,8 +14292,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -14498,8 +14498,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -14704,8 +14704,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -14910,8 +14910,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -15116,8 +15116,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -15322,8 +15322,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -15528,8 +15528,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -15734,8 +15734,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -15940,8 +15940,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -16146,8 +16146,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -16352,8 +16352,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -16558,8 +16558,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -16764,8 +16764,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -16970,8 +16970,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -17176,8 +17176,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -17382,8 +17382,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -17597,8 +17597,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },
@@ -17803,8 +17803,8 @@ _:riskH4_cece88d41ac6b3e0 dpv:hasRiskLevel risk:HighRisk .
             _:b3 odrl:action :removeDirectIdentifiers .
             :PermProvidePseudonymisedData :clause :ClauseH4 .
         } log:notIncludes {
-            :PermProvidePseudonymisedData odrl:constraint ?_:b9 .
-            ?_:b9 odrl:leftOperand :statisticallyAnonymised .
+            :PermProvidePseudonymisedData odrl:constraint _:b9 .
+            _:b9 odrl:leftOperand :statisticallyAnonymised .
         } .
     },
     { :ClauseH4 :clauseId "H4" . },

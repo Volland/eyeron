@@ -5632,7 +5632,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: expected term, got Lang(\"forSome\")" ;
+    earl:info "rejected as expected: expected term, got AtForSome" ;
   ] .
 
 [] a earl:Assertion ;
@@ -5642,7 +5642,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: expected term, got Lang(\"forAll\")" ;
+    earl:info "rejected as expected: expected term, got AtForAll" ;
   ] .
 
 [] a earl:Assertion ;
@@ -9912,7 +9912,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: expected term, got Lang(\"forSome\")" ;
+    earl:info "rejected as expected: expected term, got AtForSome" ;
   ] .
 
 [] a earl:Assertion ;
@@ -9922,7 +9922,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: expected term, got Lang(\"forAll\")" ;
+    earl:info "rejected as expected: expected term, got AtForAll" ;
   ] .
 
 [] a earl:Assertion ;

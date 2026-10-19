@@ -1,0 +1,4 @@
+@prefix : <http://example.org/> .
+
+:bob :beloved _:__q1 .
+:liz :beloved _:__q1 .

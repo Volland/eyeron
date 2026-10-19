@@ -394,32 +394,32 @@
       :mythic a :Bird .
       :mythic :canFly false .
       {
-          :mythic a :Bird .
+          ?x a :Bird .
       } => {
-          :mythic :canFly true .
-          :mythic :hasWings true .
+          ?x :canFly true .
+          ?x :hasWings true .
       } .
       {
-          :mythic a :Penguin .
+          ?x a :Penguin .
       } => {
-          :mythic :canFly false .
+          ?x :canFly false .
       } .
       {
-          :mythic a :Mammal .
+          ?x a :Mammal .
       } => {
-          :mythic :hasWings false .
+          ?x :hasWings false .
       } .
       {
-          :mythic a :Bat .
+          ?x a :Bat .
       } => {
-          :mythic :hasWings true .
-          :mythic :canFly true .
+          ?x :hasWings true .
+          ?x :canFly true .
       } .
       {
-          :mythic a :Fish .
+          ?x a :Fish .
       } => {
-          :mythic :canSwim true .
-          :mythic :hasWings false .
+          ?x :canSwim true .
+          ?x :hasWings false .
       } .
   } .
 }
@@ -978,49 +978,6 @@
     }.
 
 {
-  :kb :hasFormula {
-      :tweety a :Bird .
-      :tweety a :Penguin .
-      :falco a :Bird .
-      :opus a :Penguin .
-      :batsy a :Mammal .
-      :batsy a :Bat .
-      :nemo a :Fish .
-      :mythic a :Bird .
-      :mythic :canFly false .
-      {
-          :tweety a :Bird .
-      } => {
-          :tweety :canFly true .
-          :tweety :hasWings true .
-      } .
-      {
-          :tweety a :Penguin .
-      } => {
-          :tweety :canFly false .
-      } .
-      {
-          :tweety a :Mammal .
-      } => {
-          :tweety :hasWings false .
-      } .
-      {
-          :tweety a :Bat .
-      } => {
-          :tweety :hasWings true .
-          :tweety :canFly true .
-      } .
-      {
-          :tweety a :Fish .
-      } => {
-          :tweety :canSwim true .
-          :tweety :hasWings false .
-      } .
-  } .
-}
-  pe:fact "paraconsistent-animals.n3".
-
-{
   {
       :tweety a :Bird .
       :tweety a :Penguin .
@@ -1571,49 +1528,6 @@
             :batsy :hasWings false .
         } .
     }.
-
-{
-  :kb :hasFormula {
-      :tweety a :Bird .
-      :tweety a :Penguin .
-      :falco a :Bird .
-      :opus a :Penguin .
-      :batsy a :Mammal .
-      :batsy a :Bat .
-      :nemo a :Fish .
-      :mythic a :Bird .
-      :mythic :canFly false .
-      {
-          :batsy a :Bird .
-      } => {
-          :batsy :canFly true .
-          :batsy :hasWings true .
-      } .
-      {
-          :batsy a :Penguin .
-      } => {
-          :batsy :canFly false .
-      } .
-      {
-          :batsy a :Mammal .
-      } => {
-          :batsy :hasWings false .
-      } .
-      {
-          :batsy a :Bat .
-      } => {
-          :batsy :hasWings true .
-          :batsy :canFly true .
-      } .
-      {
-          :batsy a :Fish .
-      } => {
-          :batsy :canSwim true .
-          :batsy :hasWings false .
-      } .
-  } .
-}
-  pe:fact "paraconsistent-animals.n3".
 
 {
   {
@@ -2231,49 +2145,6 @@
             :falco :canFly false .
         } .
     }.
-
-{
-  :kb :hasFormula {
-      :tweety a :Bird .
-      :tweety a :Penguin .
-      :falco a :Bird .
-      :opus a :Penguin .
-      :batsy a :Mammal .
-      :batsy a :Bat .
-      :nemo a :Fish .
-      :mythic a :Bird .
-      :mythic :canFly false .
-      {
-          :falco a :Bird .
-      } => {
-          :falco :canFly true .
-          :falco :hasWings true .
-      } .
-      {
-          :falco a :Penguin .
-      } => {
-          :falco :canFly false .
-      } .
-      {
-          :falco a :Mammal .
-      } => {
-          :falco :hasWings false .
-      } .
-      {
-          :falco a :Bat .
-      } => {
-          :falco :hasWings true .
-          :falco :canFly true .
-      } .
-      {
-          :falco a :Fish .
-      } => {
-          :falco :canSwim true .
-          :falco :hasWings false .
-      } .
-  } .
-}
-  pe:fact "paraconsistent-animals.n3".
 
 {
   {
@@ -3284,49 +3155,6 @@
             :opus :canFly true .
         } .
     }.
-
-{
-  :kb :hasFormula {
-      :tweety a :Bird .
-      :tweety a :Penguin .
-      :falco a :Bird .
-      :opus a :Penguin .
-      :batsy a :Mammal .
-      :batsy a :Bat .
-      :nemo a :Fish .
-      :mythic a :Bird .
-      :mythic :canFly false .
-      {
-          :opus a :Bird .
-      } => {
-          :opus :canFly true .
-          :opus :hasWings true .
-      } .
-      {
-          :opus a :Penguin .
-      } => {
-          :opus :canFly false .
-      } .
-      {
-          :opus a :Mammal .
-      } => {
-          :opus :hasWings false .
-      } .
-      {
-          :opus a :Bat .
-      } => {
-          :opus :hasWings true .
-          :opus :canFly true .
-      } .
-      {
-          :opus a :Fish .
-      } => {
-          :opus :canSwim true .
-          :opus :hasWings false .
-      } .
-  } .
-}
-  pe:fact "paraconsistent-animals.n3".
 
 {
   {
@@ -5253,49 +5081,6 @@
             :nemo :hasWings true .
         } .
     }.
-
-{
-  :kb :hasFormula {
-      :tweety a :Bird .
-      :tweety a :Penguin .
-      :falco a :Bird .
-      :opus a :Penguin .
-      :batsy a :Mammal .
-      :batsy a :Bat .
-      :nemo a :Fish .
-      :mythic a :Bird .
-      :mythic :canFly false .
-      {
-          :nemo a :Bird .
-      } => {
-          :nemo :canFly true .
-          :nemo :hasWings true .
-      } .
-      {
-          :nemo a :Penguin .
-      } => {
-          :nemo :canFly false .
-      } .
-      {
-          :nemo a :Mammal .
-      } => {
-          :nemo :hasWings false .
-      } .
-      {
-          :nemo a :Bat .
-      } => {
-          :nemo :hasWings true .
-          :nemo :canFly true .
-      } .
-      {
-          :nemo a :Fish .
-      } => {
-          :nemo :canSwim true .
-          :nemo :hasWings false .
-      } .
-  } .
-}
-  pe:fact "paraconsistent-animals.n3".
 
 {
   {

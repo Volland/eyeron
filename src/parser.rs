@@ -98,7 +98,7 @@ pub fn parse_rdf_message_log(input: &str, base_iri: Option<&str>) -> Result<Docu
         let payload = Term::iri(format!("urn:eyeron:rdf-message-stream:1:payload:{}", idx + 1));
         doc.facts.push(Triple::new(envelope.clone(), ey("payloadKind"), ey("nonEmpty")));
         doc.facts.push(Triple::new(envelope, ey("payloadGraph"), payload.clone()));
-        doc.facts.push(Triple::new(payload, log("nameOf"), Term::Formula(msg_doc.facts)));
+        doc.facts.push(Triple::new(payload, log("nameOf"), Term::formula(msg_doc.facts)));
     }
 
     Ok(doc)
@@ -174,7 +174,7 @@ fn message_is_empty(message: &str) -> bool {
 }
 
 fn named_graph_formula(graph: Term, triples: Vec<Triple>) -> Triple {
-    Triple::new(graph, Term::iri(LOG_NAME_OF), Term::Formula(triples))
+    Triple::new(graph, Term::iri(LOG_NAME_OF), Term::formula(triples))
 }
 
 const RDF_REIFIES: &str = "http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies";
@@ -273,6 +273,15 @@ impl ParserProfile {
     }
 }
 
+#[derive(Default)]
+struct QuantifierScope {
+    bindings: std::collections::BTreeMap<String, Term>,
+    blanks: std::collections::BTreeMap<String, Term>,
+    graph: Graph,
+    started: bool,
+    has_existential_declaration: bool,
+}
+
 struct Parser {
     tokens: Vec<Token>,
     pos: usize,
@@ -283,6 +292,8 @@ struct Parser {
     line_starts: Vec<usize>,
     /// Current term-nesting depth, checked against `MAX_TERM_NESTING_DEPTH`.
     depth: usize,
+    scopes: Vec<QuantifierScope>,
+    quantifier_counter: usize,
 }
 
 impl Parser {
@@ -305,7 +316,7 @@ impl Parser {
         doc.prefixes.insert("math".to_string(), "http://www.w3.org/2000/10/swap/math#".to_string());
         doc.prefixes.insert("string".to_string(), "http://www.w3.org/2000/10/swap/string#".to_string());
         doc.prefixes.insert("time".to_string(), "http://www.w3.org/2000/10/swap/time#".to_string());
-        Self { tokens, pos: 0, doc, blank_counter: 0, profile, source_label: None, line_starts: Vec::new(), depth: 0 }
+        Self { tokens, pos: 0, doc, blank_counter: 0, profile, source_label: None, line_starts: Vec::new(), depth: 0, scopes: vec![QuantifierScope::default()], quantifier_counter: 0 }
     }
 
     fn with_source(mut self, source_label: Option<&str>, line_starts: Vec<usize>) -> Self {
@@ -354,10 +365,12 @@ impl Parser {
                 TokenKind::AtPrefix | TokenKind::Prefix => self.parse_prefix()?,
                 TokenKind::AtBase | TokenKind::Base => self.parse_base()?,
                 TokenKind::AtVersion | TokenKind::Version => self.parse_version()?,
-                TokenKind::LBrace => self.parse_formula_statement()?,
-                TokenKind::Boolean(true) => self.parse_true_formula_statement()?,
+                TokenKind::AtForAll | TokenKind::AtForSome => self.parse_quantifier()?,
+                TokenKind::LBrace => { self.scopes.last_mut().unwrap().started = true; self.parse_formula_statement()?; },
+                TokenKind::Boolean(true) => { self.scopes.last_mut().unwrap().started = true; self.parse_true_formula_statement()?; },
                 TokenKind::Dot => { self.advance(); }
                 _ => {
+                    self.scopes.last_mut().unwrap().started = true;
                     let source = self.source_ref_at(self.peek().offset);
                     let facts = self.parse_triples_sequence()?;
                     self.add_facts(facts, source);
@@ -365,6 +378,9 @@ impl Parser {
                 }
             }
         }
+        let root = self.scopes.pop().unwrap().graph;
+        self.doc.universals = root.universals;
+        self.doc.existentials = root.existentials;
         Ok(self.doc)
     }
 
@@ -566,12 +582,12 @@ impl Parser {
         let source = self.source_ref_at(self.peek().offset);
         self.advance();
         match self.peek_kind() {
-            TokenKind::Arrow => {
+            TokenKind::Arrow if self.quantified_iri(LOG_IMPLIES.to_string()) == Term::iri(LOG_IMPLIES) => {
                 self.advance();
                 let (rhs, fuse) = self.parse_forward_rule_rhs()?;
                 self.doc.rules.push(Rule::new(Vec::new(), rhs, true).with_fuse(fuse).with_source(source.clone()));
             }
-            TokenKind::BackArrow => {
+            TokenKind::BackArrow if self.quantified_iri(LOG_IMPLIED_BY.to_string()) == Term::iri(LOG_IMPLIED_BY) => {
                 self.advance();
                 let rhs = self.parse_formula_or_true()?;
                 self.doc.rules.push(Rule::new(rhs, Vec::new(), false).with_source(source.clone()));
@@ -590,12 +606,12 @@ impl Parser {
         let source = self.source_ref_at(self.peek().offset);
         let lhs = self.parse_formula()?;
         match self.peek_kind() {
-            TokenKind::Arrow => {
+            TokenKind::Arrow if self.quantified_iri(LOG_IMPLIES.to_string()) == Term::iri(LOG_IMPLIES) => {
                 self.advance();
                 let (rhs, fuse) = self.parse_forward_rule_rhs()?;
                 self.doc.rules.push(Rule::new(lhs, rhs, true).with_fuse(fuse).with_source(source.clone()));
             }
-            TokenKind::BackArrow => {
+            TokenKind::BackArrow if self.quantified_iri(LOG_IMPLIED_BY.to_string()) == Term::iri(LOG_IMPLIED_BY) => {
                 self.advance();
                 let rhs = self.parse_formula_or_true()?;
                 // `{ head } <= { body }` is a backward rule: use it
@@ -638,10 +654,10 @@ impl Parser {
     }
 
 
-    fn parse_formula_or_true(&mut self) -> Result<Vec<Triple>> {
+    fn parse_formula_or_true(&mut self) -> Result<Graph> {
         if matches!(self.peek_kind(), TokenKind::Boolean(true)) {
             self.advance();
-            return Ok(Vec::new());
+            return Ok(Graph::default());
         }
         if matches!(self.peek_kind(), TokenKind::Boolean(false)) {
             return Err(EyeronError::at("false rule conclusions are not supported", self.peek().offset));
@@ -651,14 +667,14 @@ impl Parser {
 
     /// The right-hand side of `=>`, and whether it was `false` -- an
     /// inference fuse rather than something to conclude.
-    fn parse_forward_rule_rhs(&mut self) -> Result<(Vec<Triple>, bool)> {
+    fn parse_forward_rule_rhs(&mut self) -> Result<(Graph, bool)> {
         if matches!(self.peek_kind(), TokenKind::Boolean(true)) {
             self.advance();
-            return Ok((Vec::new(), false));
+            return Ok((Graph::default(), false));
         }
         if matches!(self.peek_kind(), TokenKind::Boolean(false)) {
             self.advance();
-            return Ok((Vec::new(), true));
+            return Ok((Graph::default(), true));
         }
         if matches!(self.peek_kind(), TokenKind::LBrace) {
             return Ok((self.parse_formula()?, false));
@@ -672,11 +688,12 @@ impl Parser {
         if !generated.is_empty() {
             return Err(EyeronError::new("generated triples cannot appear around an unquoted RHS term"));
         }
-        Ok((vec![Triple::new(Term::iri(EYERON_UNQUOTE), Term::iri(EYERON_UNQUOTE), term)], false))
+        Ok((vec![Triple::new(Term::iri(EYERON_UNQUOTE), Term::iri(EYERON_UNQUOTE), term)].into(), false))
     }
 
-    fn parse_formula(&mut self) -> Result<Vec<Triple>> {
+    fn parse_formula(&mut self) -> Result<Graph> {
         self.expect(TokenKind::LBrace)?;
+        self.scopes.push(QuantifierScope::default());
         let mut triples = Vec::new();
         while !self.check(&TokenKind::RBrace) && !self.check(&TokenKind::Eof) {
             if self.check(&TokenKind::Dot) { self.advance(); continue; }
@@ -692,6 +709,11 @@ impl Parser {
                 self.parse_version()?;
                 continue;
             }
+            if matches!(self.peek_kind(), TokenKind::AtForAll | TokenKind::AtForSome) {
+                self.parse_quantifier()?;
+                continue;
+            }
+            self.scopes.last_mut().unwrap().started = true;
             triples.extend(self.parse_triples_sequence()?);
             if self.check(&TokenKind::Dot) { self.advance(); }
             else if !self.check(&TokenKind::RBrace) {
@@ -699,7 +721,9 @@ impl Parser {
             }
         }
         self.expect(TokenKind::RBrace)?;
-        Ok(triples)
+        let mut graph = self.scopes.pop().unwrap().graph;
+        graph.triples = triples;
+        Ok(graph)
     }
 
     fn parse_triples_sequence_from_subject(&mut self, subject: Term) -> Result<Vec<Triple>> {
@@ -725,7 +749,7 @@ impl Parser {
             if matches!((&subject, &object), (Term::Formula(_), Term::Var(_))) {
                 return Err(EyeronError::at("formula-to-variable implication is not supported", self.peek().offset));
             }
-            let object = if is_boolean_true_term(&object) { Term::Formula(Vec::new()) } else { object };
+            let object = if is_boolean_true_term(&object) { Term::formula(Vec::new()) } else { object };
             triples.append(&mut object_generated);
             if backward {
                 // Preserve `<=` polarity in quoted rule terms.  These are
@@ -897,7 +921,7 @@ impl Parser {
     fn parse_verb(&mut self) -> Result<Term> {
         if self.check(&TokenKind::A) {
             self.advance();
-            return Ok(Term::iri(RDF_TYPE));
+            return Ok(self.quantified_iri(RDF_TYPE.to_string()));
         }
         if self.profile.is_rdf12() {
             let (term, generated) = self.parse_term()?;
@@ -907,15 +931,15 @@ impl Parser {
         }
         if self.check(&TokenKind::Equals) {
             self.advance();
-            return Ok(Term::iri(OWL_SAME_AS));
+            return Ok(self.quantified_iri(OWL_SAME_AS.to_string()));
         }
         if self.check(&TokenKind::Arrow) {
             self.advance();
-            return Ok(Term::iri(LOG_IMPLIES));
+            return Ok(self.quantified_iri(LOG_IMPLIES.to_string()));
         }
         if self.check(&TokenKind::BackArrow) {
             self.advance();
-            return Ok(Term::iri(LOG_IMPLIED_BY));
+            return Ok(self.quantified_iri(LOG_IMPLIED_BY.to_string()));
         }
         let (term, _generated) = self.parse_term()?;
         // Predicate terms may themselves be lists or formulas in N3.  Generated
@@ -945,16 +969,16 @@ impl Parser {
         match tok.kind {
             TokenKind::Iri(i) => {
                 let iri = if self.profile.is_line_syntax() { i } else { self.resolve_iri(&i) };
-                Ok((Term::iri(iri), Vec::new()))
+                Ok((self.quantified_iri(iri), Vec::new()))
             }
             TokenKind::PName(p) => self.parse_pname_or_path(&p, tok.offset),
             TokenKind::Var(v) => {
                 if self.profile.is_rdf12() { Err(EyeronError::at("variables are not allowed in RDF syntax", tok.offset)) }
-                else { Ok((Term::var(v), Vec::new())) }
+                else { self.scopes[0].graph.universals.insert(v.clone().into()); Ok((Term::var(v), Vec::new())) }
             }
             TokenKind::Blank(b) => {
                 if self.profile.is_rdf12() { validate_blank_label(&b, tok.offset)?; }
-                Ok((Term::blank(b), Vec::new()))
+                Ok((if self.profile.is_rdf12() { Term::blank(b) } else { self.scoped_blank(b) }, Vec::new()))
             }
             TokenKind::String(value) => self.finish_literal(value),
             TokenKind::StringSingle(value) | TokenKind::StringLong(value) | TokenKind::StringLongSingle(value) => {
@@ -978,7 +1002,7 @@ impl Parser {
                 else { Ok((number_literal(value), Vec::new())) }
             }
             TokenKind::Boolean(value) => Ok((boolean_literal(value), Vec::new())),
-            TokenKind::A => Ok((Term::iri(RDF_TYPE), Vec::new())),
+            TokenKind::A => Ok((self.quantified_iri(RDF_TYPE.to_string()), Vec::new())),
             TokenKind::LBrace => {
                 if self.profile.is_rdf12() { return Err(EyeronError::at("formula terms are not allowed in RDF syntax", tok.offset)); }
                 self.pos -= 1;
@@ -1032,8 +1056,14 @@ impl Parser {
         let mut lit = Literal::plain(value);
         if self.check(&TokenKind::HatHat) {
             self.advance();
-            let (dt, generated) = self.parse_term()?;
-            if !generated.is_empty() { return Err(EyeronError::new("datatype cannot generate triples")); }
+            // Datatype IRIs are part of a literal, not variable occurrences
+            // in a triple position; their datatypes remain constants.
+            let token = self.advance().clone();
+            let dt = match token.kind {
+                TokenKind::Iri(i) => Term::iri(if self.profile.is_line_syntax() { i } else { self.resolve_iri(&i) }),
+                TokenKind::PName(p) if !contains_unescaped_path_operator(&p) => Term::iri(self.expand_pname(&p,token.offset)?),
+                _ => return Err(EyeronError::at("datatype must be an IRI",token.offset)),
+            };
             match dt {
                 Term::Iri(i) => {
                     if self.profile.is_line_syntax() { self.ensure_absolute_iri(&i, "N-Triples/N-Quads datatype IRI")?; }
@@ -1109,15 +1139,17 @@ impl Parser {
         } else if contains_unescaped_path_operator(pname) {
             return self.parse_path_pname(pname, offset);
         }
-        Ok((Term::iri(self.expand_pname(pname, offset)?), Vec::new()))
+        Ok((self.quantified_iri(self.expand_pname(pname, offset)?), Vec::new()))
     }
 
     fn parse_path_pname(&mut self, pname: &str, offset: usize) -> Result<(Term, Vec<Triple>)> {
         let parts = split_unescaped_path(pname, offset)?;
-        let mut current = Term::iri(self.expand_pname(&parts[0].1, offset)?);
+        let expanded = self.expand_pname(&parts[0].1, offset)?;
+        let mut current = self.quantified_iri(expanded);
         let mut generated = Vec::new();
         for (op, raw_pred) in parts.into_iter().skip(1) {
-            let pred = Term::iri(self.expand_pname(&raw_pred, offset)?);
+            let expanded = self.expand_pname(&raw_pred, offset)?;
+            let pred = self.quantified_iri(expanded);
             let next = self.fresh_blank("path");
             if op == '!' {
                 generated.push(Triple::new(current, pred, next.clone()));
@@ -1247,9 +1279,106 @@ impl Parser {
         matches!(self.peek_kind(), TokenKind::PName(p) if p.eq_ignore_ascii_case(word))
     }
 
+    fn quantified_iri(&self, iri: String) -> Term {
+        if !self.profile.is_rdf12() {
+            for scope in self.scopes.iter().rev() {
+                if let Some(term) = scope.bindings.get(&iri) {
+                    return term.clone();
+                }
+            }
+        }
+        Term::iri(iri)
+    }
+
+    fn scoped_blank(&mut self, label: String) -> Term {
+        if let Some(term) = self.scopes.last().unwrap().blanks.get(&label) {
+            return term.clone();
+        }
+        let term = Term::blank(label.clone());
+        if let Term::Blank(name) = &term {
+            self.scopes
+                .last_mut()
+                .unwrap()
+                .graph
+                .existentials
+                .insert(name.clone());
+        }
+        self.scopes
+            .last_mut()
+            .unwrap()
+            .blanks
+            .insert(label, term.clone());
+        term
+    }
+
+    fn parse_quantifier(&mut self) -> Result<()> {
+        let token = self.advance().clone();
+        let universal = matches!(token.kind, TokenKind::AtForAll);
+        let scope = self.scopes.last().unwrap();
+        if scope.started {
+            return Err(EyeronError::at(
+                "quantifiers must precede the first triple of their graph",
+                token.offset,
+            ));
+        }
+        if universal && scope.has_existential_declaration {
+            return Err(EyeronError::at(
+                "@forAll must precede @forSome in the same graph",
+                token.offset,
+            ));
+        }
+        loop {
+            let name = self.advance().clone();
+            let iri = match name.kind {
+                TokenKind::Iri(i) => self.resolve_iri(&i),
+                TokenKind::PName(p) if p.contains(':') => self.expand_pname(&p, name.offset)?,
+                _ => {
+                    return Err(EyeronError::at(
+                        "quantifier requires an IRI or prefixed name",
+                        name.offset,
+                    ))
+                }
+            };
+            if self.scopes.last().unwrap().bindings.contains_key(&iri) {
+                return Err(EyeronError::at(
+                    "IRI is already quantified in this graph",
+                    name.offset,
+                ));
+            }
+            let id: Name = loop {
+                self.quantifier_counter += 1;
+                let candidate = format!("__q{}", self.quantifier_counter);
+                if !self.tokens.iter().any(
+                    |t| matches!(&t.kind, TokenKind::Var(n) | TokenKind::Blank(n) if n == &candidate),
+                ) {
+                    break candidate.into();
+                }
+            };
+            let scope = self.scopes.last_mut().unwrap();
+            let term = if universal {
+                scope.graph.universals.insert(id.clone());
+                Term::var(id)
+            } else {
+                scope.has_existential_declaration = true;
+                scope.graph.existentials.insert(id.clone());
+                Term::blank(id)
+            };
+            scope.bindings.insert(iri, term);
+            if !self.check(&TokenKind::Comma) {
+                break;
+            }
+            self.advance();
+        }
+        self.expect_dot()
+    }
+
     fn fresh_blank(&mut self, prefix: &str) -> Term {
         self.blank_counter += 1;
-        Term::blank(format!("{}{}", prefix, self.blank_counter))
+        {
+            let name: Name = format!("{}{}", prefix, self.blank_counter).into();
+            if !self.profile.is_rdf12() { self.scopes.last_mut().unwrap().graph.existentials.insert(name.clone()); }
+            Term::blank(name)
+        }
     }
 
     fn expect_dot(&mut self) -> Result<()> { self.expect(TokenKind::Dot) }

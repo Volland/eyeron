@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
 use std::ops::Deref;
 use std::sync::Arc;
@@ -202,14 +202,30 @@ impl Literal {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Term {
     Iri(Name),
     Var(Name),
     Blank(Name),
     Literal(Literal),
     List(Vec<Term>),
-    Formula(Vec<Triple>),
+    Formula(Graph),
+}
+
+impl fmt::Debug for Term {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Iri(v) => f.debug_tuple("Iri").field(v).finish(),
+            Self::Var(v) => f.debug_tuple("Var").field(v).finish(),
+            Self::Blank(v) => f.debug_tuple("Blank").field(v).finish(),
+            Self::Literal(v) => f.debug_tuple("Literal").field(v).finish(),
+            Self::List(v) => f.debug_tuple("List").field(v).finish(),
+            // Retain the historical representation used for deterministic
+            // witness hashes when there is no local universal declaration.
+            Self::Formula(g) if g.universals.is_empty() => f.debug_tuple("Formula").field(&g.triples).finish(),
+            Self::Formula(g) => f.debug_tuple("Formula").field(g).finish(),
+        }
+    }
 }
 
 impl Term {
@@ -218,16 +234,175 @@ impl Term {
     pub fn blank(value: impl Into<Name>) -> Self { Self::Blank(value.into()) }
     pub fn literal(value: impl Into<Name>) -> Self { Self::Literal(Literal::plain(value)) }
     pub fn list(items: Vec<Term>) -> Self { Self::List(items) }
-    pub fn formula(triples: Vec<Triple>) -> Self { Self::Formula(triples) }
+    pub fn formula(triples: impl Into<Graph>) -> Self { Self::Formula(triples.into()) }
 
     pub fn is_variable(&self) -> bool { matches!(self, Term::Var(_)) }
     pub fn is_ground(&self) -> bool {
         match self {
             Term::Var(_) => false,
             Term::List(items) => items.iter().all(Term::is_ground),
-            Term::Formula(triples) => triples.iter().all(Triple::is_ground),
+            Term::Formula(graph) => graph.free_variables().is_empty(),
             _ => true,
         }
+    }
+}
+
+/// A graph is ∀universals ∃existentials { triples }.
+/// Bound names are parser-generated identities, not the source IRIs.
+#[derive(Debug, Clone, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Graph {
+    pub universals: BTreeSet<Name>,
+    pub existentials: BTreeSet<Name>,
+    pub triples: Vec<Triple>,
+}
+
+impl Graph {
+    pub fn free_variables(&self) -> BTreeSet<Term> {
+        let mut vars = BTreeSet::new();
+        for triple in &self.triples {
+            for term in [&triple.s, &triple.p, &triple.o] {
+                term.collect_free_variables(&mut vars);
+            }
+        }
+        vars.retain(|v| match v {
+            Term::Var(n) => !self.universals.contains(n),
+            Term::Blank(n) => !self.existentials.contains(n),
+            _ => true,
+        });
+        vars
+    }
+
+    /// Apply a substitution to the triples, masking bindings of nested graphs.
+    /// Callers replacing this graph's own binders manage its U/E sets separately.
+    pub fn apply_to_triples(&self, mapping: &BTreeMap<Term, Term>) -> Self {
+        fn term(t: &Term, mapping: &BTreeMap<Term, Term>) -> Term {
+            if let Some(value) = mapping.get(t) {
+                return value.clone();
+            }
+            match t {
+                Term::List(items) => Term::List(items.iter().map(|t| term(t, mapping)).collect()),
+                Term::Formula(g) => {
+                    let mut local = mapping.clone();
+                    for n in &g.universals {
+                        local.remove(&Term::var(n.clone()));
+                    }
+                    for n in &g.existentials {
+                        local.remove(&Term::blank(n.clone()));
+                    }
+                    Term::Formula(g.apply_to_triples(&local))
+                }
+                _ => t.clone(),
+            }
+        }
+        self.map_triples(|t| {
+            Triple::new(
+                term(&t.s, mapping),
+                term(&t.p, mapping),
+                term(&t.o, mapping),
+            )
+        })
+    }
+
+    /// Capture-avoiding substitution.
+    pub fn substitute(&self, mapping: &BTreeMap<Term, Term>) -> Self {
+        let mut local = mapping.clone();
+        for n in &self.universals {
+            local.remove(&Term::var(n.clone()));
+        }
+        for n in &self.existentials {
+            local.remove(&Term::blank(n.clone()));
+        }
+        self.apply_to_triples(&local)
+    }
+
+    /// Transform triples without discarding their quantifier scope.
+    pub fn map_triples(&self, f: impl FnMut(&Triple) -> Triple) -> Self {
+        Self {
+            triples: self.triples.iter().map(f).collect(),
+            ..self.clone()
+        }
+    }
+}
+
+impl Term {
+    fn collect_free_variables(&self, vars: &mut BTreeSet<Term>) {
+        match self {
+            Self::Var(_) | Self::Blank(_) => {
+                vars.insert(self.clone());
+            }
+            Self::List(items) => {
+                for item in items {
+                    item.collect_free_variables(vars);
+                }
+            }
+            Self::Formula(graph) => vars.extend(graph.free_variables()),
+            _ => {}
+        }
+    }
+}
+
+impl From<Vec<Triple>> for Graph {
+    fn from(triples: Vec<Triple>) -> Self {
+        fn blanks(term: &Term, names: &mut BTreeSet<Name>) {
+            match term {
+                Term::Blank(n) => {
+                    names.insert(n.clone());
+                }
+                Term::List(items) => {
+                    for item in items {
+                        blanks(item, names);
+                    }
+                }
+                Term::Formula(g) => {
+                    for v in g.free_variables() {
+                        if let Term::Blank(n) = v {
+                            names.insert(n);
+                        }
+                    }
+                }
+                _ => {}
+            }
+        }
+        let mut graph = Self {
+            triples,
+            ..Self::default()
+        };
+        for t in &graph.triples {
+            for term in [&t.s, &t.p, &t.o] {
+                blanks(term, &mut graph.existentials);
+            }
+        }
+        graph
+    }
+}
+impl FromIterator<Triple> for Graph {
+    fn from_iter<T: IntoIterator<Item = Triple>>(iter: T) -> Self {
+        Self::from(iter.into_iter().collect::<Vec<_>>())
+    }
+}
+impl Deref for Graph {
+    type Target = Vec<Triple>;
+    fn deref(&self) -> &Self::Target {
+        &self.triples
+    }
+}
+impl std::ops::DerefMut for Graph {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.triples
+    }
+}
+impl IntoIterator for Graph {
+    type Item = Triple;
+    type IntoIter = std::vec::IntoIter<Triple>;
+    fn into_iter(self) -> Self::IntoIter {
+        self.triples.into_iter()
+    }
+}
+impl<'a> IntoIterator for &'a Graph {
+    type Item = &'a Triple;
+    type IntoIter = std::slice::Iter<'a, Triple>;
+    fn into_iter(self) -> Self::IntoIter {
+        self.triples.iter()
     }
 }
 
@@ -254,8 +429,8 @@ pub struct SourceRef {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Rule {
-    pub premise: Vec<Triple>,
-    pub conclusion: Vec<Triple>,
+    pub premise: Graph,
+    pub conclusion: Graph,
     pub is_forward: bool,
     pub is_query: bool,
     /// `{ .. } => false`: an inference fuse. Its premise becoming provable is
@@ -267,11 +442,11 @@ pub struct Rule {
 }
 
 impl Rule {
-    pub fn new(premise: Vec<Triple>, conclusion: Vec<Triple>, is_forward: bool) -> Self {
-        Self { premise, conclusion, is_forward, is_query: false, is_fuse: false, source: None, proof_var_source_names: BTreeMap::new() }
+    pub fn new(premise: impl Into<Graph>, conclusion: impl Into<Graph>, is_forward: bool) -> Self {
+        Self { premise: premise.into(), conclusion: conclusion.into(), is_forward, is_query: false, is_fuse: false, source: None, proof_var_source_names: BTreeMap::new() }
     }
 
-    pub fn fuse(premise: Vec<Triple>) -> Self {
+    pub fn fuse(premise: impl Into<Graph>) -> Self {
         Self { is_fuse: true, ..Self::new(premise, Vec::new(), true) }
     }
 
@@ -296,19 +471,106 @@ pub struct Document {
     pub prefixes: BTreeMap<String, String>,
     pub base_iri: Option<String>,
     pub facts: Vec<Triple>,
+    pub universals: BTreeSet<Name>,
+    pub existentials: BTreeSet<Name>,
     pub fact_sources: BTreeMap<Triple, SourceRef>,
     pub rules: Vec<Rule>,
 }
 
 impl Document {
     pub fn new() -> Self {
-        Self { prefixes: default_prefixes(), base_iri: None, facts: Vec::new(), fact_sources: BTreeMap::new(), rules: Vec::new() }
+        Self {
+            prefixes: default_prefixes(),
+            base_iri: None,
+            facts: Vec::new(),
+            universals: BTreeSet::new(),
+            existentials: BTreeSet::new(),
+            fact_sources: BTreeMap::new(),
+            rules: Vec::new(),
+        }
     }
 
-    pub fn merge(&mut self, other: Document) {
-        for (k, v) in other.prefixes { self.prefixes.insert(k, v); }
-        if self.base_iri.is_none() { self.base_iri = other.base_iri; }
+    pub fn merge(&mut self, mut other: Document) {
+        // Independently parsed documents have disjoint binders.
+        let occupied: BTreeSet<_> = self
+            .universals
+            .iter()
+            .chain(&self.existentials)
+            .cloned()
+            .collect();
+        let mut all = occupied.clone();
+        all.extend(other.universals.iter().chain(&other.existentials).cloned());
+        let mut mapping = BTreeMap::new();
+        for (names, universal) in [(&other.universals, true), (&other.existentials, false)] {
+            for name in names {
+                if !occupied.contains(name) {
+                    continue;
+                }
+                let mut suffix = 1;
+                let fresh = loop {
+                    let candidate: Name = format!("{}__merge{}", name, suffix).into();
+                    if all.insert(candidate.clone()) {
+                        break candidate;
+                    }
+                    suffix += 1;
+                };
+                mapping.insert(
+                    if universal {
+                        Term::var(name.clone())
+                    } else {
+                        Term::blank(name.clone())
+                    },
+                    if universal {
+                        Term::var(fresh)
+                    } else {
+                        Term::blank(fresh)
+                    },
+                );
+            }
+        }
+        if !mapping.is_empty() {
+            let remap = |t: &Triple| {
+                Graph::from(vec![t.clone()])
+                    .apply_to_triples(&mapping)
+                    .triples
+                    .remove(0)
+            };
+            other.facts = other.facts.iter().map(remap).collect();
+            other.fact_sources = other
+                .fact_sources
+                .into_iter()
+                .map(|(t, source)| (remap(&t), source))
+                .collect();
+            for rule in &mut other.rules {
+                rule.premise = rule.premise.substitute(&mapping);
+                rule.conclusion = rule.conclusion.substitute(&mapping);
+            }
+            other.universals = other
+                .universals
+                .iter()
+                .map(|n| match mapping.get(&Term::var(n.clone())) {
+                    Some(Term::Var(v)) => v.clone(),
+                    _ => n.clone(),
+                })
+                .collect();
+            other.existentials = other
+                .existentials
+                .iter()
+                .map(|n| match mapping.get(&Term::blank(n.clone())) {
+                    Some(Term::Blank(v)) => v.clone(),
+                    _ => n.clone(),
+                })
+                .collect();
+        }
+        for (k, v) in other.prefixes {
+            self.prefixes.insert(k, v);
+        }
+        if self.base_iri.is_none() {
+            self.base_iri = other.base_iri;
+        }
         self.facts.extend(other.facts);
+        self.universals.extend(other.universals);
+        self.existentials.extend(other.existentials);
         self.fact_sources.extend(other.fact_sources);
         self.rules.extend(other.rules);
     }

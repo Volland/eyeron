@@ -35,6 +35,10 @@ cargo build --release
 - [`docs/proof-checking.md`](docs/proof-checking.md) — what makes a proof document valid for a program, and what `--check-proof` verifies.
 - [`docs/verifiable-reasoning.md`](docs/verifiable-reasoning.md) — deriving an answer, proving it, checking the proof, and writing a policy about what the proof rests on.
 
+Explicit `@forAll` / `@forSome` scopes and graph-term semantics are described in
+[the N3 guide](docs/n3.md#explicit-quantification-and-graph-terms), with
+[explicit quantification examples](examples/explicit-quantification.n3).
+
 ## License
 
 MIT. See `LICENSE.md`.

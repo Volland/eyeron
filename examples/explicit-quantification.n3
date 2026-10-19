@@ -1,0 +1,49 @@
+# Explicit and implicit quantification, inheritance, and shadowing.
+@prefix : <http://example.org/>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Implicit universals belong to the whole document; blank nodes are local.
+:implicitUniversals :graph { ?x :loves _:y }.
+:distinctVariables :graph { ?x :loves _:x }.
+:explicitQuantifiers :graph { @forAll :x. @forSome :y. :x :loves :y }.
+<example.n3> log:semantics { @forAll :x. :x :loves _:y }.
+:existentialLikes :graph { _:x :likes :pasta }.
+
+# The outer existential remains accessible inside a nested universal graph.
+:inheritedExistential :graph {
+    @forSome :y.
+    :y :says { @forAll :x. :y :likes :x }.
+}.
+
+# The inner existential shadows the unused outer universal.
+:shadowedVariable :graph {
+    @forAll :x.
+    :bob :says { @forSome :x. :x :likes :pizza, :pasta }.
+}.
+:renamedExistential :graph { _:y :likes :pizza, :pasta }.
+:universalSelfReference :graph { @forAll :x. :x :says { :x :is :wise } }.
+:concreteSelfReference :graph { :bob :says { :bob :is :wise } }.
+:existentialSelfReference :graph { @forSome :x. :x :says { :x :is :wise } }.
+:independentStatement :graph { @forAll :x. :x :says { :bob :is :wise } }.
+
+# Renaming both binders preserves graph identity.
+:renamedQuantifiers :graph { @forAll :y. @forSome :z. :y :loves :z }.
+# Declarations precede triples, with @forAll before @forSome in each graph.
+
+# Locally bound variables may be renamed consistently when matching a graph.
+{ :explicitQuantifiers :graph {
+    @forAll :person.
+    @forSome :beloved.
+    :person :loves :beloved.
+} } => { :quantifierRenaming :preservesGraphIdentity true }.
+
+# Compare a shared existential with two independent existentials.
+:sharedMotherCandidate :candidate {
+    @forSome :y.
+    :bob :hasMother :y. :liz :hasMother :y.
+}.
+:independentMothersCandidate :candidate {
+    @forSome :y, :z.
+    :bob :hasMother :y. :liz :hasMother :z.
+}.
+# The shared-mother candidate is quoted for comparison, not asserted.

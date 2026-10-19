@@ -10,36 +10,36 @@
 @prefix string: <http://www.w3.org/2000/10/swap/string#> .
 @prefix tosl: <https://example.org/tosl-profile#> .
 
-_:src2_5734e39331e3eae1 a risk:RiskSource .
-_:src2_5734e39331e3eae1 a risk:PolicyRisk .
-_:src2_5734e39331e3eae1 dct:source :PermChangeTerms .
-_:src2_5734e39331e3eae1 dct:description "Notice for changing terms is shorter than consumer requirement." .
-_:risk2_5734e39331e3eae1 a dpv:Risk .
-_:risk2_5734e39331e3eae1 a risk:PolicyRisk .
-_:risk2_5734e39331e3eae1 a risk:CustomerConfidenceLoss .
-_:risk2_5734e39331e3eae1 dct:source :PermChangeTerms .
-_:risk2_5734e39331e3eae1 risk:hasRiskSource _:src2_5734e39331e3eae1 .
-_:risk2_5734e39331e3eae1 dpv:hasConsequence risk:CustomerConfidenceLoss .
-_:risk2_5734e39331e3eae1 dpv:hasImpact risk:NonMaterialDamage .
-_:risk2_5734e39331e3eae1 :aboutClause :ClauseC2 .
-_:risk2_5734e39331e3eae1 :scoreRaw 85 .
-_:risk2_5734e39331e3eae1 :violatesNeed :Need_ChangeOnlyWithPriorNotice .
-_:risk2_5734e39331e3eae1 dct:description "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." .
-:ProcessContext1 dpv:hasRisk _:risk2_5734e39331e3eae1 .
-_:m12_5734e39331e3eae1 a dpv:RiskMitigationMeasure .
-_:m12_5734e39331e3eae1 dct:description "Increase minimum noticeDays in the inform duty to meet the consumer requirement." .
-_:m12_5734e39331e3eae1 dpv:mitigatesRisk _:risk2_5734e39331e3eae1 .
-_:m12_5734e39331e3eae1 :suggestAdd {
-    :PermChangeTerms odrl:duty _:b9_ed8d3ebd778d7e29 .
-    _:b9_ed8d3ebd778d7e29 a odrl:Duty .
-    _:b9_ed8d3ebd778d7e29 odrl:action odrl:inform .
-    _:b9_ed8d3ebd778d7e29 odrl:constraint _:b10_ed8d3ebd778d7e29 .
-    _:b10_ed8d3ebd778d7e29 a odrl:Constraint .
-    _:b10_ed8d3ebd778d7e29 odrl:leftOperand tosl:noticeDays .
-    _:b10_ed8d3ebd778d7e29 odrl:operator odrl:gteq .
-    _:b10_ed8d3ebd778d7e29 odrl:rightOperand 14 .
+_:src2_dd26e4e8f36bbb7f a risk:RiskSource .
+_:src2_dd26e4e8f36bbb7f a risk:PolicyRisk .
+_:src2_dd26e4e8f36bbb7f dct:source :PermChangeTerms .
+_:src2_dd26e4e8f36bbb7f dct:description "Notice for changing terms is shorter than consumer requirement." .
+_:risk2_dd26e4e8f36bbb7f a dpv:Risk .
+_:risk2_dd26e4e8f36bbb7f a risk:PolicyRisk .
+_:risk2_dd26e4e8f36bbb7f a risk:CustomerConfidenceLoss .
+_:risk2_dd26e4e8f36bbb7f dct:source :PermChangeTerms .
+_:risk2_dd26e4e8f36bbb7f risk:hasRiskSource _:src2_dd26e4e8f36bbb7f .
+_:risk2_dd26e4e8f36bbb7f dpv:hasConsequence risk:CustomerConfidenceLoss .
+_:risk2_dd26e4e8f36bbb7f dpv:hasImpact risk:NonMaterialDamage .
+_:risk2_dd26e4e8f36bbb7f :aboutClause :ClauseC2 .
+_:risk2_dd26e4e8f36bbb7f :scoreRaw 85 .
+_:risk2_dd26e4e8f36bbb7f :violatesNeed :Need_ChangeOnlyWithPriorNotice .
+_:risk2_dd26e4e8f36bbb7f dct:description "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." .
+:ProcessContext1 dpv:hasRisk _:risk2_dd26e4e8f36bbb7f .
+_:m12_dd26e4e8f36bbb7f a dpv:RiskMitigationMeasure .
+_:m12_dd26e4e8f36bbb7f dct:description "Increase minimum noticeDays in the inform duty to meet the consumer requirement." .
+_:m12_dd26e4e8f36bbb7f dpv:mitigatesRisk _:risk2_dd26e4e8f36bbb7f .
+_:m12_dd26e4e8f36bbb7f :suggestAdd {
+    :PermChangeTerms odrl:duty _:b9_311ac5d8c2bdd53f .
+    _:b9_311ac5d8c2bdd53f a odrl:Duty .
+    _:b9_311ac5d8c2bdd53f odrl:action odrl:inform .
+    _:b9_311ac5d8c2bdd53f odrl:constraint _:b10_311ac5d8c2bdd53f .
+    _:b10_311ac5d8c2bdd53f a odrl:Constraint .
+    _:b10_311ac5d8c2bdd53f odrl:leftOperand tosl:noticeDays .
+    _:b10_311ac5d8c2bdd53f odrl:operator odrl:gteq .
+    _:b10_311ac5d8c2bdd53f odrl:rightOperand 14 .
 } .
-_:risk2_5734e39331e3eae1 dpv:isMitigatedByMeasure _:m12_5734e39331e3eae1 .
+_:risk2_dd26e4e8f36bbb7f dpv:isMitigatedByMeasure _:m12_dd26e4e8f36bbb7f .
 _:src4_4cf150de25434292 a risk:RiskSource .
 _:src4_4cf150de25434292 a risk:PolicyRisk .
 _:src4_4cf150de25434292 dct:source :ProhibitExportData .
@@ -68,9 +68,9 @@ _:m14_4cf150de25434292 :suggestAdd {
     _:b13_738f90f6279db976 odrl:target :UserData .
 } .
 _:risk4_4cf150de25434292 dpv:isMitigatedByMeasure _:m14_4cf150de25434292 .
-_:risk2_5734e39331e3eae1 :score 85 .
-_:risk2_5734e39331e3eae1 dpv:hasSeverity risk:HighSeverity .
-_:risk2_5734e39331e3eae1 dpv:hasRiskLevel risk:HighRisk .
+_:risk2_dd26e4e8f36bbb7f :score 85 .
+_:risk2_dd26e4e8f36bbb7f dpv:hasSeverity risk:HighSeverity .
+_:risk2_dd26e4e8f36bbb7f dpv:hasRiskLevel risk:HighRisk .
 _:risk4_4cf150de25434292 :score 70 .
 _:risk4_4cf150de25434292 dpv:hasSeverity risk:ModerateSeverity .
 _:risk4_4cf150de25434292 dpv:hasRiskLevel risk:ModerateRisk .
@@ -150,17 +150,17 @@ _:risk3_1987663455332410 :score 97 .
 _:risk3_1987663455332410 dpv:hasSeverity risk:HighSeverity .
 _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
 (:Agreement1 :ConsumerExample 0) log:outputString "# odrl-dpv-risk-ranked\n\n## Source files\n\n- [N3 rules](../odrl-dpv-risk-ranked.n3)\n\n## Ranked DPV Risk Report\n\n**Agreement:** Example Agreement\n**Profile:** Example consumer profile\n\n" .
-(:Agreement1 :ConsumerExample 1 915 "C2" 0 _:risk2_5734e39331e3eae1) log:outputString "### Clause C2 — score 85\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance.\n\n" .
+(:Agreement1 :ConsumerExample 1 915 "C2" 0 _:risk2_dd26e4e8f36bbb7f) log:outputString "### Clause C2 — score 85\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance.\n\n" .
 (:Agreement1 :ConsumerExample 1 930 "C4" 0 _:risk4_4cf150de25434292) log:outputString "### Clause C4 — score 70\n\n**Risk level:** `https://w3id.org/dpv/risk#ModerateRisk`\n**Severity:** `https://w3id.org/dpv/risk#ModerateSeverity`\n\nRisk: portability is restricted because exporting user data is prohibited. Clause C4: Users are not permitted to export their data.\n\n" .
 (:Agreement1 :ConsumerExample 1 900 "C1" 0 _:risk1_87cd4004194bead4) log:outputString "### Clause C1 — score 100\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: account/data removal is permitted without notice safeguards (no notice constraint and no duty to inform). Clause C1: Provider may remove the user account (and associated data) at its discretion.\n\n" .
 (:Agreement1 :ConsumerExample 1 903 "C3" 0 _:risk3_1987663455332410) log:outputString "### Clause C3 — score 97\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: user data sharing is permitted without an explicit consent constraint. Clause C3: Provider may share user data with partners for business purposes.\n\n" .
-(:Agreement1 :ConsumerExample 1 915 "C2" 1 _:risk2_5734e39331e3eae1 _:m12_5734e39331e3eae1) log:outputString "- **Mitigation for clause C2:** Increase minimum noticeDays in the inform duty to meet the consumer requirement.\n\n" .
+(:Agreement1 :ConsumerExample 1 915 "C2" 1 _:risk2_dd26e4e8f36bbb7f _:m12_dd26e4e8f36bbb7f) log:outputString "- **Mitigation for clause C2:** Increase minimum noticeDays in the inform duty to meet the consumer requirement.\n\n" .
 (:Agreement1 :ConsumerExample 1 930 "C4" 1 _:risk4_4cf150de25434292 _:m14_4cf150de25434292) log:outputString "- **Mitigation for clause C4:** Add a permission allowing data export (or remove the prohibition) to support portability.\n\n" .
 (:Agreement1 :ConsumerExample 1 900 "C1" 1 _:risk1_87cd4004194bead4 _:m11_87cd4004194bead4) log:outputString "- **Mitigation for clause C1:** Add a notice constraint (minimum noticeDays) before account removal.\n\n" .
 (:Agreement1 :ConsumerExample 1 900 "C1" 1 _:risk1_87cd4004194bead4 _:m21_87cd4004194bead4) log:outputString "- **Mitigation for clause C1:** Add a duty to inform the consumer prior to account removal.\n\n" .
 (:Agreement1 :ConsumerExample 1 903 "C3" 1 _:risk3_1987663455332410 _:m13_1987663455332410) log:outputString "- **Mitigation for clause C3:** Add an explicit consent constraint before data sharing.\n\n" .
 
-{ _:src2_5734e39331e3eae1 a risk:RiskSource . }
+{ _:src2_dd26e4e8f36bbb7f a risk:RiskSource . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -298,11 +298,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -406,11 +406,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
       :PermChangeTerms a odrl:Permission .
       :PermChangeTerms odrl:action tosl:changeTerms .
       :PermChangeTerms :clause :ClauseC2 .
-      :PermChangeTerms odrl:duty ?_:b7 .
-      ?_:b7 odrl:action odrl:inform .
-      ?_:b7 odrl:constraint ?_:b8 .
-      ?_:b8 odrl:leftOperand tosl:noticeDays .
-      ?_:b8 odrl:rightOperand 3 .
+      :PermChangeTerms odrl:duty _:b7 .
+      _:b7 odrl:action odrl:inform .
+      _:b7 odrl:constraint _:b8 .
+      _:b8 odrl:leftOperand tosl:noticeDays .
+      _:b8 odrl:rightOperand 3 .
   } .
 }
   pe:builtin log:includes.
@@ -430,7 +430,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
 { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }
   pe:builtin string:format.
 
-{ _:src2_5734e39331e3eae1 a risk:PolicyRisk . }
+{ _:src2_dd26e4e8f36bbb7f a risk:PolicyRisk . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -568,11 +568,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -581,7 +581,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:src2_5734e39331e3eae1 dct:source :PermChangeTerms . }
+{ _:src2_dd26e4e8f36bbb7f dct:source :PermChangeTerms . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -719,11 +719,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -732,7 +732,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:src2_5734e39331e3eae1 dct:description "Notice for changing terms is shorter than consumer requirement." . }
+{ _:src2_dd26e4e8f36bbb7f dct:description "Notice for changing terms is shorter than consumer requirement." . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -870,11 +870,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -883,7 +883,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 a dpv:Risk . }
+{ _:risk2_dd26e4e8f36bbb7f a dpv:Risk . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -1021,11 +1021,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -1034,7 +1034,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 a risk:PolicyRisk . }
+{ _:risk2_dd26e4e8f36bbb7f a risk:PolicyRisk . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -1172,11 +1172,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -1185,7 +1185,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 a risk:CustomerConfidenceLoss . }
+{ _:risk2_dd26e4e8f36bbb7f a risk:CustomerConfidenceLoss . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -1323,11 +1323,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -1336,7 +1336,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 dct:source :PermChangeTerms . }
+{ _:risk2_dd26e4e8f36bbb7f dct:source :PermChangeTerms . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -1474,11 +1474,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -1487,7 +1487,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 risk:hasRiskSource _:src2_5734e39331e3eae1 . }
+{ _:risk2_dd26e4e8f36bbb7f risk:hasRiskSource _:src2_dd26e4e8f36bbb7f . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -1625,11 +1625,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -1638,7 +1638,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 dpv:hasConsequence risk:CustomerConfidenceLoss . }
+{ _:risk2_dd26e4e8f36bbb7f dpv:hasConsequence risk:CustomerConfidenceLoss . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -1776,11 +1776,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -1789,7 +1789,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 dpv:hasImpact risk:NonMaterialDamage . }
+{ _:risk2_dd26e4e8f36bbb7f dpv:hasImpact risk:NonMaterialDamage . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -1927,11 +1927,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -1940,7 +1940,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 :aboutClause :ClauseC2 . }
+{ _:risk2_dd26e4e8f36bbb7f :aboutClause :ClauseC2 . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -2078,11 +2078,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -2091,7 +2091,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 :scoreRaw 85 . }
+{ _:risk2_dd26e4e8f36bbb7f :scoreRaw 85 . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -2229,11 +2229,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -2242,7 +2242,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 :violatesNeed :Need_ChangeOnlyWithPriorNotice . }
+{ _:risk2_dd26e4e8f36bbb7f :violatesNeed :Need_ChangeOnlyWithPriorNotice . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -2380,11 +2380,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -2393,7 +2393,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 dct:description "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }
+{ _:risk2_dd26e4e8f36bbb7f dct:description "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -2531,11 +2531,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -2544,7 +2544,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ :ProcessContext1 dpv:hasRisk _:risk2_5734e39331e3eae1 . }
+{ :ProcessContext1 dpv:hasRisk _:risk2_dd26e4e8f36bbb7f . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -2682,11 +2682,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -2695,7 +2695,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:m12_5734e39331e3eae1 a dpv:RiskMitigationMeasure . }
+{ _:m12_dd26e4e8f36bbb7f a dpv:RiskMitigationMeasure . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -2833,11 +2833,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -2846,7 +2846,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:m12_5734e39331e3eae1 dct:description "Increase minimum noticeDays in the inform duty to meet the consumer requirement." . }
+{ _:m12_dd26e4e8f36bbb7f dct:description "Increase minimum noticeDays in the inform duty to meet the consumer requirement." . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -2984,11 +2984,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -2997,7 +2997,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:m12_5734e39331e3eae1 dpv:mitigatesRisk _:risk2_5734e39331e3eae1 . }
+{ _:m12_dd26e4e8f36bbb7f dpv:mitigatesRisk _:risk2_dd26e4e8f36bbb7f . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -3135,11 +3135,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -3149,15 +3149,15 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
 {
-  _:m12_5734e39331e3eae1 :suggestAdd {
-      :PermChangeTerms odrl:duty _:b9_ed8d3ebd778d7e29 .
-      _:b9_ed8d3ebd778d7e29 a odrl:Duty .
-      _:b9_ed8d3ebd778d7e29 odrl:action odrl:inform .
-      _:b9_ed8d3ebd778d7e29 odrl:constraint _:b10_ed8d3ebd778d7e29 .
-      _:b10_ed8d3ebd778d7e29 a odrl:Constraint .
-      _:b10_ed8d3ebd778d7e29 odrl:leftOperand tosl:noticeDays .
-      _:b10_ed8d3ebd778d7e29 odrl:operator odrl:gteq .
-      _:b10_ed8d3ebd778d7e29 odrl:rightOperand 14 .
+  _:m12_dd26e4e8f36bbb7f :suggestAdd {
+      :PermChangeTerms odrl:duty _:b9_311ac5d8c2bdd53f .
+      _:b9_311ac5d8c2bdd53f a odrl:Duty .
+      _:b9_311ac5d8c2bdd53f odrl:action odrl:inform .
+      _:b9_311ac5d8c2bdd53f odrl:constraint _:b10_311ac5d8c2bdd53f .
+      _:b10_311ac5d8c2bdd53f a odrl:Constraint .
+      _:b10_311ac5d8c2bdd53f odrl:leftOperand tosl:noticeDays .
+      _:b10_311ac5d8c2bdd53f odrl:operator odrl:gteq .
+      _:b10_311ac5d8c2bdd53f odrl:rightOperand 14 .
   } .
 }
   pe:rule 2;
@@ -3297,11 +3297,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -3310,7 +3310,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (70 15) math:sum 85 . },
     { ("Risk: terms may change with notice (%s days) below consumer requirement (%s days). Clause %s: %s" 3 14 "C2" "Provider may change terms by informing users at least 3 days in advance.") string:format "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . }.
 
-{ _:risk2_5734e39331e3eae1 dpv:isMitigatedByMeasure _:m12_5734e39331e3eae1 . }
+{ _:risk2_dd26e4e8f36bbb7f dpv:isMitigatedByMeasure _:m12_dd26e4e8f36bbb7f . }
   pe:rule 2;
   pe:binding
     [ pe:var "G"; pe:value {
@@ -3448,11 +3448,11 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :PermChangeTerms a odrl:Permission .
             :PermChangeTerms odrl:action tosl:changeTerms .
             :PermChangeTerms :clause :ClauseC2 .
-            :PermChangeTerms odrl:duty ?_:b7 .
-            ?_:b7 odrl:action odrl:inform .
-            ?_:b7 odrl:constraint ?_:b8 .
-            ?_:b8 odrl:leftOperand tosl:noticeDays .
-            ?_:b8 odrl:rightOperand 3 .
+            :PermChangeTerms odrl:duty _:b7 .
+            _:b7 odrl:action odrl:inform .
+            _:b7 odrl:constraint _:b8 .
+            _:b8 odrl:leftOperand tosl:noticeDays .
+            _:b8 odrl:rightOperand 3 .
         } .
     },
     { 3 math:lessThan 14 . },
@@ -6517,40 +6517,40 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     { (60 10) math:sum 70 . },
     { ("Risk: portability is restricted because exporting user data is prohibited. Clause %s: %s" "C4" "Users are not permitted to export their data.") string:format "Risk: portability is restricted because exporting user data is prohibited. Clause C4: Users are not permitted to export their data." . }.
 
-{ _:risk2_5734e39331e3eae1 :score 85 . }
+{ _:risk2_dd26e4e8f36bbb7f :score 85 . }
   pe:rule 6;
   pe:binding
-    [ pe:var "r"; pe:value _:risk2_5734e39331e3eae1 ],
+    [ pe:var "r"; pe:value _:risk2_dd26e4e8f36bbb7f ],
     [ pe:var "raw"; pe:value 85 ];
   pe:uses
-    { _:risk2_5734e39331e3eae1 a dpv:Risk . },
-    { _:risk2_5734e39331e3eae1 :scoreRaw 85 . },
+    { _:risk2_dd26e4e8f36bbb7f a dpv:Risk . },
+    { _:risk2_dd26e4e8f36bbb7f :scoreRaw 85 . },
     { 100 math:notLessThan 85 . }.
 
 { 100 math:notLessThan 85 . }
   pe:builtin math:notLessThan.
 
-{ _:risk2_5734e39331e3eae1 dpv:hasSeverity risk:HighSeverity . }
+{ _:risk2_dd26e4e8f36bbb7f dpv:hasSeverity risk:HighSeverity . }
   pe:rule 7;
   pe:binding
-    [ pe:var "r"; pe:value _:risk2_5734e39331e3eae1 ],
+    [ pe:var "r"; pe:value _:risk2_dd26e4e8f36bbb7f ],
     [ pe:var "s"; pe:value 85 ];
   pe:uses
-    { _:risk2_5734e39331e3eae1 a dpv:Risk . },
-    { _:risk2_5734e39331e3eae1 :score 85 . },
+    { _:risk2_dd26e4e8f36bbb7f a dpv:Risk . },
+    { _:risk2_dd26e4e8f36bbb7f :score 85 . },
     { 85 math:greaterThan 79 . }.
 
 { 85 math:greaterThan 79 . }
   pe:builtin math:greaterThan.
 
-{ _:risk2_5734e39331e3eae1 dpv:hasRiskLevel risk:HighRisk . }
+{ _:risk2_dd26e4e8f36bbb7f dpv:hasRiskLevel risk:HighRisk . }
   pe:rule 7;
   pe:binding
-    [ pe:var "r"; pe:value _:risk2_5734e39331e3eae1 ],
+    [ pe:var "r"; pe:value _:risk2_dd26e4e8f36bbb7f ],
     [ pe:var "s"; pe:value 85 ];
   pe:uses
-    { _:risk2_5734e39331e3eae1 a dpv:Risk . },
-    { _:risk2_5734e39331e3eae1 :score 85 . },
+    { _:risk2_dd26e4e8f36bbb7f a dpv:Risk . },
+    { _:risk2_dd26e4e8f36bbb7f :score 85 . },
     { 85 math:greaterThan 79 . }.
 
 { _:risk4_4cf150de25434292 :score 70 . }
@@ -6771,8 +6771,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -6815,8 +6815,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -6917,8 +6917,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
       :ProhibitExportData odrl:target :UserData .
       :ProhibitExportData :clause :ClauseC4 .
   } log:notIncludes {
-      :PermDeleteAccount odrl:constraint ?_:b3 .
-      ?_:b3 odrl:leftOperand tosl:noticeDays .
+      :PermDeleteAccount odrl:constraint _:b3 .
+      _:b3 odrl:leftOperand tosl:noticeDays .
   } .
 }
   pe:builtin log:notIncludes.
@@ -6963,8 +6963,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
       :ProhibitExportData odrl:target :UserData .
       :ProhibitExportData :clause :ClauseC4 .
   } log:notIncludes {
-      :PermDeleteAccount odrl:duty ?_:b4 .
-      ?_:b4 odrl:action odrl:inform .
+      :PermDeleteAccount odrl:duty _:b4 .
+      _:b4 odrl:action odrl:inform .
   } .
 }
   pe:builtin log:notIncludes.
@@ -7158,8 +7158,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -7202,8 +7202,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -7388,8 +7388,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -7432,8 +7432,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -7618,8 +7618,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -7662,8 +7662,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -7848,8 +7848,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -7892,8 +7892,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -8078,8 +8078,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -8122,8 +8122,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -8308,8 +8308,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -8352,8 +8352,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -8538,8 +8538,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -8582,8 +8582,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -8768,8 +8768,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -8812,8 +8812,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -8998,8 +8998,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -9042,8 +9042,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -9228,8 +9228,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -9272,8 +9272,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -9458,8 +9458,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -9502,8 +9502,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -9688,8 +9688,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -9732,8 +9732,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -9918,8 +9918,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -9962,8 +9962,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -10148,8 +10148,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -10192,8 +10192,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -10378,8 +10378,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -10422,8 +10422,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -10608,8 +10608,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -10652,8 +10652,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -10838,8 +10838,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -10882,8 +10882,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -11068,8 +11068,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -11112,8 +11112,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -11298,8 +11298,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -11342,8 +11342,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -11528,8 +11528,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -11572,8 +11572,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -11758,8 +11758,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -11802,8 +11802,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -11988,8 +11988,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -12032,8 +12032,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -12218,8 +12218,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -12262,8 +12262,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -12456,8 +12456,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -12500,8 +12500,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -12686,8 +12686,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -12730,8 +12730,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -12916,8 +12916,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -12960,8 +12960,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -13146,8 +13146,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -13190,8 +13190,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -13382,8 +13382,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -13426,8 +13426,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -13612,8 +13612,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -13656,8 +13656,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -13842,8 +13842,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:constraint ?_:b3 .
-            ?_:b3 odrl:leftOperand tosl:noticeDays .
+            :PermDeleteAccount odrl:constraint _:b3 .
+            _:b3 odrl:leftOperand tosl:noticeDays .
         } .
     },
     {
@@ -13886,8 +13886,8 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermDeleteAccount odrl:duty ?_:b4 .
-            ?_:b4 odrl:action odrl:inform .
+            :PermDeleteAccount odrl:duty _:b4 .
+            _:b4 odrl:action odrl:inform .
         } .
     },
     { :ClauseC1 :clauseId "C1" . },
@@ -14072,10 +14072,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -14176,10 +14176,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
       :ProhibitExportData odrl:target :UserData .
       :ProhibitExportData :clause :ClauseC4 .
   } log:notIncludes {
-      :PermShareData odrl:constraint ?_:b11 .
-      ?_:b11 odrl:leftOperand tosl:consent .
-      ?_:b11 odrl:operator odrl:eq .
-      ?_:b11 odrl:rightOperand true .
+      :PermShareData odrl:constraint _:b11 .
+      _:b11 odrl:leftOperand tosl:consent .
+      _:b11 odrl:operator odrl:eq .
+      _:b11 odrl:rightOperand true .
   } .
 }
   pe:builtin log:notIncludes.
@@ -14373,10 +14373,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -14561,10 +14561,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -14749,10 +14749,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -14937,10 +14937,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -15125,10 +15125,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -15313,10 +15313,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -15501,10 +15501,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -15689,10 +15689,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -15877,10 +15877,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -16065,10 +16065,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -16253,10 +16253,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -16441,10 +16441,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -16629,10 +16629,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -16817,10 +16817,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -17005,10 +17005,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -17193,10 +17193,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -17381,10 +17381,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -17569,10 +17569,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -17757,10 +17757,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -17953,10 +17953,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -18141,10 +18141,10 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
             :ProhibitExportData odrl:target :UserData .
             :ProhibitExportData :clause :ClauseC4 .
         } log:notIncludes {
-            :PermShareData odrl:constraint ?_:b11 .
-            ?_:b11 odrl:leftOperand tosl:consent .
-            ?_:b11 odrl:operator odrl:eq .
-            ?_:b11 odrl:rightOperand true .
+            :PermShareData odrl:constraint _:b11 .
+            _:b11 odrl:leftOperand tosl:consent .
+            _:b11 odrl:operator odrl:eq .
+            _:b11 odrl:rightOperand true .
         } .
     },
     { :ClauseC3 :clauseId "C3" . },
@@ -18253,7 +18253,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
 { ("# odrl-dpv-risk-ranked\n\n## Source files\n\n- [N3 rules](../odrl-dpv-risk-ranked.n3)\n\n## Ranked DPV Risk Report\n\n**Agreement:** %s\n**Profile:** %s\n\n" "Example Agreement" "Example consumer profile") string:format "# odrl-dpv-risk-ranked\n\n## Source files\n\n- [N3 rules](../odrl-dpv-risk-ranked.n3)\n\n## Ranked DPV Risk Report\n\n**Agreement:** Example Agreement\n**Profile:** Example consumer profile\n\n" . }
   pe:builtin string:format.
 
-{ (:Agreement1 :ConsumerExample 1 915 "C2" 0 _:risk2_5734e39331e3eae1) log:outputString "### Clause C2 — score 85\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance.\n\n" . }
+{ (:Agreement1 :ConsumerExample 1 915 "C2" 0 _:risk2_dd26e4e8f36bbb7f) log:outputString "### Clause C2 — score 85\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance.\n\n" . }
   pe:rule
     {
         {
@@ -18276,17 +18276,17 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     [ pe:var "inv"; pe:value 915 ],
     [ pe:var "line"; pe:value "### Clause C2 — score 85\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance.\n\n" ],
     [ pe:var "lvl"; pe:value risk:HighRisk ],
-    [ pe:var "r"; pe:value _:risk2_5734e39331e3eae1 ],
+    [ pe:var "r"; pe:value _:risk2_dd26e4e8f36bbb7f ],
     [ pe:var "score"; pe:value 85 ],
     [ pe:var "sev"; pe:value risk:HighSeverity ],
     [ pe:var "why"; pe:value "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." ];
   pe:uses
-    { _:risk2_5734e39331e3eae1 a dpv:Risk . },
-    { _:risk2_5734e39331e3eae1 :score 85 . },
-    { _:risk2_5734e39331e3eae1 dpv:hasRiskLevel risk:HighRisk . },
-    { _:risk2_5734e39331e3eae1 dpv:hasSeverity risk:HighSeverity . },
-    { _:risk2_5734e39331e3eae1 :aboutClause :ClauseC2 . },
-    { _:risk2_5734e39331e3eae1 dct:description "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . },
+    { _:risk2_dd26e4e8f36bbb7f a dpv:Risk . },
+    { _:risk2_dd26e4e8f36bbb7f :score 85 . },
+    { _:risk2_dd26e4e8f36bbb7f dpv:hasRiskLevel risk:HighRisk . },
+    { _:risk2_dd26e4e8f36bbb7f dpv:hasSeverity risk:HighSeverity . },
+    { _:risk2_dd26e4e8f36bbb7f :aboutClause :ClauseC2 . },
+    { _:risk2_dd26e4e8f36bbb7f dct:description "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance." . },
     { :ClauseC2 :clauseId "C2" . },
     { (1000 85) math:difference 915 . },
     { ("### Clause %s — score %s\n\n**Risk level:** `%s`\n**Severity:** `%s`\n\n%s\n\n" "C2" 85 risk:HighRisk risk:HighSeverity "Risk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance.") string:format "### Clause C2 — score 85\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: terms may change with notice (3 days) below consumer requirement (14 days). Clause C2: Provider may change terms by informing users at least 3 days in advance.\n\n" . }.
@@ -18429,7 +18429,7 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
 { ("### Clause %s — score %s\n\n**Risk level:** `%s`\n**Severity:** `%s`\n\n%s\n\n" "C3" 97 risk:HighRisk risk:HighSeverity "Risk: user data sharing is permitted without an explicit consent constraint. Clause C3: Provider may share user data with partners for business purposes.") string:format "### Clause C3 — score 97\n\n**Risk level:** `https://w3id.org/dpv/risk#HighRisk`\n**Severity:** `https://w3id.org/dpv/risk#HighSeverity`\n\nRisk: user data sharing is permitted without an explicit consent constraint. Clause C3: Provider may share user data with partners for business purposes.\n\n" . }
   pe:builtin string:format.
 
-{ (:Agreement1 :ConsumerExample 1 915 "C2" 1 _:risk2_5734e39331e3eae1 _:m12_5734e39331e3eae1) log:outputString "- **Mitigation for clause C2:** Increase minimum noticeDays in the inform duty to meet the consumer requirement.\n\n" . }
+{ (:Agreement1 :ConsumerExample 1 915 "C2" 1 _:risk2_dd26e4e8f36bbb7f _:m12_dd26e4e8f36bbb7f) log:outputString "- **Mitigation for clause C2:** Increase minimum noticeDays in the inform duty to meet the consumer requirement.\n\n" . }
   pe:rule
     {
         {
@@ -18449,18 +18449,18 @@ _:risk3_1987663455332410 dpv:hasRiskLevel risk:HighRisk .
     [ pe:var "cid"; pe:value "C2" ],
     [ pe:var "clause"; pe:value :ClauseC2 ],
     [ pe:var "inv"; pe:value 915 ],
-    [ pe:var "m"; pe:value _:m12_5734e39331e3eae1 ],
+    [ pe:var "m"; pe:value _:m12_dd26e4e8f36bbb7f ],
     [ pe:var "md"; pe:value "Increase minimum noticeDays in the inform duty to meet the consumer requirement." ],
     [ pe:var "mline"; pe:value "- **Mitigation for clause C2:** Increase minimum noticeDays in the inform duty to meet the consumer requirement.\n\n" ],
-    [ pe:var "r"; pe:value _:risk2_5734e39331e3eae1 ],
+    [ pe:var "r"; pe:value _:risk2_dd26e4e8f36bbb7f ],
     [ pe:var "score"; pe:value 85 ];
   pe:uses
-    { _:risk2_5734e39331e3eae1 a dpv:Risk . },
-    { _:risk2_5734e39331e3eae1 :score 85 . },
-    { _:risk2_5734e39331e3eae1 dpv:isMitigatedByMeasure _:m12_5734e39331e3eae1 . },
-    { _:risk2_5734e39331e3eae1 :aboutClause :ClauseC2 . },
+    { _:risk2_dd26e4e8f36bbb7f a dpv:Risk . },
+    { _:risk2_dd26e4e8f36bbb7f :score 85 . },
+    { _:risk2_dd26e4e8f36bbb7f dpv:isMitigatedByMeasure _:m12_dd26e4e8f36bbb7f . },
+    { _:risk2_dd26e4e8f36bbb7f :aboutClause :ClauseC2 . },
     { :ClauseC2 :clauseId "C2" . },
-    { _:m12_5734e39331e3eae1 dct:description "Increase minimum noticeDays in the inform duty to meet the consumer requirement." . },
+    { _:m12_dd26e4e8f36bbb7f dct:description "Increase minimum noticeDays in the inform duty to meet the consumer requirement." . },
     { (1000 85) math:difference 915 . },
     { ("- **Mitigation for clause %s:** %s\n\n" "C2" "Increase minimum noticeDays in the inform duty to meet the consumer requirement.") string:format "- **Mitigation for clause C2:** Increase minimum noticeDays in the inform duty to meet the consumer requirement.\n\n" . }.
 

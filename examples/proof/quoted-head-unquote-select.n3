@@ -52,9 +52,9 @@
 {
   :ruleCat :formula {
       {
-          :c a :Cat .
+          ?X a :Cat .
       } => {
-          :c a :Animal .
+          ?X a :Animal .
       } .
   } .
 }

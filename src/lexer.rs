@@ -2,6 +2,8 @@ use crate::error::{EyeronError, Result};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum TokenKind {
+    AtForAll,
+    AtForSome,
     AtPrefix,
     AtBase,
     AtVersion,
@@ -318,6 +320,8 @@ impl<'a> Lexer<'a> {
             return Ok(());
         }
         let kind = match lower.as_str() {
+            _ if word == "@forAll" => TokenKind::AtForAll,
+            _ if word == "@forSome" => TokenKind::AtForSome,
             _ if word == "@prefix" => TokenKind::AtPrefix,
             _ if word == "@base" => TokenKind::AtBase,
             _ if word == "@version" => TokenKind::AtVersion,

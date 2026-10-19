@@ -194,7 +194,7 @@ fn term_has_var(term: &Term) -> bool {
     match term {
         Term::Var(_) => true,
         Term::List(items) => items.iter().any(term_has_var),
-        Term::Formula(triples) => triples.iter().any(|t| term_has_var(&t.s) || term_has_var(&t.p) || term_has_var(&t.o)),
+        Term::Formula(graph) => graph.free_variables().iter().any(|t| matches!(t,Term::Var(_))),
         _ => false,
     }
 }
@@ -257,20 +257,46 @@ fn resolve_pattern_with_seen(term: &Term, bindings: &Bindings, seen: &mut HashSe
             let mut branch_seen = seen.clone();
             resolve_pattern_with_seen(item, bindings, &mut branch_seen)
         }).collect()),
-        Term::Formula(triples) => Term::Formula(triples.iter().map(|t| {
-            let mut s_seen = seen.clone();
-            let mut p_seen = seen.clone();
-            let mut o_seen = seen.clone();
-            Triple::new(
-                resolve_pattern_with_seen(&t.s, bindings, &mut s_seen),
-                resolve_pattern_with_seen(&t.p, bindings, &mut p_seen),
-                resolve_pattern_with_seen(&t.o, bindings, &mut o_seen),
-            )
-        }).collect()),
+        Term::Formula(graph) => {
+            let local = bindings_without_bound(graph, bindings);
+            Term::Formula(graph.map_triples(|t| Triple::new(
+                resolve_formula_pattern(&t.s, graph, &local, seen),
+                resolve_formula_pattern(&t.p, graph, &local, seen),
+                resolve_formula_pattern(&t.o, graph, &local, seen),
+            )))
+        }
         _ => term.clone(),
     }
 }
 
+fn bindings_without_bound(graph: &Graph, bindings: &Bindings) -> Bindings {
+    let mut local = bindings.clone();
+    for name in &graph.universals {
+        local.remove(name);
+    }
+    for name in &graph.existentials {
+        local.remove(&blank_binding_name(name));
+    }
+    local
+}
+
+fn resolve_formula_pattern(
+    term: &Term,
+    graph: &Graph,
+    bindings: &Bindings,
+    seen: &HashSet<Name>,
+) -> Term {
+    match term {
+        Term::Blank(n) if graph.existentials.contains(n) => term.clone(),
+        Term::List(items) => Term::List(
+            items
+                .iter()
+                .map(|t| resolve_formula_pattern(t, graph, bindings, seen))
+                .collect(),
+        ),
+        _ => resolve_with_seen(term, bindings, &mut seen.clone()),
+    }
+}
 
 /// Membership in the closure, holding no facts of its own.
 ///
@@ -419,6 +445,16 @@ impl Default for FactIndex {
     }
 }
 
+// Graph identity includes alpha-renaming and triple-set order, so its structural
+// hash is not an exact lookup key. Use a broader bucket and the graph matcher.
+fn is_index_ground(term: &Term) -> bool {
+    match term {
+        Term::Formula(_) | Term::Var(_) => false,
+        Term::List(items) => items.iter().all(is_index_ground),
+        _ => true,
+    }
+}
+
 impl FactIndex {
     pub(crate) fn insert(&mut self, facts: &[Triple], idx: usize) {
         self.deep_list_s.get_mut().clear();
@@ -443,9 +479,9 @@ impl FactIndex {
         let s = resolve_pattern(&pattern.s, bindings);
         let p = resolve_pattern(&pattern.p, bindings);
         let o = resolve_pattern(&pattern.o, bindings);
-        let sg = s.is_ground();
-        let pg = p.is_ground();
-        let og = o.is_ground();
+        let sg = is_index_ground(&s);
+        let pg = is_index_ground(&p);
+        let og = is_index_ground(&o);
 
         if pg && !sg {
             if let Some(deep_indices) = self.deep_list_subject_candidates(facts, &p, &s) {
@@ -509,7 +545,7 @@ impl FactIndex {
         let s = resolve_pattern(&pattern.s, bindings);
         let p = resolve_pattern(&pattern.p, bindings);
         let o = resolve_pattern(&pattern.o, bindings);
-        let (sg, pg, og) = (s.is_ground(), p.is_ground(), o.is_ground());
+        let (sg, pg, og) = (is_index_ground(&s), is_index_ground(&p), is_index_ground(&o));
 
         // The deep-list shape builds its own vector either way, so leave it to
         // `candidates`.
@@ -560,7 +596,7 @@ impl FactIndex {
         let s = resolve_pattern(&pattern.s, bindings);
         let p = resolve_pattern(&pattern.p, bindings);
         let o = resolve_pattern(&pattern.o, bindings);
-        let (sg, pg, og) = (s.is_ground(), p.is_ground(), o.is_ground());
+        let (sg, pg, og) = (is_index_ground(&s), is_index_ground(&p), is_index_ground(&o));
         if !pg { return None; }
         if !sg && matches!(s, Term::List(_)) { return None; }
         // A bucket entry always matches when each open position is a plain
@@ -583,7 +619,7 @@ impl FactIndex {
         let mut positions = Vec::<usize>::new();
         let mut values = Vec::<Term>::new();
         for (position, item) in pattern_items.iter().enumerate() {
-            if item.is_ground() {
+            if is_index_ground(item) {
                 positions.push(position);
                 values.push(item.clone());
             }
@@ -894,7 +930,7 @@ impl PreparedReasoner {
     ///
     /// Facts derived by one call are not retained for the next call.
     pub fn reason(&self, data: &Document, options: &ReasonerOptions) -> ReasonerResult {
-        if data.rules.is_empty() {
+        if data.rules.is_empty() && !has_universal_facts(data) && !has_universal_facts(&self.program) {
             // `reason_with_plan` reads only `doc.facts`/`doc.fact_sources`/
             // `doc.prefixes`/`doc.base_iri` on this path -- `query_rules`,
             // `active_rules` and `agenda_index` are passed explicitly below,
@@ -961,9 +997,29 @@ impl PreparedReasoner {
     }
 }
 
+fn fact_requires_axiom(fact: &Triple, doc: &Document) -> bool {
+    if doc.universals.is_empty() { return false; }
+    let free = Graph::from(vec![fact.clone()]).free_variables();
+    let universal = free.iter().any(|t| matches!(t,Term::Var(n) if doc.universals.contains(n)));
+    // Open quoted terms can be matched symbolically. Direct universal values
+    // and dependent root existentials need demand-driven instantiation.
+    universal && (!admissible_fact(fact) || free.iter().any(|t|
+        matches!(t,Term::Blank(n) if doc.existentials.contains(n))))
+}
+
+fn has_universal_facts(doc: &Document) -> bool {
+    doc.facts.iter().any(|fact| fact_requires_axiom(fact, doc))
+}
+
 pub fn reason(doc: &Document, options: &ReasonerOptions) -> ReasonerResult {
     let query_rules: Vec<Rule> = doc.rules.iter().filter(|rule| rule.is_query).cloned().collect();
-    let active_rules: Vec<Rule> = doc.rules.iter().filter(|rule| !rule.is_query).cloned().collect();
+    let mut active_rules: Vec<Rule> = doc.rules.iter().filter(|rule| !rule.is_query).cloned().collect();
+    if has_universal_facts(doc) {
+        let triples: Vec<_> = doc.facts.iter().filter(|fact| fact_requires_axiom(fact,doc)).cloned().collect();
+        let used = Graph::from(triples.clone()).free_variables();
+        let universals = doc.universals.iter().filter(|n| used.contains(&Term::var((*n).clone()))).cloned().collect::<BTreeSet<_>>();
+        active_rules.push(Rule::new(Vec::new(), Graph { triples, universals, existentials: doc.existentials.clone() }, false));
+    }
     let agenda_index = build_forward_agenda(&active_rules);
     reason_with_plan(doc, options, &query_rules, &active_rules, &agenda_index)
 }
@@ -991,6 +1047,7 @@ fn reason_with_plan(
     let mut seen = ClosureSet::default();
 
     for fact in &doc.facts {
+        if fact_requires_axiom(fact,doc) { continue; }
         if admissible_fact(fact) && !seen.contains(&closure, fact) {
             let idx = closure.len();
             closure.push(fact.clone());
@@ -1336,6 +1393,52 @@ fn evaluate_query_rules(
     out
 }
 
+fn graph_initial_bindings(graph: &Graph) -> Bindings {
+    let mut bindings = BTreeMap::new();
+    for term in graph.free_variables() {
+        if let Term::Blank(n) = &term {
+            bindings.insert(blank_binding_name(n), term);
+        }
+    }
+    // Prove a universal premise with an arbitrary fresh representative.
+    for name in &graph.universals {
+        bindings.insert(
+            name.clone(),
+            Term::iri(format!("urn:eyeron:eigen:{}", name)),
+        );
+    }
+    bindings
+}
+
+fn conclusion_blanks(graph: &Graph) -> BTreeMap<Name, Term> {
+    graph
+        .free_variables()
+        .into_iter()
+        .filter_map(|term| match term {
+            Term::Blank(n) => Some((n.clone(), Term::blank(n))),
+            _ => None,
+        })
+        .collect()
+}
+
+fn register_quantified_assertion(
+    graph: Graph,
+    seen: &mut HashSet<Triple>,
+    pending: &mut Vec<Rule>,
+) -> bool {
+    let marker = Triple::new(
+        Term::formula(Vec::new()),
+        Term::iri(LOG_IMPLIES),
+        Term::Formula(graph.clone()),
+    );
+    if seen.insert(marker) {
+        pending.push(Rule::new(Vec::new(), graph, false));
+        true
+    } else {
+        false
+    }
+}
+
 fn emit_conclusions(
     rule: &Rule,
     bindings: &Bindings,
@@ -1355,13 +1458,21 @@ fn emit_conclusions(
     // rule with several conclusions derives several facts at once, and a
     // copy of the rule in each was the largest thing a proof held.
     let shared_rule = capture_proof.then(|| Arc::new(rule.clone()));
-    let mut blank_map = BTreeMap::<Name, Term>::new();
+    let mut blank_map = conclusion_blanks(&rule.conclusion);
+    if !rule.conclusion.universals.is_empty() {
+        let graph = instantiate_graph_term(&rule.conclusion, bindings, &blank_map);
+        return register_quantified_assertion(graph, generated_rule_facts, pending_rules);
+    }
 
     for head in &rule.conclusion {
         let Some(t) = instantiate_triple(head, bindings, &mut blank_map) else { continue; };
 
         if is_unquote_instruction(&t) {
             if let Term::Formula(triples) = t.o {
+                if !triples.universals.is_empty() {
+                    rules_changed |= register_quantified_assertion(triples, generated_rule_facts, pending_rules);
+                    continue;
+                }
                 for expanded in triples {
                     let proof = shared_rule.as_ref().map(|rule| derived_fact_record(expanded.clone(), rule, bindings));
                     if insert_materialized_triple(
@@ -1558,10 +1669,12 @@ fn build_forward_agenda(rules: &[Rule]) -> AgendaIndex {
     let mut backward_head_predicates = HashSet::<Term>::new();
     let mut has_wild_backward_head = false;
     for rule in rules {
-        if rule.is_forward || rule.conclusion.len() != 1 { continue; }
-        match &rule.conclusion[0].p {
-            Term::Iri(_) => { backward_head_predicates.insert(rule.conclusion[0].p.clone()); }
-            _ => { has_wild_backward_head = true; }
+        if rule.is_forward { continue; }
+        for head in &rule.conclusion {
+            match &head.p {
+                Term::Iri(_) => { backward_head_predicates.insert(head.p.clone()); }
+                _ => { has_wild_backward_head = true; }
+            }
         }
     }
 
@@ -1588,6 +1701,7 @@ fn agenda_entries_for_rule(
     allow_multi_premise_agenda: bool,
 ) -> Vec<AgendaEntry> {
     if !rule.is_forward || rule.is_fuse { return Vec::new(); }
+    if !rule.premise.universals.is_empty() || !graph_initial_bindings(&rule.premise).is_empty() { return Vec::new(); }
     if rule.premise.is_empty() { return Vec::new(); }
     if rule.premise.len() != 1 && !allow_multi_premise_agenda { return Vec::new(); }
     if rule.premise.len() == 1 && rule.conclusion.iter().any(triple_contains_blank) { return Vec::new(); }
@@ -1617,8 +1731,8 @@ fn agenda_entries_for_rule(
         let Term::Iri(pred_iri) = &goal.p else { continue; };
         if is_builtin_iri(pred_iri) || pred_iri == LOG_IMPLIES || pred_iri == LOG_IMPLIED_BY { continue; }
 
-        let s_ground = if goal.s.is_ground() { Some(goal.s.clone()) } else { None };
-        let o_ground = if goal.o.is_ground() { Some(goal.o.clone()) } else { None };
+        let s_ground = if is_index_ground(&goal.s) { Some(goal.s.clone()) } else { None };
+        let o_ground = if is_index_ground(&goal.o) { Some(goal.o.clone()) } else { None };
 
         entries.push(AgendaEntry {
             rule_index,
@@ -1704,21 +1818,21 @@ fn rule_to_triple(rule: &Rule, prefix: &str) -> Triple {
         // A fuse concludes `false`, so that is what it is visible as: the
         // liar example matches one fuse rule from inside another.
         Triple::new(
-            Term::Formula(quoted.premise),
+            Term::formula(quoted.premise),
             Term::iri(LOG_IMPLIES),
             boolean_false(),
         )
     } else if quoted.is_forward {
         Triple::new(
-            Term::Formula(quoted.premise),
+            Term::formula(quoted.premise),
             Term::iri(LOG_IMPLIES),
-            Term::Formula(quoted.conclusion),
+            Term::formula(quoted.conclusion),
         )
     } else {
         Triple::new(
-            Term::Formula(quoted.conclusion),
+            Term::formula(quoted.conclusion),
             Term::iri(LOG_IMPLIED_BY),
-            Term::Formula(quoted.premise),
+            Term::formula(quoted.premise),
         )
     }
 }
@@ -1776,7 +1890,7 @@ fn rule_from_triple(t: &Triple) -> Option<Rule> {
 }
 
 fn match_premises(
-    premises: &[Triple],
+    premises: &Graph,
     facts: &[Triple],
     fact_index: Option<&FactIndex>,
     rules: &[Rule],
@@ -1796,7 +1910,7 @@ fn match_premises(
         facts,
         fact_index,
         rules,
-        BTreeMap::new(),
+        graph_initial_bindings(premises),
         0,
         &mut backward_stack,
         &mut budget,
@@ -2584,6 +2698,10 @@ fn solve_backward_goal(
         let prefix = format!("__backward_{}_{}_{}__", depth, idx, scope);
         let renamed = standardize_apart(rule, &prefix);
         for head in &renamed.conclusion {
+            if renamed.premise.is_empty() && !renamed.conclusion.universals.is_empty() {
+                if let Some(answer) = match_quantified_axiom(&goal, head, &renamed.conclusion, bindings) { out.push(answer); }
+                continue;
+            }
             let mut b = bindings.clone();
             if unify_triple(&goal, head, &mut b) {
                 let mut body_matches = Vec::new();
@@ -2631,6 +2749,62 @@ fn solve_backward_goal(
         }
     }
     out
+}
+
+fn match_quantified_axiom(
+    goal: &Triple,
+    head: &Triple,
+    graph: &Graph,
+    bindings: &Bindings,
+) -> Option<Bindings> {
+    // First discover universal assignments, including occurrences in nested
+    // graph terms. Existentials are placeholders during this discovery only;
+    // the final match uses the independently generated witness values.
+    let placeholders: BTreeMap<_, _> = graph
+        .existentials
+        .iter()
+        .map(|n| {
+            (
+                Term::blank(n.clone()),
+                Term::var(format!("__axiom_existential_{}", n)),
+            )
+        })
+        .collect();
+    let template = Graph::from(vec![head.clone()]).apply_to_triples(&placeholders);
+    let mut tentative = bindings.clone();
+    if !unify_triple(goal, &template[0], &mut tentative) {
+        return None;
+    }
+    let mut assignment = BTreeMap::new();
+    for n in &graph.universals {
+        let value = resolve(&Term::var(n.clone()), &tentative);
+        if value.is_ground() {
+            assignment.insert(n.clone(), value);
+        }
+    }
+    for n in &graph.universals {
+        assignment
+            .entry(n.clone())
+            .or_insert_with(|| Term::iri("urn:eyeron:universal-representative"));
+    }
+    // Use source binder order, independent of backward standardisation prefixes.
+    let canonical: Bindings = assignment
+        .values()
+        .enumerate()
+        .map(|(i, v)| (i.to_string().into(), v.clone()))
+        .collect();
+    let salt = stable_binding_suffix(&canonical);
+    let mut blanks = conclusion_blanks(graph);
+    for n in &graph.existentials {
+        blanks.insert(n.clone(), Term::blank(format!("{}_{}", n, salt)));
+    }
+    let instance = instantiate_triple(head, &assignment, &mut blanks)?;
+    let mut out = bindings.clone();
+    if unify_triple(goal, &instance, &mut out) {
+        Some(canonicalize_owned(out))
+    } else {
+        None
+    }
 }
 
 fn match_backward_premises_ordered(
@@ -3130,8 +3304,8 @@ fn salted_backward_prefix(depth: usize, rule_index: usize, goal: &Triple, bindin
 
 fn standardize_apart(rule: &Rule, prefix: &str) -> Rule {
     let mut out = Rule::new(
-        rule.premise.iter().map(|t| rename_triple(t, prefix)).collect(),
-        rule.conclusion.iter().map(|t| rename_triple(t, prefix)).collect(),
+        rename_graph(&rule.premise, prefix),
+        rename_graph(&rule.conclusion, prefix),
         rule.is_forward,
     )
     .with_source(rule.source.clone())
@@ -3180,11 +3354,23 @@ fn rename_triple(t: &Triple, prefix: &str) -> Triple {
     )
 }
 
+fn rename_graph(graph: &Graph, prefix: &str) -> Graph {
+    Graph {
+        universals: graph
+            .universals
+            .iter()
+            .map(|n| format!("{}{}", prefix, n).into())
+            .collect(),
+        existentials: graph.existentials.clone(),
+        triples: graph.iter().map(|t| rename_triple(t, prefix)).collect(),
+    }
+}
+
 fn rename_term(term: &Term, prefix: &str) -> Term {
     match term {
         Term::Var(name) => Term::Var(format!("{}{}", prefix, name).into()),
         Term::List(items) => Term::List(items.iter().map(|item| rename_term(item, prefix)).collect()),
-        Term::Formula(triples) => Term::Formula(triples.iter().map(|t| rename_triple(t, prefix)).collect()),
+        Term::Formula(triples) => Term::Formula(rename_graph(triples, prefix)),
         other => other.clone(),
     }
 }
@@ -3204,7 +3390,7 @@ fn match_term(pattern: &Term, value: &Term, bindings: &mut Bindings) -> bool {
     if let Term::Formula(pattern_triples) = pattern {
         let value = resolve(value, bindings);
         return match value {
-            Term::Formula(value_triples) if pattern_triples.len() == value_triples.len() => {
+            Term::Formula(value_triples) => {
                 let mut local = bindings.clone();
                 if unify_formula_unordered(pattern_triples, &value_triples, &mut local) {
                     *bindings = local;
@@ -3256,7 +3442,7 @@ pub(crate) fn unify_term(left: &Term, right: &Term, bindings: &mut Bindings) -> 
         }
         (Term::List(a), Term::Iri(iri)) if a.is_empty() && iri == RDF_NIL => true,
         (Term::Iri(iri), Term::List(b)) if iri == RDF_NIL && b.is_empty() => true,
-        (Term::Formula(a), Term::Formula(b)) if a.len() == b.len() => {
+        (Term::Formula(a), Term::Formula(b)) => {
             unify_formula_unordered(&a, &b, bindings)
         }
         (a, b) => terms_equal_semantic(&a, &b),
@@ -3431,7 +3617,7 @@ fn eval_collect_all_in(
         _ => None,
     };
     let empty_rules: Vec<Rule> = Vec::new();
-    let scope_facts = scoped_facts_storage.as_deref().unwrap_or(facts);
+    let scope_facts = scoped_facts_storage.as_deref().map_or(facts, |v| v.as_slice());
     let scope_index = if scoped_facts_storage.is_some() { None } else { fact_index };
     let scope_rules = if scoped_facts_storage.is_some() { empty_rules.as_slice() } else { rules };
 
@@ -3536,7 +3722,7 @@ fn eval_for_all_in(
         _ => None,
     };
     let empty_rules: Vec<Rule> = Vec::new();
-    let scope_facts = scoped_facts_storage.as_deref().unwrap_or(facts);
+    let scope_facts = scoped_facts_storage.as_deref().map_or(facts, |v| v.as_slice());
     let scope_index = if scoped_facts_storage.is_some() { None } else { fact_index };
     let scope_rules = if scoped_facts_storage.is_some() { empty_rules.as_slice() } else { rules };
 
@@ -3591,7 +3777,9 @@ fn eval_log_conclusion(
 ) -> Vec<Bindings> {
     let Term::Formula(input) = resolve(subject, bindings) else { return Vec::new(); };
     let mut doc = Document::new();
-    doc.facts = input.clone();
+    doc.facts = input.to_vec();
+    doc.universals = input.universals.clone();
+    doc.existentials = input.existentials.clone();
     doc.rules = input.iter().filter_map(rule_from_triple).collect();
     let result = reason(&doc, &budget.nested_options());
     let complete = result.is_complete();
@@ -3604,44 +3792,59 @@ fn eval_log_conclusion(
     }
 
     let mut b = bindings.clone();
-    let value = Term::Formula(closure);
+    let value = Term::formula(closure);
     if unify_term(object, &value, &mut b) { vec![canonicalize_owned(b)] } else { Vec::new() }
 }
 
-fn eval_log_conjunction(subject: &Term, object: &Term, bindings: &Bindings, facts: &[Triple]) -> Vec<Bindings> {
-    let mut triples = Vec::new();
-    let resolved_subject = resolve(subject, bindings);
-    match resolved_subject {
-        Term::Formula(items) => triples.extend(items),
-        Term::List(items) => {
-            for item in items {
-                let Term::Formula(ts) = resolve(&item, bindings) else { return Vec::new(); };
-                triples.extend(ts);
-            }
-        }
+fn eval_log_conjunction(
+    subject: &Term,
+    object: &Term,
+    bindings: &Bindings,
+    facts: &[Triple],
+) -> Vec<Bindings> {
+    let items = match resolve(subject, bindings) {
+        Term::Formula(g) => vec![Term::Formula(g)],
+        Term::List(items) => items,
         _ => {
-            let Some(items) = rdf_or_native_list(subject, bindings, facts) else { return Vec::new(); };
-            for item in items {
-                let Term::Formula(ts) = resolve(&item, bindings) else { return Vec::new(); };
-                triples.extend(ts);
-            }
+            let Some(items) = rdf_or_native_list(subject, bindings, facts) else {
+                return Vec::new();
+            };
+            items
         }
+    };
+    let mut merged = Document::new();
+    for item in items {
+        let Term::Formula(g) = resolve(&item, bindings) else {
+            return Vec::new();
+        };
+        let mut doc = Document::new();
+        doc.facts = g.triples;
+        doc.universals = g.universals;
+        doc.existentials = g.existentials;
+        merged.merge(doc);
     }
-    let mut deduped = Vec::new();
-    for t in triples {
-        if !deduped.iter().any(|existing| {
-            let mut b = bindings.clone();
-            unify_triple(existing, &t, &mut b)
-        }) {
-            deduped.push(t);
-        }
+    let mut unique = BTreeSet::new();
+    merged.facts.retain(|t| unique.insert(t.clone()));
+    let value = Term::Formula(Graph {
+        triples: merged.facts,
+        universals: merged.universals,
+        existentials: merged.existentials,
+    });
+    let mut out = bindings.clone();
+    if unify_term(object, &value, &mut out) {
+        vec![canonicalize_owned(out)]
+    } else {
+        Vec::new()
     }
-    let mut b = bindings.clone();
-    if unify_term(object, &Term::Formula(deduped), &mut b) { vec![canonicalize_owned(b)] } else { Vec::new() }
 }
 
-
-fn eval_log_includes(subject: &Term, object: &Term, bindings: &Bindings, facts: &[Triple], rules: &[Rule]) -> Vec<Bindings> {
+fn eval_log_includes(
+    subject: &Term,
+    object: &Term,
+    bindings: &Bindings,
+    facts: &[Triple],
+    rules: &[Rule],
+) -> Vec<Bindings> {
     let subject_resolved = resolve(subject, bindings);
     let scope = match subject_resolved {
         Term::Formula(scope) => scope,
@@ -3653,16 +3856,110 @@ fn eval_log_includes(subject: &Term, object: &Term, bindings: &Bindings, facts: 
             let mut scope = facts.to_vec();
             for (idx, rule) in rules.iter().enumerate() {
                 let t = rule_to_triple(rule, &format!("__includes_rulefact_{}__", idx));
-                if !scope.contains(&t) { scope.push(t); }
+                if !scope.contains(&t) {
+                    scope.push(t);
+                }
             }
-            scope
+            scope.into()
         }
         _ => return Vec::new(),
     };
-    let Term::Formula(pattern) = resolve(object, bindings) else { return Vec::new(); };
+    let Term::Formula(pattern) = resolve(object, bindings) else {
+        return Vec::new();
+    };
     let mut out = Vec::new();
-    match_formula_subset(&scope, &pattern, bindings, &mut out);
+    match_existential_consequence(&scope, &pattern, bindings, &mut out);
     out.into_iter().map(canonicalize_owned).collect()
+}
+
+/// Existential consequence, without universal instantiation.
+fn match_existential_consequence(
+    scope: &Graph,
+    pattern: &Graph,
+    bindings: &Bindings,
+    out: &mut Vec<Bindings>,
+) {
+    let mut source_map = BTreeMap::new();
+    let mut universal_values = BTreeSet::new();
+    let mut existential_values = BTreeSet::new();
+    for (names, universal) in [(&scope.universals, true), (&scope.existentials, false)] {
+        for name in names {
+            let value = Term::iri(format!(
+                "urn:eyeron:includes-rigid:{}:{}",
+                if universal { "u" } else { "e" },
+                name
+            ));
+            if universal {
+                universal_values.insert(value.clone());
+            } else {
+                existential_values.insert(value.clone());
+            }
+            source_map.insert(
+                if universal {
+                    Term::var(name.clone())
+                } else {
+                    Term::blank(name.clone())
+                },
+                value,
+            );
+        }
+    }
+    let mut target_map = BTreeMap::new();
+    let mut universal_keys = Vec::new();
+    let mut existential_keys = Vec::new();
+    for (names, universal) in [(&pattern.universals, true), (&pattern.existentials, false)] {
+        for name in names {
+            let key: Name =
+                format!("__includes_{}_{}", if universal { "u" } else { "e" }, name).into();
+            if universal {
+                universal_keys.push(key.clone());
+            } else {
+                existential_keys.push(key.clone());
+            }
+            target_map.insert(
+                if universal {
+                    Term::var(name.clone())
+                } else {
+                    Term::blank(name.clone())
+                },
+                Term::var(key),
+            );
+        }
+    }
+    let source = scope.apply_to_triples(&source_map);
+    let target = pattern.apply_to_triples(&target_map);
+    let mut matches = Vec::new();
+    match_formula_subset(&source, &target, bindings, &mut matches);
+    for mut candidate in matches {
+        let mut used = BTreeSet::new();
+        if !universal_keys.iter().all(|key| match candidate.get(key) {
+            None => true, // unused quantifiers normalise away
+            Some(value) => universal_values.contains(value) && used.insert(value.clone()),
+        }) {
+            continue;
+        }
+        if existential_keys.iter().any(|key| {
+            candidate
+                .get(key)
+                .is_some_and(|value| universal_values.contains(value))
+        }) {
+            continue;
+        }
+        for key in universal_keys.iter().chain(&existential_keys) {
+            candidate.remove(key);
+        }
+        // Existential substitutions are local to the compared graph, never outer bindings.
+        let reverse: BTreeMap<_, _> = source_map
+            .iter()
+            .map(|(k, v)| (v.clone(), k.clone()))
+            .collect();
+        for value in candidate.values_mut() {
+            if let Some(original) = reverse.get(value) {
+                *value = original.clone();
+            }
+        }
+        out.push(candidate);
+    }
 }
 
 fn match_formula_subset(scope: &[Triple], pattern: &[Triple], bindings: &Bindings, out: &mut Vec<Bindings>) {
@@ -3734,7 +4031,7 @@ fn eval_log_not_includes(
             ) {
                 return Vec::new();
             }
-            let witness = Term::Formula(vec![Triple::new(
+            let witness = Term::formula(vec![Triple::new(
                 Term::Iri("http://example.org/a".to_string().into()),
                 Term::Iri("http://example.org/b".to_string().into()),
                 Term::Iri("http://example.org/c".to_string().into()),
@@ -3972,7 +4269,7 @@ fn hello_semantics_formula() -> Option<Term> {
         "@prefix : <http://example.org/> .\n:Hello a :World .",
         Some("http://example.org/"),
     ).ok()?;
-    Some(Term::Formula(parsed.facts))
+    Some(Term::formula(parsed.facts))
 }
 
 fn eval_log_semantics(subject: &Term, object: &Term, bindings: &Bindings) -> Vec<Bindings> {
@@ -4009,7 +4306,7 @@ fn eval_log_semantics_or_error(subject: &Term, object: &Term, bindings: &Binding
 fn eval_log_parsed_as_n3(subject: &Term, object: &Term, bindings: &Bindings) -> Vec<Bindings> {
     let Some(text) = string_value(&resolve(subject, bindings)) else { return Vec::new(); };
     let parsed = match parse_n3(&text, Some("http://example.org/")) { Ok(doc) => doc, Err(_) => return Vec::new() };
-    let value = Term::Formula(parsed.facts);
+    let value = Term::Formula(Graph { triples: parsed.facts, universals: parsed.universals, existentials: parsed.existentials });
     let mut b = bindings.clone();
     if unify_term(object, &value, &mut b) { vec![canonicalize_owned(b)] } else { Vec::new() }
 }
@@ -4529,7 +4826,7 @@ fn terms_equal_list_builtin(a: &Term, b: &Term) -> bool {
         }
         (Term::List(xs), Term::List(ys)) if xs.len() == ys.len() => xs.iter().zip(ys.iter()).all(|(x, y)| terms_equal_list_builtin(x, y)),
         (Term::List(xs), Term::Iri(iri)) | (Term::Iri(iri), Term::List(xs)) => xs.is_empty() && iri == RDF_NIL,
-        (Term::Formula(xs), Term::Formula(ys)) if xs.len() == ys.len() => {
+        (Term::Formula(xs), Term::Formula(ys)) => {
             let mut b = BTreeMap::new();
             unify_formula_unordered(xs, ys, &mut b)
         }
@@ -5762,7 +6059,7 @@ pub(crate) fn terms_equal_semantic(a: &Term, b: &Term) -> bool {
             xs.iter().zip(ys.iter()).all(|(x, y)| terms_equal_semantic(x, y))
         }
         (Term::List(xs), Term::Iri(iri)) | (Term::Iri(iri), Term::List(xs)) => xs.is_empty() && iri == RDF_NIL,
-        (Term::Formula(xs), Term::Formula(ys)) if xs.len() == ys.len() => {
+        (Term::Formula(xs), Term::Formula(ys)) => {
             let mut b = BTreeMap::new();
             unify_formula_unordered(xs, ys, &mut b)
         }
@@ -5785,25 +6082,225 @@ fn literals_equal_semantic(a: &Literal, b: &Literal) -> bool {
     a == b
 }
 
-fn unify_formula_unordered(left: &[Triple], right: &[Triple], bindings: &mut Bindings) -> bool {
-    if left.len() != right.len() { return false; }
-    fn go(left: &[Triple], right: &[Triple], used: &mut Vec<bool>, idx: usize, bindings: &mut Bindings) -> bool {
-        if idx == left.len() { return true; }
-        for r_idx in 0..right.len() {
-            if used[r_idx] { continue; }
-            let mut local = bindings.clone();
-            if unify_triple_formula(&left[idx], &right[r_idx], &mut local) {
-                used[r_idx] = true;
-                if go(left, right, used, idx + 1, &mut local) {
+fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings) -> bool {
+    #[derive(Clone, Default)]
+    struct Alpha {
+        left: BTreeMap<Term, (bool, usize)>,
+        right: BTreeMap<Term, (bool, usize)>,
+        pairs: BTreeMap<Term, Term>,
+    }
+    fn bound(graph: &Graph) -> BTreeMap<Term, bool> {
+        let mut out = BTreeMap::new();
+        // Normalisation: unused quantifiers do not affect identity.
+        let used = Graph::from(graph.triples.clone()).free_variables();
+        // Graph::from binds blanks, so gather occurrences separately for existentials.
+        fn occurs(term: &Term, needle: &Term) -> bool {
+            if term == needle {
+                return true;
+            }
+            match term {
+                Term::List(items) => items.iter().any(|t| occurs(t, needle)),
+                Term::Formula(g) => {
+                    if matches!(needle, Term::Var(n) if g.universals.contains(n))
+                        || matches!(needle, Term::Blank(n) if g.existentials.contains(n))
+                    {
+                        return false;
+                    }
+                    g.iter()
+                        .any(|t| [&t.s, &t.p, &t.o].iter().any(|x| occurs(x, needle)))
+                }
+                _ => false,
+            }
+        }
+        for n in &graph.universals {
+            if used.contains(&Term::var(n.clone())) {
+                out.insert(Term::var(n.clone()), true);
+            }
+        }
+        for n in &graph.existentials {
+            let term = Term::blank(n.clone());
+            if graph
+                .iter()
+                .any(|t| [&t.s, &t.p, &t.o].iter().any(|x| occurs(x, &term)))
+            {
+                out.insert(term, false);
+            }
+        }
+        out
+    }
+    // A continuation lets a failed sibling graph retry an alternative
+    // renaming in an earlier nested graph, rather than committing greedily.
+    fn term(
+        a: &Term,
+        b: &Term,
+        alpha: &mut Alpha,
+        bindings: &mut Bindings,
+        next: &mut dyn FnMut(&mut Alpha, &mut Bindings) -> bool,
+    ) -> bool {
+        let ak = alpha.left.get(a);
+        let bk = alpha.right.get(b);
+        if ak.is_some() || bk.is_some() {
+            if ak != bk {
+                return false;
+            }
+            if let Some(mapped) = alpha.pairs.get(a) {
+                return mapped == b && next(alpha, bindings);
+            }
+            if alpha.pairs.values().any(|v| v == b) {
+                return false;
+            }
+            alpha.pairs.insert(a.clone(), b.clone());
+            return next(alpha, bindings);
+        }
+        let a = resolve(a, bindings);
+        let b = resolve(b, bindings);
+        if alpha.left.contains_key(&a) || alpha.right.contains_key(&b) {
+            return false;
+        }
+        match (&a, &b) {
+            (Term::Formula(a), Term::Formula(b)) => graph(a, b, alpha, bindings, next),
+            (Term::List(a), Term::List(b)) if a.len() == b.len() => {
+                let pairs: Vec<_> = a.iter().zip(b).collect();
+                sequence(&pairs, 0, alpha, bindings, next)
+            }
+            (Term::Var(n), _) => bind_one_mut(bindings, n, b.clone()) && next(alpha, bindings),
+            (_, Term::Var(n)) => bind_one_mut(bindings, n, a.clone()) && next(alpha, bindings),
+            (Term::Literal(a), Term::Literal(b)) => {
+                a.value == b.value
+                    && a.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
+                        == b.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
+                    && a.language.as_deref().map(str::to_ascii_lowercase)
+                        == b.language.as_deref().map(str::to_ascii_lowercase)
+                    && next(alpha, bindings)
+            }
+            _ => a == b && next(alpha, bindings),
+        }
+    }
+    fn sequence(
+        pairs: &[(&Term, &Term)],
+        i: usize,
+        alpha: &mut Alpha,
+        bindings: &mut Bindings,
+        next: &mut dyn FnMut(&mut Alpha, &mut Bindings) -> bool,
+    ) -> bool {
+        if i == pairs.len() {
+            return next(alpha, bindings);
+        }
+        term(
+            pairs[i].0,
+            pairs[i].1,
+            alpha,
+            bindings,
+            &mut |alpha, bindings| sequence(pairs, i + 1, alpha, bindings, next),
+        )
+    }
+    fn graph(
+        a: &Graph,
+        b: &Graph,
+        outer: &mut Alpha,
+        bindings: &mut Bindings,
+        next: &mut dyn FnMut(&mut Alpha, &mut Bindings) -> bool,
+    ) -> bool {
+        let ab = bound(a);
+        let bb = bound(b);
+        if ab.values().filter(|v| **v).count() != bb.values().filter(|v| **v).count()
+            || ab.values().filter(|v| !**v).count() != bb.values().filter(|v| !**v).count()
+        {
+            return false;
+        }
+        let a: Vec<_> = a.iter().collect::<BTreeSet<_>>().into_iter().collect();
+        let b: Vec<_> = b.iter().collect::<BTreeSet<_>>().into_iter().collect();
+        if a.len() != b.len() {
+            return false;
+        }
+        let mut alpha = outer.clone();
+        let level = outer
+            .left
+            .values()
+            .map(|(_, depth)| *depth)
+            .max()
+            .unwrap_or(0)
+            + 1;
+        alpha
+            .pairs
+            .retain(|key, value| !ab.contains_key(key) && !bb.contains_key(value));
+        alpha
+            .left
+            .extend(ab.iter().map(|(term, kind)| (term.clone(), (*kind, level))));
+        alpha
+            .right
+            .extend(bb.iter().map(|(term, kind)| (term.clone(), (*kind, level))));
+        fn go(
+            a: &[&Triple],
+            b: &[&Triple],
+            used: &mut [bool],
+            i: usize,
+            alpha: &mut Alpha,
+            bindings: &mut Bindings,
+            next: &mut dyn FnMut(&mut Alpha, &mut Bindings) -> bool,
+        ) -> bool {
+            if i == a.len() {
+                return next(alpha, bindings);
+            }
+            for j in 0..b.len() {
+                if used[j] {
+                    continue;
+                }
+                used[j] = true;
+                let mut state = alpha.clone();
+                let mut local = bindings.clone();
+                let pairs = [(&a[i].s, &b[j].s), (&a[i].p, &b[j].p), (&a[i].o, &b[j].o)];
+                if sequence(&pairs, 0, &mut state, &mut local, &mut |alpha, bindings| {
+                    go(a, b, used, i + 1, alpha, bindings, next)
+                }) {
+                    *alpha = state;
                     *bindings = local;
                     return true;
                 }
-                used[r_idx] = false;
+                used[j] = false;
             }
+            false
         }
+        let parent = outer.clone();
+        go(
+            &a,
+            &b,
+            &mut vec![false; b.len()],
+            0,
+            &mut alpha,
+            bindings,
+            &mut |matched, bindings| {
+                let mut resumed = parent.clone();
+                for (key, value) in &matched.pairs {
+                    if parent.left.contains_key(key)
+                        && !ab.contains_key(key)
+                        && !bb.contains_key(value)
+                    {
+                        resumed.pairs.insert(key.clone(), value.clone());
+                    }
+                }
+                if next(&mut resumed, bindings) {
+                    *outer = resumed;
+                    true
+                } else {
+                    false
+                }
+            },
+        )
+    }
+    let mut local = bindings.clone();
+    if graph(
+        left,
+        right,
+        &mut Alpha::default(),
+        &mut local,
+        &mut |_, _| true,
+    ) {
+        *bindings = local;
+        true
+    } else {
         false
     }
-    go(left, right, &mut vec![false; right.len()], 0, bindings)
 }
 
 fn unify_triple_formula(left: &Triple, right: &Triple, bindings: &mut Bindings) -> bool {
@@ -5829,7 +6326,7 @@ fn unify_term_formula(left: &Term, right: &Term, bindings: &mut Bindings) -> boo
         (Term::Var(a), _) => bind_one_mut(bindings, a, r.clone()),
         (_, Term::Var(b)) => bind_one_mut(bindings, b, l.clone()),
         (Term::List(xs), Term::List(ys)) if xs.len() == ys.len() => xs.iter().zip(ys.iter()).all(|(x, y)| unify_term_formula(x, y, bindings)),
-        (Term::Formula(xs), Term::Formula(ys)) if xs.len() == ys.len() => unify_formula_unordered(xs, ys, bindings),
+        (Term::Formula(xs), Term::Formula(ys)) => unify_formula_unordered(xs, ys, bindings),
         (Term::Blank(a), Term::Blank(b)) => a == b,
         _ => terms_equal_semantic(&l, &r),
     }
@@ -5894,15 +6391,7 @@ fn instantiate_term(
             for item in items { out.push(instantiate_term(item, bindings, blank_map)?); }
             Some(Term::List(out))
         }
-        Term::Formula(triples) => {
-            let mut out = Vec::with_capacity(triples.len());
-            let mut formula_blank_map = BTreeMap::<Name, Term>::new();
-            let salt = stable_formula_suffix(bindings, triples);
-            for triple in triples {
-                out.push(instantiate_formula_triple(triple, bindings, &mut formula_blank_map, &salt));
-            }
-            Some(Term::Formula(out))
-        }
+        Term::Formula(graph) => Some(Term::Formula(instantiate_graph_term(graph, bindings, blank_map))),
         other => Some(other.clone()),
     }
 }
@@ -5935,13 +6424,33 @@ fn instantiate_formula_term(
             fresh
         }
         Term::List(items) => Term::List(items.iter().map(|item| instantiate_formula_term(item, bindings, blank_map, salt)).collect()),
-        Term::Formula(triples) => {
-            let nested_salt = stable_formula_suffix(bindings, triples);
-            let mut nested_blank_map = BTreeMap::<Name, Term>::new();
-            Term::Formula(triples.iter().map(|t| instantiate_formula_triple(t, bindings, &mut nested_blank_map, &nested_salt)).collect())
-        }
+        Term::Formula(graph) => Term::Formula(instantiate_graph_term(graph, bindings, blank_map)),
         other => other.clone(),
     }
+}
+
+fn instantiate_graph_term(
+    graph: &Graph,
+    bindings: &Bindings,
+    outer_blanks: &BTreeMap<Name, Term>,
+) -> Graph {
+    let local = bindings_without_bound(graph, bindings);
+    let salt = stable_formula_suffix(&local, graph);
+    let mut blanks = outer_blanks.clone();
+    for name in &graph.existentials {
+        blanks.insert(name.clone(), Term::blank(format!("{}_{}", name, salt)));
+    }
+    let mut result =
+        graph.map_triples(|t| instantiate_formula_triple(t, &local, &mut blanks, &salt));
+    result.existentials = graph
+        .existentials
+        .iter()
+        .map(|name| match &blanks[name] {
+            Term::Blank(n) => n.clone(),
+            _ => unreachable!(),
+        })
+        .collect();
+    result
 }
 
 fn stable_formula_suffix(bindings: &Bindings, triples: &[Triple]) -> String {
@@ -6089,6 +6598,7 @@ fn occurs_in_with_seen(
             let mut branch_seen = seen.clone();
             occurs_in_with_seen(name, item, bindings, &mut branch_seen)
         }),
+        Term::Formula(triples) if triples.universals.iter().any(|n| n == name) => false,
         Term::Formula(triples) => triples.iter().any(|triple| {
             let mut s_seen = seen.clone();
             let mut p_seen = seen.clone();
@@ -6128,16 +6638,14 @@ fn resolve_with_seen(term: &Term, bindings: &Bindings, seen: &mut HashSet<Name>)
             let mut branch_seen = seen.clone();
             resolve_with_seen(item, bindings, &mut branch_seen)
         }).collect()),
-        Term::Formula(triples) => Term::Formula(triples.iter().map(|t| {
-            let mut s_seen = seen.clone();
-            let mut p_seen = seen.clone();
-            let mut o_seen = seen.clone();
-            Triple::new(
-                resolve_with_seen(&t.s, bindings, &mut s_seen),
-                resolve_with_seen(&t.p, bindings, &mut p_seen),
-                resolve_with_seen(&t.o, bindings, &mut o_seen),
-            )
-        }).collect()),
+        Term::Formula(graph) => {
+            let local = bindings_without_bound(graph, bindings);
+            Term::Formula(graph.map_triples(|t| Triple::new(
+                resolve_with_seen(&t.s, &local, &mut seen.clone()),
+                resolve_with_seen(&t.p, &local, &mut seen.clone()),
+                resolve_with_seen(&t.o, &local, &mut seen.clone()),
+            )))
+        }
         _ => term.clone(),
     }
 }

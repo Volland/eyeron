@@ -32,11 +32,11 @@ genid:c51e9d445f9ef621 a dpv:RiskMitigationMeasure .
 genid:c51e9d445f9ef621 dct:description "Limit retention to 3 years (or document the legal obligation requiring longer retention)." .
 genid:c51e9d445f9ef621 dpv:mitigatesRisk genid:6d18345e03468b09 .
 genid:c51e9d445f9ef621 :suggestAdd {
-    :PermRetention10y odrl:constraint _:b18_53286deaa40037d1 .
-    _:b18_53286deaa40037d1 a odrl:Constraint .
-    _:b18_53286deaa40037d1 odrl:leftOperand :retentionDays .
-    _:b18_53286deaa40037d1 odrl:operator odrl:lteq .
-    _:b18_53286deaa40037d1 odrl:rightOperand 1095 .
+    :PermRetention10y odrl:constraint _:b18_9050dacd9fbb61e5 .
+    _:b18_9050dacd9fbb61e5 a odrl:Constraint .
+    _:b18_9050dacd9fbb61e5 odrl:leftOperand :retentionDays .
+    _:b18_9050dacd9fbb61e5 odrl:operator odrl:lteq .
+    _:b18_9050dacd9fbb61e5 odrl:rightOperand 1095 .
 } .
 genid:6d18345e03468b09 dpv:isMitigatedByMeasure genid:c51e9d445f9ef621 .
 genid:6d18345e03468b09 :score 70 .
@@ -357,10 +357,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -518,10 +518,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
       _:b7 odrl:rightOperand 3650 .
   } log:includes {
       :PermRetention10y a odrl:Permission .
-      :PermRetention10y odrl:constraint ?_:b17 .
-      ?_:b17 a odrl:Constraint .
-      ?_:b17 odrl:leftOperand :retentionDays .
-      ?_:b17 odrl:rightOperand 3650 .
+      :PermRetention10y odrl:constraint _:b17 .
+      _:b17 a odrl:Constraint .
+      _:b17 odrl:leftOperand :retentionDays .
+      _:b17 odrl:rightOperand 3650 .
       :PermRetention10y :clause :ClauseH4 .
   } .
 }
@@ -768,10 +768,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -1001,10 +1001,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -1234,10 +1234,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -1467,10 +1467,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -1700,10 +1700,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -1933,10 +1933,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -2166,10 +2166,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -2399,10 +2399,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -2632,10 +2632,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -2865,10 +2865,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -3098,10 +3098,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -3331,10 +3331,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -3564,10 +3564,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -3797,10 +3797,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -4030,10 +4030,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -4263,10 +4263,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -4496,10 +4496,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -4729,10 +4729,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -4747,11 +4747,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
 
 {
   genid:c51e9d445f9ef621 :suggestAdd {
-      :PermRetention10y odrl:constraint _:b18_53286deaa40037d1 .
-      _:b18_53286deaa40037d1 a odrl:Constraint .
-      _:b18_53286deaa40037d1 odrl:leftOperand :retentionDays .
-      _:b18_53286deaa40037d1 odrl:operator odrl:lteq .
-      _:b18_53286deaa40037d1 odrl:rightOperand 1095 .
+      :PermRetention10y odrl:constraint _:b18_9050dacd9fbb61e5 .
+      _:b18_9050dacd9fbb61e5 a odrl:Constraint .
+      _:b18_9050dacd9fbb61e5 odrl:leftOperand :retentionDays .
+      _:b18_9050dacd9fbb61e5 odrl:operator odrl:lteq .
+      _:b18_9050dacd9fbb61e5 odrl:rightOperand 1095 .
   } .
 }
   pe:rule 4;
@@ -4970,10 +4970,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -5203,10 +5203,10 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:rightOperand 3650 .
         } log:includes {
             :PermRetention10y a odrl:Permission .
-            :PermRetention10y odrl:constraint ?_:b17 .
-            ?_:b17 a odrl:Constraint .
-            ?_:b17 odrl:leftOperand :retentionDays .
-            ?_:b17 odrl:rightOperand 3650 .
+            :PermRetention10y odrl:constraint _:b17 .
+            _:b17 a odrl:Constraint .
+            _:b17 odrl:leftOperand :retentionDays .
+            _:b17 odrl:rightOperand 3650 .
             :PermRetention10y :clause :ClauseH4 .
         } .
     },
@@ -5596,11 +5596,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -5755,11 +5755,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
       _:b7 odrl:operator odrl:eq .
       _:b7 odrl:rightOperand 3650 .
   } log:notIncludes {
-      :PermResearchUse odrl:constraint ?_:b8 .
-      ?_:b8 a odrl:Constraint .
-      ?_:b8 odrl:leftOperand :explicitConsent .
-      ?_:b8 odrl:operator odrl:eq .
-      ?_:b8 odrl:rightOperand true .
+      :PermResearchUse odrl:constraint _:b8 .
+      _:b8 a odrl:Constraint .
+      _:b8 odrl:leftOperand :explicitConsent .
+      _:b8 odrl:operator odrl:eq .
+      _:b8 odrl:rightOperand true .
   } .
 }
   pe:builtin log:notIncludes.
@@ -6068,11 +6068,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -6366,11 +6366,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -6664,11 +6664,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -6962,11 +6962,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -7260,11 +7260,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -7558,11 +7558,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -7856,11 +7856,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -8154,11 +8154,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -8452,11 +8452,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -8750,11 +8750,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -9048,11 +9048,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -9346,11 +9346,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -9644,11 +9644,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -9942,11 +9942,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -10240,11 +10240,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -10538,11 +10538,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -10836,11 +10836,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -11134,11 +11134,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -11432,11 +11432,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -11738,11 +11738,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -12036,11 +12036,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermResearchUse odrl:constraint ?_:b8 .
-            ?_:b8 a odrl:Constraint .
-            ?_:b8 odrl:leftOperand :explicitConsent .
-            ?_:b8 odrl:operator odrl:eq .
-            ?_:b8 odrl:rightOperand true .
+            :PermResearchUse odrl:constraint _:b8 .
+            _:b8 a odrl:Constraint .
+            _:b8 odrl:leftOperand :explicitConsent .
+            _:b8 odrl:operator odrl:eq .
+            _:b8 odrl:rightOperand true .
         } .
     },
     { :ClauseH1 :clauseId "H1" . },
@@ -12334,11 +12334,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -12493,11 +12493,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
       _:b7 odrl:operator odrl:eq .
       _:b7 odrl:rightOperand 3650 .
   } log:notIncludes {
-      :PermShareWithPharma odrl:constraint ?_:b10 .
-      ?_:b10 a odrl:Constraint .
-      ?_:b10 odrl:leftOperand :deIdentified .
-      ?_:b10 odrl:operator odrl:eq .
-      ?_:b10 odrl:rightOperand true .
+      :PermShareWithPharma odrl:constraint _:b10 .
+      _:b10 a odrl:Constraint .
+      _:b10 odrl:leftOperand :deIdentified .
+      _:b10 odrl:operator odrl:eq .
+      _:b10 odrl:rightOperand true .
   } .
 }
   pe:builtin log:notIncludes.
@@ -12806,11 +12806,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -13104,11 +13104,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -13402,11 +13402,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -13700,11 +13700,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -13998,11 +13998,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -14296,11 +14296,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -14594,11 +14594,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -14892,11 +14892,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -15190,11 +15190,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -15488,11 +15488,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -15786,11 +15786,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -16084,11 +16084,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -16382,11 +16382,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -16680,11 +16680,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -16978,11 +16978,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -17276,11 +17276,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -17574,11 +17574,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -17872,11 +17872,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -18170,11 +18170,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -18468,11 +18468,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -18782,11 +18782,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
@@ -19080,11 +19080,11 @@ genid:af0faa1da0665b07 dpv:hasRiskLevel risk:HighRisk .
             _:b7 odrl:operator odrl:eq .
             _:b7 odrl:rightOperand 3650 .
         } log:notIncludes {
-            :PermShareWithPharma odrl:constraint ?_:b10 .
-            ?_:b10 a odrl:Constraint .
-            ?_:b10 odrl:leftOperand :deIdentified .
-            ?_:b10 odrl:operator odrl:eq .
-            ?_:b10 odrl:rightOperand true .
+            :PermShareWithPharma odrl:constraint _:b10 .
+            _:b10 a odrl:Constraint .
+            _:b10 odrl:leftOperand :deIdentified .
+            _:b10 odrl:operator odrl:eq .
+            _:b10 odrl:rightOperand true .
         } .
     },
     { :ClauseH2 :clauseId "H2" . },
