@@ -1,0 +1,925 @@
+@prefix : <http://example.org/farming#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:answer :text "In this nitrogen-balance model, LowInputDry ends up under-supplied in N, BalancedLoam is close to the crop’s demand, and both HighInputRisk and SandyOverFertil are over-supplied. LowInputDry has too little total N input, so even after modest losses the available N falls clearly below the crop demand. BalancedLoam combines soil N and fertilizer N so that, after typical field losses, the available N lies within about plus or minus ten percent of the target demand. HighInputRisk applies more fertilizer than the crop needs, so available N overshoots the demand and some surplus is exposed to loss. SandyOverFertil applies even more N on a soil with a larger loss fraction, leading to the biggest surplus and the highest leaching index of all fields." .
+:answer :usesField :LowInputDry .
+:answer :usesField :BalancedLoam .
+:answer :usesField :HighInputRisk .
+:answer :usesField :SandyOverFertil .
+:reason :says "The model uses a simple nitrogen balance: totalN = soilN + fertN, then availN = totalN · (1 − lossFrac). The crop’s N demand defines a target level. If availN falls below about 0.9 × demand, the field is classified as under-supplied; if it lies between 0.9 and 1.1 times demand it is called balanced; and if it exceeds 1.1 × demand it is over-supplied. In LowInputDry, soil N plus fertilizer N is modest, so even after multiplying by (1 − lossFrac) the available N is much smaller than the demand, generating a large deficit. In BalancedLoam, the chosen fertilizer rate brings totalN high enough that, after losses, availN sits close to the target demand. In HighInputRisk and SandyOverFertil, totalN is large enough that availN overshoots the demand, creating a positive surplus. The leaching index is defined as surplusN × lossFrac, so it grows both with the size of the surplus and with the loss fraction. SandyOverFertil combines a large surplus with a high lossFrac, which makes its leaching index the largest among the four fields. These behaviours follow directly from the linear dependence of availN on soilN, fertN and lossFrac and from comparing availN with the crop’s N demand." .
+:check1 :ok true .
+:check1 :msg "Check 1: all example fields have derived total N, available N, deficit, surplus and a leaching index." .
+:check2 :ok true .
+:check2 :msg "Check 2: the under-supplied LowInputDry field has a positive N deficit and no surplus, while the over-supplied fields have positive surpluses and essentially no deficit." .
+:check3 :ok true .
+:check3 :msg "Check 3: the BalancedLoam field has the smallest N imbalance: its deficit is smaller than the deficit in LowInputDry and smaller than the surpluses in the two over-supplied fields." .
+:check4 :ok true .
+:check4 :msg "Check 4: moving from the BalancedLoam to the HighInputRisk field increases fertilizer N, which raises total N, available N and the N surplus." .
+:check5 :ok true .
+:check5 :msg "Check 5: the SandyOverFertil field has the largest leaching index, confirming that combining a large N surplus with a high loss fraction yields the highest potential loss in this model." .
+
+{ :answer :text "In this nitrogen-balance model, LowInputDry ends up under-supplied in N, BalancedLoam is close to the crop’s demand, and both HighInputRisk and SandyOverFertil are over-supplied. LowInputDry has too little total N input, so even after modest losses the available N falls clearly below the crop demand. BalancedLoam combines soil N and fertilizer N so that, after typical field losses, the available N lies within about plus or minus ten percent of the target demand. HighInputRisk applies more fertilizer than the crop needs, so available N overshoots the demand and some surplus is exposed to loss. SandyOverFertil applies even more N on a soil with a larger loss fraction, leading to the biggest surplus and the highest leaching index of all fields." . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "Lbal"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lhigh"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "Llow"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lsand"; pe:value 7.2 ];
+  pe:uses
+    { :LowInputDry :status "under" . },
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :status "balanced" . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :status "over" . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :leachIndex 7.2 . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "5"^^xsd:decimal . }.
+
+{ :LowInputDry :status "under" . }
+  pe:rule 8;
+  pe:binding
+    [ pe:var "F"; pe:value :LowInputDry ],
+    [ pe:var "a"; pe:value "85"^^xsd:decimal ],
+    [ pe:var "d"; pe:value 130.0 ],
+    [ pe:var "dLow"; pe:value "117"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :cropNdemand 130.0 . },
+    { :LowInputDry :availN "85"^^xsd:decimal . },
+    { (0.9 130.0) math:product "117"^^xsd:decimal . },
+    { "85"^^xsd:decimal math:lessThan "117"^^xsd:decimal . }.
+
+{ :LowInputDry :cropNdemand 130.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :LowInputDry :availN "85"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "F"; pe:value :LowInputDry ],
+    [ pe:var "avail"; pe:value "85"^^xsd:decimal ],
+    [ pe:var "keepFrac"; pe:value 0.85 ],
+    [ pe:var "lf"; pe:value 0.15 ],
+    [ pe:var "tot"; pe:value "100"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :totalN "100"^^xsd:decimal . },
+    { :LowInputDry :lossFrac 0.15 . },
+    { (1.0 0.15) math:difference 0.85 . },
+    { ("100"^^xsd:decimal 0.85) math:product "85"^^xsd:decimal . }.
+
+{ :LowInputDry :totalN "100"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :LowInputDry ],
+    [ pe:var "fert"; pe:value 60.0 ],
+    [ pe:var "soil"; pe:value 40.0 ],
+    [ pe:var "tot"; pe:value "100"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry a :Field . },
+    { :LowInputDry :soilN 40.0 . },
+    { :LowInputDry :fertN 60.0 . },
+    { (40.0 60.0) math:sum "100"^^xsd:decimal . }.
+
+{ :LowInputDry a :Field . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :LowInputDry :soilN 40.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :LowInputDry :fertN 60.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ (40.0 60.0) math:sum "100"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ :LowInputDry :lossFrac 0.15 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ (1.0 0.15) math:difference 0.85 . }
+  pe:builtin math:difference.
+
+{ ("100"^^xsd:decimal 0.85) math:product "85"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (0.9 130.0) math:product "117"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ "85"^^xsd:decimal math:lessThan "117"^^xsd:decimal . }
+  pe:builtin math:lessThan.
+
+{ :LowInputDry :leachIndex "0"^^xsd:decimal . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "F"; pe:value :LowInputDry ],
+    [ pe:var "L"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "lf"; pe:value 0.15 ],
+    [ pe:var "surp"; pe:value 0.0 ];
+  pe:uses
+    { :LowInputDry :surplusN 0.0 . },
+    { :LowInputDry :lossFrac 0.15 . },
+    { (0.0 0.15) math:product "0"^^xsd:decimal . }.
+
+{ :LowInputDry :surplusN 0.0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "F"; pe:value :LowInputDry ],
+    [ pe:var "avail"; pe:value "85"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 130.0 ];
+  pe:uses
+    { :LowInputDry :cropNdemand 130.0 . },
+    { :LowInputDry :availN "85"^^xsd:decimal . },
+    { "85"^^xsd:decimal math:notGreaterThan 130.0 . }.
+
+{ "85"^^xsd:decimal math:notGreaterThan 130.0 . }
+  pe:builtin math:notGreaterThan.
+
+{ (0.0 0.15) math:product "0"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ :BalancedLoam :status "balanced" . }
+  pe:rule 9;
+  pe:binding
+    [ pe:var "F"; pe:value :BalancedLoam ],
+    [ pe:var "a"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "d"; pe:value 130.0 ],
+    [ pe:var "dHigh"; pe:value "143"^^xsd:decimal ],
+    [ pe:var "dLow"; pe:value "117"^^xsd:decimal ];
+  pe:uses
+    { :BalancedLoam :cropNdemand 130.0 . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { (0.9 130.0) math:product "117"^^xsd:decimal . },
+    { (1.1 130.0) math:product "143"^^xsd:decimal . },
+    { "119"^^xsd:decimal math:notLessThan "117"^^xsd:decimal . },
+    { "119"^^xsd:decimal math:notGreaterThan "143"^^xsd:decimal . }.
+
+{ :BalancedLoam :cropNdemand 130.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :BalancedLoam :availN "119"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "F"; pe:value :BalancedLoam ],
+    [ pe:var "avail"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "keepFrac"; pe:value 0.85 ],
+    [ pe:var "lf"; pe:value 0.15 ],
+    [ pe:var "tot"; pe:value "140"^^xsd:decimal ];
+  pe:uses
+    { :BalancedLoam :totalN "140"^^xsd:decimal . },
+    { :BalancedLoam :lossFrac 0.15 . },
+    { (1.0 0.15) math:difference 0.85 . },
+    { ("140"^^xsd:decimal 0.85) math:product "119"^^xsd:decimal . }.
+
+{ :BalancedLoam :totalN "140"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :BalancedLoam ],
+    [ pe:var "fert"; pe:value 90.0 ],
+    [ pe:var "soil"; pe:value 50.0 ],
+    [ pe:var "tot"; pe:value "140"^^xsd:decimal ];
+  pe:uses
+    { :BalancedLoam a :Field . },
+    { :BalancedLoam :soilN 50.0 . },
+    { :BalancedLoam :fertN 90.0 . },
+    { (50.0 90.0) math:sum "140"^^xsd:decimal . }.
+
+{ :BalancedLoam a :Field . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :BalancedLoam :soilN 50.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :BalancedLoam :fertN 90.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ (50.0 90.0) math:sum "140"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ :BalancedLoam :lossFrac 0.15 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ ("140"^^xsd:decimal 0.85) math:product "119"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (1.1 130.0) math:product "143"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ "119"^^xsd:decimal math:notLessThan "117"^^xsd:decimal . }
+  pe:builtin math:notLessThan.
+
+{ "119"^^xsd:decimal math:notGreaterThan "143"^^xsd:decimal . }
+  pe:builtin math:notGreaterThan.
+
+{ :BalancedLoam :leachIndex "0"^^xsd:decimal . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "F"; pe:value :BalancedLoam ],
+    [ pe:var "L"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "lf"; pe:value 0.15 ],
+    [ pe:var "surp"; pe:value 0.0 ];
+  pe:uses
+    { :BalancedLoam :surplusN 0.0 . },
+    { :BalancedLoam :lossFrac 0.15 . },
+    { (0.0 0.15) math:product "0"^^xsd:decimal . }.
+
+{ :BalancedLoam :surplusN 0.0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "F"; pe:value :BalancedLoam ],
+    [ pe:var "avail"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 130.0 ];
+  pe:uses
+    { :BalancedLoam :cropNdemand 130.0 . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { "119"^^xsd:decimal math:notGreaterThan 130.0 . }.
+
+{ "119"^^xsd:decimal math:notGreaterThan 130.0 . }
+  pe:builtin math:notGreaterThan.
+
+{ :HighInputRisk :status "over" . }
+  pe:rule 10;
+  pe:binding
+    [ pe:var "F"; pe:value :HighInputRisk ],
+    [ pe:var "a"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "d"; pe:value 160.0 ],
+    [ pe:var "dHigh"; pe:value "176"^^xsd:decimal ];
+  pe:uses
+    { :HighInputRisk :cropNdemand 160.0 . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { (1.1 160.0) math:product "176"^^xsd:decimal . },
+    { "180"^^xsd:decimal math:greaterThan "176"^^xsd:decimal . }.
+
+{ :HighInputRisk :cropNdemand 160.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :HighInputRisk :availN "180"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "F"; pe:value :HighInputRisk ],
+    [ pe:var "avail"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "keepFrac"; pe:value 0.75 ],
+    [ pe:var "lf"; pe:value 0.25 ],
+    [ pe:var "tot"; pe:value "240"^^xsd:decimal ];
+  pe:uses
+    { :HighInputRisk :totalN "240"^^xsd:decimal . },
+    { :HighInputRisk :lossFrac 0.25 . },
+    { (1.0 0.25) math:difference 0.75 . },
+    { ("240"^^xsd:decimal 0.75) math:product "180"^^xsd:decimal . }.
+
+{ :HighInputRisk :totalN "240"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :HighInputRisk ],
+    [ pe:var "fert"; pe:value 180.0 ],
+    [ pe:var "soil"; pe:value 60.0 ],
+    [ pe:var "tot"; pe:value "240"^^xsd:decimal ];
+  pe:uses
+    { :HighInputRisk a :Field . },
+    { :HighInputRisk :soilN 60.0 . },
+    { :HighInputRisk :fertN 180.0 . },
+    { (60.0 180.0) math:sum "240"^^xsd:decimal . }.
+
+{ :HighInputRisk a :Field . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :HighInputRisk :soilN 60.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :HighInputRisk :fertN 180.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ (60.0 180.0) math:sum "240"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ :HighInputRisk :lossFrac 0.25 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ (1.0 0.25) math:difference 0.75 . }
+  pe:builtin math:difference.
+
+{ ("240"^^xsd:decimal 0.75) math:product "180"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (1.1 160.0) math:product "176"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ "180"^^xsd:decimal math:greaterThan "176"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ :HighInputRisk :leachIndex "5"^^xsd:decimal . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "F"; pe:value :HighInputRisk ],
+    [ pe:var "L"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "lf"; pe:value 0.25 ],
+    [ pe:var "surp"; pe:value "20"^^xsd:decimal ];
+  pe:uses
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { :HighInputRisk :lossFrac 0.25 . },
+    { ("20"^^xsd:decimal 0.25) math:product "5"^^xsd:decimal . }.
+
+{ :HighInputRisk :surplusN "20"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "F"; pe:value :HighInputRisk ],
+    [ pe:var "avail"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 160.0 ],
+    [ pe:var "surp"; pe:value "20"^^xsd:decimal ];
+  pe:uses
+    { :HighInputRisk :cropNdemand 160.0 . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { "180"^^xsd:decimal math:greaterThan 160.0 . },
+    { ("180"^^xsd:decimal 160.0) math:difference "20"^^xsd:decimal . }.
+
+{ "180"^^xsd:decimal math:greaterThan 160.0 . }
+  pe:builtin math:greaterThan.
+
+{ ("180"^^xsd:decimal 160.0) math:difference "20"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ ("20"^^xsd:decimal 0.25) math:product "5"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ :SandyOverFertil :status "over" . }
+  pe:rule 10;
+  pe:binding
+    [ pe:var "F"; pe:value :SandyOverFertil ],
+    [ pe:var "a"; pe:value "168"^^xsd:decimal ],
+    [ pe:var "d"; pe:value 150.0 ],
+    [ pe:var "dHigh"; pe:value "165"^^xsd:decimal ];
+  pe:uses
+    { :SandyOverFertil :cropNdemand 150.0 . },
+    { :SandyOverFertil :availN "168"^^xsd:decimal . },
+    { (1.1 150.0) math:product "165"^^xsd:decimal . },
+    { "168"^^xsd:decimal math:greaterThan "165"^^xsd:decimal . }.
+
+{ :SandyOverFertil :cropNdemand 150.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :SandyOverFertil :availN "168"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "F"; pe:value :SandyOverFertil ],
+    [ pe:var "avail"; pe:value "168"^^xsd:decimal ],
+    [ pe:var "keepFrac"; pe:value 0.6 ],
+    [ pe:var "lf"; pe:value 0.40 ],
+    [ pe:var "tot"; pe:value "280"^^xsd:decimal ];
+  pe:uses
+    { :SandyOverFertil :totalN "280"^^xsd:decimal . },
+    { :SandyOverFertil :lossFrac 0.40 . },
+    { (1.0 0.40) math:difference 0.6 . },
+    { ("280"^^xsd:decimal 0.6) math:product "168"^^xsd:decimal . }.
+
+{ :SandyOverFertil :totalN "280"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :SandyOverFertil ],
+    [ pe:var "fert"; pe:value 240.0 ],
+    [ pe:var "soil"; pe:value 40.0 ],
+    [ pe:var "tot"; pe:value "280"^^xsd:decimal ];
+  pe:uses
+    { :SandyOverFertil a :Field . },
+    { :SandyOverFertil :soilN 40.0 . },
+    { :SandyOverFertil :fertN 240.0 . },
+    { (40.0 240.0) math:sum "280"^^xsd:decimal . }.
+
+{ :SandyOverFertil a :Field . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :SandyOverFertil :soilN 40.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ :SandyOverFertil :fertN 240.0 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ (40.0 240.0) math:sum "280"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ :SandyOverFertil :lossFrac 0.40 . }
+  pe:fact "field-nitrogen-balance.n3".
+
+{ (1.0 0.40) math:difference 0.6 . }
+  pe:builtin math:difference.
+
+{ ("280"^^xsd:decimal 0.6) math:product "168"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (1.1 150.0) math:product "165"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ "168"^^xsd:decimal math:greaterThan "165"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ :SandyOverFertil :leachIndex 7.2 . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "F"; pe:value :SandyOverFertil ],
+    [ pe:var "L"; pe:value 7.2 ],
+    [ pe:var "lf"; pe:value 0.40 ],
+    [ pe:var "surp"; pe:value "18"^^xsd:decimal ];
+  pe:uses
+    { :SandyOverFertil :surplusN "18"^^xsd:decimal . },
+    { :SandyOverFertil :lossFrac 0.40 . },
+    { ("18"^^xsd:decimal 0.40) math:product 7.2 . }.
+
+{ :SandyOverFertil :surplusN "18"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "F"; pe:value :SandyOverFertil ],
+    [ pe:var "avail"; pe:value "168"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 150.0 ],
+    [ pe:var "surp"; pe:value "18"^^xsd:decimal ];
+  pe:uses
+    { :SandyOverFertil :cropNdemand 150.0 . },
+    { :SandyOverFertil :availN "168"^^xsd:decimal . },
+    { "168"^^xsd:decimal math:greaterThan 150.0 . },
+    { ("168"^^xsd:decimal 150.0) math:difference "18"^^xsd:decimal . }.
+
+{ "168"^^xsd:decimal math:greaterThan 150.0 . }
+  pe:builtin math:greaterThan.
+
+{ ("168"^^xsd:decimal 150.0) math:difference "18"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ ("18"^^xsd:decimal 0.40) math:product 7.2 . }
+  pe:builtin math:product.
+
+{ 7.2 math:greaterThan "0"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ 7.2 math:greaterThan "5"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ :answer :usesField :LowInputDry . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "Lbal"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lhigh"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "Llow"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lsand"; pe:value 7.2 ];
+  pe:uses
+    { :LowInputDry :status "under" . },
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :status "balanced" . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :status "over" . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :leachIndex 7.2 . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "5"^^xsd:decimal . }.
+
+{ :answer :usesField :BalancedLoam . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "Lbal"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lhigh"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "Llow"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lsand"; pe:value 7.2 ];
+  pe:uses
+    { :LowInputDry :status "under" . },
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :status "balanced" . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :status "over" . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :leachIndex 7.2 . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "5"^^xsd:decimal . }.
+
+{ :answer :usesField :HighInputRisk . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "Lbal"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lhigh"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "Llow"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lsand"; pe:value 7.2 ];
+  pe:uses
+    { :LowInputDry :status "under" . },
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :status "balanced" . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :status "over" . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :leachIndex 7.2 . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "5"^^xsd:decimal . }.
+
+{ :answer :usesField :SandyOverFertil . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "Lbal"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lhigh"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "Llow"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lsand"; pe:value 7.2 ];
+  pe:uses
+    { :LowInputDry :status "under" . },
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :status "balanced" . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :status "over" . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :leachIndex 7.2 . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "5"^^xsd:decimal . }.
+
+{ :reason :says "The model uses a simple nitrogen balance: totalN = soilN + fertN, then availN = totalN · (1 − lossFrac). The crop’s N demand defines a target level. If availN falls below about 0.9 × demand, the field is classified as under-supplied; if it lies between 0.9 and 1.1 times demand it is called balanced; and if it exceeds 1.1 × demand it is over-supplied. In LowInputDry, soil N plus fertilizer N is modest, so even after multiplying by (1 − lossFrac) the available N is much smaller than the demand, generating a large deficit. In BalancedLoam, the chosen fertilizer rate brings totalN high enough that, after losses, availN sits close to the target demand. In HighInputRisk and SandyOverFertil, totalN is large enough that availN overshoots the demand, creating a positive surplus. The leaching index is defined as surplusN × lossFrac, so it grows both with the size of the surplus and with the loss fraction. SandyOverFertil combines a large surplus with a high lossFrac, which makes its leaching index the largest among the four fields. These behaviours follow directly from the linear dependence of availN on soilN, fertN and lossFrac and from comparing availN with the crop’s N demand." . }
+  pe:rule 12;
+  pe:binding
+    [ pe:var "Lsand"; pe:value 7.2 ],
+    [ pe:var "availBal"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "availHigh"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "availLow"; pe:value "85"^^xsd:decimal ],
+    [ pe:var "availSand"; pe:value "168"^^xsd:decimal ],
+    [ pe:var "demBal"; pe:value 130.0 ],
+    [ pe:var "demHigh"; pe:value 160.0 ],
+    [ pe:var "demLow"; pe:value 130.0 ],
+    [ pe:var "demSand"; pe:value 150.0 ],
+    [ pe:var "totBal"; pe:value "140"^^xsd:decimal ],
+    [ pe:var "totHigh"; pe:value "240"^^xsd:decimal ],
+    [ pe:var "totLow"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "totSand"; pe:value "280"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :totalN "100"^^xsd:decimal . },
+    { :LowInputDry :availN "85"^^xsd:decimal . },
+    { :LowInputDry :cropNdemand 130.0 . },
+    { :LowInputDry :status "under" . },
+    { :BalancedLoam :totalN "140"^^xsd:decimal . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { :BalancedLoam :cropNdemand 130.0 . },
+    { :BalancedLoam :status "balanced" . },
+    { :HighInputRisk :totalN "240"^^xsd:decimal . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { :HighInputRisk :cropNdemand 160.0 . },
+    { :HighInputRisk :status "over" . },
+    { :SandyOverFertil :totalN "280"^^xsd:decimal . },
+    { :SandyOverFertil :availN "168"^^xsd:decimal . },
+    { :SandyOverFertil :cropNdemand 150.0 . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :leachIndex 7.2 . }.
+
+{ :check1 :ok true . }
+  pe:rule 13;
+  pe:binding
+    [ pe:var "L1"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "L2"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "L3"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "L4"; pe:value 7.2 ],
+    [ pe:var "a1"; pe:value "85"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "a3"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "a4"; pe:value "168"^^xsd:decimal ],
+    [ pe:var "d1"; pe:value "45"^^xsd:decimal ],
+    [ pe:var "d2"; pe:value "11"^^xsd:decimal ],
+    [ pe:var "d3"; pe:value 0.0 ],
+    [ pe:var "d4"; pe:value 0.0 ],
+    [ pe:var "s1"; pe:value 0.0 ],
+    [ pe:var "s2"; pe:value 0.0 ],
+    [ pe:var "s3"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "s4"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "t1"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "t2"; pe:value "140"^^xsd:decimal ],
+    [ pe:var "t3"; pe:value "240"^^xsd:decimal ],
+    [ pe:var "t4"; pe:value "280"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :totalN "100"^^xsd:decimal . },
+    { :LowInputDry :availN "85"^^xsd:decimal . },
+    { :LowInputDry :deficitN "45"^^xsd:decimal . },
+    { :LowInputDry :surplusN 0.0 . },
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :totalN "140"^^xsd:decimal . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { :BalancedLoam :deficitN "11"^^xsd:decimal . },
+    { :BalancedLoam :surplusN 0.0 . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :totalN "240"^^xsd:decimal . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { :HighInputRisk :deficitN 0.0 . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :totalN "280"^^xsd:decimal . },
+    { :SandyOverFertil :availN "168"^^xsd:decimal . },
+    { :SandyOverFertil :deficitN 0.0 . },
+    { :SandyOverFertil :surplusN "18"^^xsd:decimal . },
+    { :SandyOverFertil :leachIndex 7.2 . }.
+
+{ :LowInputDry :deficitN "45"^^xsd:decimal . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "F"; pe:value :LowInputDry ],
+    [ pe:var "avail"; pe:value "85"^^xsd:decimal ],
+    [ pe:var "def"; pe:value "45"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 130.0 ];
+  pe:uses
+    { :LowInputDry :cropNdemand 130.0 . },
+    { :LowInputDry :availN "85"^^xsd:decimal . },
+    { "85"^^xsd:decimal math:lessThan 130.0 . },
+    { (130.0 "85"^^xsd:decimal) math:difference "45"^^xsd:decimal . }.
+
+{ "85"^^xsd:decimal math:lessThan 130.0 . }
+  pe:builtin math:lessThan.
+
+{ (130.0 "85"^^xsd:decimal) math:difference "45"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ :BalancedLoam :deficitN "11"^^xsd:decimal . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "F"; pe:value :BalancedLoam ],
+    [ pe:var "avail"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "def"; pe:value "11"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 130.0 ];
+  pe:uses
+    { :BalancedLoam :cropNdemand 130.0 . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { "119"^^xsd:decimal math:lessThan 130.0 . },
+    { (130.0 "119"^^xsd:decimal) math:difference "11"^^xsd:decimal . }.
+
+{ "119"^^xsd:decimal math:lessThan 130.0 . }
+  pe:builtin math:lessThan.
+
+{ (130.0 "119"^^xsd:decimal) math:difference "11"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ :HighInputRisk :deficitN 0.0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "F"; pe:value :HighInputRisk ],
+    [ pe:var "avail"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 160.0 ];
+  pe:uses
+    { :HighInputRisk :cropNdemand 160.0 . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { "180"^^xsd:decimal math:notLessThan 160.0 . }.
+
+{ "180"^^xsd:decimal math:notLessThan 160.0 . }
+  pe:builtin math:notLessThan.
+
+{ :SandyOverFertil :deficitN 0.0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "F"; pe:value :SandyOverFertil ],
+    [ pe:var "avail"; pe:value "168"^^xsd:decimal ],
+    [ pe:var "dem"; pe:value 150.0 ];
+  pe:uses
+    { :SandyOverFertil :cropNdemand 150.0 . },
+    { :SandyOverFertil :availN "168"^^xsd:decimal . },
+    { "168"^^xsd:decimal math:notLessThan 150.0 . }.
+
+{ "168"^^xsd:decimal math:notLessThan 150.0 . }
+  pe:builtin math:notLessThan.
+
+{ :check1 :msg "Check 1: all example fields have derived total N, available N, deficit, surplus and a leaching index." . }
+  pe:rule 13;
+  pe:binding
+    [ pe:var "L1"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "L2"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "L3"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "L4"; pe:value 7.2 ],
+    [ pe:var "a1"; pe:value "85"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "a3"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "a4"; pe:value "168"^^xsd:decimal ],
+    [ pe:var "d1"; pe:value "45"^^xsd:decimal ],
+    [ pe:var "d2"; pe:value "11"^^xsd:decimal ],
+    [ pe:var "d3"; pe:value 0.0 ],
+    [ pe:var "d4"; pe:value 0.0 ],
+    [ pe:var "s1"; pe:value 0.0 ],
+    [ pe:var "s2"; pe:value 0.0 ],
+    [ pe:var "s3"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "s4"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "t1"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "t2"; pe:value "140"^^xsd:decimal ],
+    [ pe:var "t3"; pe:value "240"^^xsd:decimal ],
+    [ pe:var "t4"; pe:value "280"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :totalN "100"^^xsd:decimal . },
+    { :LowInputDry :availN "85"^^xsd:decimal . },
+    { :LowInputDry :deficitN "45"^^xsd:decimal . },
+    { :LowInputDry :surplusN 0.0 . },
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :totalN "140"^^xsd:decimal . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { :BalancedLoam :deficitN "11"^^xsd:decimal . },
+    { :BalancedLoam :surplusN 0.0 . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :totalN "240"^^xsd:decimal . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { :HighInputRisk :deficitN 0.0 . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :totalN "280"^^xsd:decimal . },
+    { :SandyOverFertil :availN "168"^^xsd:decimal . },
+    { :SandyOverFertil :deficitN 0.0 . },
+    { :SandyOverFertil :surplusN "18"^^xsd:decimal . },
+    { :SandyOverFertil :leachIndex 7.2 . }.
+
+{ :check2 :ok true . }
+  pe:rule 14;
+  pe:binding
+    [ pe:var "dHigh"; pe:value 0.0 ],
+    [ pe:var "dLow"; pe:value "45"^^xsd:decimal ],
+    [ pe:var "dSand"; pe:value 0.0 ],
+    [ pe:var "sHigh"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "sLow"; pe:value 0.0 ],
+    [ pe:var "sSand"; pe:value "18"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :status "under" . },
+    { :LowInputDry :deficitN "45"^^xsd:decimal . },
+    { :LowInputDry :surplusN 0.0 . },
+    { :HighInputRisk :status "over" . },
+    { :HighInputRisk :deficitN 0.0 . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :deficitN 0.0 . },
+    { :SandyOverFertil :surplusN "18"^^xsd:decimal . },
+    { "45"^^xsd:decimal math:greaterThan 0.0 . },
+    { 0.0 math:notGreaterThan 0.0 . },
+    { "20"^^xsd:decimal math:greaterThan 0.0 . },
+    { 0.0 math:notGreaterThan 0.0 . },
+    { "18"^^xsd:decimal math:greaterThan 0.0 . },
+    { 0.0 math:notGreaterThan 0.0 . }.
+
+{ "45"^^xsd:decimal math:greaterThan 0.0 . }
+  pe:builtin math:greaterThan.
+
+{ 0.0 math:notGreaterThan 0.0 . }
+  pe:builtin math:notGreaterThan.
+
+{ "20"^^xsd:decimal math:greaterThan 0.0 . }
+  pe:builtin math:greaterThan.
+
+{ "18"^^xsd:decimal math:greaterThan 0.0 . }
+  pe:builtin math:greaterThan.
+
+{ :check2 :msg "Check 2: the under-supplied LowInputDry field has a positive N deficit and no surplus, while the over-supplied fields have positive surpluses and essentially no deficit." . }
+  pe:rule 14;
+  pe:binding
+    [ pe:var "dHigh"; pe:value 0.0 ],
+    [ pe:var "dLow"; pe:value "45"^^xsd:decimal ],
+    [ pe:var "dSand"; pe:value 0.0 ],
+    [ pe:var "sHigh"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "sLow"; pe:value 0.0 ],
+    [ pe:var "sSand"; pe:value "18"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :status "under" . },
+    { :LowInputDry :deficitN "45"^^xsd:decimal . },
+    { :LowInputDry :surplusN 0.0 . },
+    { :HighInputRisk :status "over" . },
+    { :HighInputRisk :deficitN 0.0 . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { :SandyOverFertil :status "over" . },
+    { :SandyOverFertil :deficitN 0.0 . },
+    { :SandyOverFertil :surplusN "18"^^xsd:decimal . },
+    { "45"^^xsd:decimal math:greaterThan 0.0 . },
+    { 0.0 math:notGreaterThan 0.0 . },
+    { "20"^^xsd:decimal math:greaterThan 0.0 . },
+    { 0.0 math:notGreaterThan 0.0 . },
+    { "18"^^xsd:decimal math:greaterThan 0.0 . },
+    { 0.0 math:notGreaterThan 0.0 . }.
+
+{ :check3 :ok true . }
+  pe:rule 15;
+  pe:binding
+    [ pe:var "dBal"; pe:value "11"^^xsd:decimal ],
+    [ pe:var "dLow"; pe:value "45"^^xsd:decimal ],
+    [ pe:var "sHigh"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "sSand"; pe:value "18"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :deficitN "45"^^xsd:decimal . },
+    { :BalancedLoam :deficitN "11"^^xsd:decimal . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { :SandyOverFertil :surplusN "18"^^xsd:decimal . },
+    { "11"^^xsd:decimal math:greaterThan 0.0 . },
+    { "45"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . },
+    { "20"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . },
+    { "18"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . }.
+
+{ "11"^^xsd:decimal math:greaterThan 0.0 . }
+  pe:builtin math:greaterThan.
+
+{ "45"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ "20"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ "18"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ :check3 :msg "Check 3: the BalancedLoam field has the smallest N imbalance: its deficit is smaller than the deficit in LowInputDry and smaller than the surpluses in the two over-supplied fields." . }
+  pe:rule 15;
+  pe:binding
+    [ pe:var "dBal"; pe:value "11"^^xsd:decimal ],
+    [ pe:var "dLow"; pe:value "45"^^xsd:decimal ],
+    [ pe:var "sHigh"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "sSand"; pe:value "18"^^xsd:decimal ];
+  pe:uses
+    { :LowInputDry :deficitN "45"^^xsd:decimal . },
+    { :BalancedLoam :deficitN "11"^^xsd:decimal . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { :SandyOverFertil :surplusN "18"^^xsd:decimal . },
+    { "11"^^xsd:decimal math:greaterThan 0.0 . },
+    { "45"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . },
+    { "20"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . },
+    { "18"^^xsd:decimal math:greaterThan "11"^^xsd:decimal . }.
+
+{ :check4 :ok true . }
+  pe:rule 16;
+  pe:binding
+    [ pe:var "aBal"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "aHigh"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "fBal"; pe:value 90.0 ],
+    [ pe:var "fHigh"; pe:value 180.0 ],
+    [ pe:var "sBal"; pe:value 0.0 ],
+    [ pe:var "sHigh"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "tBal"; pe:value "140"^^xsd:decimal ],
+    [ pe:var "tHigh"; pe:value "240"^^xsd:decimal ];
+  pe:uses
+    { :BalancedLoam :fertN 90.0 . },
+    { :BalancedLoam :totalN "140"^^xsd:decimal . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { :BalancedLoam :surplusN 0.0 . },
+    { :HighInputRisk :fertN 180.0 . },
+    { :HighInputRisk :totalN "240"^^xsd:decimal . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { 180.0 math:greaterThan 90.0 . },
+    { "240"^^xsd:decimal math:greaterThan "140"^^xsd:decimal . },
+    { "180"^^xsd:decimal math:greaterThan "119"^^xsd:decimal . },
+    { "20"^^xsd:decimal math:greaterThan 0.0 . }.
+
+{ 180.0 math:greaterThan 90.0 . }
+  pe:builtin math:greaterThan.
+
+{ "240"^^xsd:decimal math:greaterThan "140"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ "180"^^xsd:decimal math:greaterThan "119"^^xsd:decimal . }
+  pe:builtin math:greaterThan.
+
+{ :check4 :msg "Check 4: moving from the BalancedLoam to the HighInputRisk field increases fertilizer N, which raises total N, available N and the N surplus." . }
+  pe:rule 16;
+  pe:binding
+    [ pe:var "aBal"; pe:value "119"^^xsd:decimal ],
+    [ pe:var "aHigh"; pe:value "180"^^xsd:decimal ],
+    [ pe:var "fBal"; pe:value 90.0 ],
+    [ pe:var "fHigh"; pe:value 180.0 ],
+    [ pe:var "sBal"; pe:value 0.0 ],
+    [ pe:var "sHigh"; pe:value "20"^^xsd:decimal ],
+    [ pe:var "tBal"; pe:value "140"^^xsd:decimal ],
+    [ pe:var "tHigh"; pe:value "240"^^xsd:decimal ];
+  pe:uses
+    { :BalancedLoam :fertN 90.0 . },
+    { :BalancedLoam :totalN "140"^^xsd:decimal . },
+    { :BalancedLoam :availN "119"^^xsd:decimal . },
+    { :BalancedLoam :surplusN 0.0 . },
+    { :HighInputRisk :fertN 180.0 . },
+    { :HighInputRisk :totalN "240"^^xsd:decimal . },
+    { :HighInputRisk :availN "180"^^xsd:decimal . },
+    { :HighInputRisk :surplusN "20"^^xsd:decimal . },
+    { 180.0 math:greaterThan 90.0 . },
+    { "240"^^xsd:decimal math:greaterThan "140"^^xsd:decimal . },
+    { "180"^^xsd:decimal math:greaterThan "119"^^xsd:decimal . },
+    { "20"^^xsd:decimal math:greaterThan 0.0 . }.
+
+{ :check5 :ok true . }
+  pe:rule 17;
+  pe:binding
+    [ pe:var "Lbal"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lhigh"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "Llow"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lsand"; pe:value 7.2 ];
+  pe:uses
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :leachIndex 7.2 . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "5"^^xsd:decimal . }.
+
+{ :check5 :msg "Check 5: the SandyOverFertil field has the largest leaching index, confirming that combining a large N surplus with a high loss fraction yields the highest potential loss in this model." . }
+  pe:rule 17;
+  pe:binding
+    [ pe:var "Lbal"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lhigh"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "Llow"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "Lsand"; pe:value 7.2 ];
+  pe:uses
+    { :LowInputDry :leachIndex "0"^^xsd:decimal . },
+    { :BalancedLoam :leachIndex "0"^^xsd:decimal . },
+    { :HighInputRisk :leachIndex "5"^^xsd:decimal . },
+    { :SandyOverFertil :leachIndex 7.2 . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "0"^^xsd:decimal . },
+    { 7.2 math:greaterThan "5"^^xsd:decimal . }.

@@ -1,0 +1,8 @@
+@prefix : <http://example.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+:alice a :Student .
+:alice a :Worker .
+:WorkingStudent rdfs:subClassOf :Student .
+:WorkingStudent rdfs:subClassOf :Worker .
+:bob a :WorkingStudent .

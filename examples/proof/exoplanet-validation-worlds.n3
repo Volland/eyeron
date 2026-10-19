@@ -1,0 +1,734 @@
+@prefix : <http://example.org/exoplanet#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:answer :text "Across these four exoplanet candidates, the full-Bayes world W0 and the cautious world W3 agree that signals from very rare regimes (RareWideOrbit) and from pipelines with lower specificity (CommonHotNeptuneLowSpec) do not yet justify a planet claim, whereas the naive world W1, which looks only at sensitivity, still promotes them as confirmed. In the high-occurrence MstarShortPeriod case, all four worlds agree that the candidate is secure. For the CommonHotNeptuneGood candidate, W0 and W2 find the posterior probability high enough, while W3 applies a stricter Bayes threshold and remains cautious. The overall picture is that ignoring occurrence rates or false positives can make a detection look more solid than it is, while raising the posterior threshold can turn some borderline but plausible candidates into 'needs more vetting' cases." .
+:answer :usesWorld :W0 .
+:answer :usesWorld :W1 .
+:answer :usesWorld :W2 .
+:answer :usesWorld :W3 .
+:answer :usesCandidate :RareWideOrbit .
+:answer :usesCandidate :MstarShortPeriod .
+:answer :usesCandidate :CommonHotNeptuneGood .
+:answer :usesCandidate :CommonHotNeptuneLowSpec .
+:reason :says "World W0 anchors the case in Bayes’ rule: it combines occurrence rate, pipeline sensitivity and specificity into a posterior probability that a transit-like signal is a real planet, and it confirms only when that probability is high. In the RareWideOrbit scenario, Bayes reveals that even an excellent pipeline can produce mostly impostors when the underlying planet population is extremely sparse, so W0 (and the heuristic W2 and cautious W3) refuse to confirm. World W1 behaves like a naive view of survey performance that focuses on sensitivity alone, so as long as the pipeline rarely misses planets it will treat those same detections as secure, regardless of occurrence or false positives. World W2 adds a pragmatic filter that demands both a minimum occurrence and high specificity, catching some of the over-optimism of W1 without doing full Bayes. World W3 goes in the opposite direction and raises the posterior threshold, turning cases like CommonHotNeptuneGood into ones that still need extra vetting. The four worlds illustrate how different uses of Bayesian information, and different safety margins, can shift whether a detection is labeled as a confirmed exoplanet." .
+:check1 :ok true .
+:check1 :msg "Check 1: for the MstarShortPeriod candidate in a high-occurrence regime with an excellent pipeline, all four worlds agree that the signal is trustworthy and confirm the planet." .
+:check2 :ok true .
+:check2 :msg "Check 2: in the RareWideOrbit scenario, only the sensitivity-based world W1 confirms the candidate; the Bayes world W0, the heuristic world W2 and the cautious world W3 all reject it because the underlying planet occurrence is too low for a single detection to be convincing." .
+:check3 :ok true .
+:check3 :msg "Check 3: for the CommonHotNeptuneGood candidate, the cautious Bayes world W3 is stricter than the reference world W0 and the simpler worlds W1 and W2, rejecting a signal that the others treat as sufficiently likely to be a real planet." .
+:check4 :ok true .
+:check4 :msg "Check 4: in the CommonHotNeptuneLowSpec scenario, where the pipeline has more false positives, only the naive sensitivity-based world W1 continues to confirm the candidate; W0, W2 and W3 all reject it, showing how ignoring false-positive behaviour can make a detection seem more secure than it is." .
+:check5 :ok true .
+:check5 :msg "Check 5: on this example set, the cautious Bayes world W3 is at least as conservative as the reference world W0: every candidate that W3 confirms is also confirmed by W0, and W3 rejects all candidates that W0 rejects plus the borderline CommonHotNeptuneGood case." .
+
+{ :answer :text "Across these four exoplanet candidates, the full-Bayes world W0 and the cautious world W3 agree that signals from very rare regimes (RareWideOrbit) and from pipelines with lower specificity (CommonHotNeptuneLowSpec) do not yet justify a planet claim, whereas the naive world W1, which looks only at sensitivity, still promotes them as confirmed. In the high-occurrence MstarShortPeriod case, all four worlds agree that the candidate is secure. For the CommonHotNeptuneGood candidate, W0 and W2 find the posterior probability high enough, while W3 applies a stricter Bayes threshold and remains cautious. The overall picture is that ignoring occurrence rates or false positives can make a detection look more solid than it is, while raising the posterior threshold can turn some borderline but plausible candidates into 'needs more vetting' cases." . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :RareWideOrbit :confirmsInWorld :W1 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value :RareWideOrbit ],
+    [ pe:var "Se"; pe:value 0.99 ];
+  pe:uses
+    { :RareWideOrbit :sensitivity 0.99 . },
+    { 0.99 math:notLessThan 0.95 . }.
+
+{ :RareWideOrbit :sensitivity 0.99 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ 0.99 math:notLessThan 0.95 . }
+  pe:builtin math:notLessThan.
+
+{ :RareWideOrbit :rejectsInWorld :W0 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "C"; pe:value :RareWideOrbit ],
+    [ pe:var "PPV"; pe:value 0.09016393442622944 ];
+  pe:uses
+    { :RareWideOrbit :ppv_Planet 0.09016393442622944 . },
+    { 0.09016393442622944 math:lessThan 0.9 . }.
+
+{ :RareWideOrbit :ppv_Planet 0.09016393442622944 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value :RareWideOrbit ],
+    [ pe:var "PPV"; pe:value 0.09016393442622944 ],
+    [ pe:var "Se"; pe:value 0.99 ],
+    [ pe:var "Sp"; pe:value 0.99 ],
+    [ pe:var "denom"; pe:value 0.010980000000000009 ],
+    [ pe:var "fp"; pe:value 0.00999000000000001 ],
+    [ pe:var "fpr"; pe:value 0.010000000000000009 ],
+    [ pe:var "num"; pe:value 0.00099 ],
+    [ pe:var "pNo"; pe:value 0.999 ],
+    [ pe:var "pOcc"; pe:value 0.001 ];
+  pe:uses
+    { :RareWideOrbit a :Candidate . },
+    { :RareWideOrbit :occurrence 0.001 . },
+    { :RareWideOrbit :sensitivity 0.99 . },
+    { :RareWideOrbit :specificity 0.99 . },
+    { (0.99 0.001) math:product 0.00099 . },
+    { (1.0 0.001) math:difference 0.999 . },
+    { (1.0 0.99) math:difference 0.010000000000000009 . },
+    { (0.010000000000000009 0.999) math:product 0.00999000000000001 . },
+    { (0.00099 0.00999000000000001) math:sum 0.010980000000000009 . },
+    { (0.00099 0.010980000000000009) math:quotient 0.09016393442622944 . }.
+
+{ :RareWideOrbit a :Candidate . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :RareWideOrbit :occurrence 0.001 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :RareWideOrbit :specificity 0.99 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ (0.99 0.001) math:product 0.00099 . }
+  pe:builtin math:product.
+
+{ (1.0 0.001) math:difference 0.999 . }
+  pe:builtin math:difference.
+
+{ (1.0 0.99) math:difference 0.010000000000000009 . }
+  pe:builtin math:difference.
+
+{ (0.010000000000000009 0.999) math:product 0.00999000000000001 . }
+  pe:builtin math:product.
+
+{ (0.00099 0.00999000000000001) math:sum 0.010980000000000009 . }
+  pe:builtin math:sum.
+
+{ (0.00099 0.010980000000000009) math:quotient 0.09016393442622944 . }
+  pe:builtin math:quotient.
+
+{ 0.09016393442622944 math:lessThan 0.9 . }
+  pe:builtin math:lessThan.
+
+{ :RareWideOrbit :rejectsInWorld :W2 . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "C"; pe:value :RareWideOrbit ],
+    [ pe:var "pOcc"; pe:value 0.001 ];
+  pe:uses
+    { :RareWideOrbit :occurrence 0.001 . },
+    { 0.001 math:lessThan 0.05 . }.
+
+{ 0.001 math:lessThan 0.05 . }
+  pe:builtin math:lessThan.
+
+{ :RareWideOrbit :rejectsInWorld :W3 . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "C"; pe:value :RareWideOrbit ],
+    [ pe:var "PPV"; pe:value 0.09016393442622944 ];
+  pe:uses
+    { :RareWideOrbit :ppv_Planet 0.09016393442622944 . },
+    { 0.09016393442622944 math:lessThan 0.93 . }.
+
+{ 0.09016393442622944 math:lessThan 0.93 . }
+  pe:builtin math:lessThan.
+
+{ :MstarShortPeriod :confirmsInWorld :W0 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "C"; pe:value :MstarShortPeriod ],
+    [ pe:var "PPV"; pe:value 0.9611650485436893 ];
+  pe:uses
+    { :MstarShortPeriod :ppv_Planet 0.9611650485436893 . },
+    { 0.9611650485436893 math:notLessThan 0.9 . }.
+
+{ :MstarShortPeriod :ppv_Planet 0.9611650485436893 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value :MstarShortPeriod ],
+    [ pe:var "PPV"; pe:value 0.9611650485436893 ],
+    [ pe:var "Se"; pe:value 0.99 ],
+    [ pe:var "Sp"; pe:value 0.99 ],
+    [ pe:var "denom"; pe:value 0.20600000000000002 ],
+    [ pe:var "fp"; pe:value 0.008000000000000007 ],
+    [ pe:var "fpr"; pe:value 0.010000000000000009 ],
+    [ pe:var "num"; pe:value 0.198 ],
+    [ pe:var "pNo"; pe:value 0.8 ],
+    [ pe:var "pOcc"; pe:value 0.20 ];
+  pe:uses
+    { :MstarShortPeriod a :Candidate . },
+    { :MstarShortPeriod :occurrence 0.20 . },
+    { :MstarShortPeriod :sensitivity 0.99 . },
+    { :MstarShortPeriod :specificity 0.99 . },
+    { (0.99 0.20) math:product 0.198 . },
+    { (1.0 0.20) math:difference 0.8 . },
+    { (1.0 0.99) math:difference 0.010000000000000009 . },
+    { (0.010000000000000009 0.8) math:product 0.008000000000000007 . },
+    { (0.198 0.008000000000000007) math:sum 0.20600000000000002 . },
+    { (0.198 0.20600000000000002) math:quotient 0.9611650485436893 . }.
+
+{ :MstarShortPeriod a :Candidate . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :MstarShortPeriod :occurrence 0.20 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :MstarShortPeriod :sensitivity 0.99 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :MstarShortPeriod :specificity 0.99 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ (0.99 0.20) math:product 0.198 . }
+  pe:builtin math:product.
+
+{ (1.0 0.20) math:difference 0.8 . }
+  pe:builtin math:difference.
+
+{ (0.010000000000000009 0.8) math:product 0.008000000000000007 . }
+  pe:builtin math:product.
+
+{ (0.198 0.008000000000000007) math:sum 0.20600000000000002 . }
+  pe:builtin math:sum.
+
+{ (0.198 0.20600000000000002) math:quotient 0.9611650485436893 . }
+  pe:builtin math:quotient.
+
+{ 0.9611650485436893 math:notLessThan 0.9 . }
+  pe:builtin math:notLessThan.
+
+{ :MstarShortPeriod :confirmsInWorld :W1 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value :MstarShortPeriod ],
+    [ pe:var "Se"; pe:value 0.99 ];
+  pe:uses
+    { :MstarShortPeriod :sensitivity 0.99 . },
+    { 0.99 math:notLessThan 0.95 . }.
+
+{ :MstarShortPeriod :confirmsInWorld :W2 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "C"; pe:value :MstarShortPeriod ],
+    [ pe:var "Se"; pe:value 0.99 ],
+    [ pe:var "Sp"; pe:value 0.99 ],
+    [ pe:var "pOcc"; pe:value 0.20 ];
+  pe:uses
+    { :MstarShortPeriod :occurrence 0.20 . },
+    { :MstarShortPeriod :sensitivity 0.99 . },
+    { :MstarShortPeriod :specificity 0.99 . },
+    { 0.20 math:notLessThan 0.05 . },
+    { 0.99 math:notLessThan 0.9 . },
+    { 0.99 math:notLessThan 0.97 . }.
+
+{ 0.20 math:notLessThan 0.05 . }
+  pe:builtin math:notLessThan.
+
+{ 0.99 math:notLessThan 0.9 . }
+  pe:builtin math:notLessThan.
+
+{ 0.99 math:notLessThan 0.97 . }
+  pe:builtin math:notLessThan.
+
+{ :MstarShortPeriod :confirmsInWorld :W3 . }
+  pe:rule 10;
+  pe:binding
+    [ pe:var "C"; pe:value :MstarShortPeriod ],
+    [ pe:var "PPV"; pe:value 0.9611650485436893 ];
+  pe:uses
+    { :MstarShortPeriod :ppv_Planet 0.9611650485436893 . },
+    { 0.9611650485436893 math:notLessThan 0.93 . }.
+
+{ 0.9611650485436893 math:notLessThan 0.93 . }
+  pe:builtin math:notLessThan.
+
+{ :CommonHotNeptuneGood :confirmsInWorld :W0 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneGood ],
+    [ pe:var "PPV"; pe:value 0.9134615384615384 ];
+  pe:uses
+    { :CommonHotNeptuneGood :ppv_Planet 0.9134615384615384 . },
+    { 0.9134615384615384 math:notLessThan 0.9 . }.
+
+{ :CommonHotNeptuneGood :ppv_Planet 0.9134615384615384 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneGood ],
+    [ pe:var "PPV"; pe:value 0.9134615384615384 ],
+    [ pe:var "Se"; pe:value 0.95 ],
+    [ pe:var "Sp"; pe:value 0.97 ],
+    [ pe:var "denom"; pe:value 0.26 ],
+    [ pe:var "fp"; pe:value 0.02250000000000002 ],
+    [ pe:var "fpr"; pe:value 0.030000000000000027 ],
+    [ pe:var "num"; pe:value 0.2375 ],
+    [ pe:var "pNo"; pe:value 0.75 ],
+    [ pe:var "pOcc"; pe:value 0.25 ];
+  pe:uses
+    { :CommonHotNeptuneGood a :Candidate . },
+    { :CommonHotNeptuneGood :occurrence 0.25 . },
+    { :CommonHotNeptuneGood :sensitivity 0.95 . },
+    { :CommonHotNeptuneGood :specificity 0.97 . },
+    { (0.95 0.25) math:product 0.2375 . },
+    { (1.0 0.25) math:difference 0.75 . },
+    { (1.0 0.97) math:difference 0.030000000000000027 . },
+    { (0.030000000000000027 0.75) math:product 0.02250000000000002 . },
+    { (0.2375 0.02250000000000002) math:sum 0.26 . },
+    { (0.2375 0.26) math:quotient 0.9134615384615384 . }.
+
+{ :CommonHotNeptuneGood a :Candidate . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :CommonHotNeptuneGood :occurrence 0.25 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :CommonHotNeptuneGood :sensitivity 0.95 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :CommonHotNeptuneGood :specificity 0.97 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ (0.95 0.25) math:product 0.2375 . }
+  pe:builtin math:product.
+
+{ (1.0 0.25) math:difference 0.75 . }
+  pe:builtin math:difference.
+
+{ (1.0 0.97) math:difference 0.030000000000000027 . }
+  pe:builtin math:difference.
+
+{ (0.030000000000000027 0.75) math:product 0.02250000000000002 . }
+  pe:builtin math:product.
+
+{ (0.2375 0.02250000000000002) math:sum 0.26 . }
+  pe:builtin math:sum.
+
+{ (0.2375 0.26) math:quotient 0.9134615384615384 . }
+  pe:builtin math:quotient.
+
+{ 0.9134615384615384 math:notLessThan 0.9 . }
+  pe:builtin math:notLessThan.
+
+{ :CommonHotNeptuneGood :confirmsInWorld :W1 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneGood ],
+    [ pe:var "Se"; pe:value 0.95 ];
+  pe:uses
+    { :CommonHotNeptuneGood :sensitivity 0.95 . },
+    { 0.95 math:notLessThan 0.95 . }.
+
+{ 0.95 math:notLessThan 0.95 . }
+  pe:builtin math:notLessThan.
+
+{ :CommonHotNeptuneGood :confirmsInWorld :W2 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneGood ],
+    [ pe:var "Se"; pe:value 0.95 ],
+    [ pe:var "Sp"; pe:value 0.97 ],
+    [ pe:var "pOcc"; pe:value 0.25 ];
+  pe:uses
+    { :CommonHotNeptuneGood :occurrence 0.25 . },
+    { :CommonHotNeptuneGood :sensitivity 0.95 . },
+    { :CommonHotNeptuneGood :specificity 0.97 . },
+    { 0.25 math:notLessThan 0.05 . },
+    { 0.95 math:notLessThan 0.9 . },
+    { 0.97 math:notLessThan 0.97 . }.
+
+{ 0.25 math:notLessThan 0.05 . }
+  pe:builtin math:notLessThan.
+
+{ 0.95 math:notLessThan 0.9 . }
+  pe:builtin math:notLessThan.
+
+{ 0.97 math:notLessThan 0.97 . }
+  pe:builtin math:notLessThan.
+
+{ :CommonHotNeptuneGood :rejectsInWorld :W3 . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneGood ],
+    [ pe:var "PPV"; pe:value 0.9134615384615384 ];
+  pe:uses
+    { :CommonHotNeptuneGood :ppv_Planet 0.9134615384615384 . },
+    { 0.9134615384615384 math:lessThan 0.93 . }.
+
+{ 0.9134615384615384 math:lessThan 0.93 . }
+  pe:builtin math:lessThan.
+
+{ :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneLowSpec ],
+    [ pe:var "Se"; pe:value 0.95 ];
+  pe:uses
+    { :CommonHotNeptuneLowSpec :sensitivity 0.95 . },
+    { 0.95 math:notLessThan 0.95 . }.
+
+{ :CommonHotNeptuneLowSpec :sensitivity 0.95 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneLowSpec ],
+    [ pe:var "PPV"; pe:value 0.76 ];
+  pe:uses
+    { :CommonHotNeptuneLowSpec :ppv_Planet 0.76 . },
+    { 0.76 math:lessThan 0.9 . }.
+
+{ :CommonHotNeptuneLowSpec :ppv_Planet 0.76 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneLowSpec ],
+    [ pe:var "PPV"; pe:value 0.76 ],
+    [ pe:var "Se"; pe:value 0.95 ],
+    [ pe:var "Sp"; pe:value 0.90 ],
+    [ pe:var "denom"; pe:value 0.3125 ],
+    [ pe:var "fp"; pe:value 0.07499999999999998 ],
+    [ pe:var "fpr"; pe:value 0.09999999999999998 ],
+    [ pe:var "num"; pe:value 0.2375 ],
+    [ pe:var "pNo"; pe:value 0.75 ],
+    [ pe:var "pOcc"; pe:value 0.25 ];
+  pe:uses
+    { :CommonHotNeptuneLowSpec a :Candidate . },
+    { :CommonHotNeptuneLowSpec :occurrence 0.25 . },
+    { :CommonHotNeptuneLowSpec :sensitivity 0.95 . },
+    { :CommonHotNeptuneLowSpec :specificity 0.90 . },
+    { (0.95 0.25) math:product 0.2375 . },
+    { (1.0 0.25) math:difference 0.75 . },
+    { (1.0 0.90) math:difference 0.09999999999999998 . },
+    { (0.09999999999999998 0.75) math:product 0.07499999999999998 . },
+    { (0.2375 0.07499999999999998) math:sum 0.3125 . },
+    { (0.2375 0.3125) math:quotient 0.76 . }.
+
+{ :CommonHotNeptuneLowSpec a :Candidate . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :CommonHotNeptuneLowSpec :occurrence 0.25 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ :CommonHotNeptuneLowSpec :specificity 0.90 . }
+  pe:fact "exoplanet-validation-worlds.n3".
+
+{ (1.0 0.90) math:difference 0.09999999999999998 . }
+  pe:builtin math:difference.
+
+{ (0.09999999999999998 0.75) math:product 0.07499999999999998 . }
+  pe:builtin math:product.
+
+{ (0.2375 0.07499999999999998) math:sum 0.3125 . }
+  pe:builtin math:sum.
+
+{ (0.2375 0.3125) math:quotient 0.76 . }
+  pe:builtin math:quotient.
+
+{ 0.76 math:lessThan 0.9 . }
+  pe:builtin math:lessThan.
+
+{ :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . }
+  pe:rule 9;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneLowSpec ],
+    [ pe:var "Sp"; pe:value 0.90 ];
+  pe:uses
+    { :CommonHotNeptuneLowSpec :specificity 0.90 . },
+    { 0.90 math:lessThan 0.97 . }.
+
+{ 0.90 math:lessThan 0.97 . }
+  pe:builtin math:lessThan.
+
+{ :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }
+  pe:rule 11;
+  pe:binding
+    [ pe:var "C"; pe:value :CommonHotNeptuneLowSpec ],
+    [ pe:var "PPV"; pe:value 0.76 ];
+  pe:uses
+    { :CommonHotNeptuneLowSpec :ppv_Planet 0.76 . },
+    { 0.76 math:lessThan 0.93 . }.
+
+{ 0.76 math:lessThan 0.93 . }
+  pe:builtin math:lessThan.
+
+{ :answer :usesWorld :W0 . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :answer :usesWorld :W1 . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :answer :usesWorld :W2 . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :answer :usesWorld :W3 . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :answer :usesCandidate :RareWideOrbit . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :answer :usesCandidate :MstarShortPeriod . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :answer :usesCandidate :CommonHotNeptuneGood . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :answer :usesCandidate :CommonHotNeptuneLowSpec . }
+  pe:rule 12;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :reason :says "World W0 anchors the case in Bayes’ rule: it combines occurrence rate, pipeline sensitivity and specificity into a posterior probability that a transit-like signal is a real planet, and it confirms only when that probability is high. In the RareWideOrbit scenario, Bayes reveals that even an excellent pipeline can produce mostly impostors when the underlying planet population is extremely sparse, so W0 (and the heuristic W2 and cautious W3) refuse to confirm. World W1 behaves like a naive view of survey performance that focuses on sensitivity alone, so as long as the pipeline rarely misses planets it will treat those same detections as secure, regardless of occurrence or false positives. World W2 adds a pragmatic filter that demands both a minimum occurrence and high specificity, catching some of the over-optimism of W1 without doing full Bayes. World W3 goes in the opposite direction and raises the posterior threshold, turning cases like CommonHotNeptuneGood into ones that still need extra vetting. The four worlds illustrate how different uses of Bayesian information, and different safety margins, can shift whether a detection is labeled as a confirmed exoplanet." . }
+  pe:rule 13;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :check1 :ok true . }
+  pe:rule 14;
+  pe:uses
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . }.
+
+{ :check1 :msg "Check 1: for the MstarShortPeriod candidate in a high-occurrence regime with an excellent pipeline, all four worlds agree that the signal is trustworthy and confirm the planet." . }
+  pe:rule 14;
+  pe:uses
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W1 . },
+    { :MstarShortPeriod :confirmsInWorld :W2 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . }.
+
+{ :check2 :ok true . }
+  pe:rule 15;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . }.
+
+{ :check2 :msg "Check 2: in the RareWideOrbit scenario, only the sensitivity-based world W1 confirms the candidate; the Bayes world W0, the heuristic world W2 and the cautious world W3 all reject it because the underlying planet occurrence is too low for a single detection to be convincing." . }
+  pe:rule 15;
+  pe:uses
+    { :RareWideOrbit :confirmsInWorld :W1 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W2 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . }.
+
+{ :check3 :ok true . }
+  pe:rule 16;
+  pe:uses
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . }.
+
+{ :check3 :msg "Check 3: for the CommonHotNeptuneGood candidate, the cautious Bayes world W3 is stricter than the reference world W0 and the simpler worlds W1 and W2, rejecting a signal that the others treat as sufficiently likely to be a real planet." . }
+  pe:rule 16;
+  pe:uses
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W2 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . }.
+
+{ :check4 :ok true . }
+  pe:rule 17;
+  pe:uses
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :check4 :msg "Check 4: in the CommonHotNeptuneLowSpec scenario, where the pipeline has more false positives, only the naive sensitivity-based world W1 continues to confirm the candidate; W0, W2 and W3 all reject it, showing how ignoring false-positive behaviour can make a detection seem more secure than it is." . }
+  pe:rule 17;
+  pe:uses
+    { :CommonHotNeptuneLowSpec :confirmsInWorld :W1 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W2 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :check5 :ok true . }
+  pe:rule 18;
+  pe:uses
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.
+
+{ :check5 :msg "Check 5: on this example set, the cautious Bayes world W3 is at least as conservative as the reference world W0: every candidate that W3 confirms is also confirmed by W0, and W3 rejects all candidates that W0 rejects plus the borderline CommonHotNeptuneGood case." . }
+  pe:rule 18;
+  pe:uses
+    { :MstarShortPeriod :confirmsInWorld :W0 . },
+    { :MstarShortPeriod :confirmsInWorld :W3 . },
+    { :RareWideOrbit :rejectsInWorld :W0 . },
+    { :RareWideOrbit :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneGood :confirmsInWorld :W0 . },
+    { :CommonHotNeptuneGood :rejectsInWorld :W3 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W0 . },
+    { :CommonHotNeptuneLowSpec :rejectsInWorld :W3 . }.

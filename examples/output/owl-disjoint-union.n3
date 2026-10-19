@@ -1,0 +1,10 @@
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+:Cat owl:disjointWith :Dog .
+:Pet owl:unionOf (:Cat :Dog :Bird) .
+:Cat owl:disjointWith :Bird .
+:Dog owl:disjointWith :Cat .
+:Dog owl:disjointWith :Bird .
+:Bird owl:disjointWith :Cat .
+:Bird owl:disjointWith :Dog .

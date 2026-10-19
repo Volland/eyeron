@@ -1,0 +1,89 @@
+# Zebra / Einstein's riddle: who owns the fish?
+# Adapted from EYE reasoning/zebra/zebra.n3 (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/zebra/zebra.n3
+#
+# Each attribute is assigned a house position from 1 (left) to 5 (right).
+# Different attributes of the same category occupy different houses.
+# The original clues fix the Norwegian in house 1, blue in house 2,
+# milk in house 3, and white immediately to the right of green.
+
+@prefix : <http://eulersharp.sourceforge.net/2005/11swap/zebra#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+{
+    # Green is immediately left of white. The green house drinks coffee.
+    (1 2 3 4) list:member ?Green.
+    (?Green 1) math:sum ?White.
+    ?Green log:notEqualTo 2, 3.
+    ?White log:notEqualTo 2.
+
+    # The Brit lives in red; the Norwegian lives in house 1.
+    (1 2 3 4 5) list:member ?Red.
+    ?Red log:notEqualTo 1, 2, ?Green, ?White.
+    (1 2 3 4 5) list:member ?Yellow.
+    ?Yellow log:notEqualTo 2, ?Green, ?White, ?Red.
+
+    # The Dane drinks tea, the Swede keeps dogs, the German smokes Prince.
+    (1 2 3 4 5) list:member ?Dane.
+    ?Dane log:notEqualTo 1, ?Red, 3, ?Green.
+    (1 2 3 4 5) list:member ?Swede.
+    ?Swede log:notEqualTo 1, ?Red, ?Dane.
+    (1 2 3 4 5) list:member ?German.
+    ?German log:notEqualTo 1, ?Red, ?Dane, ?Swede, ?Yellow.
+
+    # Yellow smokes Dunhill; its neighbour keeps horses.
+    (1 2 3 4 5) list:member ?Horse.
+    (?Horse ?Yellow) math:difference ?HorseDelta.
+    ?HorseDelta math:absoluteValue 1.
+    ?Horse log:notEqualTo ?Swede.
+
+    # Pall Mall smokers keep birds; Blue Masters smokers drink beer.
+    (1 2 3 4 5) list:member ?Birds.
+    ?Birds log:notEqualTo ?Yellow, ?German, ?Horse, ?Swede.
+    (1 2 3 4 5) list:member ?Beer.
+    ?Beer log:notEqualTo ?Yellow, ?German, ?Birds, 3, ?Green, ?Dane.
+    (1 2 3 4 5) list:member ?Blends.
+    ?Blends log:notEqualTo ?Yellow, ?German, ?Birds, ?Beer.
+
+    # Blends has a neighbour with cats and a neighbour who drinks water.
+    (1 2 3 4 5) list:member ?Cats.
+    ?Cats log:notEqualTo ?Horse, ?Swede, ?Birds.
+    (?Blends ?Cats) math:difference ?CatDelta.
+    ?CatDelta math:absoluteValue 1.
+    (1 2 3 4 5) list:member ?Water.
+    ?Water log:notEqualTo 3, ?Green, ?Dane, ?Beer.
+    (?Blends ?Water) math:difference ?WaterDelta.
+    ?WaterDelta math:absoluteValue 1.
+
+    # The fifth pet is the fish. Find the nationality at that position.
+    (1 2 3 4 5) list:member ?Fish.
+    ?Fish log:notEqualTo ?Horse, ?Swede, ?Birds, ?Cats.
+    ((1 :norwegian) (?Red :brit) (?Swede :swede) (?Dane :dane) (?German :german)) list:member (?Fish ?Owner).
+} => {
+    ?Owner :eats :fish.
+    :solution :positions (
+        ((?Yellow :yellow) (2 :blue) (?Red :red) (?Green :green) (?White :white))
+        ((1 :norwegian) (?Red :brit) (?Swede :swede) (?Dane :dane) (?German :german))
+        ((?Horse :horse) (?Swede :dogs) (?Birds :birds) (?Cats :cats) (?Fish :fish))
+        ((3 :milk) (?Green :coffee) (?Dane :tea) (?Beer :beer) (?Water :water))
+        ((?Yellow :dunhill) (?German :prince) (?Birds :pallmall) (?Beer :bluemasters) (?Blends :blends))
+    ).
+}.
+
+# Present the five houses in their left-to-right order.
+{
+    :solution :positions (?Colours ?Nationalities ?Pets ?Drinks ?Cigars).
+    (1 2 3 4 5) list:member ?Position.
+    ?Colours list:member (?Position ?Colour).
+    ?Nationalities list:member (?Position ?Nationality).
+    ?Pets list:member (?Position ?Pet).
+    ?Drinks list:member (?Position ?Drink).
+    ?Cigars list:member (?Position ?Cigar).
+} => {
+    :solution :house (?Position ?Colour ?Nationality ?Pet ?Drink ?Cigar).
+}.
+
+{ ?Owner :eats :fish } log:query { ?Owner :eats :fish }.
+{ :solution :house ?House } log:query { :solution :house ?House }.

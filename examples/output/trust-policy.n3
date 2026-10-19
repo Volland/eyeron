@@ -1,0 +1,8 @@
+@prefix : <http://example.org/policy#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:dept_head :auth true .
+:mgr_alice :auth true .
+:alice :auth true .
+:bob :auth false .
+:eve :auth false .

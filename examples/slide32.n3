@@ -1,0 +1,28 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/slide32/
+# Standalone program; EYE answer directives use log:query.
+
+# Source file: slide32/slide32.n3
+@base <https://eyereasoner.github.io/eye/reasoning/slide32/slide32.n3>.
+@prefix : <http://example.org/#>.
+
+# Ghent is a city
+:Ghent a :City.
+
+# every city is a human community
+{
+    ?x a :City.
+} => {
+    ?x a :HumanCommunity.
+}.
+
+
+# Query: slide32/slide32-query.n3
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+{
+    ?S a ?C .
+} log:query {
+    ?S a ?C .
+} .
+

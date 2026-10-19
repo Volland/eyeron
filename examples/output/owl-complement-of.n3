@@ -1,0 +1,6 @@
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+:Invertebrate owl:complementOf :Vertebrate .
+:Invertebrate owl:disjointWith :Vertebrate .
+:Vertebrate owl:disjointWith :Invertebrate .

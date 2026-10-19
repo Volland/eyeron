@@ -1,0 +1,112 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Sources: https://eyereasoner.github.io/eye/reasoning/gdpr-compliance/gdpr-compliance.n3, https://eyereasoner.github.io/eye/reasoning/gdpr-compliance/gdpr-compliance-query.n3
+# Premise blank nodes are named variables; backward answers are materialized.
+
+@prefix : <http://example.org/gdpr#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:jane_smith a :DataSubject .
+:john_doe a :DataSubject .
+:john_doe :hasPersonalData :email .
+:john_doe :hasPersonalData :name .
+:jane_smith :hasPersonalData :address .
+:john_doe :hasProcessingPurpose :marketing .
+:john_doe :hasProcessingPurpose :analytics .
+:jane_smith :hasProcessingPurpose :support .
+:marketing :hasLawfulBasis :consent .
+:analytics :hasLawfulBasis :legitimate_interest .
+:support :hasLawfulBasis :contract .
+:john_doe :hasLawfulBasis _:b1 .
+_:b1 :purpose :marketing .
+_:b1 :basis :consent .
+:john_doe :hasLawfulBasis _:b2 .
+_:b2 :purpose :analytics .
+_:b2 :basis :legitimate_interest .
+:jane_smith :hasLawfulBasis _:b3 .
+_:b3 :purpose :support .
+_:b3 :basis :contract .
+:john_doe :hasRetention _:b4 .
+_:b4 :purpose :marketing .
+_:b4 :days 180 .
+:john_doe :hasRetention _:b5 .
+_:b5 :purpose :analytics .
+_:b5 :days 730 .
+:jane_smith :hasRetention _:b6 .
+_:b6 :purpose :support .
+_:b6 :days 365 .
+:john_doe :isMinimalFor :marketing .
+:john_doe :isMinimalFor :analytics .
+:jane_smith :isMinimalFor :support .
+:dpo_corp a :Processor .
+:dpo_corp :signedDPA true .
+:dpo_corp :processes :john_doe .
+:dpo_corp :processes :jane_smith .
+:john_doe :exercisedRight :access .
+:john_doe :exercisedRight :rectify .
+:jane_smith :exercisedRight :access .
+:jane_smith :exercisedRight :rectify .
+
+{
+    ?S :hasProcessingPurpose ?P .
+    ?S :hasLawfulBasis ?Premise0_b7 .
+    ?Premise0_b7 :purpose ?P .
+    ?Premise0_b7 :basis ?B .
+} => {
+    ?S :lawfulPurpose ?P .
+} .
+
+{
+    ?S :hasRetention ?Premise1_b8 .
+    ?Premise1_b8 :purpose ?P .
+    ?Premise1_b8 :days ?D .
+    ?D math:notGreaterThan 730 .
+} => {
+    ?S :retentionOKFor ?P .
+} .
+
+{
+    ?S :hasProcessingPurpose ?P .
+    ?S :isMinimalFor ?P .
+} => {
+    ?S :minimizationOKFor ?P .
+} .
+
+{
+    ?P a :Processor .
+    ?P :signedDPA true .
+    ?P :processes ?S .
+} => {
+    ?S :processorOK true .
+} .
+
+{
+    ?S :exercisedRight :access .
+    ?S :exercisedRight :rectify .
+} => {
+    ?S :rightsOK true .
+} .
+
+{
+    ?S a :DataSubject .
+    ?S :lawfulPurpose ?P .
+    ?S :retentionOKFor ?P .
+    ?S :minimizationOKFor ?P .
+    ?S :processorOK true .
+    ?S :rightsOK true .
+} => {
+    ?S a :GDPRCompliant .
+} .
+
+{
+    ?S a :GDPRCompliant .
+} => {
+    ?S a :GDPRCompliant .
+} .
+
+{
+    ?S a :GDPRCompliant .
+} log:query {
+    ?S a :GDPRCompliant .
+} .

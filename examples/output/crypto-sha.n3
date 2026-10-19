@@ -1,0 +1,5 @@
+@prefix : <http://example.org/> .
+
+:hashes :sha1 ("" "da39a3ee5e6b4b0d3255bfef95601890afd80709") .
+:hashes :sha1 ("abc" "a9993e364706816aba3e25717850c26c9cd0d89d") .
+:hashes :sha1 ("blargh" "d1e670385f40ee942a059f949c761214872ac35f") .

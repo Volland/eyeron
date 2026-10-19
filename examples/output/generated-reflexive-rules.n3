@@ -1,0 +1,13 @@
+@prefix : <http://www.example.com/ns/ex#> .
+
+{
+    ?x :p ?x .
+} <= {
+    ?x :p ?y .
+} .
+
+{
+    ?y :p ?y .
+} <= {
+    ?x :p ?y .
+} .

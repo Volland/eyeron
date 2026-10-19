@@ -1,0 +1,139 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/gedcom/
+# Standalone program; EYE answer directives use log:query.
+
+# Source file: gedcom/gedcom-facts.n3
+@base <https://eyereasoner.github.io/eye/reasoning/gedcom/gedcom-facts.n3>.
+# $Id: gedcom-facts.n3,v 1.16 2004/04/18 20:03:59 amdus Exp $
+
+@prefix gc: <http://www.daml.org/2001/01/gedcom/gedcom#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix : <http://www.agfa.com/w3c/euler/gedcom-facts#>.
+
+:Frans gc:spouseIn :dp; gc:sex gc:Male.
+:Maria gc:spouseIn :dp; gc:sex gc:Female.
+:Jos gc:childIn :dp; gc:sex gc:Male.
+:Rita gc:childIn :dp; gc:sex gc:Female.
+:Geert gc:childIn :dp; gc:sex gc:Male.
+:Caroline gc:childIn :dp; gc:sex gc:Female.
+:Dirk gc:childIn :dp; gc:sex gc:Male.
+:Greta gc:childIn :dp; gc:sex gc:Female.
+:Frans owl:differentFrom :Maria.
+:dp owl:distinctMembers (:Jos :Rita :Geert :Caroline :Dirk :Greta).
+
+:Jos gc:spouseIn :dt; gc:sex gc:Male.
+:Maaike gc:spouseIn :dt; gc:sex gc:Female.
+:Goedele gc:childIn :dt; gc:sex gc:Female.
+:Veerle gc:childIn :dt; gc:sex gc:Female.
+:Nele gc:childIn :dt; gc:sex gc:Female.
+:Karel gc:childIn :dt; gc:sex gc:Male.
+:Jos owl:differentFrom :Maaike.
+:dt owl:distinctMembers (:Goedele :Veerle :Nele :Karel).
+
+:Paul gc:spouseIn :gd; gc:sex gc:Male.
+:Rita gc:spouseIn :gd; gc:sex gc:Female.
+:Ann gc:childIn :gd; gc:sex gc:Female.
+:Bart gc:childIn :gd; gc:sex gc:Male.
+:Paul owl:differentFrom :Rita.
+:gd owl:distinctMembers (:Ann :Bart).
+
+:Geert gc:spouseIn :dv; gc:sex gc:Male.
+:Christine gc:spouseIn :dv; gc:sex gc:Female.
+:Ann_Sophie gc:childIn :dv; gc:sex gc:Female.
+:Valerie gc:childIn :dv; gc:sex gc:Female.
+:Stephanie gc:childIn :dv; gc:sex gc:Female.
+:Louise gc:childIn :dv; gc:sex gc:Female.
+:Geert owl:differentFrom :Christine.
+:dv owl:distinctMembers (:Ann_Sophie :Valerie :Stephanie :Louise).
+
+:Hendrik gc:spouseIn :cd; gc:sex gc:Male.
+:Caroline gc:spouseIn :cd; gc:sex gc:Female.
+:Bieke gc:childIn :cd; gc:sex gc:Female.
+:Tineke gc:childIn :cd; gc:sex gc:Female.
+:Hendrik owl:differentFrom :Caroline.
+:cd owl:distinctMembers (:Bieke :Tineke).
+
+:Dirk gc:spouseIn :dc; gc:sex gc:Male.
+:Karolien gc:spouseIn :dc; gc:sex gc:Female.
+:Frederik gc:childIn :dc; gc:sex gc:Male.
+:Stefanie gc:childIn :dc; gc:sex gc:Female.
+:Stijn gc:childIn :dc; gc:sex gc:Male.
+:Dirk owl:differentFrom :Karolien.
+:dc owl:distinctMembers (:Frederik :Stefanie :Stijn).
+
+:Marc gc:spouseIn :sd; gc:sex gc:Male.
+:Greta gc:spouseIn :sd; gc:sex gc:Female.
+:Lien gc:childIn :sd; gc:sex gc:Female.
+:Tom gc:childIn :sd; gc:sex gc:Male.
+:Marc owl:differentFrom :Greta.
+:sd owl:distinctMembers (:Lien :Tom).
+
+
+# Source file: gedcom/gedcom-relations.n3
+@base <https://eyereasoner.github.io/eye/reasoning/gedcom/gedcom-relations.n3>.
+# $Id: gedcom-relations.n3,v 1.23 2004/04/18 20:03:59 amdus Exp $
+
+# Original http://www.daml.org/2001/01/gedcom/gedcom-relations.xml by Mike Dean (BBN Technologies / Verizon)
+# Rewritten in N3 (Jos De Roo AGFA)
+# state that the rules are true (made by Tim Berners-Lee W3C)
+# see also http://www.w3.org/2000/10/swap/Examples.html
+
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix gc: <http://www.daml.org/2001/01/gedcom/gedcom#>.
+
+gc:parent owl:inverseOf gc:child.
+gc:grandparent owl:inverseOf gc:grandchild.
+gc:ancestor owl:inverseOf gc:descendent.
+gc:sibling a owl:SymmetricProperty.
+gc:spouse a owl:SymmetricProperty.
+gc:ancestor a owl:TransitiveProperty.
+gc:parent rdfs:subPropertyOf gc:ancestor.
+
+{?C gc:childIn ?F. ?P gc:spouseIn ?F} => {?C gc:parent ?P}.
+{?C gc:parent ?P. ?P gc:sex gc:Male} => {?C gc:father ?P}.
+{?C gc:parent ?P. ?P gc:sex gc:Female} => {?C gc:mother ?P}.
+{?C gc:parent ?P. ?C gc:sex gc:Male} => {?P gc:son ?C}.
+{?C gc:parent ?P. ?C gc:sex gc:Female} => {?P gc:daughter ?C}.
+
+{?C gc:parent ?P. ?P gc:parent ?GP} => {?C gc:grandparent ?GP}.
+{?C gc:grandparent ?GP. ?GP gc:sex gc:Male} => {?C gc:grandfather ?GP}.
+{?C gc:grandparent ?GP. ?GP gc:sex gc:Female} => {?C gc:grandmother ?GP}.
+{?C gc:grandparent ?GP. ?C gc:sex gc:Male} => {?GP gc:grandson ?C}.
+{?C gc:grandparent ?GP. ?C gc:sex gc:Female} => {?GP gc:granddaughter ?C}.
+
+{?C gc:childIn ?F. ?C2 gc:childIn ?F. ?C log:notEqualTo ?C2} => {?C gc:sibling ?C2}.
+{?C gc:sibling ?S. ?S gc:sex gc:Male} => {?C gc:brother ?S}.
+{?C gc:sibling ?S. ?S gc:sex gc:Female} => {?C gc:sister ?S}.
+
+{?SP gc:spouseIn ?F. ?SP2 gc:spouseIn ?F. ?SP log:notEqualTo ?SP2} => {?SP gc:spouse ?SP2}.
+{?SP gc:spouse ?H. ?H gc:sex gc:Male} => {?SP gc:husband ?H}.
+{?SP gc:spouse ?W. ?W gc:sex gc:Female} => {?SP gc:wife ?W}.
+
+{?C gc:parent ?P. ?P gc:brother ?U} => {?C gc:uncle ?U}.
+{?C gc:parent ?P. ?P gc:sister ?A. ?A gc:spouse ?U} => {?C gc:uncle ?U}.
+{?C gc:parent ?P. ?P gc:sister ?A} => {?C gc:aunt ?A}.
+{?C gc:parent ?P. ?P gc:brother ?U. ?U gc:spouse ?A} => {?C gc:aunt ?A}.
+
+{?P gc:daughter ?C. ?P gc:sibling ?S} => {?S gc:niece ?C}.
+{?P gc:son ?C. ?P gc:sibling ?S} => {?S gc:nephew ?C}.
+{?C gc:parent ?S. ?C2 gc:parent ?S2. ?S gc:sibling ?S2} => {?C gc:firstcousin ?C2}.
+{?S gc:sibling ?S2. ?S gc:descendent ?D. ?S2 gc:descendent ?D2} => {?D gc:cousin ?D2}.
+
+
+# Query: gedcom/gedcom-filter.n3
+@prefix : <http://www.agfa.com/w3c/euler/gedcom-facts#> .
+@prefix gc: <http://www.daml.org/2001/01/gedcom/gedcom#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+{
+    ?A gc:mother ?M .
+    ?M gc:daughter ?D .
+    ?D gc:son ?S .
+    ?S gc:uncle ?A .
+} log:query {
+    ?A :testRelationship ?S .
+} .
+

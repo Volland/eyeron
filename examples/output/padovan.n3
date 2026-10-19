@@ -1,0 +1,14 @@
+@prefix : <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:sequence :padovan (0 0) .
+:sequence :padovan (1 1) .
+:sequence :padovan (2 1) .
+:sequence :padovan (3 1) .
+:sequence :padovan (4 2) .
+:sequence :padovan (5 2) .
+:sequence :padovan (6 3) .
+:sequence :padovan (7 4) .
+:sequence :padovan (8 5) .
+:sequence :padovan (9 7) .
+:sequence :padovan (10 9) .

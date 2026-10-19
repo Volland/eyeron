@@ -1,0 +1,5490 @@
+@prefix : <http://example.org/quad#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:Q1 :why _:b1_41023348b51cfbcf .
+_:b1_41023348b51cfbcf :discriminant 1 .
+_:b1_41023348b51cfbcf :denominator 2 .
+_:b1_41023348b51cfbcf :negB 3 .
+:Q1 :answer _:b2_c069274beb6a4411 .
+_:b2_c069274beb6a4411 a :RealRoot .
+_:b2_c069274beb6a4411 :value "2"^^xsd:decimal .
+:Q1 :answer _:b3_c069274beb6a4411 .
+_:b3_c069274beb6a4411 a :RealRoot .
+_:b3_c069274beb6a4411 :value "1"^^xsd:decimal .
+:Q1 :why _:b4_c069274beb6a4411 .
+_:b4_c069274beb6a4411 :sqrtDiscriminant "1"^^xsd:decimal .
+:Q1 :status "two-real-roots" .
+:Q1 :check _:b10_30f7173e0d32b4ed .
+_:b10_30f7173e0d32b4ed a :Check .
+_:b10_30f7173e0d32b4ed :kind "plug-in/real" .
+_:b10_30f7173e0d32b4ed :root "2"^^xsd:decimal .
+_:b10_30f7173e0d32b4ed :residual 0 .
+_:b10_30f7173e0d32b4ed :ok true .
+:Q1 :check _:b10_8f3fa97a1307b230 .
+_:b10_8f3fa97a1307b230 a :Check .
+_:b10_8f3fa97a1307b230 :kind "plug-in/real" .
+_:b10_8f3fa97a1307b230 :root "1"^^xsd:decimal .
+_:b10_8f3fa97a1307b230 :residual 0 .
+_:b10_8f3fa97a1307b230 :ok true .
+:Q2 :why _:b1_6473f82c16ee7df9 .
+_:b1_6473f82c16ee7df9 :discriminant 0 .
+_:b1_6473f82c16ee7df9 :denominator 2 .
+_:b1_6473f82c16ee7df9 :negB -2 .
+:Q2 :answer _:b5_b95bd459e1a915dd .
+_:b5_b95bd459e1a915dd a :RealRoot .
+_:b5_b95bd459e1a915dd :value -1 .
+_:b5_b95bd459e1a915dd :multiplicity 2 .
+:Q2 :why _:b6_b95bd459e1a915dd .
+_:b6_b95bd459e1a915dd :sqrtDiscriminant 0 .
+:Q2 :status "double-root" .
+:Q2 :check _:b10_8b8cc328149f28e0 .
+_:b10_8b8cc328149f28e0 a :Check .
+_:b10_8b8cc328149f28e0 :kind "plug-in/real" .
+_:b10_8b8cc328149f28e0 :root -1 .
+_:b10_8b8cc328149f28e0 :residual 0 .
+_:b10_8b8cc328149f28e0 :ok true .
+:Q3 :why _:b1_650185d7b00cefac .
+_:b1_650185d7b00cefac :discriminant 4 .
+_:b1_650185d7b00cefac :denominator -2 .
+_:b1_650185d7b00cefac :negB 0 .
+:Q3 :answer _:b2_1c0aec122f904ec6 .
+_:b2_1c0aec122f904ec6 a :RealRoot .
+_:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal .
+:Q3 :answer _:b3_1c0aec122f904ec6 .
+_:b3_1c0aec122f904ec6 a :RealRoot .
+_:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal .
+:Q3 :why _:b4_1c0aec122f904ec6 .
+_:b4_1c0aec122f904ec6 :sqrtDiscriminant "2"^^xsd:decimal .
+:Q3 :status "two-real-roots" .
+:Q3 :check _:b10_efb62052822e2b61 .
+_:b10_efb62052822e2b61 a :Check .
+_:b10_efb62052822e2b61 :kind "plug-in/real" .
+_:b10_efb62052822e2b61 :root "-1"^^xsd:decimal .
+_:b10_efb62052822e2b61 :residual 0 .
+_:b10_efb62052822e2b61 :ok true .
+:Q3 :check _:b10_7216d2c0ca8df7dd .
+_:b10_7216d2c0ca8df7dd a :Check .
+_:b10_7216d2c0ca8df7dd :kind "plug-in/real" .
+_:b10_7216d2c0ca8df7dd :root "1"^^xsd:decimal .
+_:b10_7216d2c0ca8df7dd :residual 0 .
+_:b10_7216d2c0ca8df7dd :ok true .
+:Q4 :why _:b1_9ee8a4d9514f6479 .
+_:b1_9ee8a4d9514f6479 :discriminant 36 .
+_:b1_9ee8a4d9514f6479 :denominator 4 .
+_:b1_9ee8a4d9514f6479 :negB -10 .
+:Q4 :answer _:b2_4bafab36e4d5f14f .
+_:b2_4bafab36e4d5f14f a :RealRoot .
+_:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal .
+:Q4 :answer _:b3_4bafab36e4d5f14f .
+_:b3_4bafab36e4d5f14f a :RealRoot .
+_:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal .
+:Q4 :why _:b4_4bafab36e4d5f14f .
+_:b4_4bafab36e4d5f14f :sqrtDiscriminant "6"^^xsd:decimal .
+:Q4 :status "two-real-roots" .
+:Q4 :check _:b10_1699f2d4c5ecbe87 .
+_:b10_1699f2d4c5ecbe87 a :Check .
+_:b10_1699f2d4c5ecbe87 :kind "plug-in/real" .
+_:b10_1699f2d4c5ecbe87 :root "-1"^^xsd:decimal .
+_:b10_1699f2d4c5ecbe87 :residual 0 .
+_:b10_1699f2d4c5ecbe87 :ok true .
+:Q4 :check _:b10_36cf8ea8eb4cd4d .
+_:b10_36cf8ea8eb4cd4d a :Check .
+_:b10_36cf8ea8eb4cd4d :kind "plug-in/real" .
+_:b10_36cf8ea8eb4cd4d :root "-4"^^xsd:decimal .
+_:b10_36cf8ea8eb4cd4d :residual 0 .
+_:b10_36cf8ea8eb4cd4d :ok true .
+:Q5 :why _:b1_9065596091819d94 .
+_:b1_9065596091819d94 :discriminant -4 .
+_:b1_9065596091819d94 :denominator 2 .
+_:b1_9065596091819d94 :negB 0 .
+:Q5 :answer _:b7_a3eb4bac570718ce .
+_:b7_a3eb4bac570718ce a :ComplexRoot .
+_:b7_a3eb4bac570718ce :real 0 .
+_:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal .
+:Q5 :answer _:b8_a3eb4bac570718ce .
+_:b8_a3eb4bac570718ce a :ComplexRoot .
+_:b8_a3eb4bac570718ce :real 0 .
+_:b8_a3eb4bac570718ce :imag -1 .
+:Q5 :why _:b9_a3eb4bac570718ce .
+_:b9_a3eb4bac570718ce :sqrtDiscriminant "2"^^xsd:decimal .
+:Q5 :status "complex-roots" .
+:Q5 :check _:b11_ba854b5f4360b40 .
+_:b11_ba854b5f4360b40 a :Check .
+_:b11_ba854b5f4360b40 :kind "plug-in/complex" .
+_:b11_ba854b5f4360b40 :root _:b12_ba854b5f4360b40 .
+_:b12_ba854b5f4360b40 :real 0 .
+_:b12_ba854b5f4360b40 :imag "1"^^xsd:decimal .
+_:b11_ba854b5f4360b40 :residualRe 0 .
+_:b11_ba854b5f4360b40 :residualIm 0 .
+_:b11_ba854b5f4360b40 :ok true .
+:Q5 :check _:b11_a210790501c722d9 .
+_:b11_a210790501c722d9 a :Check .
+_:b11_a210790501c722d9 :kind "plug-in/complex" .
+_:b11_a210790501c722d9 :root _:b12_a210790501c722d9 .
+_:b12_a210790501c722d9 :real 0 .
+_:b12_a210790501c722d9 :imag -1 .
+_:b11_a210790501c722d9 :residualRe 0 .
+_:b11_a210790501c722d9 :residualIm 0 .
+_:b11_a210790501c722d9 :ok true .
+:Q6 :why _:b1_ef71dbc9a453e6fc .
+_:b1_ef71dbc9a453e6fc :discriminant 36 .
+_:b1_ef71dbc9a453e6fc :denominator 6 .
+_:b1_ef71dbc9a453e6fc :negB 12 .
+:Q6 :answer _:b2_b98495ba1f7ecf95 .
+_:b2_b98495ba1f7ecf95 a :RealRoot .
+_:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal .
+:Q6 :answer _:b3_b98495ba1f7ecf95 .
+_:b3_b98495ba1f7ecf95 a :RealRoot .
+_:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal .
+:Q6 :why _:b4_b98495ba1f7ecf95 .
+_:b4_b98495ba1f7ecf95 :sqrtDiscriminant "6"^^xsd:decimal .
+:Q6 :status "two-real-roots" .
+:Q6 :check _:b10_8a757fac5bb14976 .
+_:b10_8a757fac5bb14976 a :Check .
+_:b10_8a757fac5bb14976 :kind "plug-in/real" .
+_:b10_8a757fac5bb14976 :root "3"^^xsd:decimal .
+_:b10_8a757fac5bb14976 :residual 0 .
+_:b10_8a757fac5bb14976 :ok true .
+:Q6 :check _:b10_11103216e90700c3 .
+_:b10_11103216e90700c3 a :Check .
+_:b10_11103216e90700c3 :kind "plug-in/real" .
+_:b10_11103216e90700c3 :root "1"^^xsd:decimal .
+_:b10_11103216e90700c3 :residual 0 .
+_:b10_11103216e90700c3 :ok true .
+
+{ :Q1 :why _:b1_41023348b51cfbcf . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "q"; pe:value :Q1 ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . }.
+
+{ :Q1 a :Quadratic . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q1 :a 1 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q1 :b -3 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q1 :c 2 . }
+  pe:fact "quadratic-equation.n3".
+
+{ 1 math:notEqualTo 0 . }
+  pe:builtin math:notEqualTo.
+
+{ (-3 2) math:exponentiation 9 . }
+  pe:builtin math:exponentiation.
+
+{ (4 1 2) math:product 8 . }
+  pe:builtin math:product.
+
+{ (9 8) math:difference 1 . }
+  pe:builtin math:difference.
+
+{ (2 1) math:product 2 . }
+  pe:builtin math:product.
+
+{ -3 math:negation 3 . }
+  pe:builtin math:negation.
+
+{ _:b1_41023348b51cfbcf :discriminant 1 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "q"; pe:value :Q1 ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . }.
+
+{ _:b1_41023348b51cfbcf :denominator 2 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "q"; pe:value :Q1 ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . }.
+
+{ _:b1_41023348b51cfbcf :negB 3 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "q"; pe:value :Q1 ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . }.
+
+{ :Q1 :answer _:b2_c069274beb6a4411 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ 1 math:greaterThan 0 . }
+  pe:builtin math:greaterThan.
+
+{ (1 0.5) math:exponentiation "1"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ _:b2_c069274beb6a4411 a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b2_c069274beb6a4411 :value "2"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q1 :answer _:b3_c069274beb6a4411 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b3_c069274beb6a4411 a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b3_c069274beb6a4411 :value "1"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q1 :why _:b4_c069274beb6a4411 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b4_c069274beb6a4411 :sqrtDiscriminant "1"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q1 :status "two-real-roots" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 1 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "b2"; pe:value 9 ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 8 ],
+    [ pe:var "negB"; pe:value 3 ],
+    [ pe:var "numMinus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "sqrtD"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { 1 math:notEqualTo 0 . },
+    { (-3 2) math:exponentiation 9 . },
+    { (4 1 2) math:product 8 . },
+    { (9 8) math:difference 1 . },
+    { 1 math:greaterThan 0 . },
+    { (2 1) math:product 2 . },
+    { -3 math:negation 3 . },
+    { (1 0.5) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:sum "4"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:difference "2"^^xsd:decimal . },
+    { ("4"^^xsd:decimal 2) math:quotient "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q1 :check _:b10_30f7173e0d32b4ed . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-6"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b2_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "4"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b2_c069274beb6a4411 . },
+    { _:b2_c069274beb6a4411 a :RealRoot . },
+    { _:b2_c069274beb6a4411 :value "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:exponentiation "4"^^xsd:decimal . },
+    { (1 "4"^^xsd:decimal) math:product "4"^^xsd:decimal . },
+    { (-3 "2"^^xsd:decimal) math:product "-6"^^xsd:decimal . },
+    { ("4"^^xsd:decimal "-6"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("2"^^xsd:decimal 2) math:exponentiation "4"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (1 "4"^^xsd:decimal) math:product "4"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (-3 "2"^^xsd:decimal) math:product "-6"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ ("4"^^xsd:decimal "-6"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ "0"^^xsd:decimal math:absoluteValue 0 . }
+  pe:builtin math:absoluteValue.
+
+{ :eps :val 0.000000001 . }
+  pe:fact "quadratic-equation.n3".
+
+{ 0 math:notGreaterThan 0.000000001 . }
+  pe:builtin math:notGreaterThan.
+
+{ _:b10_30f7173e0d32b4ed a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-6"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b2_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "4"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b2_c069274beb6a4411 . },
+    { _:b2_c069274beb6a4411 a :RealRoot . },
+    { _:b2_c069274beb6a4411 :value "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:exponentiation "4"^^xsd:decimal . },
+    { (1 "4"^^xsd:decimal) math:product "4"^^xsd:decimal . },
+    { (-3 "2"^^xsd:decimal) math:product "-6"^^xsd:decimal . },
+    { ("4"^^xsd:decimal "-6"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_30f7173e0d32b4ed :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-6"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b2_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "4"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b2_c069274beb6a4411 . },
+    { _:b2_c069274beb6a4411 a :RealRoot . },
+    { _:b2_c069274beb6a4411 :value "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:exponentiation "4"^^xsd:decimal . },
+    { (1 "4"^^xsd:decimal) math:product "4"^^xsd:decimal . },
+    { (-3 "2"^^xsd:decimal) math:product "-6"^^xsd:decimal . },
+    { ("4"^^xsd:decimal "-6"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_30f7173e0d32b4ed :root "2"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-6"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b2_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "4"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b2_c069274beb6a4411 . },
+    { _:b2_c069274beb6a4411 a :RealRoot . },
+    { _:b2_c069274beb6a4411 :value "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:exponentiation "4"^^xsd:decimal . },
+    { (1 "4"^^xsd:decimal) math:product "4"^^xsd:decimal . },
+    { (-3 "2"^^xsd:decimal) math:product "-6"^^xsd:decimal . },
+    { ("4"^^xsd:decimal "-6"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_30f7173e0d32b4ed :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-6"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b2_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "4"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b2_c069274beb6a4411 . },
+    { _:b2_c069274beb6a4411 a :RealRoot . },
+    { _:b2_c069274beb6a4411 :value "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:exponentiation "4"^^xsd:decimal . },
+    { (1 "4"^^xsd:decimal) math:product "4"^^xsd:decimal . },
+    { (-3 "2"^^xsd:decimal) math:product "-6"^^xsd:decimal . },
+    { ("4"^^xsd:decimal "-6"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_30f7173e0d32b4ed :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "4"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-6"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b2_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "4"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b2_c069274beb6a4411 . },
+    { _:b2_c069274beb6a4411 a :RealRoot . },
+    { _:b2_c069274beb6a4411 :value "2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal 2) math:exponentiation "4"^^xsd:decimal . },
+    { (1 "4"^^xsd:decimal) math:product "4"^^xsd:decimal . },
+    { (-3 "2"^^xsd:decimal) math:product "-6"^^xsd:decimal . },
+    { ("4"^^xsd:decimal "-6"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q1 :check _:b10_8f3fa97a1307b230 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-3"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b3_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b3_c069274beb6a4411 . },
+    { _:b3_c069274beb6a4411 a :RealRoot . },
+    { _:b3_c069274beb6a4411 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (1 "1"^^xsd:decimal) math:product "1"^^xsd:decimal . },
+    { (-3 "1"^^xsd:decimal) math:product "-3"^^xsd:decimal . },
+    { ("1"^^xsd:decimal "-3"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (1 "1"^^xsd:decimal) math:product "1"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (-3 "1"^^xsd:decimal) math:product "-3"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ ("1"^^xsd:decimal "-3"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ _:b10_8f3fa97a1307b230 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-3"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b3_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b3_c069274beb6a4411 . },
+    { _:b3_c069274beb6a4411 a :RealRoot . },
+    { _:b3_c069274beb6a4411 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (1 "1"^^xsd:decimal) math:product "1"^^xsd:decimal . },
+    { (-3 "1"^^xsd:decimal) math:product "-3"^^xsd:decimal . },
+    { ("1"^^xsd:decimal "-3"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8f3fa97a1307b230 :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-3"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b3_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b3_c069274beb6a4411 . },
+    { _:b3_c069274beb6a4411 a :RealRoot . },
+    { _:b3_c069274beb6a4411 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (1 "1"^^xsd:decimal) math:product "1"^^xsd:decimal . },
+    { (-3 "1"^^xsd:decimal) math:product "-3"^^xsd:decimal . },
+    { ("1"^^xsd:decimal "-3"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8f3fa97a1307b230 :root "1"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-3"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b3_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b3_c069274beb6a4411 . },
+    { _:b3_c069274beb6a4411 a :RealRoot . },
+    { _:b3_c069274beb6a4411 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (1 "1"^^xsd:decimal) math:product "1"^^xsd:decimal . },
+    { (-3 "1"^^xsd:decimal) math:product "-3"^^xsd:decimal . },
+    { ("1"^^xsd:decimal "-3"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8f3fa97a1307b230 :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-3"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b3_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b3_c069274beb6a4411 . },
+    { _:b3_c069274beb6a4411 a :RealRoot . },
+    { _:b3_c069274beb6a4411 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (1 "1"^^xsd:decimal) math:product "1"^^xsd:decimal . },
+    { (-3 "1"^^xsd:decimal) math:product "-3"^^xsd:decimal . },
+    { ("1"^^xsd:decimal "-3"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8f3fa97a1307b230 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -3 ],
+    [ pe:var "bx"; pe:value "-3"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 2 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q1 ],
+    [ pe:var "r"; pe:value _:b3_c069274beb6a4411 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q1 a :Quadratic . },
+    { :Q1 :a 1 . },
+    { :Q1 :b -3 . },
+    { :Q1 :c 2 . },
+    { :Q1 :answer _:b3_c069274beb6a4411 . },
+    { _:b3_c069274beb6a4411 a :RealRoot . },
+    { _:b3_c069274beb6a4411 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (1 "1"^^xsd:decimal) math:product "1"^^xsd:decimal . },
+    { (-3 "1"^^xsd:decimal) math:product "-3"^^xsd:decimal . },
+    { ("1"^^xsd:decimal "-3"^^xsd:decimal 2) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q2 :why _:b1_6473f82c16ee7df9 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . }.
+
+{ :Q2 a :Quadratic . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q2 :a 1 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q2 :b 2 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q2 :c 1 . }
+  pe:fact "quadratic-equation.n3".
+
+{ (2 2) math:exponentiation 4 . }
+  pe:builtin math:exponentiation.
+
+{ (4 1 1) math:product 4 . }
+  pe:builtin math:product.
+
+{ (4 4) math:difference 0 . }
+  pe:builtin math:difference.
+
+{ 2 math:negation -2 . }
+  pe:builtin math:negation.
+
+{ _:b1_6473f82c16ee7df9 :discriminant 0 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . }.
+
+{ _:b1_6473f82c16ee7df9 :denominator 2 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . }.
+
+{ _:b1_6473f82c16ee7df9 :negB -2 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . }.
+
+{ :Q2 :answer _:b5_b95bd459e1a915dd . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "x"; pe:value -1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { 0 math:equalTo 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . },
+    { (-2 2) math:quotient -1 . }.
+
+{ 0 math:equalTo 0 . }
+  pe:builtin math:equalTo.
+
+{ (-2 2) math:quotient -1 . }
+  pe:builtin math:quotient.
+
+{ _:b5_b95bd459e1a915dd a :RealRoot . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "x"; pe:value -1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { 0 math:equalTo 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . },
+    { (-2 2) math:quotient -1 . }.
+
+{ _:b5_b95bd459e1a915dd :value -1 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "x"; pe:value -1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { 0 math:equalTo 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . },
+    { (-2 2) math:quotient -1 . }.
+
+{ _:b5_b95bd459e1a915dd :multiplicity 2 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "x"; pe:value -1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { 0 math:equalTo 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . },
+    { (-2 2) math:quotient -1 . }.
+
+{ :Q2 :why _:b6_b95bd459e1a915dd . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "x"; pe:value -1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { 0 math:equalTo 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . },
+    { (-2 2) math:quotient -1 . }.
+
+{ _:b6_b95bd459e1a915dd :sqrtDiscriminant 0 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "x"; pe:value -1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { 0 math:equalTo 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . },
+    { (-2 2) math:quotient -1 . }.
+
+{ :Q2 :status "double-root" . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "D"; pe:value 0 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "b2"; pe:value 4 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value -2 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "x"; pe:value -1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (2 2) math:exponentiation 4 . },
+    { (4 1 1) math:product 4 . },
+    { (4 4) math:difference 0 . },
+    { 0 math:equalTo 0 . },
+    { (2 1) math:product 2 . },
+    { 2 math:negation -2 . },
+    { (-2 2) math:quotient -1 . }.
+
+{ :Q2 :check _:b10_8b8cc328149f28e0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "bx"; pe:value -2 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "r"; pe:value _:b5_b95bd459e1a915dd ],
+    [ pe:var "x"; pe:value -1 ],
+    [ pe:var "x2"; pe:value 1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { :Q2 :answer _:b5_b95bd459e1a915dd . },
+    { _:b5_b95bd459e1a915dd a :RealRoot . },
+    { _:b5_b95bd459e1a915dd :value -1 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (1 1) math:product 1 . },
+    { (2 -1) math:product -2 . },
+    { (1 -2 1) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (-1 2) math:exponentiation 1 . }
+  pe:builtin math:exponentiation.
+
+{ (1 1) math:product 1 . }
+  pe:builtin math:product.
+
+{ (2 -1) math:product -2 . }
+  pe:builtin math:product.
+
+{ (1 -2 1) math:sum 0 . }
+  pe:builtin math:sum.
+
+{ 0 math:absoluteValue 0 . }
+  pe:builtin math:absoluteValue.
+
+{ _:b10_8b8cc328149f28e0 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "bx"; pe:value -2 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "r"; pe:value _:b5_b95bd459e1a915dd ],
+    [ pe:var "x"; pe:value -1 ],
+    [ pe:var "x2"; pe:value 1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { :Q2 :answer _:b5_b95bd459e1a915dd . },
+    { _:b5_b95bd459e1a915dd a :RealRoot . },
+    { _:b5_b95bd459e1a915dd :value -1 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (1 1) math:product 1 . },
+    { (2 -1) math:product -2 . },
+    { (1 -2 1) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8b8cc328149f28e0 :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "bx"; pe:value -2 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "r"; pe:value _:b5_b95bd459e1a915dd ],
+    [ pe:var "x"; pe:value -1 ],
+    [ pe:var "x2"; pe:value 1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { :Q2 :answer _:b5_b95bd459e1a915dd . },
+    { _:b5_b95bd459e1a915dd a :RealRoot . },
+    { _:b5_b95bd459e1a915dd :value -1 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (1 1) math:product 1 . },
+    { (2 -1) math:product -2 . },
+    { (1 -2 1) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8b8cc328149f28e0 :root -1 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "bx"; pe:value -2 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "r"; pe:value _:b5_b95bd459e1a915dd ],
+    [ pe:var "x"; pe:value -1 ],
+    [ pe:var "x2"; pe:value 1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { :Q2 :answer _:b5_b95bd459e1a915dd . },
+    { _:b5_b95bd459e1a915dd a :RealRoot . },
+    { _:b5_b95bd459e1a915dd :value -1 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (1 1) math:product 1 . },
+    { (2 -1) math:product -2 . },
+    { (1 -2 1) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8b8cc328149f28e0 :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "bx"; pe:value -2 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "r"; pe:value _:b5_b95bd459e1a915dd ],
+    [ pe:var "x"; pe:value -1 ],
+    [ pe:var "x2"; pe:value 1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { :Q2 :answer _:b5_b95bd459e1a915dd . },
+    { _:b5_b95bd459e1a915dd a :RealRoot . },
+    { _:b5_b95bd459e1a915dd :value -1 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (1 1) math:product 1 . },
+    { (2 -1) math:product -2 . },
+    { (1 -2 1) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8b8cc328149f28e0 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value 1 ],
+    [ pe:var "b"; pe:value 2 ],
+    [ pe:var "bx"; pe:value -2 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q2 ],
+    [ pe:var "r"; pe:value _:b5_b95bd459e1a915dd ],
+    [ pe:var "x"; pe:value -1 ],
+    [ pe:var "x2"; pe:value 1 ];
+  pe:uses
+    { :Q2 a :Quadratic . },
+    { :Q2 :a 1 . },
+    { :Q2 :b 2 . },
+    { :Q2 :c 1 . },
+    { :Q2 :answer _:b5_b95bd459e1a915dd . },
+    { _:b5_b95bd459e1a915dd a :RealRoot . },
+    { _:b5_b95bd459e1a915dd :value -1 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (1 1) math:product 1 . },
+    { (2 -1) math:product -2 . },
+    { (1 -2 1) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q3 :why _:b1_650185d7b00cefac . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q3 ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . }.
+
+{ :Q3 a :Quadratic . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q3 :a -1 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q3 :b 0 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q3 :c 1 . }
+  pe:fact "quadratic-equation.n3".
+
+{ -1 math:notEqualTo 0 . }
+  pe:builtin math:notEqualTo.
+
+{ (0 2) math:exponentiation 0 . }
+  pe:builtin math:exponentiation.
+
+{ (4 -1 1) math:product -4 . }
+  pe:builtin math:product.
+
+{ (0 -4) math:difference 4 . }
+  pe:builtin math:difference.
+
+{ 0 math:negation 0 . }
+  pe:builtin math:negation.
+
+{ _:b1_650185d7b00cefac :discriminant 4 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q3 ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . }.
+
+{ _:b1_650185d7b00cefac :denominator -2 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q3 ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . }.
+
+{ _:b1_650185d7b00cefac :negB 0 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q3 ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . }.
+
+{ :Q3 :answer _:b2_1c0aec122f904ec6 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ 4 math:greaterThan 0 . }
+  pe:builtin math:greaterThan.
+
+{ (4 0.5) math:exponentiation "2"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ _:b2_1c0aec122f904ec6 a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q3 :answer _:b3_1c0aec122f904ec6 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b3_1c0aec122f904ec6 a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q3 :why _:b4_1c0aec122f904ec6 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b4_1c0aec122f904ec6 :sqrtDiscriminant "2"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q3 :status "two-real-roots" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 4 ],
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value -2 ],
+    [ pe:var "fourac"; pe:value -4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "numMinus"; pe:value "-2"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "sqrtD"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { -1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 -1 1) math:product -4 . },
+    { (0 -4) math:difference 4 . },
+    { 4 math:greaterThan 0 . },
+    { (2 -1) math:product -2 . },
+    { 0 math:negation 0 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:sum "2"^^xsd:decimal . },
+    { (0 "2"^^xsd:decimal) math:difference "-2"^^xsd:decimal . },
+    { ("2"^^xsd:decimal -2) math:quotient "-1"^^xsd:decimal . },
+    { ("-2"^^xsd:decimal -2) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q3 :check _:b10_efb62052822e2b61 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b2_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b2_1c0aec122f904ec6 . },
+    { _:b2_1c0aec122f904ec6 a :RealRoot . },
+    { _:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "-1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (0 "-1"^^xsd:decimal) math:product "0"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ _:b10_efb62052822e2b61 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b2_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b2_1c0aec122f904ec6 . },
+    { _:b2_1c0aec122f904ec6 a :RealRoot . },
+    { _:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "-1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_efb62052822e2b61 :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b2_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b2_1c0aec122f904ec6 . },
+    { _:b2_1c0aec122f904ec6 a :RealRoot . },
+    { _:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "-1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_efb62052822e2b61 :root "-1"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b2_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b2_1c0aec122f904ec6 . },
+    { _:b2_1c0aec122f904ec6 a :RealRoot . },
+    { _:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "-1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_efb62052822e2b61 :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b2_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b2_1c0aec122f904ec6 . },
+    { _:b2_1c0aec122f904ec6 a :RealRoot . },
+    { _:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "-1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_efb62052822e2b61 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b2_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b2_1c0aec122f904ec6 . },
+    { _:b2_1c0aec122f904ec6 a :RealRoot . },
+    { _:b2_1c0aec122f904ec6 :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "-1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q3 :check _:b10_7216d2c0ca8df7dd . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b3_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b3_1c0aec122f904ec6 . },
+    { _:b3_1c0aec122f904ec6 a :RealRoot . },
+    { _:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ _:b10_7216d2c0ca8df7dd a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b3_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b3_1c0aec122f904ec6 . },
+    { _:b3_1c0aec122f904ec6 a :RealRoot . },
+    { _:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_7216d2c0ca8df7dd :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b3_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b3_1c0aec122f904ec6 . },
+    { _:b3_1c0aec122f904ec6 a :RealRoot . },
+    { _:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_7216d2c0ca8df7dd :root "1"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b3_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b3_1c0aec122f904ec6 . },
+    { _:b3_1c0aec122f904ec6 a :RealRoot . },
+    { _:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_7216d2c0ca8df7dd :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b3_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b3_1c0aec122f904ec6 . },
+    { _:b3_1c0aec122f904ec6 a :RealRoot . },
+    { _:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_7216d2c0ca8df7dd :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value -1 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "bx"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q3 ],
+    [ pe:var "r"; pe:value _:b3_1c0aec122f904ec6 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q3 a :Quadratic . },
+    { :Q3 :a -1 . },
+    { :Q3 :b 0 . },
+    { :Q3 :c 1 . },
+    { :Q3 :answer _:b3_1c0aec122f904ec6 . },
+    { _:b3_1c0aec122f904ec6 a :RealRoot . },
+    { _:b3_1c0aec122f904ec6 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (-1 "1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal "0"^^xsd:decimal 1) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q4 :why _:b1_9ee8a4d9514f6479 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "q"; pe:value :Q4 ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . }.
+
+{ :Q4 a :Quadratic . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q4 :a 2 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q4 :b 10 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q4 :c 8 . }
+  pe:fact "quadratic-equation.n3".
+
+{ 2 math:notEqualTo 0 . }
+  pe:builtin math:notEqualTo.
+
+{ (10 2) math:exponentiation 100 . }
+  pe:builtin math:exponentiation.
+
+{ (4 2 8) math:product 64 . }
+  pe:builtin math:product.
+
+{ (100 64) math:difference 36 . }
+  pe:builtin math:difference.
+
+{ (2 2) math:product 4 . }
+  pe:builtin math:product.
+
+{ 10 math:negation -10 . }
+  pe:builtin math:negation.
+
+{ _:b1_9ee8a4d9514f6479 :discriminant 36 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "q"; pe:value :Q4 ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . }.
+
+{ _:b1_9ee8a4d9514f6479 :denominator 4 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "q"; pe:value :Q4 ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . }.
+
+{ _:b1_9ee8a4d9514f6479 :negB -10 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "q"; pe:value :Q4 ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . }.
+
+{ :Q4 :answer _:b2_4bafab36e4d5f14f . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ 36 math:greaterThan 0 . }
+  pe:builtin math:greaterThan.
+
+{ (36 0.5) math:exponentiation "6"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ _:b2_4bafab36e4d5f14f a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ _:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ :Q4 :answer _:b3_4bafab36e4d5f14f . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ _:b3_4bafab36e4d5f14f a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ _:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ :Q4 :why _:b4_4bafab36e4d5f14f . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ _:b4_4bafab36e4d5f14f :sqrtDiscriminant "6"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ :Q4 :status "two-real-roots" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "b2"; pe:value 100 ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "den"; pe:value 4 ],
+    [ pe:var "fourac"; pe:value 64 ],
+    [ pe:var "negB"; pe:value -10 ],
+    [ pe:var "numMinus"; pe:value "-16"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "-4"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { 2 math:notEqualTo 0 . },
+    { (10 2) math:exponentiation 100 . },
+    { (4 2 8) math:product 64 . },
+    { (100 64) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 2) math:product 4 . },
+    { 10 math:negation -10 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:sum "-4"^^xsd:decimal . },
+    { (-10 "6"^^xsd:decimal) math:difference "-16"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 4) math:quotient "-1"^^xsd:decimal . },
+    { ("-16"^^xsd:decimal 4) math:quotient "-4"^^xsd:decimal . }.
+
+{ :Q4 :check _:b10_1699f2d4c5ecbe87 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-10"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b2_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b2_4bafab36e4d5f14f . },
+    { _:b2_4bafab36e4d5f14f a :RealRoot . },
+    { _:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (2 "1"^^xsd:decimal) math:product "2"^^xsd:decimal . },
+    { (10 "-1"^^xsd:decimal) math:product "-10"^^xsd:decimal . },
+    { ("2"^^xsd:decimal "-10"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (2 "1"^^xsd:decimal) math:product "2"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (10 "-1"^^xsd:decimal) math:product "-10"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ ("2"^^xsd:decimal "-10"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ _:b10_1699f2d4c5ecbe87 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-10"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b2_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b2_4bafab36e4d5f14f . },
+    { _:b2_4bafab36e4d5f14f a :RealRoot . },
+    { _:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (2 "1"^^xsd:decimal) math:product "2"^^xsd:decimal . },
+    { (10 "-1"^^xsd:decimal) math:product "-10"^^xsd:decimal . },
+    { ("2"^^xsd:decimal "-10"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_1699f2d4c5ecbe87 :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-10"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b2_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b2_4bafab36e4d5f14f . },
+    { _:b2_4bafab36e4d5f14f a :RealRoot . },
+    { _:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (2 "1"^^xsd:decimal) math:product "2"^^xsd:decimal . },
+    { (10 "-1"^^xsd:decimal) math:product "-10"^^xsd:decimal . },
+    { ("2"^^xsd:decimal "-10"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_1699f2d4c5ecbe87 :root "-1"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-10"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b2_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b2_4bafab36e4d5f14f . },
+    { _:b2_4bafab36e4d5f14f a :RealRoot . },
+    { _:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (2 "1"^^xsd:decimal) math:product "2"^^xsd:decimal . },
+    { (10 "-1"^^xsd:decimal) math:product "-10"^^xsd:decimal . },
+    { ("2"^^xsd:decimal "-10"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_1699f2d4c5ecbe87 :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-10"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b2_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b2_4bafab36e4d5f14f . },
+    { _:b2_4bafab36e4d5f14f a :RealRoot . },
+    { _:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (2 "1"^^xsd:decimal) math:product "2"^^xsd:decimal . },
+    { (10 "-1"^^xsd:decimal) math:product "-10"^^xsd:decimal . },
+    { ("2"^^xsd:decimal "-10"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_1699f2d4c5ecbe87 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "2"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-10"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b2_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b2_4bafab36e4d5f14f . },
+    { _:b2_4bafab36e4d5f14f a :RealRoot . },
+    { _:b2_4bafab36e4d5f14f :value "-1"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (2 "1"^^xsd:decimal) math:product "2"^^xsd:decimal . },
+    { (10 "-1"^^xsd:decimal) math:product "-10"^^xsd:decimal . },
+    { ("2"^^xsd:decimal "-10"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q4 :check _:b10_36cf8ea8eb4cd4d . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "32"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-40"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b3_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "16"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b3_4bafab36e4d5f14f . },
+    { _:b3_4bafab36e4d5f14f a :RealRoot . },
+    { _:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 2) math:exponentiation "16"^^xsd:decimal . },
+    { (2 "16"^^xsd:decimal) math:product "32"^^xsd:decimal . },
+    { (10 "-4"^^xsd:decimal) math:product "-40"^^xsd:decimal . },
+    { ("32"^^xsd:decimal "-40"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("-4"^^xsd:decimal 2) math:exponentiation "16"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (2 "16"^^xsd:decimal) math:product "32"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (10 "-4"^^xsd:decimal) math:product "-40"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ ("32"^^xsd:decimal "-40"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ _:b10_36cf8ea8eb4cd4d a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "32"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-40"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b3_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "16"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b3_4bafab36e4d5f14f . },
+    { _:b3_4bafab36e4d5f14f a :RealRoot . },
+    { _:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 2) math:exponentiation "16"^^xsd:decimal . },
+    { (2 "16"^^xsd:decimal) math:product "32"^^xsd:decimal . },
+    { (10 "-4"^^xsd:decimal) math:product "-40"^^xsd:decimal . },
+    { ("32"^^xsd:decimal "-40"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_36cf8ea8eb4cd4d :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "32"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-40"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b3_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "16"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b3_4bafab36e4d5f14f . },
+    { _:b3_4bafab36e4d5f14f a :RealRoot . },
+    { _:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 2) math:exponentiation "16"^^xsd:decimal . },
+    { (2 "16"^^xsd:decimal) math:product "32"^^xsd:decimal . },
+    { (10 "-4"^^xsd:decimal) math:product "-40"^^xsd:decimal . },
+    { ("32"^^xsd:decimal "-40"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_36cf8ea8eb4cd4d :root "-4"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "32"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-40"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b3_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "16"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b3_4bafab36e4d5f14f . },
+    { _:b3_4bafab36e4d5f14f a :RealRoot . },
+    { _:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 2) math:exponentiation "16"^^xsd:decimal . },
+    { (2 "16"^^xsd:decimal) math:product "32"^^xsd:decimal . },
+    { (10 "-4"^^xsd:decimal) math:product "-40"^^xsd:decimal . },
+    { ("32"^^xsd:decimal "-40"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_36cf8ea8eb4cd4d :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "32"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-40"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b3_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "16"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b3_4bafab36e4d5f14f . },
+    { _:b3_4bafab36e4d5f14f a :RealRoot . },
+    { _:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 2) math:exponentiation "16"^^xsd:decimal . },
+    { (2 "16"^^xsd:decimal) math:product "32"^^xsd:decimal . },
+    { (10 "-4"^^xsd:decimal) math:product "-40"^^xsd:decimal . },
+    { ("32"^^xsd:decimal "-40"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_36cf8ea8eb4cd4d :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "32"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 10 ],
+    [ pe:var "bx"; pe:value "-40"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 8 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q4 ],
+    [ pe:var "r"; pe:value _:b3_4bafab36e4d5f14f ],
+    [ pe:var "x"; pe:value "-4"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "16"^^xsd:decimal ];
+  pe:uses
+    { :Q4 a :Quadratic . },
+    { :Q4 :a 2 . },
+    { :Q4 :b 10 . },
+    { :Q4 :c 8 . },
+    { :Q4 :answer _:b3_4bafab36e4d5f14f . },
+    { _:b3_4bafab36e4d5f14f a :RealRoot . },
+    { _:b3_4bafab36e4d5f14f :value "-4"^^xsd:decimal . },
+    { ("-4"^^xsd:decimal 2) math:exponentiation "16"^^xsd:decimal . },
+    { (2 "16"^^xsd:decimal) math:product "32"^^xsd:decimal . },
+    { (10 "-4"^^xsd:decimal) math:product "-40"^^xsd:decimal . },
+    { ("32"^^xsd:decimal "-40"^^xsd:decimal 8) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q5 :why _:b1_9065596091819d94 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . }.
+
+{ :Q5 a :Quadratic . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q5 :a 1 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q5 :b 0 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q5 :c 1 . }
+  pe:fact "quadratic-equation.n3".
+
+{ (0 4) math:difference -4 . }
+  pe:builtin math:difference.
+
+{ _:b1_9065596091819d94 :discriminant -4 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . }.
+
+{ _:b1_9065596091819d94 :denominator 2 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . }.
+
+{ _:b1_9065596091819d94 :negB 0 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . }.
+
+{ :Q5 :answer _:b7_a3eb4bac570718ce . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ -4 math:lessThan 0 . }
+  pe:builtin math:lessThan.
+
+{ -4 math:negation 4 . }
+  pe:builtin math:negation.
+
+{ (0 2) math:quotient 0 . }
+  pe:builtin math:quotient.
+
+{ "1"^^xsd:decimal math:negation -1 . }
+  pe:builtin math:negation.
+
+{ _:b7_a3eb4bac570718ce a :ComplexRoot . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ _:b7_a3eb4bac570718ce :real 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ :Q5 :answer _:b8_a3eb4bac570718ce . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ _:b8_a3eb4bac570718ce a :ComplexRoot . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ _:b8_a3eb4bac570718ce :real 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ _:b8_a3eb4bac570718ce :imag -1 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ :Q5 :why _:b9_a3eb4bac570718ce . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ _:b9_a3eb4bac570718ce :sqrtDiscriminant "2"^^xsd:decimal . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ :Q5 :status "complex-roots" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "D"; pe:value -4 ],
+    [ pe:var "Dn"; pe:value 4 ],
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b2"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "den"; pe:value 2 ],
+    [ pe:var "fourac"; pe:value 4 ],
+    [ pe:var "im"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "imNeg"; pe:value -1 ],
+    [ pe:var "negB"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re"; pe:value 0 ],
+    [ pe:var "sqrtDn"; pe:value "2"^^xsd:decimal ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { 1 math:notEqualTo 0 . },
+    { (0 2) math:exponentiation 0 . },
+    { (4 1 1) math:product 4 . },
+    { (0 4) math:difference -4 . },
+    { -4 math:lessThan 0 . },
+    { (2 1) math:product 2 . },
+    { 0 math:negation 0 . },
+    { -4 math:negation 4 . },
+    { (4 0.5) math:exponentiation "2"^^xsd:decimal . },
+    { (0 2) math:quotient 0 . },
+    { ("2"^^xsd:decimal 2) math:quotient "1"^^xsd:decimal . },
+    { "1"^^xsd:decimal math:negation -1 . }.
+
+{ :Q5 :check _:b11_ba854b5f4360b40 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (0 0) math:product 0 . }
+  pe:builtin math:product.
+
+{ ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ _:b11_ba854b5f4360b40 a :Check . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_ba854b5f4360b40 :kind "plug-in/complex" . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_ba854b5f4360b40 :root _:b12_ba854b5f4360b40 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b12_ba854b5f4360b40 :real 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b12_ba854b5f4360b40 :imag "1"^^xsd:decimal . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_ba854b5f4360b40 :residualRe 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_ba854b5f4360b40 :residualIm 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_ba854b5f4360b40 :ok true . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "a_u2mV2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "two_uv"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value "-1"^^xsd:decimal ],
+    [ pe:var "v"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "v2"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "z"; pe:value _:b7_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b7_a3eb4bac570718ce . },
+    { _:b7_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b7_a3eb4bac570718ce :real 0 . },
+    { _:b7_a3eb4bac570718ce :imag "1"^^xsd:decimal . },
+    { (0 2) math:exponentiation 0 . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (0 "1"^^xsd:decimal) math:difference "-1"^^xsd:decimal . },
+    { (2 0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (1 "-1"^^xsd:decimal) math:product "-1"^^xsd:decimal . },
+    { (1 "0"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { (0 0) math:product 0 . },
+    { (0 "1"^^xsd:decimal) math:product "0"^^xsd:decimal . },
+    { ("-1"^^xsd:decimal 0 1) math:sum "0"^^xsd:decimal . },
+    { ("0"^^xsd:decimal "0"^^xsd:decimal) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q5 :check _:b11_a210790501c722d9 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (0 1) math:difference -1 . }
+  pe:builtin math:difference.
+
+{ (2 0 -1) math:product 0 . }
+  pe:builtin math:product.
+
+{ (1 -1) math:product -1 . }
+  pe:builtin math:product.
+
+{ (1 0) math:product 0 . }
+  pe:builtin math:product.
+
+{ (0 -1) math:product 0 . }
+  pe:builtin math:product.
+
+{ (-1 0 1) math:sum 0 . }
+  pe:builtin math:sum.
+
+{ (0 0) math:sum 0 . }
+  pe:builtin math:sum.
+
+{ _:b11_a210790501c722d9 a :Check . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_a210790501c722d9 :kind "plug-in/complex" . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_a210790501c722d9 :root _:b12_a210790501c722d9 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b12_a210790501c722d9 :real 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b12_a210790501c722d9 :imag -1 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_a210790501c722d9 :residualRe 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_a210790501c722d9 :residualIm 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b11_a210790501c722d9 :ok true . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 1 ],
+    [ pe:var "a_2uv"; pe:value 0 ],
+    [ pe:var "a_u2mV2"; pe:value -1 ],
+    [ pe:var "b"; pe:value 0 ],
+    [ pe:var "b_u"; pe:value 0 ],
+    [ pe:var "b_v"; pe:value 0 ],
+    [ pe:var "c"; pe:value 1 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "im_abs"; pe:value 0 ],
+    [ pe:var "im_f"; pe:value 0 ],
+    [ pe:var "q"; pe:value :Q5 ],
+    [ pe:var "re_abs"; pe:value 0 ],
+    [ pe:var "re_f"; pe:value 0 ],
+    [ pe:var "two_uv"; pe:value 0 ],
+    [ pe:var "u"; pe:value 0 ],
+    [ pe:var "u2"; pe:value 0 ],
+    [ pe:var "u2_minus_v2"; pe:value -1 ],
+    [ pe:var "v"; pe:value -1 ],
+    [ pe:var "v2"; pe:value 1 ],
+    [ pe:var "z"; pe:value _:b8_a3eb4bac570718ce ];
+  pe:uses
+    { :Q5 a :Quadratic . },
+    { :Q5 :a 1 . },
+    { :Q5 :b 0 . },
+    { :Q5 :c 1 . },
+    { :Q5 :answer _:b8_a3eb4bac570718ce . },
+    { _:b8_a3eb4bac570718ce a :ComplexRoot . },
+    { _:b8_a3eb4bac570718ce :real 0 . },
+    { _:b8_a3eb4bac570718ce :imag -1 . },
+    { (0 2) math:exponentiation 0 . },
+    { (-1 2) math:exponentiation 1 . },
+    { (0 1) math:difference -1 . },
+    { (2 0 -1) math:product 0 . },
+    { (1 -1) math:product -1 . },
+    { (1 0) math:product 0 . },
+    { (0 0) math:product 0 . },
+    { (0 -1) math:product 0 . },
+    { (-1 0 1) math:sum 0 . },
+    { (0 0) math:sum 0 . },
+    { 0 math:absoluteValue 0 . },
+    { 0 math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q6 :why _:b1_ef71dbc9a453e6fc . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "q"; pe:value :Q6 ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . }.
+
+{ :Q6 a :Quadratic . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q6 :a 3 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q6 :b -12 . }
+  pe:fact "quadratic-equation.n3".
+
+{ :Q6 :c 9 . }
+  pe:fact "quadratic-equation.n3".
+
+{ 3 math:notEqualTo 0 . }
+  pe:builtin math:notEqualTo.
+
+{ (-12 2) math:exponentiation 144 . }
+  pe:builtin math:exponentiation.
+
+{ (4 3 9) math:product 108 . }
+  pe:builtin math:product.
+
+{ (144 108) math:difference 36 . }
+  pe:builtin math:difference.
+
+{ (2 3) math:product 6 . }
+  pe:builtin math:product.
+
+{ -12 math:negation 12 . }
+  pe:builtin math:negation.
+
+{ _:b1_ef71dbc9a453e6fc :discriminant 36 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "q"; pe:value :Q6 ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . }.
+
+{ _:b1_ef71dbc9a453e6fc :denominator 6 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "q"; pe:value :Q6 ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . }.
+
+{ _:b1_ef71dbc9a453e6fc :negB 12 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "q"; pe:value :Q6 ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . }.
+
+{ :Q6 :answer _:b2_b98495ba1f7ecf95 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }
+  pe:builtin math:quotient.
+
+{ _:b2_b98495ba1f7ecf95 a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q6 :answer _:b3_b98495ba1f7ecf95 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b3_b98495ba1f7ecf95 a :RealRoot . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q6 :why _:b4_b98495ba1f7ecf95 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ _:b4_b98495ba1f7ecf95 :sqrtDiscriminant "6"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q6 :status "two-real-roots" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "D"; pe:value 36 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "den"; pe:value 6 ],
+    [ pe:var "fourac"; pe:value 108 ],
+    [ pe:var "negB"; pe:value 12 ],
+    [ pe:var "numMinus"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "numPlus"; pe:value "18"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "sqrtD"; pe:value "6"^^xsd:decimal ],
+    [ pe:var "x1"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { 3 math:notEqualTo 0 . },
+    { (-12 2) math:exponentiation 144 . },
+    { (4 3 9) math:product 108 . },
+    { (144 108) math:difference 36 . },
+    { 36 math:greaterThan 0 . },
+    { (2 3) math:product 6 . },
+    { -12 math:negation 12 . },
+    { (36 0.5) math:exponentiation "6"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:sum "18"^^xsd:decimal . },
+    { (12 "6"^^xsd:decimal) math:difference "6"^^xsd:decimal . },
+    { ("18"^^xsd:decimal 6) math:quotient "3"^^xsd:decimal . },
+    { ("6"^^xsd:decimal 6) math:quotient "1"^^xsd:decimal . }.
+
+{ :Q6 :check _:b10_8a757fac5bb14976 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "27"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-36"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b2_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "9"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b2_b98495ba1f7ecf95 . },
+    { _:b2_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal . },
+    { ("3"^^xsd:decimal 2) math:exponentiation "9"^^xsd:decimal . },
+    { (3 "9"^^xsd:decimal) math:product "27"^^xsd:decimal . },
+    { (-12 "3"^^xsd:decimal) math:product "-36"^^xsd:decimal . },
+    { ("27"^^xsd:decimal "-36"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("3"^^xsd:decimal 2) math:exponentiation "9"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (3 "9"^^xsd:decimal) math:product "27"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (-12 "3"^^xsd:decimal) math:product "-36"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ ("27"^^xsd:decimal "-36"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ _:b10_8a757fac5bb14976 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "27"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-36"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b2_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "9"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b2_b98495ba1f7ecf95 . },
+    { _:b2_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal . },
+    { ("3"^^xsd:decimal 2) math:exponentiation "9"^^xsd:decimal . },
+    { (3 "9"^^xsd:decimal) math:product "27"^^xsd:decimal . },
+    { (-12 "3"^^xsd:decimal) math:product "-36"^^xsd:decimal . },
+    { ("27"^^xsd:decimal "-36"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8a757fac5bb14976 :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "27"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-36"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b2_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "9"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b2_b98495ba1f7ecf95 . },
+    { _:b2_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal . },
+    { ("3"^^xsd:decimal 2) math:exponentiation "9"^^xsd:decimal . },
+    { (3 "9"^^xsd:decimal) math:product "27"^^xsd:decimal . },
+    { (-12 "3"^^xsd:decimal) math:product "-36"^^xsd:decimal . },
+    { ("27"^^xsd:decimal "-36"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8a757fac5bb14976 :root "3"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "27"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-36"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b2_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "9"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b2_b98495ba1f7ecf95 . },
+    { _:b2_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal . },
+    { ("3"^^xsd:decimal 2) math:exponentiation "9"^^xsd:decimal . },
+    { (3 "9"^^xsd:decimal) math:product "27"^^xsd:decimal . },
+    { (-12 "3"^^xsd:decimal) math:product "-36"^^xsd:decimal . },
+    { ("27"^^xsd:decimal "-36"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8a757fac5bb14976 :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "27"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-36"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b2_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "9"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b2_b98495ba1f7ecf95 . },
+    { _:b2_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal . },
+    { ("3"^^xsd:decimal 2) math:exponentiation "9"^^xsd:decimal . },
+    { (3 "9"^^xsd:decimal) math:product "27"^^xsd:decimal . },
+    { (-12 "3"^^xsd:decimal) math:product "-36"^^xsd:decimal . },
+    { ("27"^^xsd:decimal "-36"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_8a757fac5bb14976 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "27"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-36"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b2_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "9"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b2_b98495ba1f7ecf95 . },
+    { _:b2_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b2_b98495ba1f7ecf95 :value "3"^^xsd:decimal . },
+    { ("3"^^xsd:decimal 2) math:exponentiation "9"^^xsd:decimal . },
+    { (3 "9"^^xsd:decimal) math:product "27"^^xsd:decimal . },
+    { (-12 "3"^^xsd:decimal) math:product "-36"^^xsd:decimal . },
+    { ("27"^^xsd:decimal "-36"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :Q6 :check _:b10_11103216e90700c3 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b3_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b3_b98495ba1f7ecf95 . },
+    { _:b3_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:product "3"^^xsd:decimal . },
+    { (-12 "1"^^xsd:decimal) math:product "-12"^^xsd:decimal . },
+    { ("3"^^xsd:decimal "-12"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (3 "1"^^xsd:decimal) math:product "3"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ (-12 "1"^^xsd:decimal) math:product "-12"^^xsd:decimal . }
+  pe:builtin math:product.
+
+{ ("3"^^xsd:decimal "-12"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ _:b10_11103216e90700c3 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b3_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b3_b98495ba1f7ecf95 . },
+    { _:b3_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:product "3"^^xsd:decimal . },
+    { (-12 "1"^^xsd:decimal) math:product "-12"^^xsd:decimal . },
+    { ("3"^^xsd:decimal "-12"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_11103216e90700c3 :kind "plug-in/real" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b3_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b3_b98495ba1f7ecf95 . },
+    { _:b3_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:product "3"^^xsd:decimal . },
+    { (-12 "1"^^xsd:decimal) math:product "-12"^^xsd:decimal . },
+    { ("3"^^xsd:decimal "-12"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_11103216e90700c3 :root "1"^^xsd:decimal . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b3_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b3_b98495ba1f7ecf95 . },
+    { _:b3_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:product "3"^^xsd:decimal . },
+    { (-12 "1"^^xsd:decimal) math:product "-12"^^xsd:decimal . },
+    { ("3"^^xsd:decimal "-12"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_11103216e90700c3 :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b3_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b3_b98495ba1f7ecf95 . },
+    { _:b3_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:product "3"^^xsd:decimal . },
+    { (-12 "1"^^xsd:decimal) math:product "-12"^^xsd:decimal . },
+    { ("3"^^xsd:decimal "-12"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b10_11103216e90700c3 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ax2"; pe:value "3"^^xsd:decimal ],
+    [ pe:var "b"; pe:value -12 ],
+    [ pe:var "bx"; pe:value "-12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 9 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "f"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "q"; pe:value :Q6 ],
+    [ pe:var "r"; pe:value _:b3_b98495ba1f7ecf95 ],
+    [ pe:var "x"; pe:value "1"^^xsd:decimal ],
+    [ pe:var "x2"; pe:value "1"^^xsd:decimal ];
+  pe:uses
+    { :Q6 a :Quadratic . },
+    { :Q6 :a 3 . },
+    { :Q6 :b -12 . },
+    { :Q6 :c 9 . },
+    { :Q6 :answer _:b3_b98495ba1f7ecf95 . },
+    { _:b3_b98495ba1f7ecf95 a :RealRoot . },
+    { _:b3_b98495ba1f7ecf95 :value "1"^^xsd:decimal . },
+    { ("1"^^xsd:decimal 2) math:exponentiation "1"^^xsd:decimal . },
+    { (3 "1"^^xsd:decimal) math:product "3"^^xsd:decimal . },
+    { (-12 "1"^^xsd:decimal) math:product "-12"^^xsd:decimal . },
+    { ("3"^^xsd:decimal "-12"^^xsd:decimal 9) math:sum "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.

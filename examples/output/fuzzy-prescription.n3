@@ -1,0 +1,4 @@
+@prefix : <http://eulersharp.sourceforge.net/2006/02swap/med#> .
+
+:Joe :isPrescribed :aspirinLowDose .
+:Joe :isPrescribed :betaBlocker .

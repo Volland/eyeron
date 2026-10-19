@@ -1,0 +1,18 @@
+# owl-disjoint-classes: a small runnable case for EYE RPO rules.
+# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-disjointWith.n3
+# Rules: MIT, Jos De Roo; sample data added for this example.
+
+@prefix : <http://example.org/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Sample data
+:Cat owl:disjointWith :Dog. :milo a :Cat. :fido a :Dog.
+
+# Inference rules
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+{?A owl:disjointWith ?B. ?X a ?A. ?Y a ?B } => {?X owl:differentFrom ?Y}.
+{?A owl:disjointWith ?B. ?X a ?A. ?X a ?B} => false.

@@ -1,0 +1,27 @@
+# nilakantha-pi. Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/pi/pi.n3
+# The sample uses 3, 7, and 11 terms; result arguments are explicit outputs.
+
+@prefix : <http://example.org/>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# 3 + 4 * (1/(2*3*4) - 1/(4*5*6) + ...).
+{ (?N ?N ?Accumulated ?Sign) :nilakanthaTail ?Accumulated } <= true.
+{ (?K ?N ?Accumulated ?Sign) :nilakanthaTail ?Sum } <= {
+    ?K math:lessThan ?N.
+    (2 ?K) math:product ?Twice.
+    (?Twice 1) math:sum ?Next. (?Twice 2) math:sum ?After.
+    (?Twice ?Next ?After) math:product ?Denominator.
+    (?Sign ?Denominator) math:quotient ?Term.
+    (?Accumulated ?Term) math:sum ?Updated.
+    ?Sign math:negation ?Opposite. (?K 1) math:sum ?NextK.
+    (?NextK ?N ?Updated ?Opposite) :nilakanthaTail ?Sum.
+}.
+{ ?N :pi ?Pi } <= {
+    (1 ?N 0 1) :nilakanthaTail ?Sum.
+    (4 ?Sum) math:product ?Correction. (3 ?Correction) math:sum ?Pi.
+}.
+{ (4 8 12) list:member ?N. ?N :pi ?Pi }
+    => { :nilakantha :approximation (?N ?Pi) }.

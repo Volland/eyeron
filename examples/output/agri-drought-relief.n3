@@ -1,0 +1,7 @@
+@prefix ex: <https://example.org/agri#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:APP-DR-01 ex:eligible true .
+ex:APP-DR-01 ex:status ex:Approved .
+_:pay_fe97679132096585 a ex:ReliefPayment .
+ex:APP-DR-01 ex:issuedPayment _:pay_fe97679132096585 .

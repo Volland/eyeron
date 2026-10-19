@@ -1,0 +1,14 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/iq/
+# Standalone program; EYE answer directives use log:query.
+
+# Source file: iq/iq-extra.n3
+@base <https://eyereasoner.github.io/eye/reasoning/iq/iq-extra.n3>.
+# implicit quantification
+# extra cases
+
+@prefix : <http://example.org/test#>.
+
+:a :b {:c :d :e}.
+{?x :b ?y} => ?y.
+

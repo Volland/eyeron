@@ -1,0 +1,8 @@
+@prefix ex: <https://example.org/bikepass#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:APP-BP-01 ex:eligible true .
+ex:APP-BP-01 ex:status ex:Approved .
+ex:APP-BP-01 ex:approvedPrice 12 .
+_:pass_ce2f55ce9d7b5da6 a ex:BikePass .
+ex:APP-BP-01 ex:issuedPass _:pass_ce2f55ce9d7b5da6 .

@@ -1,0 +1,7 @@
+@prefix ex: <https://example.org/edu#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:APP-GR-01 ex:eligible true .
+ex:APP-GR-01 ex:status ex:Approved .
+_:pay_b34d79284e364c3d a ex:GrantPayment .
+ex:APP-GR-01 ex:issuedPayment _:pay_b34d79284e364c3d .

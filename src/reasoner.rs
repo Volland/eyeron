@@ -1706,6 +1706,12 @@ fn agenda_entries_for_rule(
     if rule.premise.len() != 1 && !allow_multi_premise_agenda { return Vec::new(); }
     if rule.premise.len() == 1 && rule.conclusion.iter().any(triple_contains_blank) { return Vec::new(); }
 
+    // Agenda entries below only watch concrete predicates. A mixed body such
+    // as `{ ?P a owl:TransitiveProperty. ?S ?P ?X. ?X ?P ?O }` would therefore
+    // fire on the type assertion once but miss later edges with predicate ?P.
+    // Keep these rules on the general matcher until wildcard triggers exist.
+    if rule.premise.iter().any(|goal| matches!(goal.p, Term::Var(_))) { return Vec::new(); }
+
     // A semi-naive agenda is complete for rules whose non-builtin support is
     // ordinary materialized facts: when the last such support fact arrives, it
     // triggers the rule and the remaining body is matched against the closure.

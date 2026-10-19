@@ -1,0 +1,7 @@
+@prefix ex: <https://example.org/leisure#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:APP-LEIS-01 ex:eligible true .
+ex:APP-LEIS-01 ex:status ex:Approved .
+_:v_134e1665e812dc4 a ex:LeisureVoucher .
+ex:APP-LEIS-01 ex:issuedVoucher _:v_134e1665e812dc4 .

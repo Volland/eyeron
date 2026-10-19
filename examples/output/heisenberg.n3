@@ -1,0 +1,17 @@
+@prefix : <http://example.org/#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:psi a :QuantumState .
+:psi :deltaX "0.7071067811865476"^^xsd:double .
+:psi :deltaP "0.7071067811865476"^^xsd:double .
+:psi :deltaSx "0.5"^^xsd:double .
+:psi :deltaSz "0.5"^^xsd:double .
+:psi :boundXP "0.5"^^xsd:double .
+:psi :boundSxSz "0.25"^^xsd:double .
+:psi :boundXSz "0.0"^^xsd:double .
+:psi :prodXP 0.5000000000000001 .
+:psi :prodXSz 0.3535533905932738 .
+:psi :prodSxSz 0.25 .
+:psi :xpStatus "saturates" .
+:psi :sxszStatus "saturates" .
+:psi :xszStatus "satisfied" .

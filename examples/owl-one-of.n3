@@ -1,0 +1,18 @@
+# owl-one-of: a small runnable case for EYE RPO rules.
+# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-oneOf.n3
+# Rules: MIT, Jos De Roo; sample data added for this example.
+
+@prefix : <http://example.org/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Sample data
+:PrimaryColour owl:oneOf (:red :green :blue).
+
+# Inference rules
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+{?C owl:oneOf ?L. ?X list:in ?L} => {?X a ?C}.

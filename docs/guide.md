@@ -127,7 +127,7 @@ cargo doc --no-deps
 
 `scripts/test-all` runs the release test suite and appends totals across test binaries, with separate counts for conformance cases inside suite checks. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness requires every saved proof to check successfully.
 
-The vendored N3 suite has two expectations adjusted for Eyeron's graph-term scoping; see [scope differences](n3.md#conformance-scope-differences). The [W3C runner notes](../tests/w3c_rdf/README.md) cover the local manifest mirror and EARL report. CI also runs native/Wasm Clippy, a Wasm build, rustdoc, and cargo-deny; its formatting job is advisory.
+The vendored N3 suite has two expectations adjusted for Eyeron's graph-term scoping; see [scope differences](n3.md#conformance-scope-differences). The [W3C runner notes](../tests/w3c_rdf/README.md) cover the local manifest mirror and EARL report. CI has three jobs: native release tests, Clippy, and rustdoc; Wasm Clippy and a release build; and cargo-deny for dependency checks.
 
 | Code | Responsibility |
 | --- | --- |

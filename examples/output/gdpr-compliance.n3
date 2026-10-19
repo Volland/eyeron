@@ -1,0 +1,4 @@
+@prefix : <http://example.org/gdpr#> .
+
+:john_doe a :GDPRCompliant .
+:jane_smith a :GDPRCompliant .

@@ -1,0 +1,12 @@
+@prefix : <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:sequences :collatz (1 (1)) .
+:sequences :collatz (2 (2 1)) .
+:sequences :collatz (3 (3 10 5 16 8 4 2 1)) .
+:sequences :collatz (4 (4 2 1)) .
+:sequences :collatz (5 (5 16 8 4 2 1)) .
+:sequences :collatz (6 (6 3 10 5 16 8 4 2 1)) .
+:sequences :collatz (8 (8 4 2 1)) .
+:sequences :collatz (10 (10 5 16 8 4 2 1)) .
+:sequences :collatz (16 (16 8 4 2 1)) .

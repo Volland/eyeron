@@ -1,0 +1,19 @@
+# owl-max-cardinality: a small runnable case for EYE RPO rules.
+# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-maxCardinality.n3
+# Rules: MIT, Jos De Roo; sample data added for this example.
+
+@prefix : <http://example.org/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Sample data
+:OnlyChildParent owl:maxCardinality 1; owl:onProperty :child. :alice a :OnlyChildParent; :child :bob, :robert.
+
+# Inference rules
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+{?C owl:maxCardinality 1. ?C owl:onProperty ?P. ?U a ?C. ?U ?P ?Y. ?U ?P ?Z} => {?Y owl:sameAs ?Z}.
+{?C owl:maxCardinality 0. ?C owl:onProperty ?P. ?X ?P ?Y. ?X a ?C} => false.
+{?C owl:maxCardinality 1. ?C owl:onProperty ?P. ?X ?P ?Y. ?X ?P ?Z. ?X a ?C. ?Z owl:differentFrom ?Y} => false.

@@ -1,0 +1,17 @@
+# owl-different-from: a small runnable case for EYE RPO rules.
+# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-differentFrom.n3
+# Rules: MIT, Jos De Roo; sample data added for this example.
+
+@prefix : <http://example.org/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Sample data
+:alice owl:differentFrom :bob.
+
+# Inference rules
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+{?A owl:differentFrom ?B} => {?B owl:differentFrom ?A}.

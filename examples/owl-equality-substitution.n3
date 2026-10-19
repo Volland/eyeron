@@ -1,0 +1,19 @@
+# owl-equality-substitution: a small runnable case for EYE RPO rules.
+# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-sameAs-ext.n3
+# Rules: MIT, Jos De Roo; sample data added for this example.
+
+@prefix : <http://example.org/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Sample data
+:bob owl:sameAs :robert. :bob :likes :pizza. :alice :knows :bob. :likes owl:sameAs :enjoys.
+
+# Inference rules
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+{?X owl:sameAs ?Y. ?X ?P ?O} => {?Y ?P ?O}.
+{?X owl:sameAs ?Y. ?S ?X ?O} => {?S ?Y ?O}.
+{?X owl:sameAs ?Y. ?S ?P ?X} => {?S ?P ?Y}.

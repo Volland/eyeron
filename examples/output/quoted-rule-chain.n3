@@ -1,0 +1,13 @@
+@prefix : <http://example.org/try#> .
+
+{
+    :s :p ?O .
+} => {
+    :s :q ?O .
+} .
+
+{
+    :s :q ?O .
+} => {
+    :s :r ?O .
+} .

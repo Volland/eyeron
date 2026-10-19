@@ -1,0 +1,12 @@
+@prefix : <https://eyereasoner.github.io/eye/reasoning#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:TEST :PASS 3 .
+:bob :marriedTo :alice .
+
+{
+    :bob :marriedTo :alice .
+} :since "1999" .
+
+:TEST :PASS 1 .
+:TEST :PASS 2 .

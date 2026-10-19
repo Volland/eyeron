@@ -1,0 +1,5 @@
+@prefix : <http://example.org/socrates#> .
+
+:we :have {
+    :Socrates a :Mortal .
+} .

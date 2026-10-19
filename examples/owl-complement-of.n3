@@ -1,0 +1,19 @@
+# owl-complement-of: a small runnable case for EYE RPO rules.
+# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-complementOf.n3
+# Rules: MIT, Jos De Roo; sample data added for this example.
+
+@prefix : <http://example.org/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Sample data
+:Vertebrate owl:complementOf :Invertebrate.
+
+# Inference rules
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+{?C owl:complementOf ?D} => {?D owl:complementOf ?C}.
+{?C owl:complementOf ?D} => {?D owl:disjointWith ?C}.
+{?C owl:complementOf ?D. ?X a ?C. ?X a ?D} => false.

@@ -1,0 +1,11 @@
+# crypto-sha. Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/crypto/cryptoP.n3
+# SHA-1 only; other hash relations from the source are not implemented.
+
+@prefix : <http://example.org/>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix crypto: <http://www.w3.org/2000/10/swap/crypto#>.
+{ ("" "abc" "blargh") list:member ?Text. ?Text crypto:sha ?Digest }
+    => { :hashes :sha1 (?Text ?Digest) }.

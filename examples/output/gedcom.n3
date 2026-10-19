@@ -1,0 +1,8 @@
+@prefix : <http://www.agfa.com/w3c/euler/gedcom-facts#> .
+
+:Jos :testRelationship :Bart .
+:Geert :testRelationship :Bart .
+:Dirk :testRelationship :Bart .
+:Jos :testRelationship :Tom .
+:Geert :testRelationship :Tom .
+:Dirk :testRelationship :Tom .

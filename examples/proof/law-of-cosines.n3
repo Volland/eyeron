@@ -1,0 +1,3614 @@
+@prefix : <http://example.org/cosine#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:T1 :answer _:b1_54721846418c41f3 .
+_:b1_54721846418c41f3 a :Side .
+_:b1_54721846418c41f3 :which "c" .
+_:b1_54721846418c41f3 :value "5"^^xsd:decimal .
+:T1 :why _:b2_54721846418c41f3 .
+_:b2_54721846418c41f3 :a2 9 .
+_:b2_54721846418c41f3 :b2 16 .
+_:b2_54721846418c41f3 :cosAngle 6.123233995736766e-17 .
+_:b2_54721846418c41f3 :rhs "25"^^xsd:decimal .
+:T1 :status "solve-c" .
+:T1 :check _:b7_c7b33d47712c9518 .
+_:b7_c7b33d47712c9518 a :Check .
+_:b7_c7b33d47712c9518 :kind "plug-in/c" .
+_:b7_c7b33d47712c9518 :residual 0 .
+_:b7_c7b33d47712c9518 :ok true .
+:T2 :answer _:b1_21f18ac81e6a18e2 .
+_:b1_21f18ac81e6a18e2 a :Side .
+_:b1_21f18ac81e6a18e2 :which "c" .
+_:b1_21f18ac81e6a18e2 :value 6.244997998398397 .
+:T2 :why _:b2_21f18ac81e6a18e2 .
+_:b2_21f18ac81e6a18e2 :a2 25 .
+_:b2_21f18ac81e6a18e2 :b2 49 .
+_:b2_21f18ac81e6a18e2 :cosAngle 0.5000000000000001 .
+_:b2_21f18ac81e6a18e2 :rhs 38.99999999999999 .
+:T2 :status "solve-c" .
+:T2 :check _:b7_ca3a97d7f6925edf .
+_:b7_ca3a97d7f6925edf a :Check .
+_:b7_ca3a97d7f6925edf :kind "plug-in/c" .
+_:b7_ca3a97d7f6925edf :residual 0 .
+_:b7_ca3a97d7f6925edf :ok true .
+:T3 :answer _:b3_9dd1c3061358bb8b .
+_:b3_9dd1c3061358bb8b a :Side .
+_:b3_9dd1c3061358bb8b :which "a" .
+_:b3_9dd1c3061358bb8b :value 5.5677643628300215 .
+:T3 :why _:b4_9dd1c3061358bb8b .
+_:b4_9dd1c3061358bb8b :b2 25 .
+_:b4_9dd1c3061358bb8b :c2 36 .
+_:b4_9dd1c3061358bb8b :cosAngle 0.5000000000000001 .
+_:b4_9dd1c3061358bb8b :rhs 30.999999999999993 .
+:T3 :status "solve-a" .
+:T3 :check _:b8_d787c546f4131329 .
+_:b8_d787c546f4131329 a :Check .
+_:b8_d787c546f4131329 :kind "plug-in/a" .
+_:b8_d787c546f4131329 :residual 3.552713678800501e-15 .
+_:b8_d787c546f4131329 :ok true .
+:T4 :answer _:b5_72a3a4d41342fcef .
+_:b5_72a3a4d41342fcef a :Side .
+_:b5_72a3a4d41342fcef :which "b" .
+_:b5_72a3a4d41342fcef :value 1.6148359528406395 .
+:T4 :why _:b6_72a3a4d41342fcef .
+_:b6_72a3a4d41342fcef :c2 9 .
+_:b6_72a3a4d41342fcef :a2 4 .
+_:b6_72a3a4d41342fcef :cosAngle 0.8660254037844387 .
+_:b6_72a3a4d41342fcef :rhs 2.607695154586736 .
+:T4 :status "solve-b" .
+:T4 :check _:b9_5e727267f707c3ff .
+_:b9_5e727267f707c3ff a :Check .
+_:b9_5e727267f707c3ff :kind "plug-in/b" .
+_:b9_5e727267f707c3ff :residual 0 .
+_:b9_5e727267f707c3ff :ok true .
+:T5 :answer _:b1_11f7e42950068466 .
+_:b1_11f7e42950068466 a :Side .
+_:b1_11f7e42950068466 :which "c" .
+_:b1_11f7e42950068466 :value 15.062650137854062 .
+:T5 :why _:b2_11f7e42950068466 .
+_:b2_11f7e42950068466 :a2 64 .
+_:b2_11f7e42950068466 :b2 225 .
+_:b2_11f7e42950068466 :cosAngle 0.25881904510252074 .
+_:b2_11f7e42950068466 :rhs 226.883429175395 .
+:T5 :status "solve-c" .
+:T5 :check _:b7_75ee98a4bd013dab .
+_:b7_75ee98a4bd013dab a :Check .
+_:b7_75ee98a4bd013dab :kind "plug-in/c" .
+_:b7_75ee98a4bd013dab :residual 0 .
+_:b7_75ee98a4bd013dab :ok true .
+:T6 :answer _:b3_ef7616f5e6d4227 .
+_:b3_ef7616f5e6d4227 a :Side .
+_:b3_ef7616f5e6d4227 :which "a" .
+_:b3_ef7616f5e6d4227 :value "13"^^xsd:decimal .
+:T6 :why _:b4_ef7616f5e6d4227 .
+_:b4_ef7616f5e6d4227 :b2 25 .
+_:b4_ef7616f5e6d4227 :c2 144 .
+_:b4_ef7616f5e6d4227 :cosAngle 6.123233995736766e-17 .
+_:b4_ef7616f5e6d4227 :rhs "169"^^xsd:decimal .
+:T6 :status "solve-a" .
+:T6 :check _:b8_3d55bb49a2cb3a8f .
+_:b8_3d55bb49a2cb3a8f a :Check .
+_:b8_3d55bb49a2cb3a8f :kind "plug-in/a" .
+_:b8_3d55bb49a2cb3a8f :residual 0 .
+_:b8_3d55bb49a2cb3a8f :ok true .
+
+{ :T1 :answer _:b1_54721846418c41f3 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 a :Triangle . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T1 :a 3 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T1 :b 4 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T1 :C 1.5707963267948966 . }
+  pe:fact "law-of-cosines.n3".
+
+{ (3 2) math:exponentiation 9 . }
+  pe:builtin math:exponentiation.
+
+{ (4 2) math:exponentiation 16 . }
+  pe:builtin math:exponentiation.
+
+{ 1.5707963267948966 math:cos 6.123233995736766e-17 . }
+  pe:builtin math:cos.
+
+{ (9 16) math:sum 25 . }
+  pe:builtin math:sum.
+
+{ (2 3) math:product 6 . }
+  pe:builtin math:product.
+
+{ (6 4) math:product 24 . }
+  pe:builtin math:product.
+
+{ (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . }
+  pe:builtin math:product.
+
+{ (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ "25"^^xsd:decimal math:notLessThan 0 . }
+  pe:builtin math:notLessThan.
+
+{ ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ _:b1_54721846418c41f3 a :Side . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b1_54721846418c41f3 :which "c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b1_54721846418c41f3 :value "5"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 :why _:b2_54721846418c41f3 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b2_54721846418c41f3 :a2 9 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b2_54721846418c41f3 :b2 16 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b2_54721846418c41f3 :cosAngle 6.123233995736766e-17 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b2_54721846418c41f3 :rhs "25"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 :status "solve-c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "sumab"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { "25"^^xsd:decimal math:notLessThan 0 . },
+    { ("25"^^xsd:decimal 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 :check _:b7_c7b33d47712c9518 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_54721846418c41f3 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { :T1 :answer _:b1_54721846418c41f3 . },
+    { _:b1_54721846418c41f3 a :Side . },
+    { _:b1_54721846418c41f3 :which "c" . },
+    { _:b1_54721846418c41f3 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { ("25"^^xsd:decimal "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ ("25"^^xsd:decimal "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ "0"^^xsd:decimal math:absoluteValue 0 . }
+  pe:builtin math:absoluteValue.
+
+{ :eps :val 0.000000001 . }
+  pe:fact "law-of-cosines.n3".
+
+{ 0 math:notGreaterThan 0.000000001 . }
+  pe:builtin math:notGreaterThan.
+
+{ _:b7_c7b33d47712c9518 a :Check . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_54721846418c41f3 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { :T1 :answer _:b1_54721846418c41f3 . },
+    { _:b1_54721846418c41f3 a :Side . },
+    { _:b1_54721846418c41f3 :which "c" . },
+    { _:b1_54721846418c41f3 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { ("25"^^xsd:decimal "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_c7b33d47712c9518 :kind "plug-in/c" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_54721846418c41f3 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { :T1 :answer _:b1_54721846418c41f3 . },
+    { _:b1_54721846418c41f3 a :Side . },
+    { _:b1_54721846418c41f3 :which "c" . },
+    { _:b1_54721846418c41f3 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { ("25"^^xsd:decimal "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_c7b33d47712c9518 :residual 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_54721846418c41f3 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { :T1 :answer _:b1_54721846418c41f3 . },
+    { _:b1_54721846418c41f3 a :Side . },
+    { _:b1_54721846418c41f3 :which "c" . },
+    { _:b1_54721846418c41f3 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { ("25"^^xsd:decimal "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_c7b33d47712c9518 :ok true . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_54721846418c41f3 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "cosC"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ],
+    [ pe:var "tw_a"; pe:value 6 ],
+    [ pe:var "tw_ab"; pe:value 24 ],
+    [ pe:var "twabcos"; pe:value 1.4695761589768238e-15 ];
+  pe:uses
+    { :T1 a :Triangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :C 1.5707963267948966 . },
+    { :T1 :answer _:b1_54721846418c41f3 . },
+    { _:b1_54721846418c41f3 a :Side . },
+    { _:b1_54721846418c41f3 :which "c" . },
+    { _:b1_54721846418c41f3 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (9 16) math:sum 25 . },
+    { (2 3) math:product 6 . },
+    { (6 4) math:product 24 . },
+    { (24 6.123233995736766e-17) math:product 1.4695761589768238e-15 . },
+    { (25 1.4695761589768238e-15) math:difference "25"^^xsd:decimal . },
+    { ("25"^^xsd:decimal "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T2 :answer _:b1_21f18ac81e6a18e2 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ :T2 a :Triangle . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T2 :a 5 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T2 :b 7 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T2 :C 1.0471975511965976 . }
+  pe:fact "law-of-cosines.n3".
+
+{ (5 2) math:exponentiation 25 . }
+  pe:builtin math:exponentiation.
+
+{ (7 2) math:exponentiation 49 . }
+  pe:builtin math:exponentiation.
+
+{ 1.0471975511965976 math:cos 0.5000000000000001 . }
+  pe:builtin math:cos.
+
+{ (25 49) math:sum 74 . }
+  pe:builtin math:sum.
+
+{ (2 5) math:product 10 . }
+  pe:builtin math:product.
+
+{ (10 7) math:product 70 . }
+  pe:builtin math:product.
+
+{ (70 0.5000000000000001) math:product 35.00000000000001 . }
+  pe:builtin math:product.
+
+{ (74 35.00000000000001) math:difference 38.99999999999999 . }
+  pe:builtin math:difference.
+
+{ 38.99999999999999 math:notLessThan 0 . }
+  pe:builtin math:notLessThan.
+
+{ (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }
+  pe:builtin math:exponentiation.
+
+{ _:b1_21f18ac81e6a18e2 a :Side . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ _:b1_21f18ac81e6a18e2 :which "c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ _:b1_21f18ac81e6a18e2 :value 6.244997998398397 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ :T2 :why _:b2_21f18ac81e6a18e2 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ _:b2_21f18ac81e6a18e2 :a2 25 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ _:b2_21f18ac81e6a18e2 :b2 49 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ _:b2_21f18ac81e6a18e2 :cosAngle 0.5000000000000001 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ _:b2_21f18ac81e6a18e2 :rhs 38.99999999999999 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ :T2 :status "solve-c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "sumab"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { 38.99999999999999 math:notLessThan 0 . },
+    { (38.99999999999999 0.5) math:exponentiation 6.244997998398397 . }.
+
+{ :T2 :check _:b7_ca3a97d7f6925edf . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_21f18ac81e6a18e2 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 38.99999999999999 ],
+    [ pe:var "lhs0"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { :T2 :answer _:b1_21f18ac81e6a18e2 . },
+    { _:b1_21f18ac81e6a18e2 a :Side . },
+    { _:b1_21f18ac81e6a18e2 :which "c" . },
+    { _:b1_21f18ac81e6a18e2 :value 6.244997998398397 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { (6.244997998398397 2) math:exponentiation 38.99999999999999 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { (38.99999999999999 38.99999999999999) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (6.244997998398397 2) math:exponentiation 38.99999999999999 . }
+  pe:builtin math:exponentiation.
+
+{ (38.99999999999999 38.99999999999999) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b7_ca3a97d7f6925edf a :Check . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_21f18ac81e6a18e2 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 38.99999999999999 ],
+    [ pe:var "lhs0"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { :T2 :answer _:b1_21f18ac81e6a18e2 . },
+    { _:b1_21f18ac81e6a18e2 a :Side . },
+    { _:b1_21f18ac81e6a18e2 :which "c" . },
+    { _:b1_21f18ac81e6a18e2 :value 6.244997998398397 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { (6.244997998398397 2) math:exponentiation 38.99999999999999 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { (38.99999999999999 38.99999999999999) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_ca3a97d7f6925edf :kind "plug-in/c" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_21f18ac81e6a18e2 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 38.99999999999999 ],
+    [ pe:var "lhs0"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { :T2 :answer _:b1_21f18ac81e6a18e2 . },
+    { _:b1_21f18ac81e6a18e2 a :Side . },
+    { _:b1_21f18ac81e6a18e2 :which "c" . },
+    { _:b1_21f18ac81e6a18e2 :value 6.244997998398397 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { (6.244997998398397 2) math:exponentiation 38.99999999999999 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { (38.99999999999999 38.99999999999999) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_ca3a97d7f6925edf :residual 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_21f18ac81e6a18e2 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 38.99999999999999 ],
+    [ pe:var "lhs0"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { :T2 :answer _:b1_21f18ac81e6a18e2 . },
+    { _:b1_21f18ac81e6a18e2 a :Side . },
+    { _:b1_21f18ac81e6a18e2 :which "c" . },
+    { _:b1_21f18ac81e6a18e2 :value 6.244997998398397 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { (6.244997998398397 2) math:exponentiation 38.99999999999999 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { (38.99999999999999 38.99999999999999) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_ca3a97d7f6925edf :ok true . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_21f18ac81e6a18e2 ],
+    [ pe:var "b"; pe:value 7 ],
+    [ pe:var "b2"; pe:value 49 ],
+    [ pe:var "c"; pe:value 6.244997998398397 ],
+    [ pe:var "c2"; pe:value 38.99999999999999 ],
+    [ pe:var "cosC"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 38.99999999999999 ],
+    [ pe:var "lhs0"; pe:value 74 ],
+    [ pe:var "t"; pe:value :T2 ],
+    [ pe:var "tw_a"; pe:value 10 ],
+    [ pe:var "tw_ab"; pe:value 70 ],
+    [ pe:var "twabcos"; pe:value 35.00000000000001 ];
+  pe:uses
+    { :T2 a :Triangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 7 . },
+    { :T2 :C 1.0471975511965976 . },
+    { :T2 :answer _:b1_21f18ac81e6a18e2 . },
+    { _:b1_21f18ac81e6a18e2 a :Side . },
+    { _:b1_21f18ac81e6a18e2 :which "c" . },
+    { _:b1_21f18ac81e6a18e2 :value 6.244997998398397 . },
+    { (5 2) math:exponentiation 25 . },
+    { (7 2) math:exponentiation 49 . },
+    { (6.244997998398397 2) math:exponentiation 38.99999999999999 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 49) math:sum 74 . },
+    { (2 5) math:product 10 . },
+    { (10 7) math:product 70 . },
+    { (70 0.5000000000000001) math:product 35.00000000000001 . },
+    { (74 35.00000000000001) math:difference 38.99999999999999 . },
+    { (38.99999999999999 38.99999999999999) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T3 :answer _:b3_9dd1c3061358bb8b . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ :T3 a :Triangle . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T3 :b 5 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T3 :c 6 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T3 :A 1.0471975511965976 . }
+  pe:fact "law-of-cosines.n3".
+
+{ (6 2) math:exponentiation 36 . }
+  pe:builtin math:exponentiation.
+
+{ (25 36) math:sum 61 . }
+  pe:builtin math:sum.
+
+{ (10 6) math:product 60 . }
+  pe:builtin math:product.
+
+{ (60 0.5000000000000001) math:product 30.000000000000007 . }
+  pe:builtin math:product.
+
+{ (61 30.000000000000007) math:difference 30.999999999999993 . }
+  pe:builtin math:difference.
+
+{ 30.999999999999993 math:notLessThan 0 . }
+  pe:builtin math:notLessThan.
+
+{ (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }
+  pe:builtin math:exponentiation.
+
+{ _:b3_9dd1c3061358bb8b a :Side . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ _:b3_9dd1c3061358bb8b :which "a" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ _:b3_9dd1c3061358bb8b :value 5.5677643628300215 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ :T3 :why _:b4_9dd1c3061358bb8b . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ _:b4_9dd1c3061358bb8b :b2 25 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ _:b4_9dd1c3061358bb8b :c2 36 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ _:b4_9dd1c3061358bb8b :cosAngle 0.5000000000000001 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ _:b4_9dd1c3061358bb8b :rhs 30.999999999999993 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ :T3 :status "solve-a" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999993 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "s"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { 30.999999999999993 math:notLessThan 0 . },
+    { (30.999999999999993 0.5) math:exponentiation 5.5677643628300215 . }.
+
+{ :T3 :check _:b8_d787c546f4131329 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999996 ],
+    [ pe:var "abs"; pe:value 3.552713678800501e-15 ],
+    [ pe:var "ans"; pe:value _:b3_9dd1c3061358bb8b ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value -3.552713678800501e-15 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 30.999999999999993 ],
+    [ pe:var "lhs0"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { :T3 :answer _:b3_9dd1c3061358bb8b . },
+    { _:b3_9dd1c3061358bb8b a :Side . },
+    { _:b3_9dd1c3061358bb8b :which "a" . },
+    { _:b3_9dd1c3061358bb8b :value 5.5677643628300215 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (5.5677643628300215 2) math:exponentiation 30.999999999999996 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { (30.999999999999993 30.999999999999996) math:difference -3.552713678800501e-15 . },
+    { -3.552713678800501e-15 math:absoluteValue 3.552713678800501e-15 . },
+    { :eps :val 0.000000001 . },
+    { 3.552713678800501e-15 math:notGreaterThan 0.000000001 . }.
+
+{ (5.5677643628300215 2) math:exponentiation 30.999999999999996 . }
+  pe:builtin math:exponentiation.
+
+{ (30.999999999999993 30.999999999999996) math:difference -3.552713678800501e-15 . }
+  pe:builtin math:difference.
+
+{ -3.552713678800501e-15 math:absoluteValue 3.552713678800501e-15 . }
+  pe:builtin math:absoluteValue.
+
+{ 3.552713678800501e-15 math:notGreaterThan 0.000000001 . }
+  pe:builtin math:notGreaterThan.
+
+{ _:b8_d787c546f4131329 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999996 ],
+    [ pe:var "abs"; pe:value 3.552713678800501e-15 ],
+    [ pe:var "ans"; pe:value _:b3_9dd1c3061358bb8b ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value -3.552713678800501e-15 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 30.999999999999993 ],
+    [ pe:var "lhs0"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { :T3 :answer _:b3_9dd1c3061358bb8b . },
+    { _:b3_9dd1c3061358bb8b a :Side . },
+    { _:b3_9dd1c3061358bb8b :which "a" . },
+    { _:b3_9dd1c3061358bb8b :value 5.5677643628300215 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (5.5677643628300215 2) math:exponentiation 30.999999999999996 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { (30.999999999999993 30.999999999999996) math:difference -3.552713678800501e-15 . },
+    { -3.552713678800501e-15 math:absoluteValue 3.552713678800501e-15 . },
+    { :eps :val 0.000000001 . },
+    { 3.552713678800501e-15 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_d787c546f4131329 :kind "plug-in/a" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999996 ],
+    [ pe:var "abs"; pe:value 3.552713678800501e-15 ],
+    [ pe:var "ans"; pe:value _:b3_9dd1c3061358bb8b ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value -3.552713678800501e-15 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 30.999999999999993 ],
+    [ pe:var "lhs0"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { :T3 :answer _:b3_9dd1c3061358bb8b . },
+    { _:b3_9dd1c3061358bb8b a :Side . },
+    { _:b3_9dd1c3061358bb8b :which "a" . },
+    { _:b3_9dd1c3061358bb8b :value 5.5677643628300215 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (5.5677643628300215 2) math:exponentiation 30.999999999999996 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { (30.999999999999993 30.999999999999996) math:difference -3.552713678800501e-15 . },
+    { -3.552713678800501e-15 math:absoluteValue 3.552713678800501e-15 . },
+    { :eps :val 0.000000001 . },
+    { 3.552713678800501e-15 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_d787c546f4131329 :residual 3.552713678800501e-15 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999996 ],
+    [ pe:var "abs"; pe:value 3.552713678800501e-15 ],
+    [ pe:var "ans"; pe:value _:b3_9dd1c3061358bb8b ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value -3.552713678800501e-15 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 30.999999999999993 ],
+    [ pe:var "lhs0"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { :T3 :answer _:b3_9dd1c3061358bb8b . },
+    { _:b3_9dd1c3061358bb8b a :Side . },
+    { _:b3_9dd1c3061358bb8b :which "a" . },
+    { _:b3_9dd1c3061358bb8b :value 5.5677643628300215 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (5.5677643628300215 2) math:exponentiation 30.999999999999996 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { (30.999999999999993 30.999999999999996) math:difference -3.552713678800501e-15 . },
+    { -3.552713678800501e-15 math:absoluteValue 3.552713678800501e-15 . },
+    { :eps :val 0.000000001 . },
+    { 3.552713678800501e-15 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_d787c546f4131329 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.0471975511965976 ],
+    [ pe:var "a"; pe:value 5.5677643628300215 ],
+    [ pe:var "a2"; pe:value 30.999999999999996 ],
+    [ pe:var "abs"; pe:value 3.552713678800501e-15 ],
+    [ pe:var "ans"; pe:value _:b3_9dd1c3061358bb8b ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 6 ],
+    [ pe:var "c2"; pe:value 36 ],
+    [ pe:var "cosA"; pe:value 0.5000000000000001 ],
+    [ pe:var "d"; pe:value -3.552713678800501e-15 ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 30.999999999999993 ],
+    [ pe:var "lhs0"; pe:value 61 ],
+    [ pe:var "t"; pe:value :T3 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 60 ],
+    [ pe:var "twbccos"; pe:value 30.000000000000007 ];
+  pe:uses
+    { :T3 a :Triangle . },
+    { :T3 :b 5 . },
+    { :T3 :c 6 . },
+    { :T3 :A 1.0471975511965976 . },
+    { :T3 :answer _:b3_9dd1c3061358bb8b . },
+    { _:b3_9dd1c3061358bb8b a :Side . },
+    { _:b3_9dd1c3061358bb8b :which "a" . },
+    { _:b3_9dd1c3061358bb8b :value 5.5677643628300215 . },
+    { (5 2) math:exponentiation 25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (5.5677643628300215 2) math:exponentiation 30.999999999999996 . },
+    { 1.0471975511965976 math:cos 0.5000000000000001 . },
+    { (25 36) math:sum 61 . },
+    { (2 5) math:product 10 . },
+    { (10 6) math:product 60 . },
+    { (60 0.5000000000000001) math:product 30.000000000000007 . },
+    { (61 30.000000000000007) math:difference 30.999999999999993 . },
+    { (30.999999999999993 30.999999999999996) math:difference -3.552713678800501e-15 . },
+    { -3.552713678800501e-15 math:absoluteValue 3.552713678800501e-15 . },
+    { :eps :val 0.000000001 . },
+    { 3.552713678800501e-15 math:notGreaterThan 0.000000001 . }.
+
+{ :T4 :answer _:b5_72a3a4d41342fcef . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ :T4 a :Triangle . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T4 :c 3 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T4 :a 2 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T4 :B 0.5235987755982988 . }
+  pe:fact "law-of-cosines.n3".
+
+{ (2 2) math:exponentiation 4 . }
+  pe:builtin math:exponentiation.
+
+{ 0.5235987755982988 math:cos 0.8660254037844387 . }
+  pe:builtin math:cos.
+
+{ (9 4) math:sum 13 . }
+  pe:builtin math:sum.
+
+{ (6 2) math:product 12 . }
+  pe:builtin math:product.
+
+{ (12 0.8660254037844387) math:product 10.392304845413264 . }
+  pe:builtin math:product.
+
+{ (13 10.392304845413264) math:difference 2.607695154586736 . }
+  pe:builtin math:difference.
+
+{ 2.607695154586736 math:notLessThan 0 . }
+  pe:builtin math:notLessThan.
+
+{ (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }
+  pe:builtin math:exponentiation.
+
+{ _:b5_72a3a4d41342fcef a :Side . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ _:b5_72a3a4d41342fcef :which "b" . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ _:b5_72a3a4d41342fcef :value 1.6148359528406395 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ :T4 :why _:b6_72a3a4d41342fcef . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ _:b6_72a3a4d41342fcef :c2 9 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ _:b6_72a3a4d41342fcef :a2 4 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ _:b6_72a3a4d41342fcef :cosAngle 0.8660254037844387 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ _:b6_72a3a4d41342fcef :rhs 2.607695154586736 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ :T4 :status "solve-b" . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "s"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { 2.607695154586736 math:notLessThan 0 . },
+    { (2.607695154586736 0.5) math:exponentiation 1.6148359528406395 . }.
+
+{ :T4 :check _:b9_5e727267f707c3ff . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_72a3a4d41342fcef ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 2.607695154586736 ],
+    [ pe:var "lhs0"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { :T4 :answer _:b5_72a3a4d41342fcef . },
+    { _:b5_72a3a4d41342fcef a :Side . },
+    { _:b5_72a3a4d41342fcef :which "b" . },
+    { _:b5_72a3a4d41342fcef :value 1.6148359528406395 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { (1.6148359528406395 2) math:exponentiation 2.607695154586736 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { (2.607695154586736 2.607695154586736) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (1.6148359528406395 2) math:exponentiation 2.607695154586736 . }
+  pe:builtin math:exponentiation.
+
+{ (2.607695154586736 2.607695154586736) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b9_5e727267f707c3ff a :Check . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_72a3a4d41342fcef ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 2.607695154586736 ],
+    [ pe:var "lhs0"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { :T4 :answer _:b5_72a3a4d41342fcef . },
+    { _:b5_72a3a4d41342fcef a :Side . },
+    { _:b5_72a3a4d41342fcef :which "b" . },
+    { _:b5_72a3a4d41342fcef :value 1.6148359528406395 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { (1.6148359528406395 2) math:exponentiation 2.607695154586736 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { (2.607695154586736 2.607695154586736) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b9_5e727267f707c3ff :kind "plug-in/b" . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_72a3a4d41342fcef ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 2.607695154586736 ],
+    [ pe:var "lhs0"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { :T4 :answer _:b5_72a3a4d41342fcef . },
+    { _:b5_72a3a4d41342fcef a :Side . },
+    { _:b5_72a3a4d41342fcef :which "b" . },
+    { _:b5_72a3a4d41342fcef :value 1.6148359528406395 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { (1.6148359528406395 2) math:exponentiation 2.607695154586736 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { (2.607695154586736 2.607695154586736) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b9_5e727267f707c3ff :residual 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_72a3a4d41342fcef ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 2.607695154586736 ],
+    [ pe:var "lhs0"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { :T4 :answer _:b5_72a3a4d41342fcef . },
+    { _:b5_72a3a4d41342fcef a :Side . },
+    { _:b5_72a3a4d41342fcef :which "b" . },
+    { _:b5_72a3a4d41342fcef :value 1.6148359528406395 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { (1.6148359528406395 2) math:exponentiation 2.607695154586736 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { (2.607695154586736 2.607695154586736) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b9_5e727267f707c3ff :ok true . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "B"; pe:value 0.5235987755982988 ],
+    [ pe:var "a"; pe:value 2 ],
+    [ pe:var "a2"; pe:value 4 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_72a3a4d41342fcef ],
+    [ pe:var "b"; pe:value 1.6148359528406395 ],
+    [ pe:var "b2"; pe:value 2.607695154586736 ],
+    [ pe:var "c"; pe:value 3 ],
+    [ pe:var "c2"; pe:value 9 ],
+    [ pe:var "cosB"; pe:value 0.8660254037844387 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 2.607695154586736 ],
+    [ pe:var "lhs0"; pe:value 13 ],
+    [ pe:var "t"; pe:value :T4 ],
+    [ pe:var "tw_c"; pe:value 6 ],
+    [ pe:var "tw_ca"; pe:value 12 ],
+    [ pe:var "twcacos"; pe:value 10.392304845413264 ];
+  pe:uses
+    { :T4 a :Triangle . },
+    { :T4 :c 3 . },
+    { :T4 :a 2 . },
+    { :T4 :B 0.5235987755982988 . },
+    { :T4 :answer _:b5_72a3a4d41342fcef . },
+    { _:b5_72a3a4d41342fcef a :Side . },
+    { _:b5_72a3a4d41342fcef :which "b" . },
+    { _:b5_72a3a4d41342fcef :value 1.6148359528406395 . },
+    { (3 2) math:exponentiation 9 . },
+    { (2 2) math:exponentiation 4 . },
+    { (1.6148359528406395 2) math:exponentiation 2.607695154586736 . },
+    { 0.5235987755982988 math:cos 0.8660254037844387 . },
+    { (9 4) math:sum 13 . },
+    { (2 3) math:product 6 . },
+    { (6 2) math:product 12 . },
+    { (12 0.8660254037844387) math:product 10.392304845413264 . },
+    { (13 10.392304845413264) math:difference 2.607695154586736 . },
+    { (2.607695154586736 2.607695154586736) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T5 :answer _:b1_11f7e42950068466 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ :T5 a :Triangle . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T5 :a 8 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T5 :b 15 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T5 :C 1.3089969389957472 . }
+  pe:fact "law-of-cosines.n3".
+
+{ (8 2) math:exponentiation 64 . }
+  pe:builtin math:exponentiation.
+
+{ (15 2) math:exponentiation 225 . }
+  pe:builtin math:exponentiation.
+
+{ 1.3089969389957472 math:cos 0.25881904510252074 . }
+  pe:builtin math:cos.
+
+{ (64 225) math:sum 289 . }
+  pe:builtin math:sum.
+
+{ (2 8) math:product 16 . }
+  pe:builtin math:product.
+
+{ (16 15) math:product 240 . }
+  pe:builtin math:product.
+
+{ (240 0.25881904510252074) math:product 62.11657082460498 . }
+  pe:builtin math:product.
+
+{ (289 62.11657082460498) math:difference 226.883429175395 . }
+  pe:builtin math:difference.
+
+{ 226.883429175395 math:notLessThan 0 . }
+  pe:builtin math:notLessThan.
+
+{ (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }
+  pe:builtin math:exponentiation.
+
+{ _:b1_11f7e42950068466 a :Side . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ _:b1_11f7e42950068466 :which "c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ _:b1_11f7e42950068466 :value 15.062650137854062 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ :T5 :why _:b2_11f7e42950068466 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ _:b2_11f7e42950068466 :a2 64 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ _:b2_11f7e42950068466 :b2 225 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ _:b2_11f7e42950068466 :cosAngle 0.25881904510252074 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ _:b2_11f7e42950068466 :rhs 226.883429175395 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ :T5 :status "solve-c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "sumab"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { 226.883429175395 math:notLessThan 0 . },
+    { (226.883429175395 0.5) math:exponentiation 15.062650137854062 . }.
+
+{ :T5 :check _:b7_75ee98a4bd013dab . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_11f7e42950068466 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 226.883429175395 ],
+    [ pe:var "lhs0"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { :T5 :answer _:b1_11f7e42950068466 . },
+    { _:b1_11f7e42950068466 a :Side . },
+    { _:b1_11f7e42950068466 :which "c" . },
+    { _:b1_11f7e42950068466 :value 15.062650137854062 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (15.062650137854062 2) math:exponentiation 226.883429175395 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { (226.883429175395 226.883429175395) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (15.062650137854062 2) math:exponentiation 226.883429175395 . }
+  pe:builtin math:exponentiation.
+
+{ (226.883429175395 226.883429175395) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b7_75ee98a4bd013dab a :Check . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_11f7e42950068466 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 226.883429175395 ],
+    [ pe:var "lhs0"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { :T5 :answer _:b1_11f7e42950068466 . },
+    { _:b1_11f7e42950068466 a :Side . },
+    { _:b1_11f7e42950068466 :which "c" . },
+    { _:b1_11f7e42950068466 :value 15.062650137854062 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (15.062650137854062 2) math:exponentiation 226.883429175395 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { (226.883429175395 226.883429175395) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_75ee98a4bd013dab :kind "plug-in/c" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_11f7e42950068466 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 226.883429175395 ],
+    [ pe:var "lhs0"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { :T5 :answer _:b1_11f7e42950068466 . },
+    { _:b1_11f7e42950068466 a :Side . },
+    { _:b1_11f7e42950068466 :which "c" . },
+    { _:b1_11f7e42950068466 :value 15.062650137854062 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (15.062650137854062 2) math:exponentiation 226.883429175395 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { (226.883429175395 226.883429175395) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_75ee98a4bd013dab :residual 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_11f7e42950068466 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 226.883429175395 ],
+    [ pe:var "lhs0"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { :T5 :answer _:b1_11f7e42950068466 . },
+    { _:b1_11f7e42950068466 a :Side . },
+    { _:b1_11f7e42950068466 :which "c" . },
+    { _:b1_11f7e42950068466 :value 15.062650137854062 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (15.062650137854062 2) math:exponentiation 226.883429175395 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { (226.883429175395 226.883429175395) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_75ee98a4bd013dab :ok true . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "C"; pe:value 1.3089969389957472 ],
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_11f7e42950068466 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value 15.062650137854062 ],
+    [ pe:var "c2"; pe:value 226.883429175395 ],
+    [ pe:var "cosC"; pe:value 0.25881904510252074 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 226.883429175395 ],
+    [ pe:var "lhs0"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T5 ],
+    [ pe:var "tw_a"; pe:value 16 ],
+    [ pe:var "tw_ab"; pe:value 240 ],
+    [ pe:var "twabcos"; pe:value 62.11657082460498 ];
+  pe:uses
+    { :T5 a :Triangle . },
+    { :T5 :a 8 . },
+    { :T5 :b 15 . },
+    { :T5 :C 1.3089969389957472 . },
+    { :T5 :answer _:b1_11f7e42950068466 . },
+    { _:b1_11f7e42950068466 a :Side . },
+    { _:b1_11f7e42950068466 :which "c" . },
+    { _:b1_11f7e42950068466 :value 15.062650137854062 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (15.062650137854062 2) math:exponentiation 226.883429175395 . },
+    { 1.3089969389957472 math:cos 0.25881904510252074 . },
+    { (64 225) math:sum 289 . },
+    { (2 8) math:product 16 . },
+    { (16 15) math:product 240 . },
+    { (240 0.25881904510252074) math:product 62.11657082460498 . },
+    { (289 62.11657082460498) math:difference 226.883429175395 . },
+    { (226.883429175395 226.883429175395) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T6 :answer _:b3_ef7616f5e6d4227 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T6 a :Triangle . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T6 :b 5 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T6 :c 12 . }
+  pe:fact "law-of-cosines.n3".
+
+{ :T6 :A 1.5707963267948966 . }
+  pe:fact "law-of-cosines.n3".
+
+{ (12 2) math:exponentiation 144 . }
+  pe:builtin math:exponentiation.
+
+{ (25 144) math:sum 169 . }
+  pe:builtin math:sum.
+
+{ (10 12) math:product 120 . }
+  pe:builtin math:product.
+
+{ (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . }
+  pe:builtin math:product.
+
+{ (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ "169"^^xsd:decimal math:notLessThan 0 . }
+  pe:builtin math:notLessThan.
+
+{ ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ _:b3_ef7616f5e6d4227 a :Side . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b3_ef7616f5e6d4227 :which "a" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b3_ef7616f5e6d4227 :value "13"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T6 :why _:b4_ef7616f5e6d4227 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b4_ef7616f5e6d4227 :b2 25 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b4_ef7616f5e6d4227 :c2 144 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b4_ef7616f5e6d4227 :cosAngle 6.123233995736766e-17 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b4_ef7616f5e6d4227 :rhs "169"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T6 :status "solve-a" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "s"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { "169"^^xsd:decimal math:notLessThan 0 . },
+    { ("169"^^xsd:decimal 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T6 :check _:b8_3d55bb49a2cb3a8f . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_ef7616f5e6d4227 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { :T6 :answer _:b3_ef7616f5e6d4227 . },
+    { _:b3_ef7616f5e6d4227 a :Side . },
+    { _:b3_ef7616f5e6d4227 :which "a" . },
+    { _:b3_ef7616f5e6d4227 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ ("169"^^xsd:decimal "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b8_3d55bb49a2cb3a8f a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_ef7616f5e6d4227 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { :T6 :answer _:b3_ef7616f5e6d4227 . },
+    { _:b3_ef7616f5e6d4227 a :Side . },
+    { _:b3_ef7616f5e6d4227 :which "a" . },
+    { _:b3_ef7616f5e6d4227 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_3d55bb49a2cb3a8f :kind "plug-in/a" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_ef7616f5e6d4227 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { :T6 :answer _:b3_ef7616f5e6d4227 . },
+    { _:b3_ef7616f5e6d4227 a :Side . },
+    { _:b3_ef7616f5e6d4227 :which "a" . },
+    { _:b3_ef7616f5e6d4227 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_3d55bb49a2cb3a8f :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_ef7616f5e6d4227 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { :T6 :answer _:b3_ef7616f5e6d4227 . },
+    { _:b3_ef7616f5e6d4227 a :Side . },
+    { _:b3_ef7616f5e6d4227 :which "a" . },
+    { _:b3_ef7616f5e6d4227 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_3d55bb49a2cb3a8f :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value 1.5707963267948966 ],
+    [ pe:var "a"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_ef7616f5e6d4227 ],
+    [ pe:var "b"; pe:value 5 ],
+    [ pe:var "b2"; pe:value 25 ],
+    [ pe:var "c"; pe:value 12 ],
+    [ pe:var "c2"; pe:value 144 ],
+    [ pe:var "cosA"; pe:value 6.123233995736766e-17 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "lhs0"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T6 ],
+    [ pe:var "tw_b"; pe:value 10 ],
+    [ pe:var "tw_bc"; pe:value 120 ],
+    [ pe:var "twbccos"; pe:value 7.34788079488412e-15 ];
+  pe:uses
+    { :T6 a :Triangle . },
+    { :T6 :b 5 . },
+    { :T6 :c 12 . },
+    { :T6 :A 1.5707963267948966 . },
+    { :T6 :answer _:b3_ef7616f5e6d4227 . },
+    { _:b3_ef7616f5e6d4227 a :Side . },
+    { _:b3_ef7616f5e6d4227 :which "a" . },
+    { _:b3_ef7616f5e6d4227 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { 1.5707963267948966 math:cos 6.123233995736766e-17 . },
+    { (25 144) math:sum 169 . },
+    { (2 5) math:product 10 . },
+    { (10 12) math:product 120 . },
+    { (120 6.123233995736766e-17) math:product 7.34788079488412e-15 . },
+    { (169 7.34788079488412e-15) math:difference "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.

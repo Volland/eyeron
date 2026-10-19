@@ -1,0 +1,37 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/rgb/
+# Standalone program; EYE answer directives use log:query.
+
+# Source file: rgb/redgraph001.n3
+@base <https://eyereasoner.github.io/eye/reasoning/rgb/redgraph001.n3>.
+@prefix : <http://example.org/try#>.
+
+:s :p :o.
+:o :p :p.
+:p :p :s.
+
+
+# Query: rgb/greenquery001.n3
+@prefix : <http://example.org/try#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+{
+    ?S :p :o .
+} log:query {
+    {
+        ?S :p ?O .
+    } => {
+        ?S :q ?O .
+    } .
+} .
+
+{
+    ?S :p :o .
+} log:query {
+    {
+        ?S :q ?O .
+    } => {
+        ?S :r ?O .
+    } .
+} .
+

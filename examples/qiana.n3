@@ -1,0 +1,37 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/qiana/
+# Standalone program; EYE answer directives use log:query.
+
+# Source file: qiana/qiana.n3
+@base <https://eyereasoner.github.io/eye/reasoning/qiana/qiana.n3>.
+@prefix : <https://eyereasoner.github.io/ns#>.
+
+# forall phi, x: says(Einstein, phi) => believes(x, phi)
+{ ?x :believes ?phi } <= { :Einstein :says ?phi }.
+
+# forall phi: says(Einstein, phi) => phi
+{ :Einstein :says ?phi } => ?phi.
+
+# says(Einstein, not (forall x: glitters(x) => gold(x)))
+:Einstein :says { { ?x a :glitter } => { ?x :notNecessarilyA :gold } }.
+
+# example
+:northStar a :glitter.
+
+
+# Query: qiana/qiana-query.n3
+@prefix : <https://eyereasoner.github.io/ns#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+{
+    :Fabian :believes ?what .
+} log:query {
+    :Fabian :believes ?what .
+} .
+
+{
+    ?x :notNecessarilyA ?what .
+} log:query {
+    ?x :notNecessarilyA ?what .
+} .
+

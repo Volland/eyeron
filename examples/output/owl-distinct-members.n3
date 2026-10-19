@@ -1,0 +1,9 @@
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+:red owl:differentFrom :green .
+:red owl:differentFrom :blue .
+:green owl:differentFrom :red .
+:green owl:differentFrom :blue .
+:blue owl:differentFrom :red .
+:blue owl:differentFrom :green .

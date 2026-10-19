@@ -1,0 +1,3 @@
+@prefix ex: <http://example.org/#> .
+
+<https://eyereasoner.github.io/eye/reasoning/restpath/x> ex:relGoal <https://eyereasoner.github.io/eye/reasoning/restpath/y> .

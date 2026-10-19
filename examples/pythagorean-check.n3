@@ -1,0 +1,33 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Sources: https://eyereasoner.github.io/eye/reasoning/arcus/pythagoras/pythagoras.ttl
+# Premise blank nodes are named variables; backward answers are materialized.
+
+@prefix : <http://example.org/#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:a :Square :a2 .
+:b :Square :b2 .
+:c :Square :c2 .
+(:a2 :b2) :Add :c2 .
+
+{
+    ?A :Square ?A2 .
+    ?B :Square ?B2 .
+    ?C :Square ?C2 .
+    (?A2 ?B2) :Add ?C2 .
+} => {
+    (?A ?B ?C) :Pythagoras true .
+} .
+
+{
+    (:a :b :c) :Pythagoras true .
+} => {
+    (:a :b :c) :Pythagoras true .
+} .
+
+{
+    (:a :b :c) :Pythagoras true .
+} log:query {
+    (:a :b :c) :Pythagoras true .
+} .

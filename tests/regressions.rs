@@ -4,6 +4,27 @@ use eyeron::{
 };
 
 #[test]
+fn variable_predicate_rules_are_revisited_after_their_support_grows() {
+    let doc = parse_n3_with_source(r#"
+        @prefix : <http://example.org/>.
+        :ancestor a :Transitive.
+        :alice :ancestor :bob. :bob :ancestor :carol. :carol :ancestor :dave.
+        { ?P a :Transitive. ?S ?P ?X. ?X ?P ?O } => { ?S ?P ?O }.
+    "#, None, Some("variable-predicate.n3")).unwrap();
+    let options = ReasonerOptions { proof: true, ..ReasonerOptions::default() };
+    let direct = reason_document(&doc, &options);
+    let prepared = eyeron::PreparedReasoner::new(doc.clone()).reason(&Document::new(), &options);
+    for result in [direct, prepared] {
+        assert!(result.is_complete(), "{:?}", result.incomplete_summary());
+        assert_eq!(result.derived.len(), 3);
+        assert!(result_to_string(&doc.prefixes, &result.derived).contains(":alice :ancestor :dave"));
+        let proof = proof_to_n3(&doc.prefixes, &result);
+        let checked = eyeron::proof_check_n3::check_proof_document(&doc, &proof).unwrap();
+        assert!(checked.valid(), "{:?}", checked.failures);
+    }
+}
+
+#[test]
 fn n3_lists_remain_first_class_in_rule_conclusions() {
     let source = r#"
         @prefix : <http://example.org/>.

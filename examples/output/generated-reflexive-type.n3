@@ -1,0 +1,7 @@
+@prefix : <http://www.example.com/ns/ex#> .
+
+{
+    ?x :like ?x .
+} <= {
+    ?x a :Human .
+} .

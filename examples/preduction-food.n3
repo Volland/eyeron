@@ -1,0 +1,78 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/preduction/
+# Standalone program; EYE answer directives use log:query.
+
+# Source file: preduction/food-example.n3
+@base <https://eyereasoner.github.io/eye/reasoning/preduction/food-example.n3>.
+@prefix food: <http://www.w3.org/2002/03owlt/miscellaneous/consistent002#>.
+
+_:g a food:Grape.
+_:cnd a food:CheeseNutsDessert.
+_:pwlcs a food:PastaWithLightCreamSauce.
+_:ct a food:ConsumableThing.
+_:m a food:Meal.
+
+
+# Source file: preduction/food.n3
+@base <https://eyereasoner.github.io/eye/reasoning/preduction/food.n3>.
+# Food example - Examples from the OWL Guide
+
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix food: <http://www.w3.org/2002/03owlt/miscellaneous/consistent002#>.
+
+food:EdibleThing rdfs:subClassOf food:ConsumableThing.
+food:PotableLiquid rdfs:subClassOf food:ConsumableThing.
+food:Juice rdfs:subClassOf food:PotableLiquid.
+food:Grape rdfs:subClassOf food:SweetFruit.
+food:Pasta rdfs:subClassOf food:EdibleThing.
+food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta.
+food:PastaWithSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce.
+food:PastaWithRedSauce rdfs:subClassOf food:Pasta.
+food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce.
+food:PastaWithLightCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce.
+food:PastaWithHeavyCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce.
+food:OysterShellfish rdfs:subClassOf food:Shellfish.
+food:OtherTomatoBasedFood rdfs:subClassOf food:EdibleThing.
+food:NonSweetFruit rdfs:subClassOf food:EdibleThing.
+food:NonSpicyRedMeat rdfs:subClassOf food:RedMeat.
+food:NonRedMeat rdfs:subClassOf food:Meat.
+food:NonOysterShellfish rdfs:subClassOf food:Shellfish.
+food:NonBlandFish rdfs:subClassOf food:Fish.
+food:Meat rdfs:subClassOf food:EdibleThing.
+food:MealCourse rdfs:subClassOf food:ConsumableThing.
+food:Meal rdfs:subClassOf food:ConsumableThing.
+food:LightMeatFowl rdfs:subClassOf food:Fowl.
+food:Fowl rdfs:subClassOf food:EdibleThing.
+food:Dessert rdfs:subClassOf food:EdibleThing.
+food:SweetFruit rdfs:subClassOf food:EdibleThing.
+food:SweetDessert rdfs:subClassOf food:Dessert.
+food:DarkMeatFowl rdfs:subClassOf food:Fowl.
+food:CheeseNutsDessert rdfs:subClassOf food:Dessert.
+food:BlandFish rdfs:subClassOf food:Fish.
+food:Fish rdfs:subClassOf food:Seafood.
+food:SpicyRedMeat rdfs:subClassOf food:RedMeat.
+food:Shellfish rdfs:subClassOf food:Seafood.
+food:Seafood rdfs:subClassOf food:EdibleThing.
+food:RedMeat rdfs:subClassOf food:Meat.
+food:EatingGrape rdfs:subClassOf food:Grape.
+
+
+# Source file: rpo/rdfs-subClassOf.n3
+@base <https://eyereasoner.github.io/eye/reasoning/rpo/rdfs-subClassOf.n3>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+{?C rdfs:subClassOf ?D. ?X a ?C} => {?X a ?D}.
+{?C rdfs:subClassOf ?D. ?D rdfs:subClassOf ?E} => {?C rdfs:subClassOf ?E}.
+{?C rdfs:subClassOf ?D. ?P rdfs:domain ?C} => {?P rdfs:domain ?D}.
+{?C rdfs:subClassOf ?D. ?P rdfs:range ?C} => {?P rdfs:range ?D}.
+
+
+# Query: preduction/food-query.n3
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+{
+    ?A a ?B .
+} log:query {
+    ?A a ?B .
+} .
+

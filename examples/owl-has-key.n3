@@ -1,0 +1,17 @@
+# owl-has-key: a small runnable case for EYE RPO rules.
+# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-hasKey.n3
+# Rules: MIT, Jos De Roo; sample data added for this example.
+# The all-key-properties test uses log:forAllIn instead of list:setEqualTo.
+
+@prefix : <http://example.org/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+
+# Sample data
+:Person owl:hasKey (:givenName :birthDate). :alice a :Person; :givenName "Alice"; :birthDate "1990-01-02". :alias a :Person; :givenName "Alice"; :birthDate "1990-01-02". :other a :Person; :givenName "Alice"; :birthDate "1991-03-04".
+
+# Inference rules
+{?C owl:hasKey ?L. ?X a ?C. ?Y a ?C. ?X log:notEqualTo ?Y.
+ ({?P list:in ?L} {?X ?P ?Z. ?Y ?P ?Z}) log:forAllIn ?SCOPE} => {?X owl:sameAs ?Y}.

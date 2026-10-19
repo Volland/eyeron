@@ -1,0 +1,35 @@
+@prefix : <http://example.org/rdf-star-reasoning#> .
+@prefix owlstar: <http://example.org/owlstar#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+{
+    :x :p :z .
+} owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+
+{
+    :x :r :z .
+} :probability 0.49840000000000007 .
+
+{
+    :y :q :x .
+} :s :o .
+
+{
+    :y :q :x .
+} owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+
+{
+    :z :q :y .
+} owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+
+{
+    :y :q :x .
+} :probability 0.89 .
+
+{
+    :z :q :x .
+} owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+
+{
+    :x :r :x .
+} :probability 0.7921 .

@@ -1,0 +1,10 @@
+@prefix : <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:arithmetic :product (3 0 0) .
+:arithmetic :product (5 6 30) .
+:arithmetic :product (238 13 3094) .
+:arithmetic :power (3 0 1) .
+:arithmetic :power (5 6 15625) .
+:arithmetic :power (238 13 7861409907565911395902147452928) .
+:arithmetic :power (2 64 18446744073709551616) .

@@ -1,0 +1,2146 @@
+@prefix : <http://example.org/pyth#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:T1 :answer _:b1_92526b09178a1e12 .
+_:b1_92526b09178a1e12 a :Hypotenuse .
+_:b1_92526b09178a1e12 :value "5"^^xsd:decimal .
+:T1 :why _:b2_92526b09178a1e12 .
+_:b2_92526b09178a1e12 :a2 9 .
+_:b2_92526b09178a1e12 :b2 16 .
+_:b2_92526b09178a1e12 :sumSquares 25 .
+:T1 :status "solve-c" .
+:T1 :check _:b7_5b747edda3ed3f04 .
+_:b7_5b747edda3ed3f04 a :Check .
+_:b7_5b747edda3ed3f04 :kind "plug-in/hypotenuse" .
+_:b7_5b747edda3ed3f04 :residual 0 .
+_:b7_5b747edda3ed3f04 :ok true .
+:T2 :answer _:b1_8a3ca326eedd2a02 .
+_:b1_8a3ca326eedd2a02 a :Hypotenuse .
+_:b1_8a3ca326eedd2a02 :value "13"^^xsd:decimal .
+:T2 :why _:b2_8a3ca326eedd2a02 .
+_:b2_8a3ca326eedd2a02 :a2 25 .
+_:b2_8a3ca326eedd2a02 :b2 144 .
+_:b2_8a3ca326eedd2a02 :sumSquares 169 .
+:T2 :status "solve-c" .
+:T2 :check _:b7_d492578331d8dad2 .
+_:b7_d492578331d8dad2 a :Check .
+_:b7_d492578331d8dad2 :kind "plug-in/hypotenuse" .
+_:b7_d492578331d8dad2 :residual 0 .
+_:b7_d492578331d8dad2 :ok true .
+:T3 :answer _:b1_dbe3b5f9cd24e3b3 .
+_:b1_dbe3b5f9cd24e3b3 a :Hypotenuse .
+_:b1_dbe3b5f9cd24e3b3 :value "17"^^xsd:decimal .
+:T3 :why _:b2_dbe3b5f9cd24e3b3 .
+_:b2_dbe3b5f9cd24e3b3 :a2 64 .
+_:b2_dbe3b5f9cd24e3b3 :b2 225 .
+_:b2_dbe3b5f9cd24e3b3 :sumSquares 289 .
+:T3 :status "solve-c" .
+:T3 :check _:b7_9b0ece3cc846697a .
+_:b7_9b0ece3cc846697a a :Check .
+_:b7_9b0ece3cc846697a :kind "plug-in/hypotenuse" .
+_:b7_9b0ece3cc846697a :residual 0 .
+_:b7_9b0ece3cc846697a :ok true .
+:T4 :answer _:b5_b7bfe635c8ff0aed .
+_:b5_b7bfe635c8ff0aed a :Leg .
+_:b5_b7bfe635c8ff0aed :which "b" .
+_:b5_b7bfe635c8ff0aed :value "12"^^xsd:decimal .
+:T4 :why _:b6_b7bfe635c8ff0aed .
+_:b6_b7bfe635c8ff0aed :c2 169 .
+_:b6_b7bfe635c8ff0aed :a2 25 .
+_:b6_b7bfe635c8ff0aed :diffSquares 144 .
+:T4 :status "solve-b" .
+:T4 :check _:b9_3f269903c5a04d2a .
+_:b9_3f269903c5a04d2a a :Check .
+_:b9_3f269903c5a04d2a :kind "plug-in/leg-b" .
+_:b9_3f269903c5a04d2a :residual 0 .
+_:b9_3f269903c5a04d2a :ok true .
+:T5 :answer _:b3_64765e20e5ab33d2 .
+_:b3_64765e20e5ab33d2 a :Leg .
+_:b3_64765e20e5ab33d2 :which "a" .
+_:b3_64765e20e5ab33d2 :value "8"^^xsd:decimal .
+:T5 :why _:b4_64765e20e5ab33d2 .
+_:b4_64765e20e5ab33d2 :c2 100 .
+_:b4_64765e20e5ab33d2 :b2 36 .
+_:b4_64765e20e5ab33d2 :diffSquares 64 .
+:T5 :status "solve-a" .
+:T5 :check _:b8_4ef1a66fd619bf84 .
+_:b8_4ef1a66fd619bf84 a :Check .
+_:b8_4ef1a66fd619bf84 :kind "plug-in/leg-a" .
+_:b8_4ef1a66fd619bf84 :residual 0 .
+_:b8_4ef1a66fd619bf84 :ok true .
+:T6 :answer _:b1_2e18166e780d32c4 .
+_:b1_2e18166e780d32c4 a :Hypotenuse .
+_:b1_2e18166e780d32c4 :value 6.5 .
+:T6 :why _:b2_2e18166e780d32c4 .
+_:b2_2e18166e780d32c4 :a2 6.25 .
+_:b2_2e18166e780d32c4 :b2 36 .
+_:b2_2e18166e780d32c4 :sumSquares 42.25 .
+:T6 :status "solve-c" .
+:T6 :check _:b7_7123e860c4ab11bc .
+_:b7_7123e860c4ab11bc a :Check .
+_:b7_7123e860c4ab11bc :kind "plug-in/hypotenuse" .
+_:b7_7123e860c4ab11bc :residual 0 .
+_:b7_7123e860c4ab11bc :ok true .
+
+{ :T1 :answer _:b1_92526b09178a1e12 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 a :RightTriangle . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T1 :a 3 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T1 :b 4 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ (3 2) math:exponentiation 9 . }
+  pe:builtin math:exponentiation.
+
+{ (4 2) math:exponentiation 16 . }
+  pe:builtin math:exponentiation.
+
+{ (9 16) math:sum 25 . }
+  pe:builtin math:sum.
+
+{ (25 0.5) math:exponentiation "5"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ _:b1_92526b09178a1e12 a :Hypotenuse . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b1_92526b09178a1e12 :value "5"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 :why _:b2_92526b09178a1e12 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b2_92526b09178a1e12 :a2 9 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b2_92526b09178a1e12 :b2 16 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ _:b2_92526b09178a1e12 :sumSquares 25 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 :status "solve-c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { (9 16) math:sum 25 . },
+    { (25 0.5) math:exponentiation "5"^^xsd:decimal . }.
+
+{ :T1 :check _:b7_5b747edda3ed3f04 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_92526b09178a1e12 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :answer _:b1_92526b09178a1e12 . },
+    { _:b1_92526b09178a1e12 a :Hypotenuse . },
+    { _:b1_92526b09178a1e12 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { (9 16) math:sum 25 . },
+    { (25 "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (25 "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ "0"^^xsd:decimal math:absoluteValue 0 . }
+  pe:builtin math:absoluteValue.
+
+{ :eps :val 0.000000001 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ 0 math:notGreaterThan 0.000000001 . }
+  pe:builtin math:notGreaterThan.
+
+{ _:b7_5b747edda3ed3f04 a :Check . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_92526b09178a1e12 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :answer _:b1_92526b09178a1e12 . },
+    { _:b1_92526b09178a1e12 a :Hypotenuse . },
+    { _:b1_92526b09178a1e12 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { (9 16) math:sum 25 . },
+    { (25 "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_5b747edda3ed3f04 :kind "plug-in/hypotenuse" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_92526b09178a1e12 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :answer _:b1_92526b09178a1e12 . },
+    { _:b1_92526b09178a1e12 a :Hypotenuse . },
+    { _:b1_92526b09178a1e12 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { (9 16) math:sum 25 . },
+    { (25 "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_5b747edda3ed3f04 :residual 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_92526b09178a1e12 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :answer _:b1_92526b09178a1e12 . },
+    { _:b1_92526b09178a1e12 a :Hypotenuse . },
+    { _:b1_92526b09178a1e12 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { (9 16) math:sum 25 . },
+    { (25 "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_5b747edda3ed3f04 :ok true . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 3 ],
+    [ pe:var "a2"; pe:value 9 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_92526b09178a1e12 ],
+    [ pe:var "b"; pe:value 4 ],
+    [ pe:var "b2"; pe:value 16 ],
+    [ pe:var "c"; pe:value "5"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "25"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 25 ],
+    [ pe:var "t"; pe:value :T1 ];
+  pe:uses
+    { :T1 a :RightTriangle . },
+    { :T1 :a 3 . },
+    { :T1 :b 4 . },
+    { :T1 :answer _:b1_92526b09178a1e12 . },
+    { _:b1_92526b09178a1e12 a :Hypotenuse . },
+    { _:b1_92526b09178a1e12 :value "5"^^xsd:decimal . },
+    { (3 2) math:exponentiation 9 . },
+    { (4 2) math:exponentiation 16 . },
+    { ("5"^^xsd:decimal 2) math:exponentiation "25"^^xsd:decimal . },
+    { (9 16) math:sum 25 . },
+    { (25 "25"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T2 :answer _:b1_8a3ca326eedd2a02 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T2 a :RightTriangle . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T2 :a 5 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T2 :b 12 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ (5 2) math:exponentiation 25 . }
+  pe:builtin math:exponentiation.
+
+{ (12 2) math:exponentiation 144 . }
+  pe:builtin math:exponentiation.
+
+{ (25 144) math:sum 169 . }
+  pe:builtin math:sum.
+
+{ (169 0.5) math:exponentiation "13"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ _:b1_8a3ca326eedd2a02 a :Hypotenuse . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b1_8a3ca326eedd2a02 :value "13"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T2 :why _:b2_8a3ca326eedd2a02 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b2_8a3ca326eedd2a02 :a2 25 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b2_8a3ca326eedd2a02 :b2 144 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ _:b2_8a3ca326eedd2a02 :sumSquares 169 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T2 :status "solve-c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { (25 144) math:sum 169 . },
+    { (169 0.5) math:exponentiation "13"^^xsd:decimal . }.
+
+{ :T2 :check _:b7_d492578331d8dad2 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_8a3ca326eedd2a02 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { :T2 :answer _:b1_8a3ca326eedd2a02 . },
+    { _:b1_8a3ca326eedd2a02 a :Hypotenuse . },
+    { _:b1_8a3ca326eedd2a02 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { (25 144) math:sum 169 . },
+    { (169 "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (169 "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b7_d492578331d8dad2 a :Check . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_8a3ca326eedd2a02 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { :T2 :answer _:b1_8a3ca326eedd2a02 . },
+    { _:b1_8a3ca326eedd2a02 a :Hypotenuse . },
+    { _:b1_8a3ca326eedd2a02 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { (25 144) math:sum 169 . },
+    { (169 "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_d492578331d8dad2 :kind "plug-in/hypotenuse" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_8a3ca326eedd2a02 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { :T2 :answer _:b1_8a3ca326eedd2a02 . },
+    { _:b1_8a3ca326eedd2a02 a :Hypotenuse . },
+    { _:b1_8a3ca326eedd2a02 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { (25 144) math:sum 169 . },
+    { (169 "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_d492578331d8dad2 :residual 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_8a3ca326eedd2a02 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { :T2 :answer _:b1_8a3ca326eedd2a02 . },
+    { _:b1_8a3ca326eedd2a02 a :Hypotenuse . },
+    { _:b1_8a3ca326eedd2a02 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { (25 144) math:sum 169 . },
+    { (169 "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_d492578331d8dad2 :ok true . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_8a3ca326eedd2a02 ],
+    [ pe:var "b"; pe:value 12 ],
+    [ pe:var "b2"; pe:value 144 ],
+    [ pe:var "c"; pe:value "13"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 169 ],
+    [ pe:var "t"; pe:value :T2 ];
+  pe:uses
+    { :T2 a :RightTriangle . },
+    { :T2 :a 5 . },
+    { :T2 :b 12 . },
+    { :T2 :answer _:b1_8a3ca326eedd2a02 . },
+    { _:b1_8a3ca326eedd2a02 a :Hypotenuse . },
+    { _:b1_8a3ca326eedd2a02 :value "13"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { (12 2) math:exponentiation 144 . },
+    { ("13"^^xsd:decimal 2) math:exponentiation "169"^^xsd:decimal . },
+    { (25 144) math:sum 169 . },
+    { (169 "169"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T3 :answer _:b1_dbe3b5f9cd24e3b3 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ :T3 a :RightTriangle . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T3 :a 8 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T3 :b 15 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ (8 2) math:exponentiation 64 . }
+  pe:builtin math:exponentiation.
+
+{ (15 2) math:exponentiation 225 . }
+  pe:builtin math:exponentiation.
+
+{ (64 225) math:sum 289 . }
+  pe:builtin math:sum.
+
+{ (289 0.5) math:exponentiation "17"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ _:b1_dbe3b5f9cd24e3b3 a :Hypotenuse . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ _:b1_dbe3b5f9cd24e3b3 :value "17"^^xsd:decimal . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ :T3 :why _:b2_dbe3b5f9cd24e3b3 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ _:b2_dbe3b5f9cd24e3b3 :a2 64 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ _:b2_dbe3b5f9cd24e3b3 :b2 225 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ _:b2_dbe3b5f9cd24e3b3 :sumSquares 289 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ :T3 :status "solve-c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "sum"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { (64 225) math:sum 289 . },
+    { (289 0.5) math:exponentiation "17"^^xsd:decimal . }.
+
+{ :T3 :check _:b7_9b0ece3cc846697a . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_dbe3b5f9cd24e3b3 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "289"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { :T3 :answer _:b1_dbe3b5f9cd24e3b3 . },
+    { _:b1_dbe3b5f9cd24e3b3 a :Hypotenuse . },
+    { _:b1_dbe3b5f9cd24e3b3 :value "17"^^xsd:decimal . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { ("17"^^xsd:decimal 2) math:exponentiation "289"^^xsd:decimal . },
+    { (64 225) math:sum 289 . },
+    { (289 "289"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("17"^^xsd:decimal 2) math:exponentiation "289"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (289 "289"^^xsd:decimal) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b7_9b0ece3cc846697a a :Check . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_dbe3b5f9cd24e3b3 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "289"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { :T3 :answer _:b1_dbe3b5f9cd24e3b3 . },
+    { _:b1_dbe3b5f9cd24e3b3 a :Hypotenuse . },
+    { _:b1_dbe3b5f9cd24e3b3 :value "17"^^xsd:decimal . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { ("17"^^xsd:decimal 2) math:exponentiation "289"^^xsd:decimal . },
+    { (64 225) math:sum 289 . },
+    { (289 "289"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_9b0ece3cc846697a :kind "plug-in/hypotenuse" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_dbe3b5f9cd24e3b3 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "289"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { :T3 :answer _:b1_dbe3b5f9cd24e3b3 . },
+    { _:b1_dbe3b5f9cd24e3b3 a :Hypotenuse . },
+    { _:b1_dbe3b5f9cd24e3b3 :value "17"^^xsd:decimal . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { ("17"^^xsd:decimal 2) math:exponentiation "289"^^xsd:decimal . },
+    { (64 225) math:sum 289 . },
+    { (289 "289"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_9b0ece3cc846697a :residual 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_dbe3b5f9cd24e3b3 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "289"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { :T3 :answer _:b1_dbe3b5f9cd24e3b3 . },
+    { _:b1_dbe3b5f9cd24e3b3 a :Hypotenuse . },
+    { _:b1_dbe3b5f9cd24e3b3 :value "17"^^xsd:decimal . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { ("17"^^xsd:decimal 2) math:exponentiation "289"^^xsd:decimal . },
+    { (64 225) math:sum 289 . },
+    { (289 "289"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_9b0ece3cc846697a :ok true . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 8 ],
+    [ pe:var "a2"; pe:value 64 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_dbe3b5f9cd24e3b3 ],
+    [ pe:var "b"; pe:value 15 ],
+    [ pe:var "b2"; pe:value 225 ],
+    [ pe:var "c"; pe:value "17"^^xsd:decimal ],
+    [ pe:var "c2"; pe:value "289"^^xsd:decimal ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 289 ],
+    [ pe:var "t"; pe:value :T3 ];
+  pe:uses
+    { :T3 a :RightTriangle . },
+    { :T3 :a 8 . },
+    { :T3 :b 15 . },
+    { :T3 :answer _:b1_dbe3b5f9cd24e3b3 . },
+    { _:b1_dbe3b5f9cd24e3b3 a :Hypotenuse . },
+    { _:b1_dbe3b5f9cd24e3b3 :value "17"^^xsd:decimal . },
+    { (8 2) math:exponentiation 64 . },
+    { (15 2) math:exponentiation 225 . },
+    { ("17"^^xsd:decimal 2) math:exponentiation "289"^^xsd:decimal . },
+    { (64 225) math:sum 289 . },
+    { (289 "289"^^xsd:decimal) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T4 :answer _:b5_b7bfe635c8ff0aed . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ :T4 a :RightTriangle . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T4 :c 13 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T4 :a 5 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ (13 2) math:exponentiation 169 . }
+  pe:builtin math:exponentiation.
+
+{ (169 25) math:difference 144 . }
+  pe:builtin math:difference.
+
+{ (144 0.5) math:exponentiation "12"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ _:b5_b7bfe635c8ff0aed a :Leg . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ _:b5_b7bfe635c8ff0aed :which "b" . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ _:b5_b7bfe635c8ff0aed :value "12"^^xsd:decimal . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ :T4 :why _:b6_b7bfe635c8ff0aed . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ _:b6_b7bfe635c8ff0aed :c2 169 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ _:b6_b7bfe635c8ff0aed :a2 25 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ _:b6_b7bfe635c8ff0aed :diffSquares 144 . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ :T4 :status "solve-b" . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "diff"; pe:value 144 ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :c 13 . },
+    { :T4 :a 5 . },
+    { (13 2) math:exponentiation 169 . },
+    { (5 2) math:exponentiation 25 . },
+    { (169 25) math:difference 144 . },
+    { (144 0.5) math:exponentiation "12"^^xsd:decimal . }.
+
+{ :T4 :check _:b9_3f269903c5a04d2a . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_b7bfe635c8ff0aed ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "b2"; pe:value "144"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :a 5 . },
+    { :T4 :c 13 . },
+    { :T4 :answer _:b5_b7bfe635c8ff0aed . },
+    { _:b5_b7bfe635c8ff0aed a :Leg . },
+    { _:b5_b7bfe635c8ff0aed :which "b" . },
+    { _:b5_b7bfe635c8ff0aed :value "12"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { ("12"^^xsd:decimal 2) math:exponentiation "144"^^xsd:decimal . },
+    { (13 2) math:exponentiation 169 . },
+    { (25 "144"^^xsd:decimal) math:sum "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal 169) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("12"^^xsd:decimal 2) math:exponentiation "144"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ (25 "144"^^xsd:decimal) math:sum "169"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ ("169"^^xsd:decimal 169) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b9_3f269903c5a04d2a a :Check . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_b7bfe635c8ff0aed ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "b2"; pe:value "144"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :a 5 . },
+    { :T4 :c 13 . },
+    { :T4 :answer _:b5_b7bfe635c8ff0aed . },
+    { _:b5_b7bfe635c8ff0aed a :Leg . },
+    { _:b5_b7bfe635c8ff0aed :which "b" . },
+    { _:b5_b7bfe635c8ff0aed :value "12"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { ("12"^^xsd:decimal 2) math:exponentiation "144"^^xsd:decimal . },
+    { (13 2) math:exponentiation 169 . },
+    { (25 "144"^^xsd:decimal) math:sum "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal 169) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b9_3f269903c5a04d2a :kind "plug-in/leg-b" . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_b7bfe635c8ff0aed ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "b2"; pe:value "144"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :a 5 . },
+    { :T4 :c 13 . },
+    { :T4 :answer _:b5_b7bfe635c8ff0aed . },
+    { _:b5_b7bfe635c8ff0aed a :Leg . },
+    { _:b5_b7bfe635c8ff0aed :which "b" . },
+    { _:b5_b7bfe635c8ff0aed :value "12"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { ("12"^^xsd:decimal 2) math:exponentiation "144"^^xsd:decimal . },
+    { (13 2) math:exponentiation 169 . },
+    { (25 "144"^^xsd:decimal) math:sum "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal 169) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b9_3f269903c5a04d2a :residual 0 . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_b7bfe635c8ff0aed ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "b2"; pe:value "144"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :a 5 . },
+    { :T4 :c 13 . },
+    { :T4 :answer _:b5_b7bfe635c8ff0aed . },
+    { _:b5_b7bfe635c8ff0aed a :Leg . },
+    { _:b5_b7bfe635c8ff0aed :which "b" . },
+    { _:b5_b7bfe635c8ff0aed :value "12"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { ("12"^^xsd:decimal 2) math:exponentiation "144"^^xsd:decimal . },
+    { (13 2) math:exponentiation 169 . },
+    { (25 "144"^^xsd:decimal) math:sum "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal 169) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b9_3f269903c5a04d2a :ok true . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "a"; pe:value 5 ],
+    [ pe:var "a2"; pe:value 25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b5_b7bfe635c8ff0aed ],
+    [ pe:var "b"; pe:value "12"^^xsd:decimal ],
+    [ pe:var "b2"; pe:value "144"^^xsd:decimal ],
+    [ pe:var "c"; pe:value 13 ],
+    [ pe:var "c2"; pe:value 169 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "169"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T4 ];
+  pe:uses
+    { :T4 a :RightTriangle . },
+    { :T4 :a 5 . },
+    { :T4 :c 13 . },
+    { :T4 :answer _:b5_b7bfe635c8ff0aed . },
+    { _:b5_b7bfe635c8ff0aed a :Leg . },
+    { _:b5_b7bfe635c8ff0aed :which "b" . },
+    { _:b5_b7bfe635c8ff0aed :value "12"^^xsd:decimal . },
+    { (5 2) math:exponentiation 25 . },
+    { ("12"^^xsd:decimal 2) math:exponentiation "144"^^xsd:decimal . },
+    { (13 2) math:exponentiation 169 . },
+    { (25 "144"^^xsd:decimal) math:sum "169"^^xsd:decimal . },
+    { ("169"^^xsd:decimal 169) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T5 :answer _:b3_64765e20e5ab33d2 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ :T5 a :RightTriangle . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T5 :c 10 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T5 :b 6 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ (10 2) math:exponentiation 100 . }
+  pe:builtin math:exponentiation.
+
+{ (6 2) math:exponentiation 36 . }
+  pe:builtin math:exponentiation.
+
+{ (100 36) math:difference 64 . }
+  pe:builtin math:difference.
+
+{ (64 0.5) math:exponentiation "8"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ _:b3_64765e20e5ab33d2 a :Leg . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ _:b3_64765e20e5ab33d2 :which "a" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ _:b3_64765e20e5ab33d2 :value "8"^^xsd:decimal . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ :T5 :why _:b4_64765e20e5ab33d2 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ _:b4_64765e20e5ab33d2 :c2 100 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ _:b4_64765e20e5ab33d2 :b2 36 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ _:b4_64765e20e5ab33d2 :diffSquares 64 . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ :T5 :status "solve-a" . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "diff"; pe:value 64 ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :c 10 . },
+    { :T5 :b 6 . },
+    { (10 2) math:exponentiation 100 . },
+    { (6 2) math:exponentiation 36 . },
+    { (100 36) math:difference 64 . },
+    { (64 0.5) math:exponentiation "8"^^xsd:decimal . }.
+
+{ :T5 :check _:b8_4ef1a66fd619bf84 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "64"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_64765e20e5ab33d2 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :b 6 . },
+    { :T5 :c 10 . },
+    { :T5 :answer _:b3_64765e20e5ab33d2 . },
+    { _:b3_64765e20e5ab33d2 a :Leg . },
+    { _:b3_64765e20e5ab33d2 :which "a" . },
+    { _:b3_64765e20e5ab33d2 :value "8"^^xsd:decimal . },
+    { ("8"^^xsd:decimal 2) math:exponentiation "64"^^xsd:decimal . },
+    { (6 2) math:exponentiation 36 . },
+    { (10 2) math:exponentiation 100 . },
+    { ("64"^^xsd:decimal 36) math:sum "100"^^xsd:decimal . },
+    { ("100"^^xsd:decimal 100) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ ("8"^^xsd:decimal 2) math:exponentiation "64"^^xsd:decimal . }
+  pe:builtin math:exponentiation.
+
+{ ("64"^^xsd:decimal 36) math:sum "100"^^xsd:decimal . }
+  pe:builtin math:sum.
+
+{ ("100"^^xsd:decimal 100) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b8_4ef1a66fd619bf84 a :Check . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "64"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_64765e20e5ab33d2 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :b 6 . },
+    { :T5 :c 10 . },
+    { :T5 :answer _:b3_64765e20e5ab33d2 . },
+    { _:b3_64765e20e5ab33d2 a :Leg . },
+    { _:b3_64765e20e5ab33d2 :which "a" . },
+    { _:b3_64765e20e5ab33d2 :value "8"^^xsd:decimal . },
+    { ("8"^^xsd:decimal 2) math:exponentiation "64"^^xsd:decimal . },
+    { (6 2) math:exponentiation 36 . },
+    { (10 2) math:exponentiation 100 . },
+    { ("64"^^xsd:decimal 36) math:sum "100"^^xsd:decimal . },
+    { ("100"^^xsd:decimal 100) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_4ef1a66fd619bf84 :kind "plug-in/leg-a" . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "64"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_64765e20e5ab33d2 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :b 6 . },
+    { :T5 :c 10 . },
+    { :T5 :answer _:b3_64765e20e5ab33d2 . },
+    { _:b3_64765e20e5ab33d2 a :Leg . },
+    { _:b3_64765e20e5ab33d2 :which "a" . },
+    { _:b3_64765e20e5ab33d2 :value "8"^^xsd:decimal . },
+    { ("8"^^xsd:decimal 2) math:exponentiation "64"^^xsd:decimal . },
+    { (6 2) math:exponentiation 36 . },
+    { (10 2) math:exponentiation 100 . },
+    { ("64"^^xsd:decimal 36) math:sum "100"^^xsd:decimal . },
+    { ("100"^^xsd:decimal 100) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_4ef1a66fd619bf84 :residual 0 . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "64"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_64765e20e5ab33d2 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :b 6 . },
+    { :T5 :c 10 . },
+    { :T5 :answer _:b3_64765e20e5ab33d2 . },
+    { _:b3_64765e20e5ab33d2 a :Leg . },
+    { _:b3_64765e20e5ab33d2 :which "a" . },
+    { _:b3_64765e20e5ab33d2 :value "8"^^xsd:decimal . },
+    { ("8"^^xsd:decimal 2) math:exponentiation "64"^^xsd:decimal . },
+    { (6 2) math:exponentiation 36 . },
+    { (10 2) math:exponentiation 100 . },
+    { ("64"^^xsd:decimal 36) math:sum "100"^^xsd:decimal . },
+    { ("100"^^xsd:decimal 100) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b8_4ef1a66fd619bf84 :ok true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "a"; pe:value "8"^^xsd:decimal ],
+    [ pe:var "a2"; pe:value "64"^^xsd:decimal ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b3_64765e20e5ab33d2 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 10 ],
+    [ pe:var "c2"; pe:value 100 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value "100"^^xsd:decimal ],
+    [ pe:var "t"; pe:value :T5 ];
+  pe:uses
+    { :T5 a :RightTriangle . },
+    { :T5 :b 6 . },
+    { :T5 :c 10 . },
+    { :T5 :answer _:b3_64765e20e5ab33d2 . },
+    { _:b3_64765e20e5ab33d2 a :Leg . },
+    { _:b3_64765e20e5ab33d2 :which "a" . },
+    { _:b3_64765e20e5ab33d2 :value "8"^^xsd:decimal . },
+    { ("8"^^xsd:decimal 2) math:exponentiation "64"^^xsd:decimal . },
+    { (6 2) math:exponentiation 36 . },
+    { (10 2) math:exponentiation 100 . },
+    { ("64"^^xsd:decimal 36) math:sum "100"^^xsd:decimal . },
+    { ("100"^^xsd:decimal 100) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ :T6 :answer _:b1_2e18166e780d32c4 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ :T6 a :RightTriangle . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T6 :a 2.5 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ :T6 :b 6 . }
+  pe:fact "pythagorean-theorem.n3".
+
+{ (2.5 2) math:exponentiation 6.25 . }
+  pe:builtin math:exponentiation.
+
+{ (6.25 36) math:sum 42.25 . }
+  pe:builtin math:sum.
+
+{ (42.25 0.5) math:exponentiation 6.5 . }
+  pe:builtin math:exponentiation.
+
+{ _:b1_2e18166e780d32c4 a :Hypotenuse . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ _:b1_2e18166e780d32c4 :value 6.5 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ :T6 :why _:b2_2e18166e780d32c4 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ _:b2_2e18166e780d32c4 :a2 6.25 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ _:b2_2e18166e780d32c4 :b2 36 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ _:b2_2e18166e780d32c4 :sumSquares 42.25 . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ :T6 :status "solve-c" . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "sum"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 0.5) math:exponentiation 6.5 . }.
+
+{ :T6 :check _:b7_7123e860c4ab11bc . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_2e18166e780d32c4 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "c2"; pe:value 42.25 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { :T6 :answer _:b1_2e18166e780d32c4 . },
+    { _:b1_2e18166e780d32c4 a :Hypotenuse . },
+    { _:b1_2e18166e780d32c4 :value 6.5 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.5 2) math:exponentiation 42.25 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 42.25) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ (6.5 2) math:exponentiation 42.25 . }
+  pe:builtin math:exponentiation.
+
+{ (42.25 42.25) math:difference "0"^^xsd:decimal . }
+  pe:builtin math:difference.
+
+{ _:b7_7123e860c4ab11bc a :Check . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_2e18166e780d32c4 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "c2"; pe:value 42.25 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { :T6 :answer _:b1_2e18166e780d32c4 . },
+    { _:b1_2e18166e780d32c4 a :Hypotenuse . },
+    { _:b1_2e18166e780d32c4 :value 6.5 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.5 2) math:exponentiation 42.25 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 42.25) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_7123e860c4ab11bc :kind "plug-in/hypotenuse" . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_2e18166e780d32c4 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "c2"; pe:value 42.25 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { :T6 :answer _:b1_2e18166e780d32c4 . },
+    { _:b1_2e18166e780d32c4 a :Hypotenuse . },
+    { _:b1_2e18166e780d32c4 :value 6.5 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.5 2) math:exponentiation 42.25 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 42.25) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_7123e860c4ab11bc :residual 0 . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_2e18166e780d32c4 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "c2"; pe:value 42.25 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { :T6 :answer _:b1_2e18166e780d32c4 . },
+    { _:b1_2e18166e780d32c4 a :Hypotenuse . },
+    { _:b1_2e18166e780d32c4 :value 6.5 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.5 2) math:exponentiation 42.25 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 42.25) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.
+
+{ _:b7_7123e860c4ab11bc :ok true . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "a"; pe:value 2.5 ],
+    [ pe:var "a2"; pe:value 6.25 ],
+    [ pe:var "abs"; pe:value 0 ],
+    [ pe:var "ans"; pe:value _:b1_2e18166e780d32c4 ],
+    [ pe:var "b"; pe:value 6 ],
+    [ pe:var "b2"; pe:value 36 ],
+    [ pe:var "c"; pe:value 6.5 ],
+    [ pe:var "c2"; pe:value 42.25 ],
+    [ pe:var "d"; pe:value "0"^^xsd:decimal ],
+    [ pe:var "eps"; pe:value 0.000000001 ],
+    [ pe:var "lhs"; pe:value 42.25 ],
+    [ pe:var "t"; pe:value :T6 ];
+  pe:uses
+    { :T6 a :RightTriangle . },
+    { :T6 :a 2.5 . },
+    { :T6 :b 6 . },
+    { :T6 :answer _:b1_2e18166e780d32c4 . },
+    { _:b1_2e18166e780d32c4 a :Hypotenuse . },
+    { _:b1_2e18166e780d32c4 :value 6.5 . },
+    { (2.5 2) math:exponentiation 6.25 . },
+    { (6 2) math:exponentiation 36 . },
+    { (6.5 2) math:exponentiation 42.25 . },
+    { (6.25 36) math:sum 42.25 . },
+    { (42.25 42.25) math:difference "0"^^xsd:decimal . },
+    { "0"^^xsd:decimal math:absoluteValue 0 . },
+    { :eps :val 0.000000001 . },
+    { 0 math:notGreaterThan 0.000000001 . }.

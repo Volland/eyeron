@@ -1,0 +1,17 @@
+@prefix : <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:partitions :goldbach (4 2 2) .
+:partitions :goldbach (6 3 3) .
+:partitions :goldbach (8 3 5) .
+:partitions :goldbach (10 3 7) .
+:partitions :goldbach (10 5 5) .
+:partitions :goldbach (12 5 7) .
+:partitions :goldbach (20 3 17) .
+:partitions :goldbach (20 7 13) .
+:partitions :goldbach (28 5 23) .
+:partitions :goldbach (28 11 17) .
+:partitions :goldbach (50 3 47) .
+:partitions :goldbach (50 7 43) .
+:partitions :goldbach (50 13 37) .
+:partitions :goldbach (50 19 31) .

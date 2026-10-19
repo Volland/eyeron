@@ -1,0 +1,9 @@
+@prefix : <http://eulersharp.sourceforge.net/2005/11swap/zebra#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:german :eats :fish .
+:solution :house (1 :yellow :norwegian :cats :water :dunhill) .
+:solution :house (2 :blue :dane :horse :tea :blends) .
+:solution :house (3 :red :brit :birds :milk :pallmall) .
+:solution :house (4 :green :german :fish :coffee :prince) .
+:solution :house (5 :white :swede :dogs :beer :bluemasters) .

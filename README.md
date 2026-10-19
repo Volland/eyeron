@@ -18,7 +18,7 @@ The second command prints derived conclusions. The third generates a proof and c
 - [Language and runtime reference](docs/n3.md): rules, quantifier scopes, built-ins, evaluation, resource limits, and limitations.
 - [Proof-checking contract](docs/proof-checking.md): proof syntax, validity conditions, trust obligations, and checker limitations.
 
-Runnable programs live in [`examples/`](examples/), with expected output and proof documents in its `output/` and `proof/` directories. Start with [explicit quantification](examples/explicit-quantification.n3) or the [decision and proof audit](examples/verifiable-decision-audit.n3).
+Runnable programs live in [`examples/`](examples/), with expected output and proof documents in its `output/` and `proof/` directories. Start with the [Zebra puzzle](examples/zebra.n3), [explicit quantification](examples/explicit-quantification.n3), or the [decision and proof audit](examples/verifiable-decision-audit.n3).
 
 ## License
 

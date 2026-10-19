@@ -1,0 +1,7 @@
+@prefix ex: <https://example.org/health#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:APP-HYP-01 ex:eligible true .
+ex:APP-HYP-01 ex:status ex:Approved .
+_:pay_cba340144672eeb9 a ex:HealthcarePayment .
+ex:APP-HYP-01 ex:issuedPayment _:pay_cba340144672eeb9 .

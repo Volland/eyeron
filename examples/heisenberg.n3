@@ -1,0 +1,87 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Sources: https://eyereasoner.github.io/eye/reasoning/arcus/heisenberg/heisenberg.ttl
+# Premise blank nodes are named variables; backward answers are materialized.
+
+@prefix : <http://example.org/#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:psi a :QuantumState .
+:psi :deltaX "0.7071067811865476"^^xsd:double .
+:psi :deltaP "0.7071067811865476"^^xsd:double .
+:psi :deltaSx "0.5"^^xsd:double .
+:psi :deltaSz "0.5"^^xsd:double .
+:psi :boundXP "0.5"^^xsd:double .
+:psi :boundSxSz "0.25"^^xsd:double .
+:psi :boundXSz "0.0"^^xsd:double .
+(:prodXP :boundXP) :statusPredicate :xpStatus .
+(:prodSxSz :boundSxSz) :statusPredicate :sxszStatus .
+(:prodXSz :boundXSz) :statusPredicate :xszStatus .
+
+{
+    :psi :deltaX ?dX .
+    :psi :deltaP ?dP .
+    (?dX ?dP) math:product ?prod .
+} => {
+    :psi :prodXP ?prod .
+} .
+
+{
+    :psi :deltaSx ?d1 .
+    :psi :deltaSz ?d2 .
+    (?d1 ?d2) math:product ?prod .
+} => {
+    :psi :prodSxSz ?prod .
+} .
+
+{
+    :psi :deltaX ?dX .
+    :psi :deltaSz ?dZ .
+    (?dX ?dZ) math:product ?prod .
+} => {
+    :psi :prodXSz ?prod .
+} .
+
+{
+    (?prodPred ?boundPred) :statusPredicate ?statPred .
+    :psi ?prodPred ?prod .
+    :psi ?boundPred ?bound .
+    (?prod ?bound) math:difference ?diff .
+    ?diff math:absoluteValue ?gap .
+    ?gap math:lessThan 1e-12 .
+} => {
+    :psi ?statPred "saturates" .
+} .
+
+{
+    (?prodPred ?boundPred) :statusPredicate ?statPred .
+    :psi ?prodPred ?prod .
+    :psi ?boundPred ?bound .
+    (?bound ?prod) math:difference ?gap .
+    ?gap math:greaterThan 1e-12 .
+} => {
+    :psi ?statPred "violated" .
+} .
+
+{
+    (?prodPred ?boundPred) :statusPredicate ?statPred .
+    :psi ?prodPred ?prod .
+    :psi ?boundPred ?bound .
+    (?prod ?bound) math:difference ?gap .
+    ?gap math:greaterThan 1e-12 .
+} => {
+    :psi ?statPred "satisfied" .
+} .
+
+{
+    :psi ?statPred ?label .
+} => {
+    :psi ?statPred ?label .
+} .
+
+{
+    :psi ?statPred ?label .
+} log:query {
+    :psi ?statPred ?label .
+} .

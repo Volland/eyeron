@@ -1,0 +1,15 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Source: https://eyereasoner.github.io/eye/reasoning/bcrule/
+# Standalone program; EYE answer directives use log:query.
+
+# Source file: bcrule/example1.n3
+@base <https://eyereasoner.github.io/eye/reasoning/bcrule/example1.n3>.
+@prefix : <http://example.org/#>.
+
+:a :b :c.
+{ ?s :B ?o } <= { ?s :b ?o }.
+{ ?s :B ?o } => { :TEST :PASS 1.1 }.
+{ :a :B :c } => { :TEST :PASS 1.2 }.
+{ :a :B ?o } => { :TEST :PASS 1.3 }.
+{ ?s :B :c } => { :TEST :PASS 1.4 }.
+

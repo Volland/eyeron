@@ -1,0 +1,6 @@
+@prefix : <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:nilakantha :approximation (4 3.145238095238095) .
+:nilakantha :approximation (8 3.142071817071817) .
+:nilakantha :approximation (12 3.1417360992606653) .

@@ -1,0 +1,4 @@
+@prefix h: <https://eyereasoner.github.io/eye/reasoning/h2o#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+h:traveler1 h:location (51.0535 3.7304) .

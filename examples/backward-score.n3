@@ -1,0 +1,49 @@
+# Adapted from EYE reasoning examples (MIT, Jos De Roo).
+# Sources: https://eyereasoner.github.io/eye/reasoning/backward-more/backward-more.n3, https://eyereasoner.github.io/eye/reasoning/backward-more/backward-more-query1.n3
+# Premise blank nodes are named variables; backward answers are materialized.
+
+@prefix : <http://example.org/#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+_:b1 log:table :moreInterestingThan .
+:A :score 8 .
+:B :score 5 .
+:B :moreInterestingThan :C .
+:D :hasAward true .
+:B :boring true .
+
+{
+    ?X :moreInterestingThan ?Y .
+} <= {
+    ?X :score ?SX .
+    ?Y :score ?SY .
+    ?SX math:greaterThan ?SY .
+} .
+
+{
+    ?X :moreInterestingThan ?Y .
+} <= {
+    ?X :hasAward true .
+    ?Y :boring true .
+} .
+
+{
+    ?X :moreInterestingThan ?Z .
+} <= {
+    ?X :moreInterestingThan ?Y .
+    ?Y :moreInterestingThan ?Z .
+} .
+
+{
+    :A :moreInterestingThan :B .
+} => {
+    :A :moreInterestingThan :B .
+} .
+
+{
+    :A :moreInterestingThan :B .
+} log:query {
+    :A :moreInterestingThan :B .
+} .
