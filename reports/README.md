@@ -1,19 +1,3 @@
 # Reports
 
-The aggregate W3C RDF custom-harness check `w3c_rdf_13_all_manifests_1175_earl_report` writes the EARL report here by default. The test resources live under `tests/w3c_rdf/rdf-tests/`; the runner is local-only by default so repeat runs stay fast:
-
-```bash
-cargo test
-```
-
-To run only the W3C RDF sweep:
-
-```bash
-cargo test --test w3c_rdf
-```
-
-```text
-reports/w3c-rdf-earl.ttl
-```
-
-The target milestone for this report is 1175/1175 tests passed across the 12 default RDF 1.1 / RDF 1.2 manifest roots.
+The W3C RDF aggregate test writes [`w3c-rdf-earl.ttl`](w3c-rdf-earl.ttl) here. See the [W3C runner notes](../tests/w3c_rdf/README.md) for commands, manifest counts, refresh settings, and output configuration.

@@ -1,11 +1,12 @@
 //! Reader and step checker for Notation3 proof documents (specification
-//! §8.2).
+//! §8).
 //!
 //! A proof is an N3 document, so it is read with the ordinary N3 parser and
 //! its top-level steps are lifted into the abstract model. Checking a
 //! `pe:rule` step re-performs exactly one rule application against the
-//! *source* rule: instantiate its premises and conclusion under the step's
-//! bindings, and require them to be what the step recorded.
+//! cited source rule or justified carried rule: instantiate its premises
+//! and conclusion under the step's bindings, and require them to be what
+//! the step recorded.
 
 use std::collections::{BTreeMap, BTreeSet};
 

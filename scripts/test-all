@@ -7,14 +7,14 @@
 # target (and the lib's own unit tests) as a *separate process*, and each
 # one prints its own "test result: ok. N passed; M failed; ..." line (or,
 # for the custom harnesses that print one line per packaged example —
-# tests/examples.rs — its own "example result: ..." line) with no
+# tests/examples.rs — its own "n3 result: ..." line) with no
 # aggregation across binaries. This script runs the real
 # `cargo test --release`, shows its normal live output, then parses every
 # such summary line out of it and sums them into one final line.
 #
 # It also reports the much larger conformance-case counts several of those
 # "passed" checks each roll up (a single "13 passed" for the W3C RDF
-# harness represents running 1170 individual W3C RDF conformance cases,
+# harness represents running 1175 individual W3C RDF conformance cases,
 # for example) — otherwise the grand total looks far smaller than the
 # suite actually exercises.
 #
@@ -22,8 +22,8 @@
 #   - Piping cargo's output into `tee` makes stdout/stderr look like a pipe,
 #     not a terminal, to every test binary's own --color=auto detection, so
 #     color mostly disappears once you wrap the command at all.
-#   - This project's own harnesses (tests/support/report.rs, src/bin/w3c_rdf.rs,
-#     src/bin/w3c_rdf.rs and its tests/*/runner.rs counterpart)
+#   - This project's own harnesses (tests/support/report.rs, src/w3c_rdf.rs,
+#     and tests/w3c_rdf/runner.rs)
 #     already check the CARGO_TERM_COLOR env var and default to colored
 #     output, so exporting CARGO_TERM_COLOR=always alone fixes those; the
 #     *default* libtest harness (lib unit tests, cli_help, cli_stream_

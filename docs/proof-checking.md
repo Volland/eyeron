@@ -1,212 +1,95 @@
-# Proof checking
+# Proof-checking contract
 
-> This is the normative description of what it means for an eyeron proof
-> document to be **valid for a source program**, and of what a conforming
-> proof checker must do. `src/proof_check.rs` is the reference implementation and
-> `eyeron --check-proof` runs it. For how a proof is *written*, see
-> [`n3.md`](n3.md).
+This is the validity contract implemented by [proof_check.rs](../src/proof_check.rs) and its [N3 reader](../src/proof_check_n3.rs). The numbered sections are also referenced by code comments. [The guide](guide.md#proofs-and-their-limits) covers commands and a decision/audit example.
 
-Generate and check a proof in one command:
+## 1. Purpose
 
-```bash
-eyeron -c examples/dog-license.n3
-# Long form: eyeron --prove-and-check examples/dog-license.n3
-```
+A proof records derived claims and the steps supporting them. Checking asks whether those recorded steps establish their claims from the supplied source program. The requirements below use MUST and SHOULD for the contract; section 10 distinguishes current implementation gaps.
 
-This generates the proof in memory and passes it to the same checker as
-`--check-proof FILE`, using the parsed input program. It prints the checking
-report, including any trust obligations. Use `--proof` to write a proof
-document for later checking.
+## 2. Checking and its scope
 
-## 1. Why this document exists
+The checker MUST check the recorded inferences rather than search for replacement derivations. It assumes source assertions. It establishes neither their real-world truth nor completeness of the reasoner's output. Trusted justifications remain explicit obligations.
 
-eyeron writes a proof in one shape:
-a list of **steps**, each naming a conclusion, the single reason it holds,
-the bindings that reason used, and what it used. Until now that shape was
-described as "an inspectable explanation graph, not an independently
-verified proof certificate" — a reader could follow it, but nothing checked
-that it held together.
+`--check-proof` reads a saved proof. `-c` first generates a proof, then invokes the same checker on that document. Generation and checking are separate stages even within that command.
 
-This specification closes that gap. It defines checking over an
-abstract proof model, and then binds the concrete syntax to that
-model. A checker therefore has one set of rules to implement and one
-syntax readers.
+## 3. Model
 
-The keywords **MUST**, **MUST NOT**, **SHOULD** and **MAY** are to be read
-as normative requirements.
+A step has a conclusion triple, one justification, bindings, and an ordered list of premises (`uses`). A proof also has claims. The source supplies facts and rules, numbered from 1 in source order after excluding query rules. Written rules are also available as statements. Universally quantified source assertions can justify their instances.
 
-## 2. What a checker is, and is not
+## 4. Validity conditions
 
-A proof checker takes a **source program** and a **proof document** and
-decides whether the document's steps really do establish its claims *given
-that program*. It re-performs each recorded inference and compares the
-result against what was recorded.
-
-A checker MUST NOT search for a proof of its own. If a step is wrong, the
-answer is "this proof is invalid", never "but here is another proof". That
-separation is the whole point: a checker is simple enough to trust, and
-does not need to contain a reasoner.
-
-Three things a valid proof does **not** establish, and which a checker MUST
-NOT be read as asserting:
-
-1. **That the source facts are true.** A proof is an argument from the
-   given program, not about it.
-2. **Completeness.** That these conclusions follow does not mean no others
-   do.
-3. **That trusted steps hold.** §6 defines the steps a checker records as
-   obligations rather than verifying, and requires it to report them.
-
-## 3. The abstract proof model
-
-A **statement** is whatever the reasoner concludes: an RDF triple.
-
-A **step** is a quadruple:
-
-```text
-step = ( conclusion, justification, bindings, uses )
-```
-
-- `conclusion` is a statement.
-- `justification` is exactly one of the forms in §5 and §6.
-- `bindings` maps rule-variable names to terms. It is empty for every
-  justification but `rule` and `fact`.
-- `uses` is an ordered sequence of statements.
-
-A **proof document** is a set of steps together with a set of **claims** —
-the statements the document asserts were derived.
-
-A **source program** supplies, for the checker's purposes, exactly two
-things: its **rules**, numbered from 1 in source order, and its **given
-statements** (the facts written in the document rather than derived).
-
-## 4. Validity
-
-A proof document is **valid for a source program** when all four conditions
-hold. A checker MUST report the first failure precisely enough to locate
-it: the offending step's conclusion, the condition, and what was expected.
-
-**(C1) Resolution.** Every entry of every step's `uses` MUST resolve:
-it MUST be an **instance** of the conclusion of some step of the document,
-or of a given statement of the source program.
-
-A use must match a step conclusion or a given statement under the front end's term-matching rules.
-
-**(C2) Well-foundedness.** The relation "step *a* uses a statement that
-resolves to step *b*'s conclusion" MUST be acyclic. Equivalently, every step MUST have
-a finite rank, where a step's rank is one more than the greatest rank among
-the steps its `uses` resolve to, and a step whose `uses` all resolve to
-given statements has rank 1.
-
-This is the condition that makes the document a proof rather than a story.
-Without it a step could justify its own conclusion, directly or around a
-loop, and every other condition would still hold. Note that (C2) constrains
-the *derivation*, not the data: a cyclic graph may still have a well-founded proof if each step uses earlier conclusions.
-
-**(C3) Justification.** Every step MUST satisfy the condition its
-justification carries (§5, §6).
-
-**(C4) Coverage.** Every claim of the document MUST be an instance of the
-conclusion of some step, or of a given statement, in the sense of (C1).
-
-A document that satisfies (C1), (C2) and (C4), and whose every step is
-either checked or trusted, is **valid**. A checker MUST distinguish two
-successful verdicts: **checked**, when no step was merely trusted, and
-**checked with obligations**, when some were, and it MUST list them.
-
-## 5. Checked justifications
-
-### 5.1 `rule N`
-
-The step claims that rule `N` of the source program, used under the step's
-bindings, derives its conclusion from its `uses`.
-
-A checker MUST verify this by re-performing that one inference:
-
-1. Take rule `N` from the **source program** — not from any copy of the
-   rule carried in the proof document — and rename its variables apart. A
-   checker MUST fail when the source has no rule `N`.
-2. Bind each of the rule's variables named in `bindings` to the recorded
-   value.
-3. Require the rule's conclusion, so instantiated, to unify with the step's
-   conclusion.
-4. Require the rule's premises, so instantiated, to be equal in number to
-   `uses` and to unify with them pairwise, in order.
-
-Unification in steps 3 and 4 MUST share one environment, so a variable the
-bindings did not mention is still forced to take one consistent value
-across the conclusion and every premise. A checker MUST NOT accept a step
-whose bindings are insufficient to determine the inference but which
-happens to unify.
-
-Taking the rule from the source is what ties the proof to the program. A proof document MAY carry its own copy of a rule for readability; a checker MAY compare it with the source but MUST NOT substitute it for the source.
-
-### 5.2 `fact`
-
-The step claims its conclusion is given outright by the source. A checker MUST verify that the source contains a matching fact and that the step has no premises.
-
-### 5.3 `builtin`
-
-The step claims a built-in relation holds of its conclusion. A checker MUST
-re-evaluate the named built-in on the conclusion's own arguments and
-require it to succeed.
-
-A built-in is checkable exactly when re-evaluating it is a pure function of
-the conclusion. A built-in that consults anything else — the clock, the
-network, a random source, the rest of the fact set — is not, and MUST be
-treated as trusted (§6.1) rather than silently accepted.
-
-## 6. Trusted justifications
-
-A trusted justification is one whose truth a checker cannot re-establish
-from the proof document and the source program alone. Trust is not a
-loophole: each form below is enumerable, a checker MUST report every
-occurrence, and a caller MAY refuse a document that has any.
-
-### 6.1 Impure built-ins
-
-A `builtin` step whose relation is not a pure function of its conclusion
-(§5.3).
-
-## 7. Invalid justifications
-
-### 7.1 `unproven`
-
-A step whose justification is `unproven` records that the engine writing
-the proof could not justify the premise at all. It is not a trust
-obligation, because nothing is being trusted: it is an admission that the
-chain is broken.
-
-A checker MUST treat `unproven` as a failure of (C3). A document
-containing one is invalid.
-
-## 8. Syntax binding: Notation3 (`.n3`)
-
-| model | document |
+| Condition | Requirement |
 | --- | --- |
-| claims | the document's plain triples (no formula subject) |
-| step | a top-level triple whose subject is the quoted conclusion |
-| `bindings` | `pe:binding [ pe:var "N"; pe:value V ]` |
-| `uses` | `pe:uses { s p o }` |
-| `rule N` | `pe:rule N` |
-| `fact` | `pe:fact "label"`, naming the document |
-| `builtin` | `pe:builtin B` |
-| `unproven` | `pe:unproven "reason"` |
+| **C1: resolution** | Every used premise MUST resolve to a proof-step conclusion or a source assertion under the reader's matching rules. |
+| **C2: well-foundedness** | The resolved step-to-step `uses` relation MUST be acyclic. |
+| **C3: justification** | Each step MUST have a verified justification or an explicitly reported trust obligation. `unproven` fails this condition. |
+| **C4: coverage** | Every claim MUST resolve to a step conclusion or source assertion. |
 
-Given statements are the source document's own triples.
+The report records failures with their condition, affected conclusion, and detail. `checked` means no failures or obligations; `checked with obligations` means no failures but some justifications are trusted. `invalid` means at least one condition failed. Empty proofs can check with zero steps; this does not demonstrate that a source program derived anything.
+
+## 5. Verified justifications
+
+### 5.1 Rules
+
+For `pe:rule N`, the checker MUST take rule N from the supplied program, not an unverified copy in the proof. It checks that recorded bindings, premises, and conclusion form one application of that rule:
+
+1. Map source variable names to the rule's internal names and initialize a fresh binding environment.
+2. Require the number of `uses` entries to match the rule's premises.
+3. Match corresponding premises in order, sharing that environment.
+4. Require at least one rule-head triple to match the claimed conclusion under the same environment. For unquoting conclusions, resolve the graph supplied by the bindings first.
+
+Bindings may be partial; matching extends them consistently. Local graph binders retain their scopes. Blank placeholders in a rule head can match the existential witnesses produced by reasoning.
+
+Generated rules and query rules can be carried as `pe:rule { { ... } => { ... } }`, or with `<=`. Their rule statement MUST match an available source statement or a proof-step conclusion, up to the reader's renaming rules, before the application is checked. The reader recognizes reversed `log:implies`/`log:impliedBy` representations of the same rule.
+
+### 5.2 Facts
+
+For `pe:fact`, the checker MUST find the conclusion among the source assertions, their permitted instances, or equivalent rule statements. A fact step MUST have no premises; section 10 notes the missing enforcement in the current reader. Its file label is descriptive; source membership is what the checker verifies, not authentication of a document or authority.
+
+### 5.3 Built-ins
+
+For `pe:builtin`, the named relation MUST agree with the conclusion's predicate and hold when re-evaluated on its arguments. The current reader re-evaluates the conclusion's relation, with the predicate-agreement gap noted in section 10. Built-ins classified as context-dependent are instead obligations (section 6).
+
+## 6. Trust obligations
+
+The N3 reader currently trusts these built-in predicates because its checking policy treats them as depending on state outside the recorded triple:
+
+- `time:localTime`, `time:currentTime`, `time:gmTime`, and `math:random`;
+- `log:content`, `log:semantics`, `log:semanticsOrError`;
+- `log:collectAllIn`, `log:forAllIn`, `log:includes`, `log:notIncludes`, `log:conclusion`, `log:conjunction`;
+- `list:map`.
+
+This list is a checker classification, not a list of implemented reasoner built-ins: for example, `math:random` is not generated by the current evaluator. Even a closed `log:includes` test is classified as trusted by this policy. The generic checker also has abstract `absent` and `collected` kinds; the current N3 reader does not read them as separate justification predicates.
+
+Every obligation MUST be listed with its kind and conclusion. Acceptance records an assumption; it does not establish that the trusted relation holds. Consumers can reject reports with nonempty `obligations` even when `Report::valid()` is true. The CLI currently returns success for both successful verdicts.
+
+## 7. Unproven steps
+
+`pe:unproven` means the proof writer could not supply support. The checker MUST report it as a C3 failure. It is not a trusted assumption.
+
+## 8. N3 syntax and reading
+
+The proof vocabulary is `https://eyereasoner.github.io/pe#`.
+
+| Meaning | Syntax |
+| --- | --- |
+| Claim | A plain top-level triple with a non-formula subject and a non-`pe:` predicate |
+| Step conclusion | `{ s p o }` as the subject of its `pe:` statements |
+| Numbered rule | `pe:rule N` |
+| Carried rule | `pe:rule { { premises } => { conclusions } }` (or `<=`) |
+| Source assertion | `pe:fact "label"` |
+| Built-in relation | `pe:builtin predicate` |
+| Missing support | `pe:unproven "reason"` |
+| Binding | `pe:binding [ pe:var "name"; pe:value value ]` |
+| Premise | `pe:uses { s p o }`, repeated for multiple premises |
+
+The reader groups step metadata by its quoted subject, which must contain one triple. Uses also wrap one triple. It resolves recorded conclusions directly, allowing consistent local renaming in closed graph terms. Source facts containing free universals and written rule statements are matched as instances.
+
+Use the same parsed source `Document` when checking a merged program or one with relative IRIs; see [input handling](guide.md#proofs-and-their-limits) for the CLI/API distinction.
 
 ## 9. Reporting
 
-A checker MUST report, per document: the verdict, the number of steps
-checked, and every trust obligation with its kind and conclusion. On
-failure it MUST report the failing condition and the step.
-
-A checker SHOULD report counts per justification kind, because the ratio of
-checked to trusted steps is the honest measure of how much a proof
-establishes.
-
-The CLI names the proof document and source program, then reports the total
-steps, verified justifications, and trusted obligations:
+Reports contain step totals, verified-justification counts, counts by kind, obligations, and failures. An invalid proof can have verified justifications while failing premise resolution, cycle checking, or claim coverage. Failure counts are counts of diagnostics, not necessarily distinct steps.
 
 ```console
 $ eyeron --check-proof examples/proof/socrates.n3 examples/socrates.n3
@@ -219,14 +102,18 @@ Step kinds:
 All premises and claims are supported; no circular dependencies.
 ```
 
-`checked with obligations` lists every trusted conclusion under
-“Trust obligations (accepted without verifying their truth)”. Such steps
-are accepted assumptions, rather than verified justifications. An invalid
-proof lists each failure with its condition code, a description of that
-condition, and the affected conclusion. Verified counts concern step
-justifications; a proof can still be invalid because a premise is missing,
-a dependency is circular, or a claim is unsupported.
+Trusted conclusions are listed under “Trust obligations (accepted without verifying their truth)”; failures include readable C1–C4 labels. Invalid proofs return status 1. Parsing errors occur before a checking report exists.
 
-## 10. What eyeron's own proofs establish
+## 10. Implementation coverage and gaps
 
-`tests/proof_checking.rs` checks every packaged proof against the program that produced it. It re-performs rule steps, checks premises, and detects cycles. The suite covers examples with derived rules, property paths, built-ins, and shared proof steps.
+[tests/proof_checking.rs](../tests/proof_checking.rs) checks the packaged proofs, with explicitly listed generation gaps described in [the language reference](n3.md#proof-generation-gaps). Those expected failures remain part of the suite's passing count.
+
+The current N3 reader assumes the writer's shape more than a strict proof-schema validator would:
+
+- Multiple recognized justification predicates on a step are not rejected; the last recognized one wins.
+- A `pe:uses` object that does not wrap exactly one triple is ignored. Fact steps are not independently required to have an empty `uses` list; retained premises still undergo C1/C2 checks.
+- The reader does not require the `pe:builtin` IRI to equal the conclusion's predicate: it uses the former for trust classification and the latter for re-evaluation.
+- C2 checks the explicit `uses` edges. Matching the provenance of a carried rule is a separate check and does not add dependency edges to that graph.
+- Top-level statements with formula subjects are not counted as claims by this reader, as the syntax binding above specifies.
+
+These limitations matter when checking arbitrary externally authored proof documents. The checker is tested on Eyeron's generated syntax; full schema validation and stronger carried-rule dependency tracking remain implementation work.

@@ -1,104 +1,142 @@
 # Eyeron guide
 
-Eyeron turns facts and rules into conclusions you can inspect from a command line, a Rust application, or a browser. Rules are written in [Notation3](n3.md); the data they reason over may be N3, Turtle, TriG, N-Triples, N-Quads, or an RDF Message Log. A run emits the newly derived facts. See [how Eyeron reasons](reasoning.md) for the evaluation strategy, and [verifiable reasoning](verifiable-reasoning.md) for handing someone an answer they can check without running the engine.
+Build, run, embed, and test Eyeron here. The [language reference](n3.md) describes evaluation and built-ins; the [proof-checking contract](proof-checking.md) describes what verification establishes.
 
-## Building and running
+## Build and run
 
 ```bash
 cargo build --release
 ./target/release/eyeron examples/socrates.n3
-./target/release/eyeron rules.n3 facts.ttl
+./target/release/eyeron -c examples/dog-license.n3
 ```
 
-The executable chooses a syntax by file extension or by content sniffing for stdin and URLs. Multiple files merge into one document. Use `-` to read standard input. `eyeron --help` lists the CLI flags.
+The commands below use `eyeron`; use `./target/release/eyeron` if the executable is not on your `PATH`.
 
-## Proofs
+### Inputs and output
 
-`--proof` writes a proof as an N3 document: its claims, followed by steps that record the conclusion, why it holds, the bindings used, and its premises.
+| Input | Selection |
+| --- | --- |
+| Notation3 | `.n3`, or the default parser for stdin and unrecognized extensions |
+| Turtle / TriG | `.ttl` / `.trig` |
+| N-Triples / N-Quads | `.nt` / `.nq` |
+| RDF Message Log | Recognized by its `VERSION "*-messages"` or `@version` directive |
 
-To generate and check a proof in one invocation, use `-c` / `--prove-and-check`:
+Local files and HTTP(S) URLs are accepted. Files are parsed separately and merged, keeping their blank-node and quantifier scopes separate. Relative IRIs use each file's location or URL unless `--base-iri` overrides it. Use `-` for stdin, or supply options without files to read stdin; no arguments prints help. Ordinary stdin uses N3; `--rdf` selects Turtle for stdin and rejects unknown file extensions.
+
+```bash
+eyeron rules.n3 data.ttl
+eyeron --rdf - < data.ttl
+eyeron --base-iri https://example.org/ - < rules.n3
+```
+
+Ordinary output contains derived results. When `log:query` is present, its answers select the output. If results contain `log:outputString`, the printer emits those strings instead of triples. [Evaluation](n3.md#evaluation-and-output) explains the distinction between output and closure.
+
+### CLI options
+
+| Option | Behavior |
+| --- | --- |
+| `-a`, `--ast` | Print the parsed document and exit |
+| `-p`, `--proof` | Write an N3 proof document |
+| `-c`, `--prove-and-check` | Generate a proof in memory and print its checking report |
+| `--check-proof FILE` | Check a saved proof against the positional source inputs; `-` reads the proof from stdin |
+| `-r`, `--rdf` | Select RDF-compatible output and Turtle parsing for stdin; file extensions still select their own parser |
+| `--base-iri IRI`, `--base IRI` | Override the parser's base IRI |
+| `--max-backward-depth N` | Set backward search depth; default 32 |
+| `--stream-messages` | Process RDF Message Log payloads independently; requires `--rdf` |
+| `-s`, `--stream` | Compatibility flag; ordinary output still waits for reasoning to finish |
+| `-h`, `--help`; `-v`, `--version` | Print help or the version |
+
+`--proof-comments` aliases `--proof`. `--builtin`, `--store`, `--store-path`, `--store-clear`, and `--enforce-https` are accepted with warnings and have no implementation. `--prove-and-check` rejects `--ast`, `--check-proof`, and `--stream-messages` in the same invocation.
+
+Successful reasoning and valid proofs return status 0, including proofs with listed trust obligations. Parse, reasoning-limit, and invalid-proof errors return 1. A fired inference fuse prints its rule and matched instance and returns **65**. Library callers should inspect both completion status and `result.fuse`.
+
+## Proofs and their limits
 
 ```bash
 eyeron -c examples/dog-license.n3
+eyeron -p examples/socrates.n3 > /tmp/socrates.why.n3
+eyeron --check-proof /tmp/socrates.why.n3 examples/socrates.n3
 ```
 
-This prints the checking report. The generated proof stays in memory and is
-checked against the same parsed program, including merged input files and
-base IRIs. Exit status is 0 for a valid proof (including one with listed
-trust obligations) and 1 for an invalid proof or an error.
+A proof records derived claims and steps with their justifications, bindings, and premises. The checker checks those recorded steps, premise resolution, dependency cycles, and claim coverage. It assumes the source facts; a valid proof does not establish their truth or prove that every possible conclusion was found.
 
-| One step | Written as |
-| --- | --- |
-| Conclusion | `{ s p o }` as subject |
-| Reason | `pe:rule N`, `pe:fact`, `pe:builtin`, or `pe:unproven` |
-| Bindings | `pe:binding [ pe:var "X"; pe:value V ]` |
-| Premises | `pe:uses { s p o }` |
+`checked` means every step justification was verified. `checked with obligations` lists accepted assumptions whose truth was not verified, such as scoped collection or clock-dependent built-ins. An invalid proof lists the affected conclusion and the failed condition. See [the contract](proof-checking.md) for exact rules and implementation gaps.
 
-To save the proof for a separate check, use `--proof` and `--check-proof`:
+`-c` checks against the same parsed, merged program used to generate the proof, including its base IRIs. The current separate `--check-proof` path reparses concatenated source text as N3, without applying the CLI's format/base selection or separate-file scoping. Use `-c`, or the Rust `check_proof_document` API with a prepared `Document`, when those distinctions matter. Proof collection retains additional derivation data and costs memory.
+
+### Example: audit a decision
+
+[verifiable-decision.n3](../examples/verifiable-decision.n3) combines consent, privacy, and ethics assertions to permit a request. Generate and check its proof:
 
 ```bash
-cargo run --release -- --proof examples/socrates.n3 > socrates.why.n3
-cargo run --release -- --check-proof socrates.why.n3 examples/socrates.n3
+eyeron -p examples/verifiable-decision.n3 > /tmp/decision.why.n3
+eyeron --check-proof /tmp/decision.why.n3 examples/verifiable-decision.n3
 ```
 
-The checker re-performs each recorded inference against the source program, resolves premises, and detects cycles. See [proof checking](proof-checking.md) for its validity rules. A proof explains how a conclusion follows from the given facts; it does not establish that those facts are true. Proof collection costs memory, so enable it when you need the explanation.
+The report contains `checked: 11 steps, 11 verified, 0 trusted`. Proofs are N3 data, so another program can follow `pe:uses` and apply a policy to the assertions supporting a decision:
+
+```bash
+eyeron examples/verifiable-decision-audit.n3 \
+       examples/input/verifiable-decision-audit.n3
+```
+
+This bundled audit reads a saved copy of the decision proof and identifies its supporting authorities. Removing an authority from its quoted trust policy triggers an inference fuse. To audit the proof you just generated, replace the second input with `/tmp/decision.why.n3`.
 
 ## Rust library
-
-The high-level API parses N3, reasons, and returns derived output:
 
 ```rust
 fn main() -> eyeron::Result<()> {
     let output = eyeron::reason(r#"
-        @prefix : <http://example.org/> .
-        :Socrates a :Man .
-        { ?x a :Man . } => { ?x a :Mortal . } .
+        @prefix : <http://example.org/>.
+        :Socrates a :Human.
+        { ?x a :Human } => { ?x a :Mortal }.
     "#)?;
     assert!(output.contains(":Socrates a :Mortal"));
     Ok(())
 }
 ```
 
-For lower-level integration, use `parse_n3`, `parse_rdf12`, or `parse_rdf_message_log`, then `reason_document`. The `ReasonerResult` reports completion status, limits, statistics, derived facts, and proof data. `PreparedReasoner` parses an N3 program and builds its forward-rule index once for independent data batches.
+The convenience `reason(&str)` parses N3 or an RDF Message Log and returns serialized derived output; it returns an error for incomplete reasoning. For control over inputs and results, use `parse_n3`, `parse_n3_with_source`, `parse_rdf12`, or `parse_rdf_message_log`, then `reason_document(&document, &options)`.
 
-## Browser playground
+`ReasonerResult` contains `status`, `limits_reached`, `errors`, `statistics`, `derived`, `closure`, `proofs`, and `fuse`. Inspect these before treating the output as complete. `include_explicit` controls copies of input facts and their source labels; it defaults to true and is forced on for proof collection.
 
-The [playground](https://eyereasoner.github.io/eyeron/playground) runs Eyeron in WebAssembly and includes the packaged examples. To build and serve it locally:
+`PreparedReasoner::new(document)` takes an already parsed program and prepares its rules and agenda. Each `prepared.reason(&data, &options)` call evaluates an independent data batch. `proof_to_n3` writes proof text; `proof_check_n3::check_proof_document(&document, &proof)` checks it. The [source exports](../src/lib.rs) and `cargo doc --no-deps` provide the API details.
+
+## Browser
+
+The [playground](https://eyereasoner.github.io/eyeron/playground) uses the same Rust engine through WebAssembly. Its JS exports include `reason`, `reasonWithOptions`, `reasonWithData`, and `reasonWithDataReport`. `EyeronSession` prepares a program once for independent data batches; `reasonReport` adds statistics to its JSON result. See [wasm.rs](../src/wasm.rs) for signatures and error envelopes.
+
+To rebuild and serve it locally, install `wasm-pack` and the Rust `wasm32-unknown-unknown` target, then run:
 
 ```bash
 cargo playground
 python3 -m http.server
 ```
 
-Open <http://localhost:8000/playground.html>. The `cargo playground` alias rebuilds the committed `pkg/` Wasm package. Browser and native entry points use the same Rust reasoner.
+Open <http://localhost:8000/playground.html>. The build updates the committed `pkg/` artifacts. Browser APIs expose reasoning and proof generation; proof checking is currently exposed through the native CLI and Rust library.
 
-## Testing
+## Development and testing
 
 ```bash
 cargo test --release
 ./scripts/test-all
 cargo test --release --test examples
-cargo test --release --test playground
 cargo test --release --test proof_checking
+cargo doc --no-deps
 ```
 
-The suite includes unit and CLI tests, example outputs and proofs, the Notation3 conformance suite, and the local W3C RDF manifest mirror. `scripts/test-all` prints a grand total across test binaries. Graph output is compared by graph isomorphism so triple order and blank-node labels may differ, while missing or extra triples fail. Markdown reports are checked against their stable expected lines.
+`scripts/test-all` runs the release test suite and appends totals across test binaries, with separate counts for conformance cases inside suite checks. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness verifies saved proofs and explicitly records known generation gaps; its passing count includes those expected gaps.
 
-The example suite reasons over each example once and checks that single run against both of its goldens, the derived output and the proof. Proofs match their saved goldens exactly, except `age.n3`, whose current clock value and derived elapsed duration are normalized before comparison.
+The vendored N3 suite has two expectations adjusted for Eyeron's graph-term scoping; see [scope differences](n3.md#conformance-scope-differences). The [W3C runner notes](../tests/w3c_rdf/README.md) cover the local manifest mirror and EARL report. CI also runs native/Wasm Clippy, a Wasm build, rustdoc, and cargo-deny; its formatting job is advisory.
 
-## Repository map
-
-| Path | Responsibility |
+| Code | Responsibility |
 | --- | --- |
-| `src/ast.rs` | Shared terms, triples, rules, and documents |
-| `src/lexer.rs`, `src/parser.rs`, `src/rdf_compat.rs` | N3, Turtle, TriG and N-Triples/N-Quads front end |
-| `src/reasoner.rs` | Forward and backward reasoning |
-| `src/printing.rs` | N3, TriG and JSON output |
-| `src/proof_writer.rs` | Writes an N3 proof of what was derived |
-| `src/proof_check.rs`, `src/proof_check_n3.rs` | Proof checker and its N3 reader |
-| `src/main.rs` | Native CLI |
-| `src/wasm.rs` | Browser interface |
-| `examples/` | Inputs with expected outputs and proofs |
-| `tests/` | Unit, CLI, example, proof, and conformance tests |
+| `src/ast.rs` | `Term`, scoped `Graph`, triples, rules, documents |
+| `src/lexer.rs`, `src/parser.rs`, `src/rdf_compat.rs` | Input syntax and parser profiles |
+| `src/reasoner.rs` | Evaluation, built-ins, prepared programs, budgets |
+| `src/printing.rs` | N3/TriG serialization, RDF JSON, fuse reports |
+| `src/proof_writer.rs` | N3 proof generation |
+| `src/proof_check.rs`, `src/proof_check_n3.rs` | Generic checker and N3 reader |
+| `src/main.rs`, `src/wasm.rs` | Native CLI and browser entry points |
 
-Reasoning can hit resource limits. Library users should inspect completion status before treating a result as exhaustive. Eyeron is not a persistent graph store or a query service.
+For maintainers, `./release patch "message"` (or `minor`/`major`) pulls `main`, bumps the version, rebuilds the playground, commits all working-tree changes, and pushes `main` and an annotated tag. Run the checks beforehand; the script does not run tests. Tag pushes trigger the GitHub release workflow.

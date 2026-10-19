@@ -51,4 +51,4 @@ EYERON_W3C_RDF_OFFLINE=1       # redundant default; documents intent
 EYERON_W3C_RDF_CACHE_DIR=tests/w3c_rdf/rdf-tests
 ```
 
-Current milestone target: 1175/1175 tests passed across 12 manifests. Per-manifest expected counts are 70, 29, 87, 27, 48, 77, 313, 32, 74, 357, 26, and 35. Keep the populated `tests/w3c_rdf/rdf-tests/` directory under version control for fast, reproducible local runs.
+The aggregate check expects 1175 passing cases across 12 manifests. Per-manifest expected counts are 70, 29, 87, 27, 48, 77, 313, 32, 74, 357, 26, and 35. Keep the populated `tests/w3c_rdf/rdf-tests/` directory under version control for fast, reproducible local runs.

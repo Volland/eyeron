@@ -794,7 +794,7 @@ pub struct ReasonerOptions {
     /// Whether `ReasonerResult.explicit`/`.explicit_sources` should be
     /// populated at all. Both are a copy of every fact in `Document.facts`/
     /// `.fact_sources` (the caller already has that data -- `reason` only
-    /// borrows it), needed for proof reconstruction (`proof/n3.rs`) and for
+    /// borrows it), needed for proof reconstruction (`proof_writer.rs`) and for
     /// callers who want to distinguish explicit from derived facts without
     /// keeping their own copy of the input around. A caller that only reads
     /// `.derived` (`eyeron::reason(&str)`, the `log:conclusion` builtin's
