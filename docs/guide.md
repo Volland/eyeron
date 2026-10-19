@@ -46,7 +46,7 @@ Ordinary output contains derived results. When `log:query` is present, its answe
 | `-s`, `--stream` | Compatibility flag; ordinary output still waits for reasoning to finish |
 | `-h`, `--help`; `-v`, `--version` | Print help or the version |
 
-`--proof-comments` aliases `--proof`. `--builtin`, `--store`, `--store-path`, `--store-clear`, and `--enforce-https` are accepted with warnings and have no implementation. `--prove-and-check` rejects `--ast`, `--check-proof`, and `--stream-messages` in the same invocation.
+`--proof-comments` aliases `--proof`. `--builtin`, `--store`, `--store-path`, `--store-clear`, and `--enforce-https` are accepted with warnings and have no implementation. `--prove-and-check` rejects `--ast`, `--check-proof`, and `--stream-messages` in the same invocation. `--check-proof` also rejects `--stream-messages`.
 
 Successful reasoning and valid proofs return status 0, including proofs with listed trust obligations. Parse, reasoning-limit, and invalid-proof errors return 1. A fired inference fuse prints its rule and matched instance and returns **65**. Library callers should inspect both completion status and `result.fuse`.
 
@@ -60,9 +60,9 @@ eyeron --check-proof /tmp/socrates.why.n3 examples/socrates.n3
 
 A proof records derived claims and steps with their justifications, bindings, and premises. The checker checks those recorded steps, premise resolution, dependency cycles, and claim coverage. It assumes the source facts; a valid proof does not establish their truth or prove that every possible conclusion was found.
 
-`checked` means every step justification was verified. `checked with obligations` lists accepted assumptions whose truth was not verified, such as scoped collection or clock-dependent built-ins. An invalid proof lists the affected conclusion and the failed condition. See [the contract](proof-checking.md) for exact rules and implementation gaps.
+`checked` means every step justification was verified. `checked with obligations` lists accepted assumptions whose truth was not verified, such as scoped collection or clock-dependent built-ins. An invalid proof lists the affected conclusion and the failed condition. See [the contract](proof-checking.md) for exact rules and test coverage.
 
-`-c` checks against the same parsed, merged program used to generate the proof, including its base IRIs. The current separate `--check-proof` path reparses concatenated source text as N3, without applying the CLI's format/base selection or separate-file scoping. Use `-c`, or the Rust `check_proof_document` API with a prepared `Document`, when those distinctions matter. Proof collection retains additional derivation data and costs memory.
+`-c` and `--check-proof` use the same source loader: each input is parsed with its format and base IRI, then merged with separate file scopes. A saved proof can come from stdin when the sources are files; sources can come from stdin when the proof is a file. Supplying both through stdin is rejected. The Rust `check_proof_document` API accepts an already prepared `Document`. Proof collection retains additional derivation data and costs memory.
 
 ### Example: audit a decision
 
@@ -125,7 +125,7 @@ cargo test --release --test proof_checking
 cargo doc --no-deps
 ```
 
-`scripts/test-all` runs the release test suite and appends totals across test binaries, with separate counts for conformance cases inside suite checks. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness verifies saved proofs and explicitly records known generation gaps; its passing count includes those expected gaps.
+`scripts/test-all` runs the release test suite and appends totals across test binaries, with separate counts for conformance cases inside suite checks. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness requires every saved proof to check successfully.
 
 The vendored N3 suite has two expectations adjusted for Eyeron's graph-term scoping; see [scope differences](n3.md#conformance-scope-differences). The [W3C runner notes](../tests/w3c_rdf/README.md) cover the local manifest mirror and EARL report. CI also runs native/Wasm Clippy, a Wasm build, rustdoc, and cargo-deny; its formatting job is advisory.
 

@@ -726,7 +726,345 @@
       :adVendor :canRead :AudienceList .
   } .
 }
-  pe:unproven "no explicit fact, verified builtin, or backward proof was found".
+  pe:rule 1;
+  pe:binding
+    [ pe:var "PolicyClosure"; pe:value {
+        :ticket-99 :request :PublishCampaignAccessSummary .
+        :adVendor a :ExternalRecipient .
+        :marketingTeam a :InternalRecipient .
+        :AudienceList dpv:hasPersonalData dpv:PersonalData .
+        :ProductCatalog a :NonPersonalDataset .
+        :policy-internal a odrl:Set .
+        :policy-internal dpv:hasPurpose dpv:ServiceProvision .
+        :policy-internal odrl:permission _:b1 .
+        _:b1 odrl:assignee :marketingTeam .
+        _:b1 odrl:target :ProductCatalog .
+        _:b1 odrl:action odrl:read .
+        :policy-external a odrl:Set .
+        :policy-external dpv:hasPurpose dpv:Marketing .
+        :policy-external odrl:permission _:b2 .
+        _:b2 odrl:assignee :adVendor .
+        _:b2 odrl:target :AudienceList .
+        _:b2 odrl:action odrl:read .
+        {
+            ?Policy odrl:permission _:b3 .
+            _:b3 odrl:assignee :adVendor .
+            _:b3 odrl:target ?Dataset .
+            _:b3 odrl:action odrl:read .
+        } => {
+            :adVendor :canRead ?Dataset .
+        } .
+        {
+            ?Policy dpv:hasPurpose ?Purpose .
+            ?Policy odrl:permission _:b4 .
+            _:b4 odrl:assignee :adVendor .
+            _:b4 odrl:target ?Dataset .
+            _:b4 odrl:action odrl:read .
+        } => {
+            :adVendor :authorisedPurpose ?Purpose .
+        } .
+        {
+            ?Policy odrl:permission _:b5 .
+            _:b5 odrl:assignee :adVendor .
+            _:b5 odrl:target ?Dataset .
+            _:b5 odrl:action odrl:read .
+            ?Dataset dpv:hasPersonalData ?Category .
+        } => {
+            :adVendor :authorisedReadCategory ?Category .
+        } .
+        :adVendor :authorisedReadCategory dpv:PersonalData .
+        :marketingTeam :authorisedPurpose dpv:ServiceProvision .
+        :marketingTeam :canRead :ProductCatalog .
+        :adVendor :authorisedPurpose dpv:Marketing .
+        :adVendor :canRead :AudienceList .
+    } ],
+    [ pe:var "PolicyTheory"; pe:value {
+        :ticket-99 :request :PublishCampaignAccessSummary .
+        :adVendor a :ExternalRecipient .
+        :marketingTeam a :InternalRecipient .
+        :AudienceList dpv:hasPersonalData dpv:PersonalData .
+        :ProductCatalog a :NonPersonalDataset .
+        :policy-internal a odrl:Set .
+        :policy-internal dpv:hasPurpose dpv:ServiceProvision .
+        :policy-internal odrl:permission _:b1 .
+        _:b1 odrl:assignee :marketingTeam .
+        _:b1 odrl:target :ProductCatalog .
+        _:b1 odrl:action odrl:read .
+        :policy-external a odrl:Set .
+        :policy-external dpv:hasPurpose dpv:Marketing .
+        :policy-external odrl:permission _:b2 .
+        _:b2 odrl:assignee :adVendor .
+        _:b2 odrl:target :AudienceList .
+        _:b2 odrl:action odrl:read .
+        {
+            ?Policy odrl:permission _:b3 .
+            _:b3 odrl:assignee :adVendor .
+            _:b3 odrl:target ?Dataset .
+            _:b3 odrl:action odrl:read .
+        } => {
+            :adVendor :canRead ?Dataset .
+        } .
+        {
+            ?Policy dpv:hasPurpose ?Purpose .
+            ?Policy odrl:permission _:b4 .
+            _:b4 odrl:assignee :adVendor .
+            _:b4 odrl:target ?Dataset .
+            _:b4 odrl:action odrl:read .
+        } => {
+            :adVendor :authorisedPurpose ?Purpose .
+        } .
+        {
+            ?Policy odrl:permission _:b5 .
+            _:b5 odrl:assignee :adVendor .
+            _:b5 odrl:target ?Dataset .
+            _:b5 odrl:action odrl:read .
+            ?Dataset dpv:hasPersonalData ?Category .
+        } => {
+            :adVendor :authorisedReadCategory ?Category .
+        } .
+    } ];
+  pe:uses
+    {
+        :case :policyTheory {
+            :ticket-99 :request :PublishCampaignAccessSummary .
+            :adVendor a :ExternalRecipient .
+            :marketingTeam a :InternalRecipient .
+            :AudienceList dpv:hasPersonalData dpv:PersonalData .
+            :ProductCatalog a :NonPersonalDataset .
+            :policy-internal a odrl:Set .
+            :policy-internal dpv:hasPurpose dpv:ServiceProvision .
+            :policy-internal odrl:permission _:b1 .
+            _:b1 odrl:assignee :marketingTeam .
+            _:b1 odrl:target :ProductCatalog .
+            _:b1 odrl:action odrl:read .
+            :policy-external a odrl:Set .
+            :policy-external dpv:hasPurpose dpv:Marketing .
+            :policy-external odrl:permission _:b2 .
+            _:b2 odrl:assignee :adVendor .
+            _:b2 odrl:target :AudienceList .
+            _:b2 odrl:action odrl:read .
+            {
+                ?Policy odrl:permission _:b3 .
+                _:b3 odrl:assignee :adVendor .
+                _:b3 odrl:target ?Dataset .
+                _:b3 odrl:action odrl:read .
+            } => {
+                :adVendor :canRead ?Dataset .
+            } .
+            {
+                ?Policy dpv:hasPurpose ?Purpose .
+                ?Policy odrl:permission _:b4 .
+                _:b4 odrl:assignee :adVendor .
+                _:b4 odrl:target ?Dataset .
+                _:b4 odrl:action odrl:read .
+            } => {
+                :adVendor :authorisedPurpose ?Purpose .
+            } .
+            {
+                ?Policy odrl:permission _:b5 .
+                _:b5 odrl:assignee :adVendor .
+                _:b5 odrl:target ?Dataset .
+                _:b5 odrl:action odrl:read .
+                ?Dataset dpv:hasPersonalData ?Category .
+            } => {
+                :adVendor :authorisedReadCategory ?Category .
+            } .
+        } .
+    },
+    {
+        {
+            :ticket-99 :request :PublishCampaignAccessSummary .
+            :adVendor a :ExternalRecipient .
+            :marketingTeam a :InternalRecipient .
+            :AudienceList dpv:hasPersonalData dpv:PersonalData .
+            :ProductCatalog a :NonPersonalDataset .
+            :policy-internal a odrl:Set .
+            :policy-internal dpv:hasPurpose dpv:ServiceProvision .
+            :policy-internal odrl:permission _:b1 .
+            _:b1 odrl:assignee :marketingTeam .
+            _:b1 odrl:target :ProductCatalog .
+            _:b1 odrl:action odrl:read .
+            :policy-external a odrl:Set .
+            :policy-external dpv:hasPurpose dpv:Marketing .
+            :policy-external odrl:permission _:b2 .
+            _:b2 odrl:assignee :adVendor .
+            _:b2 odrl:target :AudienceList .
+            _:b2 odrl:action odrl:read .
+            {
+                ?Policy odrl:permission _:b3 .
+                _:b3 odrl:assignee :adVendor .
+                _:b3 odrl:target ?Dataset .
+                _:b3 odrl:action odrl:read .
+            } => {
+                :adVendor :canRead ?Dataset .
+            } .
+            {
+                ?Policy dpv:hasPurpose ?Purpose .
+                ?Policy odrl:permission _:b4 .
+                _:b4 odrl:assignee :adVendor .
+                _:b4 odrl:target ?Dataset .
+                _:b4 odrl:action odrl:read .
+            } => {
+                :adVendor :authorisedPurpose ?Purpose .
+            } .
+            {
+                ?Policy odrl:permission _:b5 .
+                _:b5 odrl:assignee :adVendor .
+                _:b5 odrl:target ?Dataset .
+                _:b5 odrl:action odrl:read .
+                ?Dataset dpv:hasPersonalData ?Category .
+            } => {
+                :adVendor :authorisedReadCategory ?Category .
+            } .
+        } log:conclusion {
+            :ticket-99 :request :PublishCampaignAccessSummary .
+            :adVendor a :ExternalRecipient .
+            :marketingTeam a :InternalRecipient .
+            :AudienceList dpv:hasPersonalData dpv:PersonalData .
+            :ProductCatalog a :NonPersonalDataset .
+            :policy-internal a odrl:Set .
+            :policy-internal dpv:hasPurpose dpv:ServiceProvision .
+            :policy-internal odrl:permission _:b1 .
+            _:b1 odrl:assignee :marketingTeam .
+            _:b1 odrl:target :ProductCatalog .
+            _:b1 odrl:action odrl:read .
+            :policy-external a odrl:Set .
+            :policy-external dpv:hasPurpose dpv:Marketing .
+            :policy-external odrl:permission _:b2 .
+            _:b2 odrl:assignee :adVendor .
+            _:b2 odrl:target :AudienceList .
+            _:b2 odrl:action odrl:read .
+            {
+                ?Policy odrl:permission _:b3 .
+                _:b3 odrl:assignee :adVendor .
+                _:b3 odrl:target ?Dataset .
+                _:b3 odrl:action odrl:read .
+            } => {
+                :adVendor :canRead ?Dataset .
+            } .
+            {
+                ?Policy dpv:hasPurpose ?Purpose .
+                ?Policy odrl:permission _:b4 .
+                _:b4 odrl:assignee :adVendor .
+                _:b4 odrl:target ?Dataset .
+                _:b4 odrl:action odrl:read .
+            } => {
+                :adVendor :authorisedPurpose ?Purpose .
+            } .
+            {
+                ?Policy odrl:permission _:b5 .
+                _:b5 odrl:assignee :adVendor .
+                _:b5 odrl:target ?Dataset .
+                _:b5 odrl:action odrl:read .
+                ?Dataset dpv:hasPersonalData ?Category .
+            } => {
+                :adVendor :authorisedReadCategory ?Category .
+            } .
+            :adVendor :authorisedReadCategory dpv:PersonalData .
+            :marketingTeam :authorisedPurpose dpv:ServiceProvision .
+            :marketingTeam :canRead :ProductCatalog .
+            :adVendor :authorisedPurpose dpv:Marketing .
+            :adVendor :canRead :AudienceList .
+        } .
+    }.
+
+{
+  {
+      :ticket-99 :request :PublishCampaignAccessSummary .
+      :adVendor a :ExternalRecipient .
+      :marketingTeam a :InternalRecipient .
+      :AudienceList dpv:hasPersonalData dpv:PersonalData .
+      :ProductCatalog a :NonPersonalDataset .
+      :policy-internal a odrl:Set .
+      :policy-internal dpv:hasPurpose dpv:ServiceProvision .
+      :policy-internal odrl:permission _:b1 .
+      _:b1 odrl:assignee :marketingTeam .
+      _:b1 odrl:target :ProductCatalog .
+      _:b1 odrl:action odrl:read .
+      :policy-external a odrl:Set .
+      :policy-external dpv:hasPurpose dpv:Marketing .
+      :policy-external odrl:permission _:b2 .
+      _:b2 odrl:assignee :adVendor .
+      _:b2 odrl:target :AudienceList .
+      _:b2 odrl:action odrl:read .
+      {
+          ?Policy odrl:permission _:b3 .
+          _:b3 odrl:assignee :adVendor .
+          _:b3 odrl:target ?Dataset .
+          _:b3 odrl:action odrl:read .
+      } => {
+          :adVendor :canRead ?Dataset .
+      } .
+      {
+          ?Policy dpv:hasPurpose ?Purpose .
+          ?Policy odrl:permission _:b4 .
+          _:b4 odrl:assignee :adVendor .
+          _:b4 odrl:target ?Dataset .
+          _:b4 odrl:action odrl:read .
+      } => {
+          :adVendor :authorisedPurpose ?Purpose .
+      } .
+      {
+          ?Policy odrl:permission _:b5 .
+          _:b5 odrl:assignee :adVendor .
+          _:b5 odrl:target ?Dataset .
+          _:b5 odrl:action odrl:read .
+          ?Dataset dpv:hasPersonalData ?Category .
+      } => {
+          :adVendor :authorisedReadCategory ?Category .
+      } .
+  } log:conclusion {
+      :ticket-99 :request :PublishCampaignAccessSummary .
+      :adVendor a :ExternalRecipient .
+      :marketingTeam a :InternalRecipient .
+      :AudienceList dpv:hasPersonalData dpv:PersonalData .
+      :ProductCatalog a :NonPersonalDataset .
+      :policy-internal a odrl:Set .
+      :policy-internal dpv:hasPurpose dpv:ServiceProvision .
+      :policy-internal odrl:permission _:b1 .
+      _:b1 odrl:assignee :marketingTeam .
+      _:b1 odrl:target :ProductCatalog .
+      _:b1 odrl:action odrl:read .
+      :policy-external a odrl:Set .
+      :policy-external dpv:hasPurpose dpv:Marketing .
+      :policy-external odrl:permission _:b2 .
+      _:b2 odrl:assignee :adVendor .
+      _:b2 odrl:target :AudienceList .
+      _:b2 odrl:action odrl:read .
+      {
+          ?Policy odrl:permission _:b3 .
+          _:b3 odrl:assignee :adVendor .
+          _:b3 odrl:target ?Dataset .
+          _:b3 odrl:action odrl:read .
+      } => {
+          :adVendor :canRead ?Dataset .
+      } .
+      {
+          ?Policy dpv:hasPurpose ?Purpose .
+          ?Policy odrl:permission _:b4 .
+          _:b4 odrl:assignee :adVendor .
+          _:b4 odrl:target ?Dataset .
+          _:b4 odrl:action odrl:read .
+      } => {
+          :adVendor :authorisedPurpose ?Purpose .
+      } .
+      {
+          ?Policy odrl:permission _:b5 .
+          _:b5 odrl:assignee :adVendor .
+          _:b5 odrl:target ?Dataset .
+          _:b5 odrl:action odrl:read .
+          ?Dataset dpv:hasPersonalData ?Category .
+      } => {
+          :adVendor :authorisedReadCategory ?Category .
+      } .
+      :adVendor :authorisedReadCategory dpv:PersonalData .
+      :marketingTeam :authorisedPurpose dpv:ServiceProvision .
+      :marketingTeam :canRead :ProductCatalog .
+      :adVendor :authorisedPurpose dpv:Marketing .
+      :adVendor :canRead :AudienceList .
+  } .
+}
+  pe:builtin log:conclusion.
 
 {
   {

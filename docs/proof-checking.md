@@ -4,7 +4,7 @@ This is the validity contract implemented by [proof_check.rs](../src/proof_check
 
 ## 1. Purpose
 
-A proof records derived claims and the steps supporting them. Checking asks whether those recorded steps establish their claims from the supplied source program. The requirements below use MUST and SHOULD for the contract; section 10 distinguishes current implementation gaps.
+A proof records derived claims and the steps supporting them. Checking asks whether those recorded steps establish their claims from the supplied source program. The requirements below use MUST and SHOULD for the contract; section 10 describes implementation coverage.
 
 ## 2. Checking and its scope
 
@@ -21,7 +21,7 @@ A step has a conclusion triple, one justification, bindings, and an ordered list
 | Condition | Requirement |
 | --- | --- |
 | **C1: resolution** | Every used premise MUST resolve to a proof-step conclusion or a source assertion under the reader's matching rules. |
-| **C2: well-foundedness** | The resolved step-to-step `uses` relation MUST be acyclic. |
+| **C2: well-foundedness** | The resolved step dependencies, including carried-rule provenance, MUST be acyclic. |
 | **C3: justification** | Each step MUST have a verified justification or an explicitly reported trust obligation. `unproven` fails this condition. |
 | **C4: coverage** | Every claim MUST resolve to a step conclusion or source assertion. |
 
@@ -40,15 +40,15 @@ For `pe:rule N`, the checker MUST take rule N from the supplied program, not an 
 
 Bindings may be partial; matching extends them consistently. Local graph binders retain their scopes. Blank placeholders in a rule head can match the existential witnesses produced by reasoning.
 
-Generated rules and query rules can be carried as `pe:rule { { ... } => { ... } }`, or with `<=`. Their rule statement MUST match an available source statement or a proof-step conclusion, up to the reader's renaming rules, before the application is checked. The reader recognizes reversed `log:implies`/`log:impliedBy` representations of the same rule.
+Generated rules and query rules can be carried as `pe:rule { { ... } => { ... } }`, or with `<=`. Their rule statement MUST match an available source statement or a proof-step conclusion, up to the reader's renaming rules, before the application is checked. When a proof step supplies that rule, it adds a dependency subject to C1/C2; a rule cannot justify its own derivation through a cycle. The reader recognizes reversed `log:implies`/`log:impliedBy` representations of the same rule.
 
 ### 5.2 Facts
 
-For `pe:fact`, the checker MUST find the conclusion among the source assertions, their permitted instances, or equivalent rule statements. A fact step MUST have no premises; section 10 notes the missing enforcement in the current reader. Its file label is descriptive; source membership is what the checker verifies, not authentication of a document or authority.
+For `pe:fact`, the checker MUST find the conclusion among the source assertions, their permitted instances, or equivalent rule statements. A fact step MUST have no premises. Its file label is descriptive; source membership is what the checker verifies, not authentication of a document or authority.
 
 ### 5.3 Built-ins
 
-For `pe:builtin`, the named relation MUST agree with the conclusion's predicate and hold when re-evaluated on its arguments. The current reader re-evaluates the conclusion's relation, with the predicate-agreement gap noted in section 10. Built-ins classified as context-dependent are instead obligations (section 6).
+For `pe:builtin`, the named relation MUST agree with the conclusion's predicate and hold when re-evaluated on its arguments. The reader rejects a predicate mismatch before either re-evaluation or trust classification. Built-ins classified as context-dependent are instead obligations (section 6).
 
 ## 6. Trust obligations
 
@@ -73,7 +73,7 @@ The proof vocabulary is `https://eyereasoner.github.io/pe#`.
 
 | Meaning | Syntax |
 | --- | --- |
-| Claim | A plain top-level triple with a non-formula subject and a non-`pe:` predicate |
+| Claim | A top-level statement with a non-`pe:` predicate, including formula subjects and rule assertions |
 | Step conclusion | `{ s p o }` as the subject of its `pe:` statements |
 | Numbered rule | `pe:rule N` |
 | Carried rule | `pe:rule { { premises } => { conclusions } }` (or `<=`) |
@@ -85,7 +85,9 @@ The proof vocabulary is `https://eyereasoner.github.io/pe#`.
 
 The reader groups step metadata by its quoted subject, which must contain one triple. Uses also wrap one triple. It resolves recorded conclusions directly, allowing consistent local renaming in closed graph terms. Source facts containing free universals and written rule statements are matched as instances.
 
-Use the same parsed source `Document` when checking a merged program or one with relative IRIs; see [input handling](guide.md#proofs-and-their-limits) for the CLI/API distinction.
+The `pe:` namespace is reserved for proof metadata. Every step must have exactly one recognized justification, and each premise must wrap exactly one triple. Rule numbers must be positive `xsd:integer` values; fact labels and unproven reasons must be strings; built-in names must be IRIs. Bindings require one nonempty string name and one value, may occur only on rule steps, and cannot repeat a variable name. Unknown predicates, malformed metadata, and unreferenced binding records are reader errors.
+
+Both CLI checking modes use the same parsed source `Document`, preserving input formats, base IRIs, and file scopes; see [input handling](guide.md#proofs-and-their-limits).
 
 ## 9. Reporting
 
@@ -104,16 +106,8 @@ All premises and claims are supported; no circular dependencies.
 
 Trusted conclusions are listed under “Trust obligations (accepted without verifying their truth)”; failures include readable C1–C4 labels. Invalid proofs return status 1. Parsing errors occur before a checking report exists.
 
-## 10. Implementation coverage and gaps
+## 10. Implementation coverage
 
-[tests/proof_checking.rs](../tests/proof_checking.rs) checks the packaged proofs, with explicitly listed generation gaps described in [the language reference](n3.md#proof-generation-gaps). Those expected failures remain part of the suite's passing count.
+[tests/proof_validation.rs](../tests/proof_validation.rs) covers malformed metadata, mislabeled built-ins, unsupported formula/rule claims, and cycles through carried-rule provenance. [CLI tests](../tests/cli_proof_check.rs) cover saved and generated proofs, source bases, separate input scopes, RDF formats, and stdin. Malformed proof metadata returns a reader error before a report is constructed; semantic C1–C4 failures produce an invalid report.
 
-The current N3 reader assumes the writer's shape more than a strict proof-schema validator would:
-
-- Multiple recognized justification predicates on a step are not rejected; the last recognized one wins.
-- A `pe:uses` object that does not wrap exactly one triple is ignored. Fact steps are not independently required to have an empty `uses` list; retained premises still undergo C1/C2 checks.
-- The reader does not require the `pe:builtin` IRI to equal the conclusion's predicate: it uses the former for trust classification and the latter for re-evaluation.
-- C2 checks the explicit `uses` edges. Matching the provenance of a carried rule is a separate check and does not add dependency edges to that graph.
-- Top-level statements with formula subjects are not counted as claims by this reader, as the syntax binding above specifies.
-
-These limitations matter when checking arbitrary externally authored proof documents. The checker is tested on Eyeron's generated syntax; full schema validation and stronger carried-rule dependency tracking remain implementation work.
+[tests/proof_checking.rs](../tests/proof_checking.rs) requires every packaged proof to check successfully. [Generation regressions](../tests/proof_generation.rs) also check fresh proofs, including quoted closures with overlapping variable names, backward premise ordering, and backtracking past incomplete or circular explanations.

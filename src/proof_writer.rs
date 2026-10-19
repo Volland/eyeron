@@ -109,6 +109,7 @@ pub(crate) fn collect_all_proof_entries<'a>(
 ) -> Vec<ProofEntry<'a>> {
     let mut collector = ProofCollector {
         derived_by_fact,
+        general_derived: derived_by_fact.values().flatten().copied().filter(|proof| !proof.fact.is_ground()).collect(),
         explicit_facts,
         explicit_sources,
         base_facts,
@@ -125,6 +126,9 @@ pub(crate) fn collect_all_proof_entries<'a>(
 
 struct ProofCollector<'a, 'b> {
     derived_by_fact: &'b BTreeMap<&'a Triple, Vec<&'a DerivedFact>>,
+    /// Open conclusions may be used at a more specific universal instance.
+    /// Keep these separately so ordinary ground proofs do not scan the store.
+    general_derived: Vec<&'a DerivedFact>,
     explicit_facts: &'a BTreeSet<Triple>,
     explicit_sources: &'a BTreeMap<Triple, SourceRef>,
     base_facts: &'a [Triple],
@@ -197,6 +201,24 @@ impl<'a> ProofCollector<'a, '_> {
             return;
         }
 
+        // Substitution can instantiate free universals inside a quoted
+        // closure. The resulting premise is no longer the earlier step's
+        // exact conclusion: replay that derivation at the same instance,
+        // including its premises and bindings, so the reader can check it
+        // without weakening resolution or trusting an unsupported fact.
+        if parent.is_none_or(|parent| parent.fact != *premise) {
+            for candidate in &self.general_derived {
+                if let Some(instance) = instantiate_derivation(candidate, premise) {
+                    let key = format!("rule:{}:{}", triple_key(&instance.fact), source_key(instance.rule.source.as_ref()));
+                    if !self.seen.insert(key) { return; }
+                    let premises = instance.premises.clone();
+                    self.entries.push(ProofEntry::Rule(std::borrow::Cow::Owned(instance)));
+                    for used in &premises { self.visit_premise(used, None); }
+                    return;
+                }
+            }
+        }
+
         // The explanation comes back as a flat set of steps rather than a
         // tree, so a premise used more than once is explained once.
         let mut steps = Vec::new();
@@ -251,6 +273,38 @@ impl<'a> ProofCollector<'a, '_> {
         };
         if self.seen.insert(key) { self.entries.push(entry); }
     }
+}
+
+/// Instantiate only free universal variables. Concrete blank nodes retain
+/// their identity, and `Graph::substitute` masks nested local quantifiers.
+fn instantiate_derivation(proof: &DerivedFact, target: &Triple) -> Option<DerivedFact> {
+    let mut bindings = BTreeMap::new();
+    if !crate::reasoner::match_triple(&proof.fact, target, &mut bindings) { return None; }
+    let mapping: BTreeMap<Term, Term> = bindings.into_iter()
+        .filter(|(name, _)| !name.starts_with("_:"))
+        .map(|(name, value)| (Term::var(name), value)).collect();
+    let substitute = |triple: &Triple| {
+        Graph { triples: vec![triple.clone()], ..Graph::default() }
+            .substitute(&mapping).triples.pop().expect("one triple")
+    };
+    let fact = substitute(&proof.fact);
+    // Matching is more permissive about blank patterns and literal values
+    // than an instance is. Require the substitution to produce the exact use.
+    if fact != *target { return None; }
+    let mut recorded: BTreeMap<Name, Term> = proof.bindings.iter().map(|(name, value)| {
+        let triple = substitute(&Triple::new(Term::iri("urn:eyeron:binding"), Term::iri("urn:eyeron:value"), value.clone()));
+        (name.clone(), triple.o)
+    }).collect();
+    for (variable, value) in &mapping {
+        let Term::Var(name) = variable else { unreachable!() };
+        recorded.entry(name.clone()).or_insert_with(|| value.clone());
+    }
+    Some(DerivedFact {
+        fact,
+        rule: proof.rule.clone(),
+        premises: proof.premises.iter().map(substitute).collect(),
+        bindings: recorded.into_iter().collect(),
+    })
 }
 
 /// The 1-based position of `rule` in the document's rule list — the number

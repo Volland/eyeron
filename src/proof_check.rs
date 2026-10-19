@@ -36,7 +36,7 @@ impl Kind {
     }
 }
 
-/// Where one `uses` entry resolves (§4 C1).
+/// Where a premise or carried-rule dependency resolves (§4 C1).
 pub enum Resolution {
     /// To the conclusion of this step, of which it is an instance.
     Step(usize),
@@ -112,7 +112,7 @@ pub trait Document {
     /// Step `index`'s conclusion, for reporting.
     fn describe(&self, index: usize) -> String;
 
-    /// Where each entry of step `index`'s `uses` resolves, in order.
+    /// Where the step's premises and carried-rule provenance resolve.
     fn dependencies(&self, index: usize) -> Vec<Resolution>;
 
     /// The statements the document asserts were derived, for reporting.
@@ -135,7 +135,7 @@ pub fn check(document: &dyn Document) -> Report {
         *report.counts.entry(document.kind(index).label()).or_insert(0) += 1;
     }
 
-    // (C1) every use resolves, and collect the step-to-step edges (C2)
+    // (C1) every dependency resolves, and collect the step-to-step edges (C2)
     // needs while we are here.
     let mut edges: Vec<Vec<usize>> = Vec::with_capacity(document.step_count());
     for index in 0..document.step_count() {

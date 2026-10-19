@@ -56,6 +56,12 @@ fn run() -> Result<()> {
         ));
     }
 
+    if opt.check_proof.is_some() && opt.stream_messages {
+        return Err(EyeronError::new("--check-proof cannot be combined with --stream-messages"));
+    }
+    if opt.check_proof.as_deref() == Some("-") && (opt.files.is_empty() || opt.files.iter().any(|file| file == "-")) {
+        return Err(EyeronError::new("stdin cannot supply both the source program and the proof"));
+    }
     if opt.stream {
         eprintln!(
             "warning: --stream is accepted; Eyeron currently emits after the fixpoint is reached"
@@ -66,34 +72,10 @@ fn run() -> Result<()> {
     }
     let sources = read_sources(&opt.files)?;
 
+    let capture_proof = opt.proof || opt.prove_and_check || opt.check_proof.is_some();
+    let merged = parse_sources(&opt, &sources, capture_proof)?;
     if let Some(path) = &opt.check_proof {
-        return run_check_proof(path, &sources);
-    }
-
-    let capture_proof = opt.proof || opt.prove_and_check;
-    let mut merged = Document::new();
-    for (label, text) in &sources {
-        let path_base = if label == "<stdin>" {
-            None
-        } else if is_http_url(label) {
-            Some(label.clone())
-        } else {
-            path_to_file_iri(label).ok()
-        };
-        let base = opt.base_iri.as_deref().or(path_base.as_deref());
-        let parsed = if is_rdf_message_log(text) {
-            parse_rdf_message_log(text, base)
-        } else if let Some(format) = rdf_format_for_source(label, opt.rdf)? {
-            parse_rdf12(text, base, format)
-        } else if capture_proof {
-            parse_n3_with_source(text, base, Some(label))
-        } else {
-            parse_n3(text, base)
-        };
-        match parsed {
-            Ok(doc) => merged.merge(doc),
-            Err(err) => return Err(EyeronError::new(err.with_source_location(text, label))),
-        }
+        return run_check_proof(path, &sources, &merged);
     }
 
     if opt.ast {
@@ -129,6 +111,36 @@ fn run() -> Result<()> {
         print!("{}", result_to_string(&merged.prefixes, &result.derived));
     }
     Ok(())
+}
+
+/// Parse source inputs identically for reasoning and saved-proof checking.
+fn parse_sources(opt: &CliOptions, sources: &[(String, String)], capture_proof: bool) -> Result<Document> {
+    let mut merged = Document::new();
+    for (label, text) in sources {
+        let path_base = if label == "<stdin>" {
+            None
+        } else if is_http_url(label) {
+            Some(label.clone())
+        } else {
+            path_to_file_iri(label).ok()
+        };
+        let base = opt.base_iri.as_deref().or(path_base.as_deref());
+        let parsed = if is_rdf_message_log(text) {
+            parse_rdf_message_log(text, base)
+        } else if let Some(format) = rdf_format_for_source(label, opt.rdf)? {
+            parse_rdf12(text, base, format)
+        } else if capture_proof {
+            parse_n3_with_source(text, base, Some(label))
+        } else {
+            parse_n3(text, base)
+        };
+        match parsed {
+            Ok(doc) => merged.merge(doc),
+            Err(err) => return Err(EyeronError::new(err.with_source_location(text, label))),
+        }
+    }
+
+    Ok(merged)
 }
 
 fn run_stream_messages(opt: &CliOptions) -> Result<()> {
@@ -344,12 +356,10 @@ fn read_text_source(source: &str) -> Result<String> {
 
 /// `--check-proof`: read the proof document and check it against the
 /// program, reporting the verdict the specification's §9 requires.
-fn run_check_proof(path: &str, sources: &[(String, String)]) -> Result<()> {
+fn run_check_proof(path: &str, sources: &[(String, String)], document: &Document) -> Result<()> {
     let proof = read_text_source(path)?;
-    let source: String = sources.iter().map(|(_, text)| text.as_str()).collect::<Vec<_>>().join("\n");
-    let label = sources.first().map(|(label, _)| label.clone()).unwrap_or_else(|| "<input>".to_string());
-
-    let report = eyeron::proof_check_n3::check_proof(&source, &proof, &label)?;
+    let report = eyeron::proof_check_n3::check_proof_document(document, &proof)
+        .map_err(|err| EyeronError::new(err.with_source_location(&proof, path)))?;
     report_proof_check(path, sources, &report)
 }
 

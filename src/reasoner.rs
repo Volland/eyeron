@@ -2931,8 +2931,12 @@ pub(crate) fn explain_backward_indexed(
     max_depth: usize,
     emit: &mut dyn FnMut(BackwardStep),
 ) -> bool {
-    let mut state = ExplainState { visited: HashSet::new(), done: HashSet::new(), budget: SearchBudget::for_proof(max_depth) };
-    explain_backward_inner(goal, facts, fact_index, given, rules, 0, max_depth, &mut state, emit)
+    let mut state = ExplainState { visited: HashSet::new(), done: HashSet::new(), done_log: Vec::new(), steps: Vec::new(), budget: SearchBudget::for_proof(max_depth) };
+    let explained = explain_backward_inner(goal, facts, fact_index, given, rules, 0, max_depth, &mut state);
+    if explained {
+        for step in state.steps { emit(step); }
+    }
+    explained
 }
 
 /// The index every fact in `facts` belongs to, for `explain_backward_indexed`.
@@ -2962,7 +2966,27 @@ struct ExplainState {
     visited: HashSet<String>,
     /// Ground goals already explained, so each is explained once.
     done: HashSet<String>,
+    /// Successful subgoals added by the current candidate. Failed candidates
+    /// roll these back along with their buffered steps.
+    done_log: Vec<String>,
+    /// One shared buffer keeps committing a deep derivation linear: each
+    /// candidate appends steps, and a failed candidate truncates them.
+    steps: Vec<BackwardStep>,
     budget: SearchBudget,
+}
+
+impl ExplainState {
+    fn finish(&mut self, key: String) {
+        if self.done.insert(key.clone()) {
+            self.done_log.push(key);
+        }
+    }
+
+    fn rollback(&mut self, checkpoint: usize) {
+        for key in self.done_log.drain(checkpoint..) {
+            self.done.remove(&key);
+        }
+    }
 }
 
 /// True iff this built-in's result depends on something outside the triple
@@ -3008,7 +3032,6 @@ fn explain_backward_inner(
     depth: usize,
     max_depth: usize,
     state: &mut ExplainState,
-    emit: &mut dyn FnMut(BackwardStep),
 ) -> bool {
     if depth > max_depth {
         state.budget.hit_limit(ReasonerLimit::BackwardDepth);
@@ -3031,9 +3054,9 @@ fn explain_backward_inner(
         // anything else in the closure was derived, and has to be explained
         // by the rule that derived it.
         if given.contains(fact) && match_triple(goal, fact, &mut local) {
-            emit(BackwardStep::Fact { fact: fact.clone() });
+            state.steps.push(BackwardStep::Fact { fact: fact.clone() });
             if reusable {
-                state.done.insert(key);
+                state.finish(key);
             }
             return true;
         }
@@ -3055,9 +3078,9 @@ fn explain_backward_inner(
         // fired; this walk runs afterwards, against a larger closure, so
         // its disagreement is not evidence of anything.
         if verified || builtin_reads_outside_its_triple(&goal.p) {
-            emit(BackwardStep::Builtin { fact: goal.clone(), builtin: goal.p.clone() });
+            state.steps.push(BackwardStep::Builtin { fact: goal.clone(), builtin: goal.p.clone() });
             if reusable {
-                state.done.insert(key);
+                state.finish(key);
             }
             return true;
         }
@@ -3091,33 +3114,30 @@ fn explain_backward_inner(
 
         let mut body_matches = Vec::new();
         let mut local_stack = state.visited.clone();
-        match_premise_at(&renamed.premise, facts, Some(fact_index), rules, 0, initial, depth + 1, &mut local_stack, &mut state.budget, &mut body_matches);
-        let Some(subst) = body_matches.into_iter().next() else { continue };
-        let subst = canonicalize_bindings(&subst);
-        let fact = resolve_pattern_triple(head, &subst);
-        let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
-        let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
-
-        // Recorded before the premises are explained, so a premise needing
-        // this same goal finds it done rather than starting it again.
-        if reusable {
-            state.done.insert(key.clone());
-        }
-        emit(BackwardStep::Rule(DerivedFact { fact, rule: Arc::new(renamed), premises: premises.clone(), bindings }));
-        for premise in &premises {
-            if !explain_backward_inner(premise, facts, fact_index, given, rules, depth + 1, max_depth, state, emit) {
-                emit(BackwardStep::Unproven {
-                    fact: premise.clone(),
-                    reason: if is_builtin_premise(premise) {
-                        "builtin evaluation did not verify this premise".to_string()
-                    } else {
-                        "no explicit fact, verified builtin, or backward proof was found".to_string()
-                    },
-                });
+        match_backward_premises_ordered(&renamed.premise, (0..renamed.premise.len()).collect(), facts, Some(fact_index), rules, initial, depth + 1, &mut local_stack, &mut state.budget, &mut body_matches);
+        for subst in body_matches {
+            let subst = canonicalize_bindings(&subst);
+            let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
+            let checkpoint = state.done_log.len();
+            let step_checkpoint = state.steps.len();
+            let fact = resolve_pattern_triple(head, &subst);
+            let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
+            state.steps.push(BackwardStep::Rule(DerivedFact { fact, rule: Arc::new(renamed.clone()), premises: premises.clone(), bindings }));
+            if !premises.iter().all(|premise| explain_backward_inner(premise, facts, fact_index, given, rules, depth + 1, max_depth, state)) {
+                state.rollback(checkpoint);
+                state.steps.truncate(step_checkpoint);
+                continue;
             }
+            // Commit only a complete explanation. In particular, the goal
+            // remains on the recursion stack until its premises are proved;
+            // marking it done earlier would accept circular support.
+            if reusable {
+                state.finish(key.clone());
+            }
+            explained = true;
+            break;
         }
-        explained = true;
-        break;
+        if explained { break; }
     }
     state.visited.remove(&key);
     explained
@@ -3238,36 +3258,32 @@ fn find_backward_proof_inner(
 
         let mut body_matches = Vec::new();
         let mut local_stack = visited.clone();
-        match_premise_at(
+        match_backward_premises_ordered(
             &renamed.premise,
+            (0..renamed.premise.len()).collect(),
             facts,
             Some(fact_index),
             rules,
-            0,
             initial,
             depth + 1,
             &mut local_stack,
             budget,
             &mut body_matches,
         );
-        let Some(subst) = body_matches.into_iter().next() else { continue; };
-        let subst = canonicalize_bindings(&subst);
-        let fact = resolve_pattern_triple(head, &subst);
-        let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
-        let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
-        let df = DerivedFact { fact, rule: Arc::new(renamed), premises: premises.clone(), bindings };
-        let children = premises
-            .iter()
-            .map(|prem| {
+        for subst in body_matches {
+            let subst = canonicalize_bindings(&subst);
+            let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
+            let children: Option<Vec<_>> = premises.iter().map(|prem| {
                 find_backward_proof_inner(prem, facts, fact_index, rules, depth + 1, max_depth, visited, budget, explained)
-                    .unwrap_or_else(|| ProofNode::Unproven {
-                        fact: prem.clone(),
-                        reason: "no explicit fact, verified builtin, or backward proof was found".to_string(),
-                    })
-            })
-            .collect();
-        out = Some(ProofNode::Rule { df, children });
-        break;
+            }).collect();
+            let Some(children) = children else { continue; };
+            let fact = resolve_pattern_triple(head, &subst);
+            let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
+            let df = DerivedFact { fact, rule: Arc::new(renamed.clone()), premises, bindings };
+            out = Some(ProofNode::Rule { df, children });
+            break;
+        }
+        if out.is_some() { break; }
     }
 
     visited.remove(&key);

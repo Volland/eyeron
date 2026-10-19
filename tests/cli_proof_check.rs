@@ -131,3 +131,143 @@ fn prove_and_check_rejects_conflicting_modes() {
         );
     }
 }
+
+struct FixtureDir(std::path::PathBuf);
+
+impl FixtureDir {
+    fn new() -> Self {
+        let stamp = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let path =
+            std::env::temp_dir().join(format!("eyeron-proof-cli-{}-{stamp}", std::process::id()));
+        std::fs::create_dir(&path).unwrap();
+        Self(path)
+    }
+
+    fn write(&self, name: &str, text: &str) -> String {
+        let path = self.0.join(name);
+        std::fs::write(&path, text).unwrap();
+        path.to_str().unwrap().to_string()
+    }
+}
+
+impl Drop for FixtureDir {
+    fn drop(&mut self) {
+        std::fs::remove_dir_all(&self.0).unwrap();
+    }
+}
+
+fn assert_separate_roundtrip(args: &[&str], source_stdin: Option<&[u8]>) {
+    let mut generation = vec!["-p"];
+    generation.extend_from_slice(args);
+    let proof = match source_stdin {
+        Some(input) => run_with_stdin(&generation, input),
+        None => run(&generation),
+    };
+    assert!(
+        proof.status.success(),
+        "{}",
+        String::from_utf8_lossy(&proof.stderr)
+    );
+    assert!(
+        !proof.stdout.is_empty(),
+        "the fixture must produce an actual proof"
+    );
+    let fixture = FixtureDir::new();
+    let saved = fixture.write(
+        "saved-proof.n3",
+        std::str::from_utf8(&proof.stdout).unwrap(),
+    );
+    let mut checking = vec!["--check-proof", saved.as_str()];
+    checking.extend_from_slice(args);
+    let checked = match source_stdin {
+        Some(input) => run_with_stdin(&checking, input),
+        None => run(&checking),
+    };
+    assert!(
+        checked.status.success(),
+        "{}\n{}",
+        String::from_utf8_lossy(&checked.stdout),
+        String::from_utf8_lossy(&checked.stderr)
+    );
+    assert!(
+        String::from_utf8_lossy(&checked.stdout).contains("checked:"),
+        "{}",
+        String::from_utf8_lossy(&checked.stdout)
+    );
+}
+
+#[test]
+fn saved_proofs_use_default_file_bases_and_explicit_base_overrides() {
+    let fixture = FixtureDir::new();
+    let source = fixture.write(
+        "relative.n3",
+        "<alice> <kind> <Human>. { ?x <kind> <Human> } => { ?x <kind> <Mortal> }.",
+    );
+    assert_separate_roundtrip(&[&source], None);
+    assert_separate_roundtrip(&["--base-iri", "https://example.org/", &source], None);
+}
+
+#[test]
+fn saved_proofs_preserve_separate_quantifier_and_prefix_scopes() {
+    assert_separate_roundtrip(
+        &[
+            "examples/shared-existential.n3",
+            "examples/explicit-existential-rule.n3",
+        ],
+        None,
+    );
+    let fixture = FixtureDir::new();
+    let first = fixture.write(
+        "first.n3",
+        "@prefix : <http://first.example/>. @forSome :x. :x :p :a. { ?s :p :a } => { ?s :q :a }.",
+    );
+    let second = fixture.write(
+        "second.n3",
+        "@prefix : <http://second.example/>. @forSome :x. :x :p :b. { ?s :p :b } => { ?s :q :b }.",
+    );
+    assert_separate_roundtrip(&[&first, &second], None);
+}
+
+#[test]
+fn saved_proofs_parse_rdf_formats_and_stdin_as_the_generator_does() {
+    let fixture = FixtureDir::new();
+    let rules = fixture.write("rules.n3", "@prefix : <http://example.org/>. @prefix log: <http://www.w3.org/2000/10/swap/log#>. { :g log:nameOf { :a :p :b } } => { :ok :holds true }.");
+    let nq = fixture.write("data.nq", "<http://example.org/a> <http://example.org/p> <http://example.org/b> <http://example.org/g> .");
+    let trig = fixture.write("data.trig", "<http://example.org/g> { <http://example.org/a> <http://example.org/p> <http://example.org/b> . }");
+    assert_separate_roundtrip(&[&rules, &nq], None);
+    assert_separate_roundtrip(&[&rules, &trig], None);
+    let simple_rules = fixture.write(
+        "simple.n3",
+        "@prefix : <http://example.org/>. { ?s :p :b } => { ?s :q :b }.",
+    );
+    let data = b"@prefix : <http://example.org/>. :a :p :b.";
+    assert_separate_roundtrip(&["--rdf", &simple_rules, "-"], Some(data));
+    assert_separate_roundtrip(
+        &["--base-iri", "https://example.org/", "-"],
+        Some(b"<a> <p> <b>. { ?s <p> <b> } => { ?s <q> <b> }."),
+    );
+}
+
+#[test]
+fn proof_and_source_cannot_both_read_stdin() {
+    for args in [
+        &["--check-proof", "-"][..],
+        &["--check-proof", "-", "-"][..],
+    ] {
+        let output = run(args);
+        assert_eq!(output.status.code(), Some(1));
+        assert!(String::from_utf8_lossy(&output.stderr).contains("stdin cannot supply both"));
+    }
+}
+
+#[test]
+fn malformed_proof_metadata_is_a_cli_error() {
+    let proof = b"@prefix pe: <https://eyereasoner.github.io/pe#>. @prefix : <http://example.org/>. { :a :p :b } pe:fact \"source\"; pe:uses {}.";
+    let output = run_with_stdin(&["--check-proof", "-", "examples/socrates.n3"], proof);
+    assert_eq!(output.status.code(), Some(1));
+    assert!(output.stdout.is_empty());
+    assert!(String::from_utf8_lossy(&output.stderr).contains("exactly one premise triple"));
+}
