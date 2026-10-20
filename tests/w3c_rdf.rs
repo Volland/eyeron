@@ -12,11 +12,11 @@ struct ManifestSpec {
     expected: usize,
 }
 
-const AGGREGATE_LABEL: &str = "w3c_rdf_13_all_manifests_1175_earl_report";
+const AGGREGATE_LABEL: &str = "w3c_rdf_13_all_manifests_1180_earl_report";
 
 const MANIFESTS: &[ManifestSpec] = &[
     ManifestSpec { label: "w3c_rdf_01_rdf11_n_triples_70", url: "https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-n-triples/manifest.ttl", expected: 70 },
-    ManifestSpec { label: "w3c_rdf_02_rdf12_n_triples_29", url: "https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/manifest.ttl", expected: 29 },
+    ManifestSpec { label: "w3c_rdf_02_rdf12_n_triples_34", url: "https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/manifest.ttl", expected: 34 },
     ManifestSpec { label: "w3c_rdf_03_rdf11_n_quads_87", url: "https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-n-quads/manifest.ttl", expected: 87 },
     ManifestSpec { label: "w3c_rdf_04_rdf12_n_quads_27", url: "https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-quads/syntax/manifest.ttl", expected: 27 },
     ManifestSpec { label: "w3c_rdf_05_rdf11_semantics_48", url: "https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-mt/manifest.ttl", expected: 48 },
@@ -107,9 +107,9 @@ fn main() {
     }
 
     if let Some(suite) = &suite {
-        match suite.check_total(AGGREGATE_LABEL, 1175) {
+        match suite.check_total(AGGREGATE_LABEL, 1180) {
             Ok(()) => {
-                print_result(&config, AGGREGATE_LABEL, TestOutcome::Ok, "1175 tests + EARL report");
+                print_result(&config, AGGREGATE_LABEL, TestOutcome::Ok, "1180 tests + EARL report");
                 passed += 1;
             }
             Err(err) => {

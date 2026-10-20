@@ -282,7 +282,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: directives are not allowed in N-Triples/N-Quads" ;
+    earl:info "rejected as expected: only VERSION directives are allowed in N-Triples/N-Quads" ;
   ] .
 
 [] a earl:Assertion ;
@@ -292,7 +292,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: directives are not allowed in N-Triples/N-Quads" ;
+    earl:info "rejected as expected: only VERSION directives are allowed in N-Triples/N-Quads" ;
   ] .
 
 [] a earl:Assertion ;
@@ -778,6 +778,16 @@
 [] a earl:Assertion ;
   earl:assertedBy <https://github.com/eyereasoner/eyeron> ;
   earl:subject <https://github.com/eyereasoner/eyeron> ;
+  earl:test <https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/ntriples-version-1.nt> ;
+  earl:result [
+    a earl:TestResult ;
+    earl:outcome earl:passed ;
+    earl:info "accepted as expected" ;
+  ] .
+
+[] a earl:Assertion ;
+  earl:assertedBy <https://github.com/eyereasoner/eyeron> ;
+  earl:subject <https://github.com/eyereasoner/eyeron> ;
   earl:test <https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/ntriples12-bad-syntax-01.nt> ;
   earl:result [
     a earl:TestResult ;
@@ -993,6 +1003,46 @@
     a earl:TestResult ;
     earl:outcome earl:passed ;
     earl:info "rejected as expected: rdf:langString and rdf:dirLangString require language-tag syntax" ;
+  ] .
+
+[] a earl:Assertion ;
+  earl:assertedBy <https://github.com/eyereasoner/eyeron> ;
+  earl:subject <https://github.com/eyereasoner/eyeron> ;
+  earl:test <https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/ntriples-version-bad-1.nt> ;
+  earl:result [
+    a earl:TestResult ;
+    earl:outcome earl:passed ;
+    earl:info "rejected as expected: N-Triples/N-Quads VERSION is case-sensitive" ;
+  ] .
+
+[] a earl:Assertion ;
+  earl:assertedBy <https://github.com/eyereasoner/eyeron> ;
+  earl:subject <https://github.com/eyereasoner/eyeron> ;
+  earl:test <https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/ntriples-version-bad-2.nt> ;
+  earl:result [
+    a earl:TestResult ;
+    earl:outcome earl:passed ;
+    earl:info "rejected as expected: N-Triples/N-Quads VERSION requires a double-quoted short string" ;
+  ] .
+
+[] a earl:Assertion ;
+  earl:assertedBy <https://github.com/eyereasoner/eyeron> ;
+  earl:subject <https://github.com/eyereasoner/eyeron> ;
+  earl:test <https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/ntriples-version-bad-3.nt> ;
+  earl:result [
+    a earl:TestResult ;
+    earl:outcome earl:passed ;
+    earl:info "rejected as expected: N-Triples/N-Quads VERSION requires a double-quoted short string" ;
+  ] .
+
+[] a earl:Assertion ;
+  earl:assertedBy <https://github.com/eyereasoner/eyeron> ;
+  earl:subject <https://github.com/eyereasoner/eyeron> ;
+  earl:test <https://w3c.github.io/rdf-tests/rdf/rdf12/rdf-n-triples/syntax/ntriples-version-bad-4.nt> ;
+  earl:result [
+    a earl:TestResult ;
+    earl:outcome earl:passed ;
+    earl:info "rejected as expected: only VERSION directives are allowed in N-Triples/N-Quads" ;
   ] .
 
 [] a earl:Assertion ;
@@ -1442,7 +1492,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: directives are not allowed in N-Triples/N-Quads" ;
+    earl:info "rejected as expected: only VERSION directives are allowed in N-Triples/N-Quads" ;
   ] .
 
 [] a earl:Assertion ;
@@ -1452,7 +1502,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: directives are not allowed in N-Triples/N-Quads" ;
+    earl:info "rejected as expected: only VERSION directives are allowed in N-Triples/N-Quads" ;
   ] .
 
 [] a earl:Assertion ;

@@ -28,7 +28,40 @@ pub fn parse_n3_with_source(input: &str, base_iri: Option<&str>, source_label: O
 
 pub(crate) fn parse_rdf12_compat(input: &str, base_iri: Option<&str>, format: RdfFormat) -> Result<Document> {
     let tokens = lex(input)?;
+    if matches!(format, RdfFormat::NTriples | RdfFormat::NQuads) {
+        validate_rdf_line_versions(input, &tokens)?;
+    }
     Parser::with_profile(tokens, base_iri, ParserProfile::rdf12(format)).parse_document()
+}
+
+fn validate_rdf_line_versions(input: &str, tokens: &[Token]) -> Result<()> {
+    for (idx, directive) in tokens.iter().enumerate() {
+        if !matches!(directive.kind, TokenKind::Version) {
+            continue;
+        }
+        // The shared N3/Turtle lexer folds directive case. Line syntaxes
+        // require the exact uppercase spelling and a double-quoted string.
+        if !input[directive.offset..].starts_with("VERSION") {
+            return Err(EyeronError::at("N-Triples/N-Quads VERSION is case-sensitive", directive.offset));
+        }
+        let value = &tokens[idx + 1];
+        if !matches!(value.kind, TokenKind::String(_)) {
+            return Err(EyeronError::at("N-Triples/N-Quads VERSION requires a double-quoted short string", value.offset));
+        }
+        if !input[directive.offset + "VERSION".len()..value.offset]
+            .chars().all(|c| matches!(c, ' ' | '\t'))
+        {
+            return Err(EyeronError::at("VERSION and its value must be on the same line", directive.offset));
+        }
+        let next = &tokens[idx + 2];
+        if (idx > 0 && !input[tokens[idx - 1].offset..directive.offset].contains(['\r', '\n']))
+            || (!matches!(next.kind, TokenKind::Eof)
+                && !input[value.offset..next.offset].contains(['\r', '\n']))
+        {
+            return Err(EyeronError::at("N-Triples/N-Quads VERSION must be on its own line", directive.offset));
+        }
+    }
+    Ok(())
 }
 
 fn line_starts(input: &str) -> Vec<usize> {
@@ -437,9 +470,13 @@ impl Parser {
     fn parse_rdf_line_document(&mut self) -> Result<()> {
         while !self.check(&TokenKind::Eof) {
             match self.peek_kind() {
+                TokenKind::Version => {
+                    self.parse_version()?;
+                    continue;
+                }
                 TokenKind::Dot => { return Err(EyeronError::at("empty N-Triples/N-Quads statement", self.peek().offset)); }
-                TokenKind::AtPrefix | TokenKind::Prefix | TokenKind::AtBase | TokenKind::Base | TokenKind::AtVersion | TokenKind::Version => {
-                    return Err(EyeronError::at("directives are not allowed in N-Triples/N-Quads", self.peek().offset));
+                TokenKind::AtPrefix | TokenKind::Prefix | TokenKind::AtBase | TokenKind::Base | TokenKind::AtVersion => {
+                    return Err(EyeronError::at("only VERSION directives are allowed in N-Triples/N-Quads", self.peek().offset));
                 }
                 _ => {}
             }
@@ -567,7 +604,7 @@ impl Parser {
                 TokenKind::String(_) | TokenKind::StringSingle(_) => {}
                 _ => return Err(EyeronError::at("RDF VERSION requires a short string", version_tok.offset)),
             }
-            if self.check(&TokenKind::Dot) { self.advance(); }
+            if !self.profile.is_line_syntax() && self.check(&TokenKind::Dot) { self.advance(); }
             return Ok(());
         }
         match version_tok.kind {

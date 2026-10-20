@@ -166,7 +166,7 @@ pub struct ManifestOutcome {
 /// One pass over every default manifest, writing the EARL report, with each
 /// manifest's own result kept alongside the total.
 ///
-/// The per-manifest checks and the aggregate check are the same 1175 cases
+/// The per-manifest checks and the aggregate check are the same 1180 cases
 /// counted two ways, so they are run once and read twice rather than run
 /// twice.
 pub struct SuiteRun {
@@ -176,6 +176,7 @@ pub struct SuiteRun {
 
 pub fn run_default_suite() -> Result<SuiteRun, String> {
     let (counts, manifests) = run_options_detailed(options_from_env(Vec::new(), true))?;
+    print_case_counts(&counts);
     Ok(SuiteRun { counts, manifests })
 }
 
@@ -202,8 +203,14 @@ pub fn refresh_requested() -> bool { env_flag("EYERON_W3C_RDF_REFRESH") }
 
 pub fn run_manifest_suite_for_test(label: &str, resource: &str, expected_total: usize) -> Result<(), String> {
     let counts = run_options(options_from_env(vec![resource.to_string()], false))?;
+    print_case_counts(&counts);
     let expected = if has_filter() { None } else { Some(expected_total) };
     assert_clean_counts(label, &counts, expected)
+}
+
+fn print_case_counts(counts: &Counts) {
+    // scripts/test-all counts these cases in place of the harness checks.
+    println!("w3c cases: {} run; {} OK", counts.total, counts.pass);
 }
 
 fn options_from_env(resources: Vec<String>, write_report: bool) -> Options {

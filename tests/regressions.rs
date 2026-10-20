@@ -4,6 +4,69 @@ use eyeron::{
 };
 
 #[test]
+fn rdf_line_version_announcements_preserve_the_triples_and_graphs() {
+    for (format, data) in [
+        (RdfFormat::NTriples, "<urn:s> <urn:p> \"Hello\"@en--ltr ."),
+        (RdfFormat::NQuads, "<urn:s> <urn:p> \"Hello\"@en--ltr <urn:g> ."),
+    ] {
+        let expected = parse_rdf12(data, None, format).unwrap();
+        for directive in [
+            "VERSION \"1.2\"\n",
+            "# header\n  VERSION\t\"1.2\" # announcement\n",
+            "VERSION\"1.2\"\r\nVERSION \"1.2\"\r\n",
+        ] {
+            let input = format!("{directive}{data}");
+            let parsed = parse_rdf12(&input, None, format).unwrap();
+            assert_eq!(parsed.facts, expected.facts, "{format:?}: {input}");
+        }
+        let after = format!("{data}\nVERSION \"1.2\"");
+        assert_eq!(parse_rdf12(&after, None, format).unwrap().facts, expected.facts);
+        assert!(parse_rdf12("VERSION \"1.2\"", None, format).unwrap().facts.is_empty());
+    }
+}
+
+#[test]
+fn rdf_line_versions_require_uppercase_double_quotes_and_a_separate_line() {
+    for format in [RdfFormat::NTriples, RdfFormat::NQuads] {
+        for invalid in [
+            "VERSION",
+            "version \"1.2\"",
+            "Version \"1.2\"",
+            "VERSION 1.2",
+            "VERSION <urn:version:1.2>",
+            "VERSION '1.2'",
+            "VERSION \"\"\"1.2\"\"\"",
+            "VERSION \"1.2\"@en",
+            "VERSION \"1.2\"^^<http://www.w3.org/2001/XMLSchema#string>",
+            "VERSION \"1.2\" .",
+            "@version \"1.2\" .",
+            "VERSION\n\"1.2\"",
+            "VERSION \"1.2\" <urn:s> <urn:p> <urn:o> .",
+            "<urn:s> <urn:p> <urn:o> . VERSION \"1.2\"",
+            "PREFIX ex: <urn:example:>",
+            "BASE <urn:base:>",
+        ] {
+            assert!(parse_rdf12(invalid, None, format).is_err(), "{format:?} accepted {invalid}");
+        }
+    }
+}
+
+#[test]
+fn turtle_trig_and_n3_version_keywords_remain_case_insensitive() {
+    let data = "<urn:s> <urn:p> <urn:o> .";
+    for keyword in ["version", "Version", "VERSION"] {
+        let input = format!("{keyword} \"1.2\"\n{data}");
+        for format in [RdfFormat::Turtle, RdfFormat::Trig] {
+            assert_eq!(
+                parse_rdf12(&input, None, format).unwrap().facts,
+                parse_rdf12(data, None, format).unwrap().facts,
+            );
+        }
+        assert_eq!(parse_n3(&input, None).unwrap().facts, parse_n3(data, None).unwrap().facts);
+    }
+}
+
+#[test]
 fn variable_predicate_rules_are_revisited_after_their_support_grows() {
     let doc = parse_n3_with_source(r#"
         @prefix : <http://example.org/>.

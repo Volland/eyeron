@@ -18,6 +18,6 @@ Run once online to populate or refresh this mirror:
 EYERON_W3C_RDF_REFRESH=1 cargo test --test w3c_rdf
 ```
 
-During refresh, the 12 per-manifest harness checks are reported as delegated and the aggregate pass performs the single online mirror refresh.
+During a full refresh, one aggregate pass refreshes the mirror and writes the EARL report; the per-manifest checks inspect that same run.
 
-To make the 1175-test suite fully local in the repository, commit the populated `rdf-tests/` directory.
+To make the 1180-test suite fully local in the repository, commit the populated `rdf-tests/` directory.

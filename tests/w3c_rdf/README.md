@@ -8,7 +8,7 @@ It is part of the normal `cargo test` suite. By default this test is **local-onl
 cargo test
 ```
 
-The integration test uses a custom harness and prints 13 libtest-style lines: 12 per-manifest checks named with their expected counts, plus `w3c_rdf_13_all_manifests_1175_earl_report`. The status words are colored when Cargo colors are enabled. This makes plain `cargo test` output more informative than a single opaque `w3c_rdf_manifests ... ok` line.
+The integration test uses a custom harness and prints 13 libtest-style lines: 12 per-manifest checks named with their expected counts, plus `w3c_rdf_13_all_manifests_1180_earl_report`. The status words are colored when Cargo colors are enabled. This makes plain `cargo test` output more informative than a single opaque `w3c_rdf_manifests ... ok` line.
 
 To run only the W3C RDF sweep:
 
@@ -29,7 +29,7 @@ EYERON_W3C_RDF_REFRESH=1 cargo test --test w3c_rdf
 ```
 
 After that, commit `tests/w3c_rdf/rdf-tests/`. Normal runs are then local.
-During `EYERON_W3C_RDF_REFRESH=1`, the 12 per-manifest harness lines are reported as delegated and the aggregate pass performs the single online mirror refresh. You can run a subset with a substring filter, for example `cargo test --test w3c_rdf rdf11_turtle`.
+During a full `EYERON_W3C_RDF_REFRESH=1` run, one aggregate pass refreshes the mirror and writes the EARL report; the per-manifest checks inspect that same run. You can run a local subset with a substring filter, for example `cargo test --test w3c_rdf rdf11_turtle`.
 
 
 The runner loads the 12 default RDF 1.1 / RDF 1.2 manifest roots from the local mirror, follows `mf:include`, executes syntax/eval/RDF-RDFS entailment cases through Eyeron's shared parser profiles, and the aggregate test writes:
@@ -51,4 +51,4 @@ EYERON_W3C_RDF_OFFLINE=1       # redundant default; documents intent
 EYERON_W3C_RDF_CACHE_DIR=tests/w3c_rdf/rdf-tests
 ```
 
-The aggregate check expects 1175 passing cases across 12 manifests. Per-manifest expected counts are 70, 29, 87, 27, 48, 77, 313, 32, 74, 357, 26, and 35. Keep the populated `tests/w3c_rdf/rdf-tests/` directory under version control for fast, reproducible local runs.
+The aggregate check expects 1180 passing cases across 12 manifests. Per-manifest expected counts are 70, 34, 87, 27, 48, 77, 313, 32, 74, 357, 26, and 35. Keep the populated `tests/w3c_rdf/rdf-tests/` directory under version control for fast, reproducible local runs.

@@ -1,35 +1,8 @@
 #!/usr/bin/env bash
 
-# Runs the full test suite (as `cargo test --release` does) and appends a
-# grand total across every test binary.
-#
-# Cargo has no built-in way to do this: `cargo test` runs each `[[test]]`
-# target (and the lib's own unit tests) as a *separate process*, and each
-# one prints its own "test result: ok. N passed; M failed; ..." line (or,
-# for the custom harnesses that print one line per packaged example —
-# tests/examples.rs — its own "n3 result: ..." line) with no
-# aggregation across binaries. This script runs the real
-# `cargo test --release`, shows its normal live output, then parses every
-# such summary line out of it and sums them into one final line.
-#
-# It also reports the much larger conformance-case counts several of those
-# "passed" checks each roll up (a single "13 passed" for the W3C RDF
-# harness represents running 1175 individual W3C RDF conformance cases,
-# for example) — otherwise the grand total looks far smaller than the
-# suite actually exercises.
-#
-# Two color-detection quirks, both fixed below:
-#   - Piping cargo's output into `tee` makes stdout/stderr look like a pipe,
-#     not a terminal, to every test binary's own --color=auto detection, so
-#     color mostly disappears once you wrap the command at all.
-#   - This project's own harnesses (tests/support/report.rs, src/w3c_rdf.rs,
-#     and tests/w3c_rdf/runner.rs)
-#     already check the CARGO_TERM_COLOR env var and default to colored
-#     output, so exporting CARGO_TERM_COLOR=always alone fixes those; the
-#     *default* libtest harness (lib unit tests, cli_help, cli_stream_
-#     messages, notation3_conformance, playground, regressions) needs the
-#     standard `-- --color always` flag instead, since it does not consult
-#     that env var itself.
+# Run the release suite with live output and one final count of individual tests.
+# Conformance cases replace their harness checks; W3C cases are counted once.
+# Keep colours through tee for Cargo, libtest, and the custom harnesses.
 
 set -uo pipefail
 
@@ -44,39 +17,45 @@ CARGO_TERM_COLOR=always cargo test --release --color always "$@" -- --color alwa
 status=${PIPESTATUS[0]}
 elapsed=$(awk -v s="$started" -v e="$(date +%s.%N)" 'BEGIN { printf "%.2f", e - s }')
 
-plain_log=$(sed -E 's/\x1b\[[0-9;]*m//g' "$log")
-
-# Sum every "<word> result: ok|FAILED. N passed; M failed; K ignored; ..."
-# line — the default libtest harness's and this project's own harness =
-# false runners' summaries all end in this phrase (just with a different
-# leading word), so no per-binary special-casing is needed.
-totals=$(echo "$plain_log" | awk '
-  /^[A-Za-z0-9_]+ result: / {
-    binaries++
-    for (i = 1; i <= NF; i++) {
-      if ($i == "passed;") passed += $(i - 1)
-      if ($i == "failed;") failed += $(i - 1)
-      if ($i == "ignored;") ignored += $(i - 1)
-    }
+# Each suite reports its own result. Expand suites that also report individual
+# conformance counts, rather than adding both the cases and their wrappers.
+totals=$(sed -E 's/\x1b\[[0-9;]*m//g' "$log" | awk '
+  /^w3c cases: / {
+    cases_run += $3
+    cases_ok += $5
+    expanded = 1
   }
-  END { printf "%d %d %d %d", passed, failed, ignored, binaries }
+  /notation3tests score: / {
+    score = $0
+    sub(/^.*\(/, "", score)
+    split(score, counts, /[\/)]/)
+    cases_ok += counts[1]
+    cases_run += counts[2]
+    expanded = 1
+  }
+  /^[A-Za-z0-9_]+ result: / {
+    passed = failed = 0
+    for (i = 1; i <= NF; i++) {
+      if ($i == "passed;") passed = $(i - 1)
+      if ($i == "failed;") failed = $(i - 1)
+    }
+    if (expanded) {
+      run += cases_run
+      ok += cases_ok
+    } else {
+      run += passed + failed
+      ok += passed
+    }
+    cases_run = cases_ok = expanded = 0
+  }
+  END { printf "%d %.1f", run, run ? 100 * ok / run : 0 }
 ')
-read -r passed failed ignored binaries <<< "$totals"
+read -r run percent_ok <<< "$totals"
 
-# A handful of those "passed" checks each roll up many individual
-# conformance cases, reported via their own known summary lines rather
-# than as separate top-level tests: the W3C RDF harness's
-# aggregate lines, and the vendored notation3tests suite's score line.
-cases=$(echo "$plain_log" | grep -oE '(_all_manifests_[0-9]+_earl_report ... ok \([0-9]+)|notation3tests score: [0-9.]+% \([0-9]+' | grep -oE '[0-9]+$' | awk '{ sum += $1 } END { print sum + 0 }')
-
-echo
-summary="Grand total: ok. ${passed} passed; ${failed} failed; ${ignored} ignored across ${binaries} test binaries (${elapsed}s)"
-if [[ "$status" -ne 0 || "$failed" -ne 0 ]]; then
-  summary="Grand total: FAILED. ${passed} passed; ${failed} failed; ${ignored} ignored across ${binaries} test binaries (${elapsed}s)"
+printf '\nTests: %s run; %s%% OK; %ss total' "$run" "$percent_ok" "$elapsed"
+if [[ "$status" -ne 0 ]]; then
+  printf ' (FAILED)'
 fi
-echo "=== ${summary} ==="
-if [[ "$cases" -gt 0 ]]; then
-  echo "=== (of which ${cases} are individual W3C RDF / notation3tests conformance cases rolled up into a handful of the checks above) ==="
-fi
+printf '\n'
 
 exit "$status"
