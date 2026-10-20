@@ -3,36 +3,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-:liouvillesConstant :inFamily :AllTranscendentals .
-:kempnerNumber :inFamily :AllTranscendentals .
-:champernowneC10 :inFamily :AllTranscendentals .
-:lemniscateConstant :inFamily :AllTranscendentals .
-:pow_2_sqrt2 :inFamily :GelfondSchneiderNumbers .
-:pow_2_sqrt2 :provedBy :GelfondSchneider .
-:pow_minus1_minusi :inFamily :GelfondSchneiderNumbers .
-:pow_minus1_minusi :provedBy :GelfondSchneider .
-:exp_sqrt2 :inFamily :LWExpNumbers .
-:exp_sqrt2 :provedBy :LindemannWeierstrass .
-:e :inFamily :AllTranscendentals .
-:pi :inFamily :AllTranscendentals .
-:gelfondsConstant :inFamily :GelfondSchneiderNumbers .
-:gelfondsConstant :provedBy :GelfondSchneider .
-:chaitinsOmega :inFamily :AlgorithmicRandomNumbers .
-:chaitinsOmega :provedBy :NoncomputableImpliesTranscendental .
-:liouvillesConstant :kind :Transcendental .
-:kempnerNumber :kind :Transcendental .
-:champernowneC10 :kind :Transcendental .
-:lemniscateConstant :kind :Transcendental .
-:pow_2_sqrt2 :inFamily :AllTranscendentals .
-:pow_minus1_minusi :inFamily :AllTranscendentals .
-:exp_sqrt2 :inFamily :AllTranscendentals .
-:gelfondsConstant :inFamily :AllTranscendentals .
-:chaitinsOmega :inFamily :AllTranscendentals .
-:pow_2_sqrt2 :kind :Transcendental .
-:pow_minus1_minusi :kind :Transcendental .
-:exp_sqrt2 :kind :Transcendental .
-:gelfondsConstant :kind :Transcendental .
-:chaitinsOmega :kind :Transcendental .
 :report :family :AllTranscendentals .
 :report :family :LWExpNumbers .
 :report :family :GelfondSchneiderNumbers .
@@ -172,341 +142,6 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
 :report :unknown :aperyZeta3 .
 :report :unknown :catalanG .
 
-{ :liouvillesConstant :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :LiouvilleNumbers ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :liouvillesConstant ];
-  pe:uses
-    { :liouvillesConstant :inFamily :LiouvilleNumbers . },
-    { :LiouvilleNumbers :subFamilyOf :AllTranscendentals . }.
-
-{ :liouvillesConstant :inFamily :LiouvilleNumbers . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :LiouvilleNumbers :subFamilyOf :AllTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :kempnerNumber :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :DigitExpansionTranscendentals ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :kempnerNumber ];
-  pe:uses
-    { :kempnerNumber :inFamily :DigitExpansionTranscendentals . },
-    { :DigitExpansionTranscendentals :subFamilyOf :AllTranscendentals . }.
-
-{ :kempnerNumber :inFamily :DigitExpansionTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :DigitExpansionTranscendentals :subFamilyOf :AllTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :champernowneC10 :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :DigitExpansionTranscendentals ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :champernowneC10 ];
-  pe:uses
-    { :champernowneC10 :inFamily :DigitExpansionTranscendentals . },
-    { :DigitExpansionTranscendentals :subFamilyOf :AllTranscendentals . }.
-
-{ :champernowneC10 :inFamily :DigitExpansionTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :lemniscateConstant :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :EllipticPeriodConstants ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :lemniscateConstant ];
-  pe:uses
-    { :lemniscateConstant :inFamily :EllipticPeriodConstants . },
-    { :EllipticPeriodConstants :subFamilyOf :AllTranscendentals . }.
-
-{ :lemniscateConstant :inFamily :EllipticPeriodConstants . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :EllipticPeriodConstants :subFamilyOf :AllTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pow_2_sqrt2 :inFamily :GelfondSchneiderNumbers . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "A"; pe:value :2 ],
-    [ pe:var "B"; pe:value :sqrt2 ],
-    [ pe:var "X"; pe:value :pow_2_sqrt2 ];
-  pe:uses
-    { :pow_2_sqrt2 :powBase :2 . },
-    { :pow_2_sqrt2 :powExp :sqrt2 . },
-    { :2 :kind :Algebraic . },
-    { :2 :kind :NotZeroOrOne . },
-    { :sqrt2 :kind :Algebraic . },
-    { :sqrt2 :kind :NonRational . }.
-
-{ :pow_2_sqrt2 :powBase :2 . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pow_2_sqrt2 :powExp :sqrt2 . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :2 :kind :Algebraic . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :2 :kind :NotZeroOrOne . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :sqrt2 :kind :Algebraic . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :sqrt2 :kind :NonRational . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pow_2_sqrt2 :provedBy :GelfondSchneider . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "A"; pe:value :2 ],
-    [ pe:var "B"; pe:value :sqrt2 ],
-    [ pe:var "X"; pe:value :pow_2_sqrt2 ];
-  pe:uses
-    { :pow_2_sqrt2 :powBase :2 . },
-    { :pow_2_sqrt2 :powExp :sqrt2 . },
-    { :2 :kind :Algebraic . },
-    { :2 :kind :NotZeroOrOne . },
-    { :sqrt2 :kind :Algebraic . },
-    { :sqrt2 :kind :NonRational . }.
-
-{ :pow_minus1_minusi :inFamily :GelfondSchneiderNumbers . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "A"; pe:value :minus1 ],
-    [ pe:var "B"; pe:value :minusi ],
-    [ pe:var "X"; pe:value :pow_minus1_minusi ];
-  pe:uses
-    { :pow_minus1_minusi :powBase :minus1 . },
-    { :pow_minus1_minusi :powExp :minusi . },
-    { :minus1 :kind :Algebraic . },
-    { :minus1 :kind :NotZeroOrOne . },
-    { :minusi :kind :Algebraic . },
-    { :minusi :kind :NonRational . }.
-
-{ :pow_minus1_minusi :powBase :minus1 . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pow_minus1_minusi :powExp :minusi . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :minus1 :kind :Algebraic . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :minus1 :kind :NotZeroOrOne . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :minusi :kind :Algebraic . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :minusi :kind :NonRational . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pow_minus1_minusi :provedBy :GelfondSchneider . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "A"; pe:value :minus1 ],
-    [ pe:var "B"; pe:value :minusi ],
-    [ pe:var "X"; pe:value :pow_minus1_minusi ];
-  pe:uses
-    { :pow_minus1_minusi :powBase :minus1 . },
-    { :pow_minus1_minusi :powExp :minusi . },
-    { :minus1 :kind :Algebraic . },
-    { :minus1 :kind :NotZeroOrOne . },
-    { :minusi :kind :Algebraic . },
-    { :minusi :kind :NonRational . }.
-
-{ :exp_sqrt2 :inFamily :LWExpNumbers . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "A"; pe:value :sqrt2 ],
-    [ pe:var "X"; pe:value :exp_sqrt2 ];
-  pe:uses
-    { :exp_sqrt2 :expArg :sqrt2 . },
-    { :sqrt2 :kind :Algebraic . },
-    { :sqrt2 :kind :NonZero . }.
-
-{ :exp_sqrt2 :expArg :sqrt2 . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :sqrt2 :kind :NonZero . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :exp_sqrt2 :provedBy :LindemannWeierstrass . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "A"; pe:value :sqrt2 ],
-    [ pe:var "X"; pe:value :exp_sqrt2 ];
-  pe:uses
-    { :exp_sqrt2 :expArg :sqrt2 . },
-    { :sqrt2 :kind :Algebraic . },
-    { :sqrt2 :kind :NonZero . }.
-
-{ :e :inFamily :AllTranscendentals . }
-  pe:rule 8;
-  pe:binding [ pe:var "X"; pe:value :e ];
-  pe:uses { :e :kind :Transcendental . }.
-
-{ :e :kind :Transcendental . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pi :inFamily :AllTranscendentals . }
-  pe:rule 8;
-  pe:binding [ pe:var "X"; pe:value :pi ];
-  pe:uses { :pi :kind :Transcendental . }.
-
-{ :pi :kind :Transcendental . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :gelfondsConstant :inFamily :GelfondSchneiderNumbers . }
-  pe:rule 6;
-  pe:binding
-    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
-    [ pe:var "X"; pe:value :gelfondsConstant ],
-    [ pe:var "Y"; pe:value :pow_minus1_minusi ];
-  pe:uses
-    { :gelfondsConstant :sameAs :pow_minus1_minusi . },
-    { :pow_minus1_minusi :inFamily :GelfondSchneiderNumbers . }.
-
-{ :gelfondsConstant :sameAs :pow_minus1_minusi . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :gelfondsConstant :provedBy :GelfondSchneider . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "T"; pe:value :GelfondSchneider ],
-    [ pe:var "X"; pe:value :gelfondsConstant ],
-    [ pe:var "Y"; pe:value :pow_minus1_minusi ];
-  pe:uses
-    { :gelfondsConstant :sameAs :pow_minus1_minusi . },
-    { :pow_minus1_minusi :provedBy :GelfondSchneider . }.
-
-{ :chaitinsOmega :inFamily :AlgorithmicRandomNumbers . }
-  pe:rule 3;
-  pe:binding [ pe:var "X"; pe:value :chaitinsOmega ];
-  pe:uses { :chaitinsOmega :tag :NonComputable . }.
-
-{ :chaitinsOmega :tag :NonComputable . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :chaitinsOmega :provedBy :NoncomputableImpliesTranscendental . }
-  pe:rule 3;
-  pe:binding [ pe:var "X"; pe:value :chaitinsOmega ];
-  pe:uses { :chaitinsOmega :tag :NonComputable . }.
-
-{ :liouvillesConstant :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :liouvillesConstant ];
-  pe:uses { :liouvillesConstant :inFamily :AllTranscendentals . }.
-
-{ :kempnerNumber :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :kempnerNumber ];
-  pe:uses { :kempnerNumber :inFamily :AllTranscendentals . }.
-
-{ :champernowneC10 :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :champernowneC10 ];
-  pe:uses { :champernowneC10 :inFamily :AllTranscendentals . }.
-
-{ :lemniscateConstant :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :lemniscateConstant ];
-  pe:uses { :lemniscateConstant :inFamily :AllTranscendentals . }.
-
-{ :pow_2_sqrt2 :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :pow_2_sqrt2 ];
-  pe:uses
-    { :pow_2_sqrt2 :inFamily :GelfondSchneiderNumbers . },
-    { :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }.
-
-{ :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pow_minus1_minusi :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :pow_minus1_minusi ];
-  pe:uses
-    { :pow_minus1_minusi :inFamily :GelfondSchneiderNumbers . },
-    { :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }.
-
-{ :exp_sqrt2 :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :LWExpNumbers ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :exp_sqrt2 ];
-  pe:uses
-    { :exp_sqrt2 :inFamily :LWExpNumbers . },
-    { :LWExpNumbers :subFamilyOf :AllTranscendentals . }.
-
-{ :LWExpNumbers :subFamilyOf :AllTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :gelfondsConstant :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :gelfondsConstant ];
-  pe:uses
-    { :gelfondsConstant :inFamily :GelfondSchneiderNumbers . },
-    { :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }.
-
-{ :chaitinsOmega :inFamily :AllTranscendentals . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "F"; pe:value :AlgorithmicRandomNumbers ],
-    [ pe:var "G"; pe:value :AllTranscendentals ],
-    [ pe:var "X"; pe:value :chaitinsOmega ];
-  pe:uses
-    { :chaitinsOmega :inFamily :AlgorithmicRandomNumbers . },
-    { :AlgorithmicRandomNumbers :subFamilyOf :AllTranscendentals . }.
-
-{ :AlgorithmicRandomNumbers :subFamilyOf :AllTranscendentals . }
-  pe:fact "transcendental-names-and-families.n3".
-
-{ :pow_2_sqrt2 :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :pow_2_sqrt2 ];
-  pe:uses { :pow_2_sqrt2 :inFamily :AllTranscendentals . }.
-
-{ :pow_minus1_minusi :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :pow_minus1_minusi ];
-  pe:uses { :pow_minus1_minusi :inFamily :AllTranscendentals . }.
-
-{ :exp_sqrt2 :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :exp_sqrt2 ];
-  pe:uses { :exp_sqrt2 :inFamily :AllTranscendentals . }.
-
-{ :gelfondsConstant :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :gelfondsConstant ];
-  pe:uses { :gelfondsConstant :inFamily :AllTranscendentals . }.
-
-{ :chaitinsOmega :kind :Transcendental . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :chaitinsOmega ];
-  pe:uses { :chaitinsOmega :inFamily :AllTranscendentals . }.
-
 { :report :family :AllTranscendentals . }
   pe:rule
     {
@@ -628,6 +263,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     [ pe:var "G"; pe:value :AllTranscendentals ];
   pe:uses { :LWExpNumbers :subFamilyOf :AllTranscendentals . }.
 
+{ :LWExpNumbers :subFamilyOf :AllTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { _:b1_4caa431a7d6aa268 :child :LWExpNumbers . }
   pe:rule
     {
@@ -675,6 +313,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
     [ pe:var "G"; pe:value :AllTranscendentals ];
   pe:uses { :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }.
+
+{ :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { _:b1_e184a2b60a3d4310 :child :GelfondSchneiderNumbers . }
   pe:rule
@@ -724,6 +365,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     [ pe:var "G"; pe:value :AllTranscendentals ];
   pe:uses { :LiouvilleNumbers :subFamilyOf :AllTranscendentals . }.
 
+{ :LiouvilleNumbers :subFamilyOf :AllTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { _:b1_5b32543b86e35ac3 :child :LiouvilleNumbers . }
   pe:rule
     {
@@ -771,6 +415,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     [ pe:var "F"; pe:value :DigitExpansionTranscendentals ],
     [ pe:var "G"; pe:value :AllTranscendentals ];
   pe:uses { :DigitExpansionTranscendentals :subFamilyOf :AllTranscendentals . }.
+
+{ :DigitExpansionTranscendentals :subFamilyOf :AllTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { _:b1_4ab652eb16f674a3 :child :DigitExpansionTranscendentals . }
   pe:rule
@@ -820,6 +467,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     [ pe:var "G"; pe:value :AllTranscendentals ];
   pe:uses { :AlgorithmicRandomNumbers :subFamilyOf :AllTranscendentals . }.
 
+{ :AlgorithmicRandomNumbers :subFamilyOf :AllTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { _:b1_c5e229eb71686832 :child :AlgorithmicRandomNumbers . }
   pe:rule
     {
@@ -867,6 +517,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     [ pe:var "F"; pe:value :EllipticPeriodConstants ],
     [ pe:var "G"; pe:value :AllTranscendentals ];
   pe:uses { :EllipticPeriodConstants :subFamilyOf :AllTranscendentals . }.
+
+{ :EllipticPeriodConstants :subFamilyOf :AllTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { _:b1_3a9669b057345464 :child :EllipticPeriodConstants . }
   pe:rule
@@ -917,6 +570,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :e :kind :Transcendental . },
     { :e rdfs:label "e" . }.
 
+{ :e :kind :Transcendental . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { :e rdfs:label "e" . }
   pe:fact "transcendental-names-and-families.n3".
 
@@ -936,6 +592,9 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :pi :kind :Transcendental . },
     { :pi rdfs:label "pi" . }.
+
+{ :pi :kind :Transcendental . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { :pi rdfs:label "pi" . }
   pe:fact "transcendental-names-and-families.n3".
@@ -957,6 +616,24 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :liouvillesConstant :kind :Transcendental . },
     { :liouvillesConstant rdfs:label "Liouville's constant L" . }.
 
+{ :liouvillesConstant :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :liouvillesConstant ];
+  pe:uses { :liouvillesConstant :inFamily :AllTranscendentals . }.
+
+{ :liouvillesConstant :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :LiouvilleNumbers ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :liouvillesConstant ];
+  pe:uses
+    { :liouvillesConstant :inFamily :LiouvilleNumbers . },
+    { :LiouvilleNumbers :subFamilyOf :AllTranscendentals . }.
+
+{ :liouvillesConstant :inFamily :LiouvilleNumbers . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { :liouvillesConstant rdfs:label "Liouville's constant L" . }
   pe:fact "transcendental-names-and-families.n3".
 
@@ -976,6 +653,24 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :kempnerNumber :kind :Transcendental . },
     { :kempnerNumber rdfs:label "Kempner number (binary series)" . }.
+
+{ :kempnerNumber :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :kempnerNumber ];
+  pe:uses { :kempnerNumber :inFamily :AllTranscendentals . }.
+
+{ :kempnerNumber :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :DigitExpansionTranscendentals ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :kempnerNumber ];
+  pe:uses
+    { :kempnerNumber :inFamily :DigitExpansionTranscendentals . },
+    { :DigitExpansionTranscendentals :subFamilyOf :AllTranscendentals . }.
+
+{ :kempnerNumber :inFamily :DigitExpansionTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { :kempnerNumber rdfs:label "Kempner number (binary series)" . }
   pe:fact "transcendental-names-and-families.n3".
@@ -997,6 +692,24 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :champernowneC10 :kind :Transcendental . },
     { :champernowneC10 rdfs:label "Champernowne constant C_10" . }.
 
+{ :champernowneC10 :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :champernowneC10 ];
+  pe:uses { :champernowneC10 :inFamily :AllTranscendentals . }.
+
+{ :champernowneC10 :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :DigitExpansionTranscendentals ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :champernowneC10 ];
+  pe:uses
+    { :champernowneC10 :inFamily :DigitExpansionTranscendentals . },
+    { :DigitExpansionTranscendentals :subFamilyOf :AllTranscendentals . }.
+
+{ :champernowneC10 :inFamily :DigitExpansionTranscendentals . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { :champernowneC10 rdfs:label "Champernowne constant C_10" . }
   pe:fact "transcendental-names-and-families.n3".
 
@@ -1016,6 +729,24 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :lemniscateConstant :kind :Transcendental . },
     { :lemniscateConstant rdfs:label "Lemniscate constant (varpi)" . }.
+
+{ :lemniscateConstant :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :lemniscateConstant ];
+  pe:uses { :lemniscateConstant :inFamily :AllTranscendentals . }.
+
+{ :lemniscateConstant :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :EllipticPeriodConstants ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :lemniscateConstant ];
+  pe:uses
+    { :lemniscateConstant :inFamily :EllipticPeriodConstants . },
+    { :EllipticPeriodConstants :subFamilyOf :AllTranscendentals . }.
+
+{ :lemniscateConstant :inFamily :EllipticPeriodConstants . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { :lemniscateConstant rdfs:label "Lemniscate constant (varpi)" . }
   pe:fact "transcendental-names-and-families.n3".
@@ -1037,6 +768,53 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :pow_2_sqrt2 :kind :Transcendental . },
     { :pow_2_sqrt2 rdfs:label "2^(sqrt(2))" . }.
 
+{ :pow_2_sqrt2 :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :pow_2_sqrt2 ];
+  pe:uses { :pow_2_sqrt2 :inFamily :AllTranscendentals . }.
+
+{ :pow_2_sqrt2 :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :pow_2_sqrt2 ];
+  pe:uses
+    { :pow_2_sqrt2 :inFamily :GelfondSchneiderNumbers . },
+    { :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }.
+
+{ :pow_2_sqrt2 :inFamily :GelfondSchneiderNumbers . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value :2 ],
+    [ pe:var "B"; pe:value :sqrt2 ],
+    [ pe:var "X"; pe:value :pow_2_sqrt2 ];
+  pe:uses
+    { :pow_2_sqrt2 :powBase :2 . },
+    { :pow_2_sqrt2 :powExp :sqrt2 . },
+    { :2 :kind :Algebraic . },
+    { :2 :kind :NotZeroOrOne . },
+    { :sqrt2 :kind :Algebraic . },
+    { :sqrt2 :kind :NonRational . }.
+
+{ :pow_2_sqrt2 :powBase :2 . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :pow_2_sqrt2 :powExp :sqrt2 . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :2 :kind :Algebraic . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :2 :kind :NotZeroOrOne . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :sqrt2 :kind :Algebraic . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :sqrt2 :kind :NonRational . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { :pow_2_sqrt2 rdfs:label "2^(sqrt(2))" . }
   pe:fact "transcendental-names-and-families.n3".
 
@@ -1056,6 +834,53 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :pow_minus1_minusi :kind :Transcendental . },
     { :pow_minus1_minusi rdfs:label "(-1)^(-i)" . }.
+
+{ :pow_minus1_minusi :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :pow_minus1_minusi ];
+  pe:uses { :pow_minus1_minusi :inFamily :AllTranscendentals . }.
+
+{ :pow_minus1_minusi :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :pow_minus1_minusi ];
+  pe:uses
+    { :pow_minus1_minusi :inFamily :GelfondSchneiderNumbers . },
+    { :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }.
+
+{ :pow_minus1_minusi :inFamily :GelfondSchneiderNumbers . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value :minus1 ],
+    [ pe:var "B"; pe:value :minusi ],
+    [ pe:var "X"; pe:value :pow_minus1_minusi ];
+  pe:uses
+    { :pow_minus1_minusi :powBase :minus1 . },
+    { :pow_minus1_minusi :powExp :minusi . },
+    { :minus1 :kind :Algebraic . },
+    { :minus1 :kind :NotZeroOrOne . },
+    { :minusi :kind :Algebraic . },
+    { :minusi :kind :NonRational . }.
+
+{ :pow_minus1_minusi :powBase :minus1 . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :pow_minus1_minusi :powExp :minusi . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :minus1 :kind :Algebraic . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :minus1 :kind :NotZeroOrOne . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :minusi :kind :Algebraic . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :minusi :kind :NonRational . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { :pow_minus1_minusi rdfs:label "(-1)^(-i)" . }
   pe:fact "transcendental-names-and-families.n3".
@@ -1077,6 +902,37 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :exp_sqrt2 :kind :Transcendental . },
     { :exp_sqrt2 rdfs:label "e^(sqrt(2))" . }.
 
+{ :exp_sqrt2 :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :exp_sqrt2 ];
+  pe:uses { :exp_sqrt2 :inFamily :AllTranscendentals . }.
+
+{ :exp_sqrt2 :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :LWExpNumbers ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :exp_sqrt2 ];
+  pe:uses
+    { :exp_sqrt2 :inFamily :LWExpNumbers . },
+    { :LWExpNumbers :subFamilyOf :AllTranscendentals . }.
+
+{ :exp_sqrt2 :inFamily :LWExpNumbers . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "A"; pe:value :sqrt2 ],
+    [ pe:var "X"; pe:value :exp_sqrt2 ];
+  pe:uses
+    { :exp_sqrt2 :expArg :sqrt2 . },
+    { :sqrt2 :kind :Algebraic . },
+    { :sqrt2 :kind :NonZero . }.
+
+{ :exp_sqrt2 :expArg :sqrt2 . }
+  pe:fact "transcendental-names-and-families.n3".
+
+{ :sqrt2 :kind :NonZero . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { :exp_sqrt2 rdfs:label "e^(sqrt(2))" . }
   pe:fact "transcendental-names-and-families.n3".
 
@@ -1097,6 +953,34 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :gelfondsConstant :kind :Transcendental . },
     { :gelfondsConstant rdfs:label "Gelfond's constant e^pi" . }.
 
+{ :gelfondsConstant :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :gelfondsConstant ];
+  pe:uses { :gelfondsConstant :inFamily :AllTranscendentals . }.
+
+{ :gelfondsConstant :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :gelfondsConstant ];
+  pe:uses
+    { :gelfondsConstant :inFamily :GelfondSchneiderNumbers . },
+    { :GelfondSchneiderNumbers :subFamilyOf :AllTranscendentals . }.
+
+{ :gelfondsConstant :inFamily :GelfondSchneiderNumbers . }
+  pe:rule 6;
+  pe:binding
+    [ pe:var "F"; pe:value :GelfondSchneiderNumbers ],
+    [ pe:var "X"; pe:value :gelfondsConstant ],
+    [ pe:var "Y"; pe:value :pow_minus1_minusi ];
+  pe:uses
+    { :gelfondsConstant :sameAs :pow_minus1_minusi . },
+    { :pow_minus1_minusi :inFamily :GelfondSchneiderNumbers . }.
+
+{ :gelfondsConstant :sameAs :pow_minus1_minusi . }
+  pe:fact "transcendental-names-and-families.n3".
+
 { :gelfondsConstant rdfs:label "Gelfond's constant e^pi" . }
   pe:fact "transcendental-names-and-families.n3".
 
@@ -1116,6 +1000,29 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :chaitinsOmega :kind :Transcendental . },
     { :chaitinsOmega rdfs:label "Chaitin's Omega (for a fixed universal machine)" . }.
+
+{ :chaitinsOmega :kind :Transcendental . }
+  pe:rule 2;
+  pe:binding [ pe:var "X"; pe:value :chaitinsOmega ];
+  pe:uses { :chaitinsOmega :inFamily :AllTranscendentals . }.
+
+{ :chaitinsOmega :inFamily :AllTranscendentals . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "F"; pe:value :AlgorithmicRandomNumbers ],
+    [ pe:var "G"; pe:value :AllTranscendentals ],
+    [ pe:var "X"; pe:value :chaitinsOmega ];
+  pe:uses
+    { :chaitinsOmega :inFamily :AlgorithmicRandomNumbers . },
+    { :AlgorithmicRandomNumbers :subFamilyOf :AllTranscendentals . }.
+
+{ :chaitinsOmega :inFamily :AlgorithmicRandomNumbers . }
+  pe:rule 3;
+  pe:binding [ pe:var "X"; pe:value :chaitinsOmega ];
+  pe:uses { :chaitinsOmega :tag :NonComputable . }.
+
+{ :chaitinsOmega :tag :NonComputable . }
+  pe:fact "transcendental-names-and-families.n3".
 
 { :chaitinsOmega rdfs:label "Chaitin's Omega (for a fixed universal machine)" . }
   pe:fact "transcendental-names-and-families.n3".
@@ -1863,6 +1770,11 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :e :inFamily :AllTranscendentals . },
     { :e rdfs:label "e" . }.
 
+{ :e :inFamily :AllTranscendentals . }
+  pe:rule 8;
+  pe:binding [ pe:var "X"; pe:value :e ];
+  pe:uses { :e :kind :Transcendental . }.
+
 { _:b2_da03c737941060f1 :x :e . }
   pe:rule
     {
@@ -1922,6 +1834,11 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :pi :inFamily :AllTranscendentals . },
     { :pi rdfs:label "pi" . }.
+
+{ :pi :inFamily :AllTranscendentals . }
+  pe:rule 8;
+  pe:binding [ pe:var "X"; pe:value :pi ];
+  pe:uses { :pi :kind :Transcendental . }.
 
 { _:b2_81d1c28593b31717 :x :pi . }
   pe:rule
@@ -2562,6 +2479,20 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :pow_2_sqrt2 :kind :Transcendental . },
     { :pow_2_sqrt2 :provedBy :GelfondSchneider . }.
 
+{ :pow_2_sqrt2 :provedBy :GelfondSchneider . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value :2 ],
+    [ pe:var "B"; pe:value :sqrt2 ],
+    [ pe:var "X"; pe:value :pow_2_sqrt2 ];
+  pe:uses
+    { :pow_2_sqrt2 :powBase :2 . },
+    { :pow_2_sqrt2 :powExp :sqrt2 . },
+    { :2 :kind :Algebraic . },
+    { :2 :kind :NotZeroOrOne . },
+    { :sqrt2 :kind :Algebraic . },
+    { :sqrt2 :kind :NonRational . }.
+
 {
   :report :proof {
       :pow_minus1_minusi :provedBy :GelfondSchneider .
@@ -2584,6 +2515,20 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :pow_minus1_minusi :kind :Transcendental . },
     { :pow_minus1_minusi :provedBy :GelfondSchneider . }.
+
+{ :pow_minus1_minusi :provedBy :GelfondSchneider . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "A"; pe:value :minus1 ],
+    [ pe:var "B"; pe:value :minusi ],
+    [ pe:var "X"; pe:value :pow_minus1_minusi ];
+  pe:uses
+    { :pow_minus1_minusi :powBase :minus1 . },
+    { :pow_minus1_minusi :powExp :minusi . },
+    { :minus1 :kind :Algebraic . },
+    { :minus1 :kind :NotZeroOrOne . },
+    { :minusi :kind :Algebraic . },
+    { :minusi :kind :NonRational . }.
 
 {
   :report :proof {
@@ -2608,6 +2553,16 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :exp_sqrt2 :kind :Transcendental . },
     { :exp_sqrt2 :provedBy :LindemannWeierstrass . }.
 
+{ :exp_sqrt2 :provedBy :LindemannWeierstrass . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "A"; pe:value :sqrt2 ],
+    [ pe:var "X"; pe:value :exp_sqrt2 ];
+  pe:uses
+    { :exp_sqrt2 :expArg :sqrt2 . },
+    { :sqrt2 :kind :Algebraic . },
+    { :sqrt2 :kind :NonZero . }.
+
 {
   :report :proof {
       :gelfondsConstant :provedBy :GelfondSchneider .
@@ -2631,6 +2586,16 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
     { :gelfondsConstant :kind :Transcendental . },
     { :gelfondsConstant :provedBy :GelfondSchneider . }.
 
+{ :gelfondsConstant :provedBy :GelfondSchneider . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "T"; pe:value :GelfondSchneider ],
+    [ pe:var "X"; pe:value :gelfondsConstant ],
+    [ pe:var "Y"; pe:value :pow_minus1_minusi ];
+  pe:uses
+    { :gelfondsConstant :sameAs :pow_minus1_minusi . },
+    { :pow_minus1_minusi :provedBy :GelfondSchneider . }.
+
 {
   :report :proof {
       :chaitinsOmega :provedBy :NoncomputableImpliesTranscendental .
@@ -2653,6 +2618,11 @@ _:b2_1565500650b7fe97 :family :AllTranscendentals .
   pe:uses
     { :chaitinsOmega :kind :Transcendental . },
     { :chaitinsOmega :provedBy :NoncomputableImpliesTranscendental . }.
+
+{ :chaitinsOmega :provedBy :NoncomputableImpliesTranscendental . }
+  pe:rule 3;
+  pe:binding [ pe:var "X"; pe:value :chaitinsOmega ];
+  pe:uses { :chaitinsOmega :tag :NonComputable . }.
 
 { :report :unknown :ePlusPi . }
   pe:rule

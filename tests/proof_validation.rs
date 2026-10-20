@@ -141,12 +141,22 @@ fn formula_subjects_and_rule_statements_are_claims_too() {
         let missing = check("", claim).unwrap();
         assert!(!missing.valid(), "unjustified claim accepted: {claim}");
         assert!(missing.failures.iter().any(|f| f.condition == "C4"));
+        // A source holding `{} => false` forbids everything, and one with a
+        // query outputs only its answers, which a rule statement is not.
+        let rejected_by = match claim {
+            "{} => false." => Some("C6"),
+            "{} log:query { :a :p :b }." => Some("C7"),
+            _ => None,
+        };
         let given = check(claim, claim).unwrap();
-        assert!(
-            given.valid(),
-            "given claim rejected: {claim}: {:?}",
-            given.failures
-        );
+        match rejected_by {
+            Some(condition) => assert!(
+                !given.valid() && given.failures.iter().all(|f| f.condition == condition),
+                "{claim}: {:?}",
+                given.failures
+            ),
+            None => assert!(given.valid(), "given claim rejected: {claim}: {:?}", given.failures),
+        }
     }
     // A fuse assertion and a query directive cannot be normalized to ordinary rules.
     assert!(!check("{} => {}.", "{} => false.").unwrap().valid());
@@ -222,7 +232,8 @@ fn an_existential_is_witnessed_by_a_fresh_blank_for_one_firing_only() {
         &format!("{facts}{}{}", firing(":a", "_:w"), firing(":b", "_:w")),
         "another firing already introduced",
     );
-    let report = check(source, &format!("{facts}{}{}", firing(":a", "_:w1"), firing(":b", "_:w2"))).unwrap();
+    let claims = ":a :hasParent _:w1. :b :hasParent _:w2.\n";
+    let report = check(source, &format!("{claims}{facts}{}{}", firing(":a", "_:w1"), firing(":b", "_:w2"))).unwrap();
     assert!(report.valid(), "{:?}", report.failures);
 }
 
@@ -252,4 +263,86 @@ fn a_query_answer_is_output_and_never_a_premise() {
     );
     let report = check(source, &format!(":s a :Answer.\n{answer}")).unwrap();
     assert!(report.valid(), "{:?}", report.failures);
+}
+
+fn rejects_under(source: &str, proof: &str, condition: &str, message: &str) {
+    let report = check(source, proof).expect("proof should parse");
+    assert!(
+        report.failures.iter().any(|failure| failure.condition == condition && failure.detail.contains(message)),
+        "expected {condition} \"{message}\": {:?}",
+        report.failures
+    );
+}
+
+#[test]
+fn a_test_on_a_quoted_graph_is_re_decided_rather_than_trusted() {
+    let source = "{ { :a :p :b } log:includes { :c :p :d } } => { :x :y :z }.";
+    let step = |verb: &str| format!(
+        ":x :y :z.\n{{ :x :y :z }} pe:rule 1; pe:uses {{ {{ :a :p :b }} log:{verb} {{ :c :p :d }} }}.\n\
+         {{ {{ :a :p :b }} log:{verb} {{ :c :p :d }} }} pe:builtin log:{verb}."
+    );
+    rejects_under(source, &step("includes"), "C5", "did not hold");
+    let report = check("{ { :a :p :b } log:notIncludes { :c :p :d } } => { :x :y :z }.", &step("notIncludes")).unwrap();
+    assert!(report.valid() && report.obligations.is_empty(), "{:?}", report);
+}
+
+#[test]
+fn a_negation_over_the_current_graph_is_held_to_the_proofs_own_evidence() {
+    let source = ":a :source :x. :a a :Blocked. { ?x :source :x. ?S log:notIncludes { ?x a :Blocked } } => { ?x a :Free }.";
+    let proof = ":a a :Free.\n\
+        { :a a :Free } pe:rule 1; pe:binding [ pe:var \"x\"; pe:value :a ];\n\
+          pe:uses { :a :source :x }, { ?S log:notIncludes { :a a :Blocked } }.\n\
+        { :a :source :x } pe:fact \"test.n3\".\n\
+        { ?S log:notIncludes { :a a :Blocked } } pe:builtin log:notIncludes.";
+    rejects_under(source, proof, "C6", "evidence includes it");
+    // Without the contrary fact the same test stays an `absent` obligation.
+    let report = check(":a :source :x. { ?x :source :x. ?S log:notIncludes { ?x a :Blocked } } => { ?x a :Free }.", proof).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    assert_eq!(report.obligations.iter().map(|o| o.kind).collect::<Vec<_>>(), ["absent"]);
+}
+
+#[test]
+fn a_collection_over_the_current_graph_cannot_omit_what_the_proof_shows() {
+    let source = ":p :dog :d1, :d2. { (?d { :p :dog ?d } ?all) log:collectAllIn ?S } => { :p :dogs ?all }.";
+    let proof = |all: &str| format!(
+        ":p :dogs {all}.\n\
+         {{ :p :dogs {all} }} pe:rule 1; pe:binding [ pe:var \"all\"; pe:value {all} ];\n\
+           pe:uses {{ (?d {{ :p :dog ?d }} {all}) log:collectAllIn ?S }}.\n\
+         {{ (?d {{ :p :dog ?d }} {all}) log:collectAllIn ?S }} pe:builtin log:collectAllIn."
+    );
+    rejects_under(source, &proof("(:d1)"), "C6", "omits");
+    let report = check(source, &proof("(:d1 :d2)")).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn evidence_that_trips_an_inference_fuse_is_rejected() {
+    let source = ":a a :Cat. { ?x a :Cat } => { ?x a :Dog }. { ?x a :Cat, :Dog } => false.";
+    let proof = ":a a :Dog.\n\
+        { :a a :Dog } pe:rule 1; pe:binding [ pe:var \"x\"; pe:value :a ]; pe:uses { :a a :Cat }.\n\
+        { :a a :Cat } pe:fact \"test.n3\".";
+    rejects_under(source, proof, "C6", "inference fuse");
+}
+
+#[test]
+fn every_step_serves_a_claim_and_every_claim_answers_a_query() {
+    let source = ":a :p :b. :c :p :d.";
+    rejects_under(source, ":a :p :b.\n{ :a :p :b } pe:fact \"test.n3\".\n{ :c :p :d } pe:fact \"test.n3\".", "C7", "serves no claim");
+    let query = ":a :p :b. :c :q :d. { ?x :p ?y } log:query { ?x :p ?y }.";
+    rejects_under(query, ":c :q :d.\n{ :c :q :d } pe:fact \"test.n3\".", "C7", "answers none");
+    let report = check(query, ":a :p :b.\n{ :a :p :b } pe:fact \"test.n3\".").unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn a_report_names_all_seven_conditions() {
+    let report = check(":a :p :b.", ":a :p :b.\n{ :a :p :b } pe:fact \"test.n3\".").unwrap();
+    let names: Vec<_> = report.conditions().into_iter().map(|(id, name, _, failed)| {
+        assert_eq!(failed, 0);
+        format!("{id} {name}")
+    }).collect();
+    assert_eq!(names, [
+        "C1 resolution", "C2 well-foundedness", "C3 justification", "C4 coverage",
+        "C5 re-decision", "C6 boundary consistency", "C7 relevance",
+    ]);
 }

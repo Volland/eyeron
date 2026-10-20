@@ -1,5 +1,4 @@
 @prefix : <http://example.org/#> .
-@prefix list: <http://www.w3.org/2000/10/swap/list#> .
 @prefix math: <http://www.w3.org/2000/10/swap/math#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 
@@ -30,12 +29,6 @@
 2048 :easter (5 4) .
 2049 :easter (18 4) .
 2050 :easter (10 4) .
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 0 . }
-  pe:builtin list:member.
-
-{ (2024 0) math:sum 2024 . }
-  pe:builtin math:sum.
 
 { 2024 :easter (31 3) . }
   pe:rule 1;
@@ -210,12 +203,6 @@
 { (30 1) math:sum 31 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 1 . }
-  pe:builtin list:member.
-
-{ (2024 1) math:sum 2025 . }
-  pe:builtin math:sum.
-
 { 2025 :easter (20 4) . }
   pe:rule 1;
   pe:binding
@@ -355,12 +342,6 @@
 
 { (143 31) math:remainder 19 . }
   pe:builtin math:remainder.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 2 . }
-  pe:builtin list:member.
-
-{ (2024 2) math:sum 2026 . }
-  pe:builtin math:sum.
 
 { 2026 :easter (5 4) . }
   pe:rule 1;
@@ -505,12 +486,6 @@
 { (4 1) math:sum 5 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 3 . }
-  pe:builtin list:member.
-
-{ (2024 3) math:sum 2027 . }
-  pe:builtin math:sum.
-
 { 2027 :easter (28 3) . }
   pe:rule 1;
   pe:binding
@@ -643,12 +618,6 @@
   pe:builtin math:remainder.
 
 { (27 1) math:sum 28 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 4 . }
-  pe:builtin list:member.
-
-{ (2024 4) math:sum 2028 . }
   pe:builtin math:sum.
 
 { 2028 :easter (16 4) . }
@@ -791,12 +760,6 @@
 { (15 1) math:sum 16 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 5 . }
-  pe:builtin list:member.
-
-{ (2024 5) math:sum 2029 . }
-  pe:builtin math:sum.
-
 { 2029 :easter (1 4) . }
   pe:rule 1;
   pe:binding
@@ -937,12 +900,6 @@
 { (0 1) math:sum 1 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 6 . }
-  pe:builtin list:member.
-
-{ (2024 6) math:sum 2030 . }
-  pe:builtin math:sum.
-
 { 2030 :easter (21 4) . }
   pe:rule 1;
   pe:binding
@@ -1080,12 +1037,6 @@
 { (20 1) math:sum 21 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 7 . }
-  pe:builtin list:member.
-
-{ (2024 7) math:sum 2031 . }
-  pe:builtin math:sum.
-
 { 2031 :easter (13 4) . }
   pe:rule 1;
   pe:binding
@@ -1220,12 +1171,6 @@
 { (12 1) math:sum 13 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 8 . }
-  pe:builtin list:member.
-
-{ (2024 8) math:sum 2032 . }
-  pe:builtin math:sum.
-
 { 2032 :easter (28 3) . }
   pe:rule 1;
   pe:binding
@@ -1358,12 +1303,6 @@
   pe:builtin math:integerQuotient.
 
 { (6 0 0 114) math:sum 120 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 9 . }
-  pe:builtin list:member.
-
-{ (2024 9) math:sum 2033 . }
   pe:builtin math:sum.
 
 { 2033 :easter (17 4) . }
@@ -1503,12 +1442,6 @@
 { (16 1) math:sum 17 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 10 . }
-  pe:builtin list:member.
-
-{ (2024 10) math:sum 2034 . }
-  pe:builtin math:sum.
-
 { 2034 :easter (9 4) . }
   pe:rule 1;
   pe:binding
@@ -1646,12 +1579,6 @@
 { (8 1) math:sum 9 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 11 . }
-  pe:builtin list:member.
-
-{ (2024 11) math:sum 2035 . }
-  pe:builtin math:sum.
-
 { 2035 :easter (25 3) . }
   pe:rule 1;
   pe:binding
@@ -1786,12 +1713,6 @@
 { (24 1) math:sum 25 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 12 . }
-  pe:builtin list:member.
-
-{ (2024 12) math:sum 2036 . }
-  pe:builtin math:sum.
-
 { 2036 :easter (13 4) . }
   pe:rule 1;
   pe:binding
@@ -1923,12 +1844,6 @@
 { (21 1 0 114) math:sum 136 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 13 . }
-  pe:builtin list:member.
-
-{ (2024 13) math:sum 2037 . }
-  pe:builtin math:sum.
-
 { 2037 :easter (5 4) . }
   pe:rule 1;
   pe:binding
@@ -2058,12 +1973,6 @@
   pe:builtin math:integerQuotient.
 
 { (10 4 0 114) math:sum 128 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 14 . }
-  pe:builtin list:member.
-
-{ (2024 14) math:sum 2038 . }
   pe:builtin math:sum.
 
 { 2038 :easter (25 4) . }
@@ -2200,12 +2109,6 @@
 { (148 31) math:remainder 24 . }
   pe:builtin math:remainder.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 15 . }
-  pe:builtin list:member.
-
-{ (2024 15) math:sum 2039 . }
-  pe:builtin math:sum.
-
 { 2039 :easter (10 4) . }
   pe:rule 1;
   pe:binding
@@ -2338,12 +2241,6 @@
   pe:builtin math:remainder.
 
 { (9 1) math:sum 10 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 16 . }
-  pe:builtin list:member.
-
-{ (2024 16) math:sum 2040 . }
   pe:builtin math:sum.
 
 { 2040 :easter (1 4) . }
@@ -2480,12 +2377,6 @@
 { (7 3 0 114) math:sum 124 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 17 . }
-  pe:builtin list:member.
-
-{ (2024 17) math:sum 2041 . }
-  pe:builtin math:sum.
-
 { 2041 :easter (21 4) . }
   pe:rule 1;
   pe:binding
@@ -2612,12 +2503,6 @@
   pe:builtin math:integerQuotient.
 
 { (26 4 0 114) math:sum 144 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 18 . }
-  pe:builtin list:member.
-
-{ (2024 18) math:sum 2042 . }
   pe:builtin math:sum.
 
 { 2042 :easter (6 4) . }
@@ -2757,12 +2642,6 @@
 { (5 1) math:sum 6 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 19 . }
-  pe:builtin list:member.
-
-{ (2024 19) math:sum 2043 . }
-  pe:builtin math:sum.
-
 { 2043 :easter (29 3) . }
   pe:rule 1;
   pe:binding
@@ -2873,12 +2752,6 @@
 { (28 1) math:sum 29 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 20 . }
-  pe:builtin list:member.
-
-{ (2024 20) math:sum 2044 . }
-  pe:builtin math:sum.
-
 { 2044 :easter (17 4) . }
   pe:rule 1;
   pe:binding
@@ -2986,12 +2859,6 @@
 { (23 3 0 114) math:sum 140 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 21 . }
-  pe:builtin list:member.
-
-{ (2024 21) math:sum 2045 . }
-  pe:builtin math:sum.
-
 { 2045 :easter (9 4) . }
   pe:rule 1;
   pe:binding
@@ -3096,12 +2963,6 @@
 { (12 6 0 114) math:sum 132 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 22 . }
-  pe:builtin list:member.
-
-{ (2024 22) math:sum 2046 . }
-  pe:builtin math:sum.
-
 { 2046 :easter (25 3) . }
   pe:rule 1;
   pe:binding
@@ -3204,12 +3065,6 @@
   pe:builtin math:integerQuotient.
 
 { (1 2 0 114) math:sum 117 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 23 . }
-  pe:builtin list:member.
-
-{ (2024 23) math:sum 2047 . }
   pe:builtin math:sum.
 
 { 2047 :easter (14 4) . }
@@ -3322,12 +3177,6 @@
 { (13 1) math:sum 14 . }
   pe:builtin math:sum.
 
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 24 . }
-  pe:builtin list:member.
-
-{ (2024 24) math:sum 2048 . }
-  pe:builtin math:sum.
-
 { 2048 :easter (5 4) . }
   pe:rule 1;
   pe:binding
@@ -3433,12 +3282,6 @@
   pe:builtin math:integerQuotient.
 
 { (9 5 0 114) math:sum 128 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 25 . }
-  pe:builtin list:member.
-
-{ (2024 25) math:sum 2049 . }
   pe:builtin math:sum.
 
 { 2049 :easter (18 4) . }
@@ -3555,12 +3398,6 @@
   pe:builtin math:remainder.
 
 { (17 1) math:sum 18 . }
-  pe:builtin math:sum.
-
-{ (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26) list:member 26 . }
-  pe:builtin list:member.
-
-{ (2024 26) math:sum 2050 . }
   pe:builtin math:sum.
 
 { 2050 :easter (10 4) . }

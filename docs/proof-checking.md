@@ -14,18 +14,23 @@ The checker MUST check the recorded inferences rather than search for replacemen
 
 ## 3. Model
 
-A step has a conclusion triple, one justification, bindings, and an ordered list of premises (`uses`). A proof also has claims. The source supplies facts and rules, numbered from 1 in source order after excluding query rules. Written rules are also available as statements. Universally quantified source assertions can justify their instances.
+A step has a conclusion triple, one justification, bindings, and an ordered list of premises (`uses`). A proof also has claims: what the run outputs, which for a program with `log:query` rules is their answers alone. The source supplies facts and rules, numbered from 1 in source order after excluding query rules. Written rules are also available as statements. Universally quantified source assertions can justify their instances. The proof's evidence is the source facts together with every step conclusion.
 
 ## 4. Validity conditions
 
 | Condition | Requirement |
 | --- | --- |
-| **C1: resolution** | Every used premise MUST resolve to a proof-step conclusion or a source assertion under the reader's matching rules. |
+| **C1: resolution** | Each rule step MUST re-perform one application of the cited source rule, or of a justified carried rule, under consistent bindings (5.1). Each fact step MUST state a source assertion or a permitted instance of one (5.2). |
 | **C2: well-foundedness** | The resolved step dependencies, including carried-rule provenance, MUST be acyclic. |
-| **C3: justification** | Each step MUST have a verified justification or an explicitly reported trust obligation. `unproven` fails this condition. |
-| **C4: coverage** | Every claim MUST resolve to a step conclusion or source assertion. |
+| **C3: justification** | Each step MUST have exactly one supported justification of a well-formed kind; `unproven`, a fact step with premises, and a built-in named for another predicate fail. No statement may be claimed twice. |
+| **C4: coverage** | Every premise, carried rule, and claim MUST resolve to a step conclusion or a source assertion. |
+| **C5: re-decision** | Each built-in step MUST hold when re-evaluated on its recorded arguments (5.3), unless it is a trust obligation (6). |
+| **C6: boundary consistency** | The proof's evidence MUST NOT contradict what its obligations assume (6), and MUST NOT satisfy the premise of a source inference fuse. |
+| **C7: relevance** | Every step MUST serve a claim: some claim depends on it. With `log:query` rules in the source, every claim MUST be an instance of a query's conclusion. |
 
-The report records failures with their condition, affected conclusion, and detail. `checked` means no failures or obligations; `checked with obligations` means no failures but some justifications are trusted. `invalid` means at least one condition failed. Empty proofs can check with zero steps; this does not demonstrate that a source program derived anything.
+C1 and C5 re-perform what the proof records; C2 and C4 check its structure; C3 its form; C6 looks inside the proof for evidence against its assumptions; C7 keeps it to what the source asked for. Malformed proof metadata (section 8) is a reader error rather than a C3 failure, because no report can attribute it to a step.
+
+The report records failures with their condition, affected conclusion, and detail, and lists every condition with how many items it examined and how many failures it found. `checked` means no failures or obligations; `checked with obligations` means no failures but some justifications are trusted. `invalid` means at least one condition failed. Empty proofs can check with zero steps; this does not demonstrate that a source program derived anything.
 
 ## 5. Verified justifications
 
@@ -48,20 +53,20 @@ For `pe:fact`, the checker MUST find the conclusion among the source assertions,
 
 ### 5.3 Built-ins
 
-For `pe:builtin`, the named relation MUST agree with the conclusion's predicate and hold when re-evaluated on its arguments, which MUST NOT contain variables outside graph terms. The reader rejects a predicate mismatch before either re-evaluation or trust classification. Built-ins classified as context-dependent are instead obligations (section 6).
+For `pe:builtin`, the named relation MUST agree with the conclusion's predicate (C3) and hold when re-evaluated on its arguments (C5), which MUST NOT contain variables outside graph terms; a collection's template and condition may be open, its result may not. Scoped built-ins whose scope is a quoted graph — `log:includes`, `log:notIncludes`, `log:collectAllIn`, `log:forAllIn` — and `log:conjunction` are functions of their arguments and are re-decided like any other. Built-ins that read outside the proof, and scoped tests over the current graph, are obligations instead (section 6).
 
 ## 6. Trust obligations
 
-The N3 reader currently trusts these built-in predicates because its checking policy treats them as depending on state outside the recorded triple:
+An obligation is a step the checker accepts without re-establishing it. Each is listed with its kind and conclusion:
 
-- `time:localTime`, `time:currentTime`, `time:gmTime`, and `math:random`;
-- `log:content`, `log:semantics`, `log:semanticsOrError`;
-- `log:collectAllIn`, `log:forAllIn`, `log:includes`, `log:notIncludes`, `log:conclusion`, `log:conjunction`;
-- `list:map`.
+- `impure built-in`: `time:localTime`, `time:currentTime`, `time:gmTime`, `math:random`, `log:content`, `log:semantics`, `log:semanticsOrError`, `list:map`, and `log:conclusion`, which reads the clock, the network, a random source, the fact set, or runs the reasoner itself. This is a checker classification: `math:random`, for example, is not generated by the current evaluator.
+- `absent`: `log:notIncludes` over the current graph. Its scope is anything but a quoted graph, or the stand-in graph `{ <http://example.org/a> <http://example.org/b> <http://example.org/c> }` an unbound subject is bound to after the current graph has been tested.
+- `collected`: `log:collectAllIn` and `log:forAllIn` over the current graph.
+- `current graph`: `log:includes` over the current graph.
 
-This list is a checker classification, not a list of implemented reasoner built-ins: for example, `math:random` is not generated by the current evaluator. Even a closed `log:includes` test is classified as trusted by this policy. The generic checker also has abstract `absent` and `collected` kinds; the current N3 reader does not read them as separate justification predicates.
+Whether a test over the current graph held depends on everything the run derived, which a proof does not record, so its truth is assumed. Its consistency is not (C6): the checker re-evaluates the test over the proof's evidence alone and fails when that evidence contradicts it. A negation fails when the evidence includes what it says is absent. A collection fails when the evidence supplies a member its recorded list omits. A universal test fails when the evidence has a counterexample whose conclusion consists of built-ins, since only those can be refuted without inference. The evidence is only what the proof records, so C6 can find a contradiction but cannot establish that a negation or collection was complete.
 
-Every obligation MUST be listed with its kind and conclusion. Acceptance records an assumption; it does not establish that the trusted relation holds. Consumers can reject reports with nonempty `obligations` even when `Report::valid()` is true. The CLI currently returns success for both successful verdicts.
+Acceptance records an assumption; it does not establish that the trusted relation holds. Consumers can reject reports with nonempty `obligations` even when `Report::valid()` is true. The CLI returns success for both successful verdicts.
 
 ## 7. Unproven steps
 
@@ -101,13 +106,20 @@ checked: 3 steps, 3 verified, 0 trusted
 Step kinds:
   source facts: 2
   rule applications: 1
-All premises and claims are supported; no circular dependencies.
+Conditions:
+  C1 resolution: 3 checked, 0 failed
+  C2 well-foundedness: 3 checked, 0 failed
+  C3 justification: 3 checked, 0 failed
+  C4 coverage: 3 checked, 0 failed
+  C5 re-decision: 0 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 4 checked, 0 failed
 ```
 
-Trusted conclusions are listed under “Trust obligations (accepted without verifying their truth)”; failures include readable C1–C4 labels. Invalid proofs return status 1. Parsing errors occur before a checking report exists.
+Trusted conclusions are listed under “Trust obligations (accepted without verifying their truth)”; failures name their condition, such as `[C6: boundary consistency]`. Invalid proofs return status 1. Parsing errors occur before a checking report exists.
 
 ## 10. Implementation coverage
 
-[tests/proof_validation.rs](../tests/proof_validation.rs) covers malformed metadata, mislabeled built-ins, unsupported formula/rule claims, cycles through carried-rule provenance, over-general carried rules, reused or non-fresh existential witnesses, open built-in arguments, and query answers used as premises. [CLI tests](../tests/cli_proof_check.rs) cover saved and generated proofs, source bases, separate input scopes, RDF formats, and stdin. Malformed proof metadata returns a reader error before a report is constructed; semantic C1–C4 failures produce an invalid report.
+[tests/proof_validation.rs](../tests/proof_validation.rs) covers malformed metadata, mislabeled built-ins, unsupported formula/rule claims, cycles through carried-rule provenance, over-general carried rules, reused or non-fresh existential witnesses, open built-in arguments, query answers used as premises, re-decided quoted-graph tests, negations and collections contradicted by the proof's evidence, tripped inference fuses, and steps or claims that serve nothing the source asked for. [CLI tests](../tests/cli_proof_check.rs) cover saved and generated proofs, source bases, separate input scopes, RDF formats, and stdin. Malformed proof metadata returns a reader error before a report is constructed; semantic C1–C7 failures produce an invalid report.
 
-[tests/proof_checking.rs](../tests/proof_checking.rs) requires every packaged proof to check successfully. [Generation regressions](../tests/proof_generation.rs) also check fresh proofs, including quoted closures with overlapping variable names, backward premise ordering, and backtracking past incomplete or circular explanations.
+[tests/proof_checking.rs](../tests/proof_checking.rs) requires every packaged proof to check successfully, except `variable-predicate-dependency`: an intentional negative cycle that assumes `:a a :Blocked` is absent and then derives it, which C6 rejects. [Generation regressions](../tests/proof_generation.rs) also check fresh proofs, including quoted closures with overlapping variable names, backward premise ordering, and backtracking past incomplete or circular explanations.

@@ -217,10 +217,8 @@ fn parse_document(source_path: &Path, name: &str) -> Document {
     }
     if input_path.exists() {
         let input = read(&input_path);
-        // An `examples/input/*.trig` companion is either an RDF Message Log,
-        // an N3 document (`proof-audit.trig` is an N3 proof, quoted formulas
-        // and all), or real TriG with named graphs. Try N3 before TriG, the
-        // way the CLI's own N3-first reading does, so both kinds load.
+        // A `.trig` companion is either an RDF Message Log or real TriG with
+        // named graphs; an `.n3` one parses as N3 either way.
         let input_label = input_path.to_string_lossy();
         let parsed = if eyeron::is_rdf_message_log(&input) {
             eyeron::parse_rdf_message_log(&input, None)
@@ -234,6 +232,19 @@ fn parse_document(source_path: &Path, name: &str) -> Document {
     doc
 }
 
+/// Whether this run rewrites the goldens that no longer match, as asked for
+/// with `EYERON_UPDATE_GOLDENS=1` after an intentional change. Ordinary runs
+/// only read them. Markdown output goldens are never rewritten.
+fn updating_goldens() -> bool {
+    std::env::var_os("EYERON_UPDATE_GOLDENS").is_some_and(|value| value == "1")
+}
+
+fn update_golden(path: &Path, text: &str) -> Result<(), String> {
+    fs::write(path, text).map_err(|err| format!("cannot update {}: {err}", path.display()))?;
+    eprintln!("updated {}", path.display());
+    Ok(())
+}
+
 /// Parses, reasons, and checks both goldens — all off one run. Runs on a
 /// worker thread so a rule set that stops making progress fails on a
 /// timeout instead of hanging the suite.
@@ -244,6 +255,8 @@ fn run_case(case: &Case) {
     let output_golden = read(&case.output_golden);
     let output_is_n3 = case.output_golden.extension().and_then(|ext| ext.to_str()) == Some("n3");
     let proof_golden = case.proof_golden.as_ref().map(|path| read(path));
+    let output_golden_path = case.output_golden.clone();
+    let proof_golden_path = case.proof_golden.clone();
 
     let (tx, rx) = std::sync::mpsc::channel();
     let thread_name = name.clone();
@@ -272,13 +285,21 @@ fn run_case(case: &Case) {
                 }
                 None => {
                     let output = result_to_string(&doc.prefixes, &result.derived);
-                    compare_output_golden(&thread_name, &output, &output_golden, output_is_n3)
+                    let compared = compare_output_golden(&thread_name, &output, &output_golden, output_is_n3);
+                    if compared.is_err() && output_is_n3 && updating_goldens() {
+                        update_golden(&output_golden_path, &output)
+                    } else {
+                        compared
+                    }
                 }
             };
             if outcome.is_ok() {
-                if let Some(expected) = &proof_golden {
+                if let (Some(expected), Some(path)) = (&proof_golden, &proof_golden_path) {
                     let proof = proof_to_n3(&doc.prefixes, &result);
                     outcome = compare_proof_golden(&thread_name, &proof, expected);
+                    if outcome.is_err() && updating_goldens() {
+                        outcome = update_golden(path, &proof);
+                    }
                 }
             }
             let _ = tx.send(outcome);

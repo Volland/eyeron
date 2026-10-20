@@ -7,77 +7,13 @@ _:g a food:SweetFruit .
 _:cnd a food:Dessert .
 _:pwlcs a food:PastaWithWhiteSauce .
 _:m a food:ConsumableThing .
-food:Pasta rdfs:subClassOf food:ConsumableThing .
-food:OtherTomatoBasedFood rdfs:subClassOf food:ConsumableThing .
-food:NonSweetFruit rdfs:subClassOf food:ConsumableThing .
-food:Meat rdfs:subClassOf food:ConsumableThing .
-food:Fowl rdfs:subClassOf food:ConsumableThing .
-food:Dessert rdfs:subClassOf food:ConsumableThing .
-food:SweetFruit rdfs:subClassOf food:ConsumableThing .
-food:Seafood rdfs:subClassOf food:ConsumableThing .
-food:Juice rdfs:subClassOf food:ConsumableThing .
-food:Grape rdfs:subClassOf food:EdibleThing .
-food:Grape rdfs:subClassOf food:ConsumableThing .
-food:EatingGrape rdfs:subClassOf food:SweetFruit .
-food:PastaWithWhiteSauce rdfs:subClassOf food:EdibleThing .
-food:PastaWithRedSauce rdfs:subClassOf food:EdibleThing .
 _:pwlcs a food:Pasta .
-food:PastaWithWhiteSauce rdfs:subClassOf food:ConsumableThing .
-food:PastaWithLightCreamSauce rdfs:subClassOf food:Pasta .
-food:PastaWithHeavyCreamSauce rdfs:subClassOf food:Pasta .
-food:PastaWithSpicyRedSauce rdfs:subClassOf food:Pasta .
-food:PastaWithSpicyRedSauce rdfs:subClassOf food:EdibleThing .
-food:PastaWithRedSauce rdfs:subClassOf food:ConsumableThing .
-food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:Pasta .
-food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:EdibleThing .
-food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:ConsumableThing .
-food:PastaWithLightCreamSauce rdfs:subClassOf food:EdibleThing .
-food:PastaWithLightCreamSauce rdfs:subClassOf food:ConsumableThing .
-food:PastaWithHeavyCreamSauce rdfs:subClassOf food:EdibleThing .
-food:PastaWithHeavyCreamSauce rdfs:subClassOf food:ConsumableThing .
-food:OysterShellfish rdfs:subClassOf food:Seafood .
-food:NonSpicyRedMeat rdfs:subClassOf food:Meat .
-food:NonRedMeat rdfs:subClassOf food:EdibleThing .
-food:NonRedMeat rdfs:subClassOf food:ConsumableThing .
-food:NonOysterShellfish rdfs:subClassOf food:Seafood .
-food:NonBlandFish rdfs:subClassOf food:Seafood .
-food:RedMeat rdfs:subClassOf food:EdibleThing .
-food:NonSpicyRedMeat rdfs:subClassOf food:EdibleThing .
-food:LightMeatFowl rdfs:subClassOf food:EdibleThing .
-food:LightMeatFowl rdfs:subClassOf food:ConsumableThing .
-food:DarkMeatFowl rdfs:subClassOf food:EdibleThing .
 _:cnd a food:EdibleThing .
-food:SweetDessert rdfs:subClassOf food:EdibleThing .
-food:CheeseNutsDessert rdfs:subClassOf food:EdibleThing .
 _:g a food:EdibleThing .
-food:EatingGrape rdfs:subClassOf food:EdibleThing .
-food:SweetDessert rdfs:subClassOf food:ConsumableThing .
-food:DarkMeatFowl rdfs:subClassOf food:ConsumableThing .
-food:CheeseNutsDessert rdfs:subClassOf food:ConsumableThing .
-food:BlandFish rdfs:subClassOf food:Seafood .
-food:Fish rdfs:subClassOf food:EdibleThing .
-food:Fish rdfs:subClassOf food:ConsumableThing .
-food:SpicyRedMeat rdfs:subClassOf food:Meat .
-food:SpicyRedMeat rdfs:subClassOf food:EdibleThing .
-food:Shellfish rdfs:subClassOf food:EdibleThing .
-food:Shellfish rdfs:subClassOf food:ConsumableThing .
-food:OysterShellfish rdfs:subClassOf food:EdibleThing .
-food:NonOysterShellfish rdfs:subClassOf food:EdibleThing .
-food:NonBlandFish rdfs:subClassOf food:EdibleThing .
-food:BlandFish rdfs:subClassOf food:EdibleThing .
-food:RedMeat rdfs:subClassOf food:ConsumableThing .
-food:EatingGrape rdfs:subClassOf food:ConsumableThing .
 _:g a food:ConsumableThing .
 _:cnd a food:ConsumableThing .
 _:pwlcs a food:EdibleThing .
 _:pwlcs a food:ConsumableThing .
-food:PastaWithSpicyRedSauce rdfs:subClassOf food:ConsumableThing .
-food:NonSpicyRedMeat rdfs:subClassOf food:ConsumableThing .
-food:SpicyRedMeat rdfs:subClassOf food:ConsumableThing .
-food:OysterShellfish rdfs:subClassOf food:ConsumableThing .
-food:NonOysterShellfish rdfs:subClassOf food:ConsumableThing .
-food:NonBlandFish rdfs:subClassOf food:ConsumableThing .
-food:BlandFish rdfs:subClassOf food:ConsumableThing .
 
 { _:g a food:SweetFruit . }
   pe:rule 1;
@@ -143,188 +79,6 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
 { _:m a food:Meal . }
   pe:fact "owl-food-ontology.n3".
 
-{ food:Pasta rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Pasta ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Pasta rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:Pasta rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:EdibleThing rdfs:subClassOf food:ConsumableThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:OtherTomatoBasedFood rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:OtherTomatoBasedFood ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:OtherTomatoBasedFood rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:OtherTomatoBasedFood rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:NonSweetFruit rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonSweetFruit ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:NonSweetFruit rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:NonSweetFruit rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Meat rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Meat ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Meat rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:Meat rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Fowl rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Fowl ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Fowl rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:Fowl rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Dessert rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Dessert ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Dessert rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:Dessert rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:SweetFruit rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:SweetFruit ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:SweetFruit rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:SweetFruit rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Seafood rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Seafood ],
-    [ pe:var "D"; pe:value food:EdibleThing ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Seafood rdfs:subClassOf food:EdibleThing . },
-    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:Seafood rdfs:subClassOf food:EdibleThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Juice rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Juice ],
-    [ pe:var "D"; pe:value food:PotableLiquid ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Juice rdfs:subClassOf food:PotableLiquid . },
-    { food:PotableLiquid rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:Juice rdfs:subClassOf food:PotableLiquid . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:PotableLiquid rdfs:subClassOf food:ConsumableThing . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Grape rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Grape ],
-    [ pe:var "D"; pe:value food:SweetFruit ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:Grape rdfs:subClassOf food:SweetFruit . },
-    { food:SweetFruit rdfs:subClassOf food:EdibleThing . }.
-
-{ food:Grape rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Grape ],
-    [ pe:var "D"; pe:value food:SweetFruit ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Grape rdfs:subClassOf food:SweetFruit . },
-    { food:SweetFruit rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:EatingGrape rdfs:subClassOf food:SweetFruit . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:EatingGrape ],
-    [ pe:var "D"; pe:value food:Grape ],
-    [ pe:var "E"; pe:value food:SweetFruit ];
-  pe:uses
-    { food:EatingGrape rdfs:subClassOf food:Grape . },
-    { food:Grape rdfs:subClassOf food:SweetFruit . }.
-
-{ food:EatingGrape rdfs:subClassOf food:Grape . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:PastaWithWhiteSauce rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "D"; pe:value food:Pasta ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . },
-    { food:Pasta rdfs:subClassOf food:EdibleThing . }.
-
-{ food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:PastaWithRedSauce rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithRedSauce ],
-    [ pe:var "D"; pe:value food:Pasta ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:PastaWithRedSauce rdfs:subClassOf food:Pasta . },
-    { food:Pasta rdfs:subClassOf food:EdibleThing . }.
-
-{ food:PastaWithRedSauce rdfs:subClassOf food:Pasta . }
-  pe:fact "owl-food-ontology.n3".
-
 { _:pwlcs a food:Pasta . }
   pe:rule 1;
   pe:binding
@@ -335,283 +89,7 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
     { food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . },
     { _:pwlcs a food:PastaWithWhiteSauce . }.
 
-{ food:PastaWithWhiteSauce rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "D"; pe:value food:Pasta ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . },
-    { food:Pasta rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:PastaWithLightCreamSauce rdfs:subClassOf food:Pasta . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithLightCreamSauce ],
-    [ pe:var "D"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "E"; pe:value food:Pasta ];
-  pe:uses
-    { food:PastaWithLightCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce . },
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . }.
-
-{ food:PastaWithHeavyCreamSauce rdfs:subClassOf food:Pasta . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithHeavyCreamSauce ],
-    [ pe:var "D"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "E"; pe:value food:Pasta ];
-  pe:uses
-    { food:PastaWithHeavyCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce . },
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . }.
-
-{ food:PastaWithHeavyCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:PastaWithSpicyRedSauce rdfs:subClassOf food:Pasta . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithSpicyRedSauce ],
-    [ pe:var "D"; pe:value food:PastaWithRedSauce ],
-    [ pe:var "E"; pe:value food:Pasta ];
-  pe:uses
-    { food:PastaWithSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce . },
-    { food:PastaWithRedSauce rdfs:subClassOf food:Pasta . }.
-
-{ food:PastaWithSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:PastaWithSpicyRedSauce rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithSpicyRedSauce ],
-    [ pe:var "D"; pe:value food:PastaWithRedSauce ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:PastaWithSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce . },
-    { food:PastaWithRedSauce rdfs:subClassOf food:EdibleThing . }.
-
-{ food:PastaWithRedSauce rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithRedSauce ],
-    [ pe:var "D"; pe:value food:Pasta ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:PastaWithRedSauce rdfs:subClassOf food:Pasta . },
-    { food:Pasta rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:Pasta . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithNonSpicyRedSauce ],
-    [ pe:var "D"; pe:value food:PastaWithRedSauce ],
-    [ pe:var "E"; pe:value food:Pasta ];
-  pe:uses
-    { food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce . },
-    { food:PastaWithRedSauce rdfs:subClassOf food:Pasta . }.
-
-{ food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithNonSpicyRedSauce ],
-    [ pe:var "D"; pe:value food:PastaWithRedSauce ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce . },
-    { food:PastaWithRedSauce rdfs:subClassOf food:EdibleThing . }.
-
-{ food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithNonSpicyRedSauce ],
-    [ pe:var "D"; pe:value food:PastaWithRedSauce ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:PastaWithNonSpicyRedSauce rdfs:subClassOf food:PastaWithRedSauce . },
-    { food:PastaWithRedSauce rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:PastaWithLightCreamSauce rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithLightCreamSauce ],
-    [ pe:var "D"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:PastaWithLightCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce . },
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:EdibleThing . }.
-
-{ food:PastaWithLightCreamSauce rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithLightCreamSauce ],
-    [ pe:var "D"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:PastaWithLightCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce . },
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:PastaWithHeavyCreamSauce rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithHeavyCreamSauce ],
-    [ pe:var "D"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:PastaWithHeavyCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce . },
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:EdibleThing . }.
-
-{ food:PastaWithHeavyCreamSauce rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:PastaWithHeavyCreamSauce ],
-    [ pe:var "D"; pe:value food:PastaWithWhiteSauce ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:PastaWithHeavyCreamSauce rdfs:subClassOf food:PastaWithWhiteSauce . },
-    { food:PastaWithWhiteSauce rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:OysterShellfish rdfs:subClassOf food:Seafood . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:OysterShellfish ],
-    [ pe:var "D"; pe:value food:Shellfish ],
-    [ pe:var "E"; pe:value food:Seafood ];
-  pe:uses
-    { food:OysterShellfish rdfs:subClassOf food:Shellfish . },
-    { food:Shellfish rdfs:subClassOf food:Seafood . }.
-
-{ food:OysterShellfish rdfs:subClassOf food:Shellfish . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Shellfish rdfs:subClassOf food:Seafood . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:NonSpicyRedMeat rdfs:subClassOf food:Meat . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonSpicyRedMeat ],
-    [ pe:var "D"; pe:value food:RedMeat ],
-    [ pe:var "E"; pe:value food:Meat ];
-  pe:uses
-    { food:NonSpicyRedMeat rdfs:subClassOf food:RedMeat . },
-    { food:RedMeat rdfs:subClassOf food:Meat . }.
-
-{ food:NonSpicyRedMeat rdfs:subClassOf food:RedMeat . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:RedMeat rdfs:subClassOf food:Meat . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:NonRedMeat rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonRedMeat ],
-    [ pe:var "D"; pe:value food:Meat ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:NonRedMeat rdfs:subClassOf food:Meat . },
-    { food:Meat rdfs:subClassOf food:EdibleThing . }.
-
-{ food:NonRedMeat rdfs:subClassOf food:Meat . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:NonRedMeat rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonRedMeat ],
-    [ pe:var "D"; pe:value food:Meat ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:NonRedMeat rdfs:subClassOf food:Meat . },
-    { food:Meat rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:NonOysterShellfish rdfs:subClassOf food:Seafood . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonOysterShellfish ],
-    [ pe:var "D"; pe:value food:Shellfish ],
-    [ pe:var "E"; pe:value food:Seafood ];
-  pe:uses
-    { food:NonOysterShellfish rdfs:subClassOf food:Shellfish . },
-    { food:Shellfish rdfs:subClassOf food:Seafood . }.
-
-{ food:NonOysterShellfish rdfs:subClassOf food:Shellfish . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:NonBlandFish rdfs:subClassOf food:Seafood . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonBlandFish ],
-    [ pe:var "D"; pe:value food:Fish ],
-    [ pe:var "E"; pe:value food:Seafood ];
-  pe:uses
-    { food:NonBlandFish rdfs:subClassOf food:Fish . },
-    { food:Fish rdfs:subClassOf food:Seafood . }.
-
-{ food:NonBlandFish rdfs:subClassOf food:Fish . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:Fish rdfs:subClassOf food:Seafood . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:RedMeat rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:RedMeat ],
-    [ pe:var "D"; pe:value food:Meat ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:RedMeat rdfs:subClassOf food:Meat . },
-    { food:Meat rdfs:subClassOf food:EdibleThing . }.
-
-{ food:NonSpicyRedMeat rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonSpicyRedMeat ],
-    [ pe:var "D"; pe:value food:Meat ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:NonSpicyRedMeat rdfs:subClassOf food:Meat . },
-    { food:Meat rdfs:subClassOf food:EdibleThing . }.
-
-{ food:LightMeatFowl rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:LightMeatFowl ],
-    [ pe:var "D"; pe:value food:Fowl ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:LightMeatFowl rdfs:subClassOf food:Fowl . },
-    { food:Fowl rdfs:subClassOf food:EdibleThing . }.
-
-{ food:LightMeatFowl rdfs:subClassOf food:Fowl . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:LightMeatFowl rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:LightMeatFowl ],
-    [ pe:var "D"; pe:value food:Fowl ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:LightMeatFowl rdfs:subClassOf food:Fowl . },
-    { food:Fowl rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:DarkMeatFowl rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:DarkMeatFowl ],
-    [ pe:var "D"; pe:value food:Fowl ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:DarkMeatFowl rdfs:subClassOf food:Fowl . },
-    { food:Fowl rdfs:subClassOf food:EdibleThing . }.
-
-{ food:DarkMeatFowl rdfs:subClassOf food:Fowl . }
+{ food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . }
   pe:fact "owl-food-ontology.n3".
 
 { _:cnd a food:EdibleThing . }
@@ -624,28 +102,8 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
     { food:Dessert rdfs:subClassOf food:EdibleThing . },
     { _:cnd a food:Dessert . }.
 
-{ food:SweetDessert rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:SweetDessert ],
-    [ pe:var "D"; pe:value food:Dessert ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:SweetDessert rdfs:subClassOf food:Dessert . },
-    { food:Dessert rdfs:subClassOf food:EdibleThing . }.
-
-{ food:SweetDessert rdfs:subClassOf food:Dessert . }
+{ food:Dessert rdfs:subClassOf food:EdibleThing . }
   pe:fact "owl-food-ontology.n3".
-
-{ food:CheeseNutsDessert rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:CheeseNutsDessert ],
-    [ pe:var "D"; pe:value food:Dessert ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:CheeseNutsDessert rdfs:subClassOf food:Dessert . },
-    { food:Dessert rdfs:subClassOf food:EdibleThing . }.
 
 { _:g a food:EdibleThing . }
   pe:rule 1;
@@ -657,181 +115,8 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
     { food:SweetFruit rdfs:subClassOf food:EdibleThing . },
     { _:g a food:SweetFruit . }.
 
-{ food:EatingGrape rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:EatingGrape ],
-    [ pe:var "D"; pe:value food:SweetFruit ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:EatingGrape rdfs:subClassOf food:SweetFruit . },
-    { food:SweetFruit rdfs:subClassOf food:EdibleThing . }.
-
-{ food:SweetDessert rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:SweetDessert ],
-    [ pe:var "D"; pe:value food:Dessert ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:SweetDessert rdfs:subClassOf food:Dessert . },
-    { food:Dessert rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:DarkMeatFowl rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:DarkMeatFowl ],
-    [ pe:var "D"; pe:value food:Fowl ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:DarkMeatFowl rdfs:subClassOf food:Fowl . },
-    { food:Fowl rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:CheeseNutsDessert rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:CheeseNutsDessert ],
-    [ pe:var "D"; pe:value food:Dessert ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:CheeseNutsDessert rdfs:subClassOf food:Dessert . },
-    { food:Dessert rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:BlandFish rdfs:subClassOf food:Seafood . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:BlandFish ],
-    [ pe:var "D"; pe:value food:Fish ],
-    [ pe:var "E"; pe:value food:Seafood ];
-  pe:uses
-    { food:BlandFish rdfs:subClassOf food:Fish . },
-    { food:Fish rdfs:subClassOf food:Seafood . }.
-
-{ food:BlandFish rdfs:subClassOf food:Fish . }
+{ food:SweetFruit rdfs:subClassOf food:EdibleThing . }
   pe:fact "owl-food-ontology.n3".
-
-{ food:Fish rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Fish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:Fish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:EdibleThing . }.
-
-{ food:Fish rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Fish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Fish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:SpicyRedMeat rdfs:subClassOf food:Meat . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:SpicyRedMeat ],
-    [ pe:var "D"; pe:value food:RedMeat ],
-    [ pe:var "E"; pe:value food:Meat ];
-  pe:uses
-    { food:SpicyRedMeat rdfs:subClassOf food:RedMeat . },
-    { food:RedMeat rdfs:subClassOf food:Meat . }.
-
-{ food:SpicyRedMeat rdfs:subClassOf food:RedMeat . }
-  pe:fact "owl-food-ontology.n3".
-
-{ food:SpicyRedMeat rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:SpicyRedMeat ],
-    [ pe:var "D"; pe:value food:RedMeat ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:SpicyRedMeat rdfs:subClassOf food:RedMeat . },
-    { food:RedMeat rdfs:subClassOf food:EdibleThing . }.
-
-{ food:Shellfish rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Shellfish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:Shellfish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:EdibleThing . }.
-
-{ food:Shellfish rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:Shellfish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:Shellfish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:OysterShellfish rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:OysterShellfish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:OysterShellfish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:EdibleThing . }.
-
-{ food:NonOysterShellfish rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonOysterShellfish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:NonOysterShellfish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:EdibleThing . }.
-
-{ food:NonBlandFish rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonBlandFish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:NonBlandFish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:EdibleThing . }.
-
-{ food:BlandFish rdfs:subClassOf food:EdibleThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:BlandFish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:EdibleThing ];
-  pe:uses
-    { food:BlandFish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:EdibleThing . }.
-
-{ food:RedMeat rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:RedMeat ],
-    [ pe:var "D"; pe:value food:Meat ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:RedMeat rdfs:subClassOf food:Meat . },
-    { food:Meat rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:EatingGrape rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:EatingGrape ],
-    [ pe:var "D"; pe:value food:Grape ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:EatingGrape rdfs:subClassOf food:Grape . },
-    { food:Grape rdfs:subClassOf food:ConsumableThing . }.
 
 { _:g a food:ConsumableThing . }
   pe:rule 1;
@@ -843,6 +128,19 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
     { food:SweetFruit rdfs:subClassOf food:ConsumableThing . },
     { _:g a food:SweetFruit . }.
 
+{ food:SweetFruit rdfs:subClassOf food:ConsumableThing . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "C"; pe:value food:SweetFruit ],
+    [ pe:var "D"; pe:value food:EdibleThing ],
+    [ pe:var "E"; pe:value food:ConsumableThing ];
+  pe:uses
+    { food:SweetFruit rdfs:subClassOf food:EdibleThing . },
+    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
+
+{ food:EdibleThing rdfs:subClassOf food:ConsumableThing . }
+  pe:fact "owl-food-ontology.n3".
+
 { _:cnd a food:ConsumableThing . }
   pe:rule 1;
   pe:binding
@@ -852,6 +150,16 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
   pe:uses
     { food:Dessert rdfs:subClassOf food:ConsumableThing . },
     { _:cnd a food:Dessert . }.
+
+{ food:Dessert rdfs:subClassOf food:ConsumableThing . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "C"; pe:value food:Dessert ],
+    [ pe:var "D"; pe:value food:EdibleThing ],
+    [ pe:var "E"; pe:value food:ConsumableThing ];
+  pe:uses
+    { food:Dessert rdfs:subClassOf food:EdibleThing . },
+    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
 
 { _:pwlcs a food:EdibleThing . }
   pe:rule 1;
@@ -863,6 +171,19 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
     { food:PastaWithWhiteSauce rdfs:subClassOf food:EdibleThing . },
     { _:pwlcs a food:PastaWithWhiteSauce . }.
 
+{ food:PastaWithWhiteSauce rdfs:subClassOf food:EdibleThing . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "C"; pe:value food:PastaWithWhiteSauce ],
+    [ pe:var "D"; pe:value food:Pasta ],
+    [ pe:var "E"; pe:value food:EdibleThing ];
+  pe:uses
+    { food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . },
+    { food:Pasta rdfs:subClassOf food:EdibleThing . }.
+
+{ food:Pasta rdfs:subClassOf food:EdibleThing . }
+  pe:fact "owl-food-ontology.n3".
+
 { _:pwlcs a food:ConsumableThing . }
   pe:rule 1;
   pe:binding
@@ -873,72 +194,22 @@ food:BlandFish rdfs:subClassOf food:ConsumableThing .
     { food:PastaWithWhiteSauce rdfs:subClassOf food:ConsumableThing . },
     { _:pwlcs a food:PastaWithWhiteSauce . }.
 
-{ food:PastaWithSpicyRedSauce rdfs:subClassOf food:ConsumableThing . }
+{ food:PastaWithWhiteSauce rdfs:subClassOf food:ConsumableThing . }
   pe:rule 2;
   pe:binding
-    [ pe:var "C"; pe:value food:PastaWithSpicyRedSauce ],
+    [ pe:var "C"; pe:value food:PastaWithWhiteSauce ],
     [ pe:var "D"; pe:value food:Pasta ],
     [ pe:var "E"; pe:value food:ConsumableThing ];
   pe:uses
-    { food:PastaWithSpicyRedSauce rdfs:subClassOf food:Pasta . },
+    { food:PastaWithWhiteSauce rdfs:subClassOf food:Pasta . },
     { food:Pasta rdfs:subClassOf food:ConsumableThing . }.
 
-{ food:NonSpicyRedMeat rdfs:subClassOf food:ConsumableThing . }
+{ food:Pasta rdfs:subClassOf food:ConsumableThing . }
   pe:rule 2;
   pe:binding
-    [ pe:var "C"; pe:value food:NonSpicyRedMeat ],
-    [ pe:var "D"; pe:value food:Meat ],
+    [ pe:var "C"; pe:value food:Pasta ],
+    [ pe:var "D"; pe:value food:EdibleThing ],
     [ pe:var "E"; pe:value food:ConsumableThing ];
   pe:uses
-    { food:NonSpicyRedMeat rdfs:subClassOf food:Meat . },
-    { food:Meat rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:SpicyRedMeat rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:SpicyRedMeat ],
-    [ pe:var "D"; pe:value food:Meat ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:SpicyRedMeat rdfs:subClassOf food:Meat . },
-    { food:Meat rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:OysterShellfish rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:OysterShellfish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:OysterShellfish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:NonOysterShellfish rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonOysterShellfish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:NonOysterShellfish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:NonBlandFish rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:NonBlandFish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:NonBlandFish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:ConsumableThing . }.
-
-{ food:BlandFish rdfs:subClassOf food:ConsumableThing . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value food:BlandFish ],
-    [ pe:var "D"; pe:value food:Seafood ],
-    [ pe:var "E"; pe:value food:ConsumableThing ];
-  pe:uses
-    { food:BlandFish rdfs:subClassOf food:Seafood . },
-    { food:Seafood rdfs:subClassOf food:ConsumableThing . }.
+    { food:Pasta rdfs:subClassOf food:EdibleThing . },
+    { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.

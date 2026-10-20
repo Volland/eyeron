@@ -3,23 +3,8 @@
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-:polly a :Bird .
-:polly :abnormal true .
 :tweety :flies true .
 :polly :flies false .
-
-{ :polly a :Bird . }
-  pe:rule 1;
-  pe:binding [ pe:var "X"; pe:value :polly ];
-  pe:uses { :polly a :Penguin . }.
-
-{ :polly a :Penguin . }
-  pe:fact "defeasable-logic.n3".
-
-{ :polly :abnormal true . }
-  pe:rule 2;
-  pe:binding [ pe:var "X"; pe:value :polly ];
-  pe:uses { :polly a :Penguin . }.
 
 { :tweety :flies true . }
   pe:rule 3;
@@ -66,6 +51,14 @@
             :polly :flies true .
         } .
     }.
+
+{ :polly a :Bird . }
+  pe:rule 1;
+  pe:binding [ pe:var "X"; pe:value :polly ];
+  pe:uses { :polly a :Penguin . }.
+
+{ :polly a :Penguin . }
+  pe:fact "defeasable-logic.n3".
 
 {
   {

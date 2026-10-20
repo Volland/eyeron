@@ -4,30 +4,7 @@
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-(:water) log:allPossibleCases ({
-    :water :is :solid .
-} {
-    :water :is :liquid .
-} {
-    :water :is :gas .
-}) .
 :water :is :observable .
-
-{
-  (:water) log:allPossibleCases ({
-      :water :is :solid .
-  } {
-      :water :is :liquid .
-  } {
-      :water :is :gas .
-  }) .
-}
-  pe:rule 1;
-  pe:binding [ pe:var "A"; pe:value :water ];
-  pe:uses { :water a :InorganicCompound . }.
-
-{ :water a :InorganicCompound . }
-  pe:fact "proof-by-cases-2.n3".
 
 { :water :is :observable . }
   pe:rule 5;
@@ -70,6 +47,22 @@
             } .
         }) log:forAllIn _:forAllIn .
     }.
+
+{
+  (:water) log:allPossibleCases ({
+      :water :is :solid .
+  } {
+      :water :is :liquid .
+  } {
+      :water :is :gas .
+  }) .
+}
+  pe:rule 1;
+  pe:binding [ pe:var "A"; pe:value :water ];
+  pe:uses { :water a :InorganicCompound . }.
+
+{ :water a :InorganicCompound . }
+  pe:fact "proof-by-cases-2.n3".
 
 {
   ({

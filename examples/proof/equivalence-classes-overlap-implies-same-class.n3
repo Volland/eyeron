@@ -2,58 +2,6 @@
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 
-:a :sim :a .
-:b :sim :b .
-:c :sim :c .
-:a :sim :b .
-:b :inClassOf :a .
-(:b :a) :sameClass true .
-:c :sim :b .
-:a :sim :c .
-:b :inClassOf :c .
-(:b :c) :sameClass true .
-:a :inClassOf :a .
-(:a :a) :sameClass true .
-:b :inClassOf :b .
-(:b :b) :sameClass true .
-:c :inClassOf :c .
-(:c :c) :sameClass true .
-:a :inClassOf :b .
-(:a :b) :sameClass true .
-(:a :a :b) :sharedMemberShowsSameClass true .
-(:a :b :b) :sharedMemberShowsSameClass true .
-(:b :a :b) :sharedMemberShowsSameClass true .
-(:b :a :a) :sharedMemberShowsSameClass true .
-:c :sim :a .
-:c :inClassOf :b .
-(:c :b) :sameClass true .
-:a :inClassOf :c .
-(:a :c) :sameClass true .
-(:c :c :b) :sharedMemberShowsSameClass true .
-(:c :b :b) :sharedMemberShowsSameClass true .
-(:a :c :b) :sharedMemberShowsSameClass true .
-(:b :c :b) :sharedMemberShowsSameClass true .
-(:b :c :a) :sharedMemberShowsSameClass true .
-(:b :c :c) :sharedMemberShowsSameClass true .
-(:a :a :a) :sharedMemberShowsSameClass true .
-(:a :b :a) :sharedMemberShowsSameClass true .
-(:a :c :a) :sharedMemberShowsSameClass true .
-(:b :b :b) :sharedMemberShowsSameClass true .
-(:b :b :a) :sharedMemberShowsSameClass true .
-(:b :b :c) :sharedMemberShowsSameClass true .
-(:c :c :c) :sharedMemberShowsSameClass true .
-(:c :b :c) :sharedMemberShowsSameClass true .
-(:c :c :a) :sharedMemberShowsSameClass true .
-(:c :b :a) :sharedMemberShowsSameClass true .
-:c :inClassOf :a .
-(:c :a) :sameClass true .
-(:b :a :c) :sharedMemberShowsSameClass true .
-(:a :b :c) :sharedMemberShowsSameClass true .
-(:c :a :a) :sharedMemberShowsSameClass true .
-(:a :c :c) :sharedMemberShowsSameClass true .
-(:a :a :c) :sharedMemberShowsSameClass true .
-(:c :a :c) :sharedMemberShowsSameClass true .
-(:c :a :b) :sharedMemberShowsSameClass true .
 :result :sameClassBecauseOfSharedMember (:a :b :b) .
 :result :sameClassBecauseOfSharedMember (:b :a :b) .
 :result :sameClassBecauseOfSharedMember (:b :a :a) .
@@ -73,493 +21,6 @@
 :result :sameClassBecauseOfSharedMember (:c :a :c) .
 :result :sameClassBecauseOfSharedMember (:c :a :b) .
 
-{ :a :sim :a . }
-  pe:rule 1;
-  pe:binding [ pe:var "x"; pe:value :a ];
-  pe:uses { :a :inX true . }.
-
-{ :a :inX true . }
-  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
-
-{ :b :sim :b . }
-  pe:rule 1;
-  pe:binding [ pe:var "x"; pe:value :b ];
-  pe:uses { :b :inX true . }.
-
-{ :b :inX true . }
-  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
-
-{ :c :sim :c . }
-  pe:rule 1;
-  pe:binding [ pe:var "x"; pe:value :c ];
-  pe:uses { :c :inX true . }.
-
-{ :c :inX true . }
-  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
-
-{ :a :sim :b . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :a ];
-  pe:uses { :b :sim :a . }.
-
-{ :b :sim :a . }
-  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
-
-{ :b :inClassOf :a . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :b ],
-    [ pe:var "x"; pe:value :a ];
-  pe:uses { :b :sim :a . }.
-
-{ (:b :a) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :a ];
-  pe:uses { :b :sim :a . }.
-
-{ :c :sim :b . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :c ];
-  pe:uses { :b :sim :c . }.
-
-{ :b :sim :c . }
-  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
-
-{ :a :sim :c . }
-  pe:rule 3;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :a :sim :b . },
-    { :b :sim :c . }.
-
-{ :b :inClassOf :c . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :b ],
-    [ pe:var "x"; pe:value :c ];
-  pe:uses { :b :sim :c . }.
-
-{ (:b :c) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :c ];
-  pe:uses { :b :sim :c . }.
-
-{ :a :inClassOf :a . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :a ],
-    [ pe:var "x"; pe:value :a ];
-  pe:uses { :a :sim :a . }.
-
-{ (:a :a) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :a ];
-  pe:uses { :a :sim :a . }.
-
-{ :b :inClassOf :b . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :b ],
-    [ pe:var "x"; pe:value :b ];
-  pe:uses { :b :sim :b . }.
-
-{ (:b :b) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :b ];
-  pe:uses { :b :sim :b . }.
-
-{ :c :inClassOf :c . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :c ],
-    [ pe:var "x"; pe:value :c ];
-  pe:uses { :c :sim :c . }.
-
-{ (:c :c) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :c ];
-  pe:uses { :c :sim :c . }.
-
-{ :a :inClassOf :b . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :a ],
-    [ pe:var "x"; pe:value :b ];
-  pe:uses { :a :sim :b . }.
-
-{ (:a :b) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :b ];
-  pe:uses { :a :sim :b . }.
-
-{ (:a :a :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :a . },
-    { :b :inClassOf :a . },
-    { (:a :a) :sameClass true . }.
-
-{ (:a :b :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :a . },
-    { :b :inClassOf :b . },
-    { (:a :b) :sameClass true . }.
-
-{ (:b :a :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :b . },
-    { :b :inClassOf :a . },
-    { (:b :a) :sameClass true . }.
-
-{ (:b :a :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :b . },
-    { :a :inClassOf :a . },
-    { (:b :a) :sameClass true . }.
-
-{ :c :sim :a . }
-  pe:rule 3;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :c :sim :b . },
-    { :b :sim :a . }.
-
-{ :c :inClassOf :b . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :c ],
-    [ pe:var "x"; pe:value :b ];
-  pe:uses { :c :sim :b . }.
-
-{ (:c :b) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :b ];
-  pe:uses { :c :sim :b . }.
-
-{ :a :inClassOf :c . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :a ],
-    [ pe:var "x"; pe:value :c ];
-  pe:uses { :a :sim :c . }.
-
-{ (:a :c) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :c ];
-  pe:uses { :a :sim :c . }.
-
-{ (:c :c :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :c . },
-    { :b :inClassOf :c . },
-    { (:c :c) :sameClass true . }.
-
-{ (:c :b :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :c . },
-    { :b :inClassOf :b . },
-    { (:c :b) :sameClass true . }.
-
-{ (:a :c :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :a . },
-    { :b :inClassOf :c . },
-    { (:a :c) :sameClass true . }.
-
-{ (:b :c :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :b . },
-    { :b :inClassOf :c . },
-    { (:b :c) :sameClass true . }.
-
-{ (:b :c :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :b . },
-    { :a :inClassOf :c . },
-    { (:b :c) :sameClass true . }.
-
-{ (:b :c :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :b . },
-    { :c :inClassOf :c . },
-    { (:b :c) :sameClass true . }.
-
-{ (:a :a :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :a . },
-    { :a :inClassOf :a . },
-    { (:a :a) :sameClass true . }.
-
-{ (:a :b :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :a . },
-    { :a :inClassOf :b . },
-    { (:a :b) :sameClass true . }.
-
-{ (:a :c :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :a . },
-    { :a :inClassOf :c . },
-    { (:a :c) :sameClass true . }.
-
-{ (:b :b :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :b . },
-    { :b :inClassOf :b . },
-    { (:b :b) :sameClass true . }.
-
-{ (:b :b :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :b . },
-    { :a :inClassOf :b . },
-    { (:b :b) :sameClass true . }.
-
-{ (:b :b :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :b . },
-    { :c :inClassOf :b . },
-    { (:b :b) :sameClass true . }.
-
-{ (:c :c :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :c . },
-    { :c :inClassOf :c . },
-    { (:c :c) :sameClass true . }.
-
-{ (:c :b :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :c . },
-    { :c :inClassOf :b . },
-    { (:c :b) :sameClass true . }.
-
-{ (:c :c :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :c . },
-    { :a :inClassOf :c . },
-    { (:c :c) :sameClass true . }.
-
-{ (:c :b :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :c . },
-    { :a :inClassOf :b . },
-    { (:c :b) :sameClass true . }.
-
-{ :c :inClassOf :a . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "u"; pe:value :c ],
-    [ pe:var "x"; pe:value :a ];
-  pe:uses { :c :sim :a . }.
-
-{ (:c :a) :sameClass true . }
-  pe:rule 5;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :a ];
-  pe:uses { :c :sim :a . }.
-
-{ (:b :a :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :b ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :b . },
-    { :c :inClassOf :a . },
-    { (:b :a) :sameClass true . }.
-
-{ (:a :b :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :b ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :a . },
-    { :c :inClassOf :b . },
-    { (:a :b) :sameClass true . }.
-
-{ (:c :a :a) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :a ];
-  pe:uses
-    { :a :inClassOf :c . },
-    { :a :inClassOf :a . },
-    { (:c :a) :sameClass true . }.
-
-{ (:a :c :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :c ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :a . },
-    { :c :inClassOf :c . },
-    { (:a :c) :sameClass true . }.
-
-{ (:a :a :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :a ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :a . },
-    { :c :inClassOf :a . },
-    { (:a :a) :sameClass true . }.
-
-{ (:c :a :c) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :c ];
-  pe:uses
-    { :c :inClassOf :c . },
-    { :c :inClassOf :a . },
-    { (:c :a) :sameClass true . }.
-
-{ (:c :a :b) :sharedMemberShowsSameClass true . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "x"; pe:value :c ],
-    [ pe:var "y"; pe:value :a ],
-    [ pe:var "z"; pe:value :b ];
-  pe:uses
-    { :b :inClassOf :c . },
-    { :b :inClassOf :a . },
-    { (:c :a) :sameClass true . }.
-
 { :result :sameClassBecauseOfSharedMember (:a :b :b) . }
   pe:rule
     {
@@ -577,6 +38,56 @@
   pe:uses
     { (:a :b :b) :sharedMemberShowsSameClass true . },
     { :a log:notEqualTo :b . }.
+
+{ (:a :b :b) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :b ];
+  pe:uses
+    { :b :inClassOf :a . },
+    { :b :inClassOf :b . },
+    { (:a :b) :sameClass true . }.
+
+{ :b :inClassOf :a . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :b ],
+    [ pe:var "x"; pe:value :a ];
+  pe:uses { :b :sim :a . }.
+
+{ :b :sim :a . }
+  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
+
+{ :b :inClassOf :b . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :b ],
+    [ pe:var "x"; pe:value :b ];
+  pe:uses { :b :sim :b . }.
+
+{ :b :sim :b . }
+  pe:rule 1;
+  pe:binding [ pe:var "x"; pe:value :b ];
+  pe:uses { :b :inX true . }.
+
+{ :b :inX true . }
+  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
+
+{ (:a :b) :sameClass true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :b ];
+  pe:uses { :a :sim :b . }.
+
+{ :a :sim :b . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :a ];
+  pe:uses { :b :sim :a . }.
 
 { :a log:notEqualTo :b . }
   pe:builtin log:notEqualTo.
@@ -599,6 +110,24 @@
     { (:b :a :b) :sharedMemberShowsSameClass true . },
     { :b log:notEqualTo :a . }.
 
+{ (:b :a :b) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :a ],
+    [ pe:var "z"; pe:value :b ];
+  pe:uses
+    { :b :inClassOf :b . },
+    { :b :inClassOf :a . },
+    { (:b :a) :sameClass true . }.
+
+{ (:b :a) :sameClass true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :a ];
+  pe:uses { :b :sim :a . }.
+
 { :b log:notEqualTo :a . }
   pe:builtin log:notEqualTo.
 
@@ -620,6 +149,39 @@
     { (:b :a :a) :sharedMemberShowsSameClass true . },
     { :b log:notEqualTo :a . }.
 
+{ (:b :a :a) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :a ],
+    [ pe:var "z"; pe:value :a ];
+  pe:uses
+    { :a :inClassOf :b . },
+    { :a :inClassOf :a . },
+    { (:b :a) :sameClass true . }.
+
+{ :a :inClassOf :b . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :a ],
+    [ pe:var "x"; pe:value :b ];
+  pe:uses { :a :sim :b . }.
+
+{ :a :inClassOf :a . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :a ],
+    [ pe:var "x"; pe:value :a ];
+  pe:uses { :a :sim :a . }.
+
+{ :a :sim :a . }
+  pe:rule 1;
+  pe:binding [ pe:var "x"; pe:value :a ];
+  pe:uses { :a :inX true . }.
+
+{ :a :inX true . }
+  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
+
 { :result :sameClassBecauseOfSharedMember (:c :b :b) . }
   pe:rule
     {
@@ -637,6 +199,41 @@
   pe:uses
     { (:c :b :b) :sharedMemberShowsSameClass true . },
     { :c log:notEqualTo :b . }.
+
+{ (:c :b :b) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :b ];
+  pe:uses
+    { :b :inClassOf :c . },
+    { :b :inClassOf :b . },
+    { (:c :b) :sameClass true . }.
+
+{ :b :inClassOf :c . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :b ],
+    [ pe:var "x"; pe:value :c ];
+  pe:uses { :b :sim :c . }.
+
+{ :b :sim :c . }
+  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
+
+{ (:c :b) :sameClass true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :b ];
+  pe:uses { :c :sim :b . }.
+
+{ :c :sim :b . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :c ];
+  pe:uses { :b :sim :c . }.
 
 { :c log:notEqualTo :b . }
   pe:builtin log:notEqualTo.
@@ -659,6 +256,34 @@
     { (:a :c :b) :sharedMemberShowsSameClass true . },
     { :a log:notEqualTo :c . }.
 
+{ (:a :c :b) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :c ],
+    [ pe:var "z"; pe:value :b ];
+  pe:uses
+    { :b :inClassOf :a . },
+    { :b :inClassOf :c . },
+    { (:a :c) :sameClass true . }.
+
+{ (:a :c) :sameClass true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :c ];
+  pe:uses { :a :sim :c . }.
+
+{ :a :sim :c . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :c ];
+  pe:uses
+    { :a :sim :b . },
+    { :b :sim :c . }.
+
 { :a log:notEqualTo :c . }
   pe:builtin log:notEqualTo.
 
@@ -679,6 +304,24 @@
   pe:uses
     { (:b :c :b) :sharedMemberShowsSameClass true . },
     { :b log:notEqualTo :c . }.
+
+{ (:b :c :b) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :c ],
+    [ pe:var "z"; pe:value :b ];
+  pe:uses
+    { :b :inClassOf :b . },
+    { :b :inClassOf :c . },
+    { (:b :c) :sameClass true . }.
+
+{ (:b :c) :sameClass true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :c ];
+  pe:uses { :b :sim :c . }.
 
 { :b log:notEqualTo :c . }
   pe:builtin log:notEqualTo.
@@ -701,6 +344,24 @@
     { (:b :c :a) :sharedMemberShowsSameClass true . },
     { :b log:notEqualTo :c . }.
 
+{ (:b :c :a) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :c ],
+    [ pe:var "z"; pe:value :a ];
+  pe:uses
+    { :a :inClassOf :b . },
+    { :a :inClassOf :c . },
+    { (:b :c) :sameClass true . }.
+
+{ :a :inClassOf :c . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :a ],
+    [ pe:var "x"; pe:value :c ];
+  pe:uses { :a :sim :c . }.
+
 { :result :sameClassBecauseOfSharedMember (:b :c :c) . }
   pe:rule
     {
@@ -718,6 +379,39 @@
   pe:uses
     { (:b :c :c) :sharedMemberShowsSameClass true . },
     { :b log:notEqualTo :c . }.
+
+{ (:b :c :c) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :c ],
+    [ pe:var "z"; pe:value :c ];
+  pe:uses
+    { :c :inClassOf :b . },
+    { :c :inClassOf :c . },
+    { (:b :c) :sameClass true . }.
+
+{ :c :inClassOf :b . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :c ],
+    [ pe:var "x"; pe:value :b ];
+  pe:uses { :c :sim :b . }.
+
+{ :c :inClassOf :c . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :c ],
+    [ pe:var "x"; pe:value :c ];
+  pe:uses { :c :sim :c . }.
+
+{ :c :sim :c . }
+  pe:rule 1;
+  pe:binding [ pe:var "x"; pe:value :c ];
+  pe:uses { :c :inX true . }.
+
+{ :c :inX true . }
+  pe:fact "equivalence-classes-overlap-implies-same-class.n3".
 
 { :result :sameClassBecauseOfSharedMember (:a :b :a) . }
   pe:rule
@@ -737,6 +431,17 @@
     { (:a :b :a) :sharedMemberShowsSameClass true . },
     { :a log:notEqualTo :b . }.
 
+{ (:a :b :a) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :a ];
+  pe:uses
+    { :a :inClassOf :a . },
+    { :a :inClassOf :b . },
+    { (:a :b) :sameClass true . }.
+
 { :result :sameClassBecauseOfSharedMember (:a :c :a) . }
   pe:rule
     {
@@ -754,6 +459,17 @@
   pe:uses
     { (:a :c :a) :sharedMemberShowsSameClass true . },
     { :a log:notEqualTo :c . }.
+
+{ (:a :c :a) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :c ],
+    [ pe:var "z"; pe:value :a ];
+  pe:uses
+    { :a :inClassOf :a . },
+    { :a :inClassOf :c . },
+    { (:a :c) :sameClass true . }.
 
 { :result :sameClassBecauseOfSharedMember (:c :b :c) . }
   pe:rule
@@ -773,6 +489,17 @@
     { (:c :b :c) :sharedMemberShowsSameClass true . },
     { :c log:notEqualTo :b . }.
 
+{ (:c :b :c) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :c ];
+  pe:uses
+    { :c :inClassOf :c . },
+    { :c :inClassOf :b . },
+    { (:c :b) :sameClass true . }.
+
 { :result :sameClassBecauseOfSharedMember (:c :b :a) . }
   pe:rule
     {
@@ -790,6 +517,17 @@
   pe:uses
     { (:c :b :a) :sharedMemberShowsSameClass true . },
     { :c log:notEqualTo :b . }.
+
+{ (:c :b :a) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :a ];
+  pe:uses
+    { :a :inClassOf :c . },
+    { :a :inClassOf :b . },
+    { (:c :b) :sameClass true . }.
 
 { :result :sameClassBecauseOfSharedMember (:b :a :c) . }
   pe:rule
@@ -809,6 +547,34 @@
     { (:b :a :c) :sharedMemberShowsSameClass true . },
     { :b log:notEqualTo :a . }.
 
+{ (:b :a :c) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :b ],
+    [ pe:var "y"; pe:value :a ],
+    [ pe:var "z"; pe:value :c ];
+  pe:uses
+    { :c :inClassOf :b . },
+    { :c :inClassOf :a . },
+    { (:b :a) :sameClass true . }.
+
+{ :c :inClassOf :a . }
+  pe:rule 4;
+  pe:binding
+    [ pe:var "u"; pe:value :c ],
+    [ pe:var "x"; pe:value :a ];
+  pe:uses { :c :sim :a . }.
+
+{ :c :sim :a . }
+  pe:rule 3;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :a ];
+  pe:uses
+    { :c :sim :b . },
+    { :b :sim :a . }.
+
 { :result :sameClassBecauseOfSharedMember (:a :b :c) . }
   pe:rule
     {
@@ -827,6 +593,17 @@
     { (:a :b :c) :sharedMemberShowsSameClass true . },
     { :a log:notEqualTo :b . }.
 
+{ (:a :b :c) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :b ],
+    [ pe:var "z"; pe:value :c ];
+  pe:uses
+    { :c :inClassOf :a . },
+    { :c :inClassOf :b . },
+    { (:a :b) :sameClass true . }.
+
 { :result :sameClassBecauseOfSharedMember (:c :a :a) . }
   pe:rule
     {
@@ -844,6 +621,24 @@
   pe:uses
     { (:c :a :a) :sharedMemberShowsSameClass true . },
     { :c log:notEqualTo :a . }.
+
+{ (:c :a :a) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :a ],
+    [ pe:var "z"; pe:value :a ];
+  pe:uses
+    { :a :inClassOf :c . },
+    { :a :inClassOf :a . },
+    { (:c :a) :sameClass true . }.
+
+{ (:c :a) :sameClass true . }
+  pe:rule 5;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :a ];
+  pe:uses { :c :sim :a . }.
 
 { :c log:notEqualTo :a . }
   pe:builtin log:notEqualTo.
@@ -866,6 +661,17 @@
     { (:a :c :c) :sharedMemberShowsSameClass true . },
     { :a log:notEqualTo :c . }.
 
+{ (:a :c :c) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :a ],
+    [ pe:var "y"; pe:value :c ],
+    [ pe:var "z"; pe:value :c ];
+  pe:uses
+    { :c :inClassOf :a . },
+    { :c :inClassOf :c . },
+    { (:a :c) :sameClass true . }.
+
 { :result :sameClassBecauseOfSharedMember (:c :a :c) . }
   pe:rule
     {
@@ -884,6 +690,17 @@
     { (:c :a :c) :sharedMemberShowsSameClass true . },
     { :c log:notEqualTo :a . }.
 
+{ (:c :a :c) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :a ],
+    [ pe:var "z"; pe:value :c ];
+  pe:uses
+    { :c :inClassOf :c . },
+    { :c :inClassOf :a . },
+    { (:c :a) :sameClass true . }.
+
 { :result :sameClassBecauseOfSharedMember (:c :a :b) . }
   pe:rule
     {
@@ -901,3 +718,14 @@
   pe:uses
     { (:c :a :b) :sharedMemberShowsSameClass true . },
     { :c log:notEqualTo :a . }.
+
+{ (:c :a :b) :sharedMemberShowsSameClass true . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "x"; pe:value :c ],
+    [ pe:var "y"; pe:value :a ],
+    [ pe:var "z"; pe:value :b ];
+  pe:uses
+    { :b :inClassOf :c . },
+    { :b :inClassOf :a . },
+    { (:c :a) :sameClass true . }.

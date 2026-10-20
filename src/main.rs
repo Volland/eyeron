@@ -382,8 +382,9 @@ fn report_proof_check(path: &str, sources: &[(String, String)], report: &eyeron:
         };
         println!("  {}: {}", description, count);
     }
-    if report.valid() {
-        println!("All premises and claims are supported; no circular dependencies.");
+    println!("Conditions:");
+    for (id, name, checked, failed) in report.conditions() {
+        println!("  {} {}: {} checked, {} failed", id, name, checked, failed);
     }
     if !report.obligations.is_empty() {
         println!("Trust obligations (accepted without verifying their truth):");
@@ -398,14 +399,8 @@ fn report_proof_check(path: &str, sources: &[(String, String)], report: &eyeron:
         println!("Failures:");
     }
     for failure in &report.failures {
-        let condition = match failure.condition {
-            "C1" => "C1: premise resolution",
-            "C2" => "C2: circular dependencies",
-            "C3" => "C3: step justification",
-            "C4" => "C4: claim coverage",
-            other => other,
-        };
-        println!("  [{}]", condition);
+        let name = eyeron::proof_check::CONDITIONS.iter().find(|(id, _)| *id == failure.condition).map_or("", |(_, name)| name);
+        println!("  [{}: {}]", failure.condition, name);
         for line in failure.conclusion.lines() {
             println!("    {}", line);
         }

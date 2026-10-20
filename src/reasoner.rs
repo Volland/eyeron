@@ -3194,6 +3194,67 @@ pub fn verify_builtin_triple(goal: &Triple) -> bool {
     eval_builtin(goal, &concrete, &[], None, &[], 0, &mut backward_stack, &mut budget).is_some_and(|matches| !matches.is_empty())
 }
 
+/// The formula an unbound `log:notIncludes` subject is bound to once the
+/// current graph has been found not to include the object: the argument
+/// mode the N3 built-ins tests expect, `?X log:notIncludes { :A :b :c }`
+/// giving `?X = { :a :b :c }`. The test itself was over the current graph.
+fn not_includes_witness() -> Term {
+    Term::formula(vec![Triple::new(
+        Term::iri("http://example.org/a"),
+        Term::iri("http://example.org/b"),
+        Term::iri("http://example.org/c"),
+    )])
+}
+
+/// Whether `term` is the formula `log:notIncludes` binds an unbound subject
+/// to, which stands for a test over the current graph.
+pub fn is_not_includes_witness(term: &Term) -> bool {
+    *term == not_includes_witness()
+}
+
+/// A closed set of triples — what a proof records, its source facts and
+/// step conclusions — that patterns and built-ins can be evaluated against
+/// with no rules, so nothing is inferred. A proof checker uses it to look
+/// for contrary evidence inside the proof itself.
+pub struct Evidence {
+    facts: Vec<Triple>,
+    index: FactIndex,
+}
+
+impl Evidence {
+    pub fn new(facts: Vec<Triple>) -> Self {
+        let mut index = FactIndex::default();
+        for position in 0..facts.len() {
+            index.insert(&facts, position);
+        }
+        Self { facts, index }
+    }
+
+    /// The solutions of `pattern` over the evidence alone.
+    pub fn solutions(&self, pattern: &[Triple]) -> Vec<Bindings> {
+        let mut budget = SearchBudget::for_proof(1);
+        let mut out = Vec::new();
+        match_premise_at(pattern, &self.facts, Some(&self.index), &[], 0, Bindings::new(), 0, &mut HashSet::new(), &mut budget, &mut out);
+        out
+    }
+
+    /// Evaluate built-in `goal`, with the evidence as the current graph.
+    pub fn evaluate(&self, goal: &Triple) -> Vec<Bindings> {
+        let mut concrete = BTreeMap::new();
+        for term in [&goal.s, &goal.p, &goal.o] {
+            bind_concrete_blanks(term, &mut concrete);
+        }
+        let mut budget = SearchBudget::for_proof(1);
+        eval_builtin(goal, &concrete, &self.facts, Some(&self.index), &[], 0, &mut HashSet::new(), &mut budget).unwrap_or_default()
+    }
+
+    /// Whether every triple of `pattern` is a built-in, so that its failing
+    /// over the evidence refutes it rather than only failing to find it.
+    pub fn is_decidable(pattern: &[Triple]) -> bool {
+        pattern.iter().all(is_builtin_premise)
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 fn explain_backward_inner(
     goal: &Triple,
@@ -4275,13 +4336,8 @@ fn eval_log_not_includes(
             ) {
                 return Vec::new();
             }
-            let witness = Term::formula(vec![Triple::new(
-                Term::Iri("http://example.org/a".to_string().into()),
-                Term::Iri("http://example.org/b".to_string().into()),
-                Term::Iri("http://example.org/c".to_string().into()),
-            )]);
             let mut b = bindings.clone();
-            if bind_one_mut(&mut b, &name, witness) {
+            if bind_one_mut(&mut b, &name, not_includes_witness()) {
                 vec![canonicalize_owned(b)]
             } else {
                 Vec::new()

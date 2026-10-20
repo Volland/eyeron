@@ -1,117 +1,10 @@
 @prefix : <http://example.org/#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 
-:paris :path :orleans .
-:paris :path :chartres .
-:paris :path :amiens .
-:orleans :path :blois .
-:orleans :path :bourges .
-:blois :path :tours .
-:chartres :path :lemans .
-:lemans :path :angers .
-:lemans :path :tours .
 :angers :path :nantes .
-:paris :path :blois .
-:paris :path :bourges .
-:paris :path :lemans .
-:orleans :path :tours .
-:paris :path :tours .
-:chartres :path :angers .
-:chartres :path :tours .
 :lemans :path :nantes .
-:paris :path :angers .
 :chartres :path :nantes .
 :paris :path :nantes .
-
-{ :paris :path :orleans . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :orleans ];
-  pe:uses { :paris :oneway :orleans . }.
-
-{ :paris :oneway :orleans . }
-  pe:fact "road-paths.n3".
-
-{ :paris :path :chartres . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :chartres ];
-  pe:uses { :paris :oneway :chartres . }.
-
-{ :paris :oneway :chartres . }
-  pe:fact "road-paths.n3".
-
-{ :paris :path :amiens . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :amiens ];
-  pe:uses { :paris :oneway :amiens . }.
-
-{ :paris :oneway :amiens . }
-  pe:fact "road-paths.n3".
-
-{ :orleans :path :blois . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :orleans ],
-    [ pe:var "B"; pe:value :blois ];
-  pe:uses { :orleans :oneway :blois . }.
-
-{ :orleans :oneway :blois . }
-  pe:fact "road-paths.n3".
-
-{ :orleans :path :bourges . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :orleans ],
-    [ pe:var "B"; pe:value :bourges ];
-  pe:uses { :orleans :oneway :bourges . }.
-
-{ :orleans :oneway :bourges . }
-  pe:fact "road-paths.n3".
-
-{ :blois :path :tours . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :blois ],
-    [ pe:var "B"; pe:value :tours ];
-  pe:uses { :blois :oneway :tours . }.
-
-{ :blois :oneway :tours . }
-  pe:fact "road-paths.n3".
-
-{ :chartres :path :lemans . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :chartres ],
-    [ pe:var "B"; pe:value :lemans ];
-  pe:uses { :chartres :oneway :lemans . }.
-
-{ :chartres :oneway :lemans . }
-  pe:fact "road-paths.n3".
-
-{ :lemans :path :angers . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :lemans ],
-    [ pe:var "B"; pe:value :angers ];
-  pe:uses { :lemans :oneway :angers . }.
-
-{ :lemans :oneway :angers . }
-  pe:fact "road-paths.n3".
-
-{ :lemans :path :tours . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "A"; pe:value :lemans ],
-    [ pe:var "B"; pe:value :tours ];
-  pe:uses { :lemans :oneway :tours . }.
-
-{ :lemans :oneway :tours . }
-  pe:fact "road-paths.n3".
 
 { :angers :path :nantes . }
   pe:rule 1;
@@ -123,55 +16,35 @@
 { :angers :oneway :nantes . }
   pe:fact "road-paths.n3".
 
-{ :paris :path :blois . }
+{ :lemans :path :nantes . }
   pe:rule 2;
   pe:binding
-    [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :orleans ],
-    [ pe:var "C"; pe:value :blois ];
+    [ pe:var "A"; pe:value :lemans ],
+    [ pe:var "B"; pe:value :angers ],
+    [ pe:var "C"; pe:value :nantes ];
   pe:uses
-    { :paris :path :orleans . },
-    { :orleans :path :blois . }.
+    { :lemans :path :angers . },
+    { :angers :path :nantes . }.
 
-{ :paris :path :bourges . }
-  pe:rule 2;
+{ :lemans :path :angers . }
+  pe:rule 1;
   pe:binding
-    [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :orleans ],
-    [ pe:var "C"; pe:value :bourges ];
-  pe:uses
-    { :paris :path :orleans . },
-    { :orleans :path :bourges . }.
+    [ pe:var "A"; pe:value :lemans ],
+    [ pe:var "B"; pe:value :angers ];
+  pe:uses { :lemans :oneway :angers . }.
 
-{ :paris :path :lemans . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :chartres ],
-    [ pe:var "C"; pe:value :lemans ];
-  pe:uses
-    { :paris :path :chartres . },
-    { :chartres :path :lemans . }.
+{ :lemans :oneway :angers . }
+  pe:fact "road-paths.n3".
 
-{ :orleans :path :tours . }
+{ :chartres :path :nantes . }
   pe:rule 2;
   pe:binding
-    [ pe:var "A"; pe:value :orleans ],
-    [ pe:var "B"; pe:value :blois ],
-    [ pe:var "C"; pe:value :tours ];
+    [ pe:var "A"; pe:value :chartres ],
+    [ pe:var "B"; pe:value :angers ],
+    [ pe:var "C"; pe:value :nantes ];
   pe:uses
-    { :orleans :path :blois . },
-    { :blois :path :tours . }.
-
-{ :paris :path :tours . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :blois ],
-    [ pe:var "C"; pe:value :tours ];
-  pe:uses
-    { :paris :path :blois . },
-    { :blois :path :tours . }.
+    { :chartres :path :angers . },
+    { :angers :path :nantes . }.
 
 { :chartres :path :angers . }
   pe:rule 2;
@@ -183,24 +56,24 @@
     { :chartres :path :lemans . },
     { :lemans :path :angers . }.
 
-{ :chartres :path :tours . }
-  pe:rule 2;
+{ :chartres :path :lemans . }
+  pe:rule 1;
   pe:binding
     [ pe:var "A"; pe:value :chartres ],
-    [ pe:var "B"; pe:value :lemans ],
-    [ pe:var "C"; pe:value :tours ];
-  pe:uses
-    { :chartres :path :lemans . },
-    { :lemans :path :tours . }.
+    [ pe:var "B"; pe:value :lemans ];
+  pe:uses { :chartres :oneway :lemans . }.
 
-{ :lemans :path :nantes . }
+{ :chartres :oneway :lemans . }
+  pe:fact "road-paths.n3".
+
+{ :paris :path :nantes . }
   pe:rule 2;
   pe:binding
-    [ pe:var "A"; pe:value :lemans ],
+    [ pe:var "A"; pe:value :paris ],
     [ pe:var "B"; pe:value :angers ],
     [ pe:var "C"; pe:value :nantes ];
   pe:uses
-    { :lemans :path :angers . },
+    { :paris :path :angers . },
     { :angers :path :nantes . }.
 
 { :paris :path :angers . }
@@ -213,22 +86,22 @@
     { :paris :path :lemans . },
     { :lemans :path :angers . }.
 
-{ :chartres :path :nantes . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "A"; pe:value :chartres ],
-    [ pe:var "B"; pe:value :angers ],
-    [ pe:var "C"; pe:value :nantes ];
-  pe:uses
-    { :chartres :path :angers . },
-    { :angers :path :nantes . }.
-
-{ :paris :path :nantes . }
+{ :paris :path :lemans . }
   pe:rule 2;
   pe:binding
     [ pe:var "A"; pe:value :paris ],
-    [ pe:var "B"; pe:value :angers ],
-    [ pe:var "C"; pe:value :nantes ];
+    [ pe:var "B"; pe:value :chartres ],
+    [ pe:var "C"; pe:value :lemans ];
   pe:uses
-    { :paris :path :angers . },
-    { :angers :path :nantes . }.
+    { :paris :path :chartres . },
+    { :chartres :path :lemans . }.
+
+{ :paris :path :chartres . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "A"; pe:value :paris ],
+    [ pe:var "B"; pe:value :chartres ];
+  pe:uses { :paris :oneway :chartres . }.
+
+{ :paris :oneway :chartres . }
+  pe:fact "road-paths.n3".

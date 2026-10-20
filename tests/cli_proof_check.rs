@@ -112,7 +112,7 @@ fn separately_checked_invalid_proof_still_returns_failure() {
     assert_eq!(output.status.code(), Some(1));
     let text = String::from_utf8(output.stdout).unwrap();
     assert!(text.contains("invalid: 1 failure(s)"), "{text}");
-    assert!(text.contains("[C3: step justification]"), "{text}");
+    assert!(text.contains("[C1: resolution]"), "{text}");
 }
 
 #[test]

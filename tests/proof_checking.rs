@@ -61,6 +61,12 @@ fn check(name: &str) -> Result<Report, String> {
     eyeron::proof_check_n3::check_proof_document(&document, &proof).map_err(|e| e.message)
 }
 
+/// Packaged proofs that must be rejected, and the condition that rejects
+/// them. variable-predicate-dependency.n3 is an intentional negative cycle:
+/// the run assumes `:a a :Blocked` is absent and then derives it, so its
+/// proof contradicts itself (C6).
+const EXPECTED_INVALID: &[(&str, &str)] = &[("variable-predicate-dependency", "C6")];
+
 fn main() {
     let started = std::time::Instant::now();
     let mut passed = 0usize;
@@ -73,12 +79,19 @@ fn main() {
         for path in sorted_proofs() {
             let name = path.file_stem().and_then(|s| s.to_str()).expect("utf8 name").to_string();
             let outcome = check(&name);
+            let expected = EXPECTED_INVALID.iter().find(|(invalid, _)| *invalid == name).map(|(_, condition)| *condition);
             let (valid, summary) = match &outcome {
                 Ok(report) => {
                     steps += report.steps;
                     verified += report.verified;
                     trusted += report.obligations.len();
-                    (report.valid(), report.verdict())
+                    match expected {
+                        Some(condition) => {
+                            let rejected = !report.valid() && report.failures.iter().all(|failure| failure.condition == condition);
+                            (rejected, format!("{}, rejected under {condition} as expected", report.verdict()))
+                        }
+                        None => (report.valid(), report.verdict()),
+                    }
                 }
                 Err(message) => (false, format!("could not be read: {message}")),
             };

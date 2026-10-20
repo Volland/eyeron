@@ -9,7 +9,11 @@ const PE_NS: &str = "https://eyereasoner.github.io/pe#";
 pub fn proof_to_n3(prefixes: &BTreeMap<String, String>, result: &ReasonerResult) -> String {
     if result.proofs.is_empty() { return String::new(); }
 
-    let roots = unique_proofs(&result.proofs);
+    // A proof claims what the run outputs — with queries, their answers
+    // alone — and records only the steps those claims depend on.
+    let output = result.derived.iter().collect::<BTreeSet<_>>();
+    let mut roots = unique_proofs(&result.proofs);
+    roots.retain(|root| output.contains(&root.fact));
     let derived_by_fact = index_by_conclusion(&result.proofs);
     let explicit_facts = result.explicit.iter().cloned().collect::<BTreeSet<_>>();
 
@@ -158,14 +162,38 @@ impl<'a> ProofCollector<'a, '_> {
         // the closure, so the fact stays a claim the proof makes. But writing
         // the rule application as its step would say the fact holds because it
         // holds. What actually holds it up is whatever proved the premise, so
-        // that is what the step below records.
-        if !proof.premises.contains(&proof.fact) {
+        // that is what the step below records -- and that premise alone, as
+        // nothing in the proof uses the others.
+        if proof.premises.contains(&proof.fact) {
+            self.visit_premise(&proof.fact, Some(proof));
+        } else {
             self.entries.push(ProofEntry::Rule(std::borrow::Cow::Borrowed(proof)));
+            for premise in &proof.premises {
+                self.visit_premise(premise, Some(proof));
+            }
         }
 
-        for premise in &proof.premises {
-            self.visit_premise(premise, Some(proof));
+        // A rule the run generated is carried by the step, which a checker
+        // accepts only when the proof also derives it; with only the output
+        // claimed, nothing else would put that derivation in.
+        if proof.rule.source.is_none() {
+            if let Some(derivation) = self.rule_derivation(&proof.rule) {
+                self.visit_derived_fact(derivation);
+            }
         }
+    }
+
+    /// The derivation of the statement asserting `rule`, written either way
+    /// round and up to the renaming of its variables.
+    fn rule_derivation(&self, rule: &Rule) -> Option<&'a DerivedFact> {
+        let statement = rule_statement(rule);
+        let reversed = Triple::new(statement.o.clone(), Term::iri(if rule.is_forward { LOG_IMPLIED_BY } else { LOG_IMPLIES }), statement.s.clone());
+        let same = |fact: &Triple, wanted: &Triple| fact.p == wanted.p
+            && crate::reasoner::match_triple(fact, wanted, &mut BTreeMap::new());
+        self.derived_by_fact
+            .iter()
+            .find(|(fact, _)| same(fact, &statement) || same(fact, &reversed))
+            .and_then(|(_, derivations)| derivations.first().copied())
     }
 
     fn remember_backward_step(&mut self, step: BackwardStep) {

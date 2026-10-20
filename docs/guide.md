@@ -58,9 +58,9 @@ eyeron -p examples/socrates.n3 > /tmp/socrates.why.n3
 eyeron --check-proof /tmp/socrates.why.n3 examples/socrates.n3
 ```
 
-A proof records derived claims and steps with their justifications, bindings, and premises. The checker checks those recorded steps, premise resolution, dependency cycles, and claim coverage. It assumes the source facts; a valid proof does not establish their truth or prove that every possible conclusion was found.
+A proof claims what the run outputs and records the steps those claims depend on, with their justifications, bindings, and premises. The checker applies seven conditions: it re-performs each recorded rule application (C1) and built-in (C5), and checks dependency cycles (C2), justification form (C3), premise and claim coverage (C4), that the proof's own evidence does not contradict its assumptions (C6), and that every step serves a claim (C7). It assumes the source facts; a valid proof does not establish their truth or prove that every possible conclusion was found.
 
-`checked` means every step justification was verified. `checked with obligations` lists accepted assumptions whose truth was not verified, such as scoped collection or clock-dependent built-ins. An invalid proof lists the affected conclusion and the failed condition. See [the contract](proof-checking.md) for exact rules and test coverage.
+`checked` means every step justification was verified. `checked with obligations` lists accepted assumptions whose truth was not verified, such as negation or collection over the current graph, or clock-dependent built-ins. An invalid proof lists the affected conclusion and the failed condition. See [the contract](proof-checking.md) for exact rules and test coverage.
 
 `-c` and `--check-proof` use the same source loader: each input is parsed with its format and base IRI, then merged with separate file scopes. A saved proof can come from stdin when the sources are files; sources can come from stdin when the proof is a file. Supplying both through stdin is rejected. The Rust `check_proof_document` API accepts an already prepared `Document`. Proof collection retains additional derivation data and costs memory.
 
@@ -125,7 +125,7 @@ cargo test --release --test proof_checking
 cargo doc --no-deps
 ```
 
-`scripts/test-all` runs the release test suite and ends with one line showing individual tests run, the percentage OK, and total elapsed time. It counts conformance cases in place of their suite checks, without double-counting the W3C manifest and aggregate reports. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness requires every saved proof to check successfully.
+`scripts/test-all` runs the release test suite and ends with one line showing individual tests run, the percentage OK, and total elapsed time. It counts conformance cases in place of their suite checks, without double-counting the W3C manifest and aggregate reports. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness requires every saved proof to check successfully, apart from one intentional negative cycle it expects C6 to reject. After an intentional output change, `EYERON_UPDATE_GOLDENS=1 cargo test --release --test examples` rewrites the goldens that no longer match.
 
 The vendored N3 suite has two expectations adjusted for Eyeron's graph-term scoping; see [scope differences](n3.md#conformance-scope-differences). The [W3C runner notes](../tests/w3c_rdf/README.md) cover the local manifest mirror and EARL report. CI has three jobs: native release tests, Clippy, and rustdoc; Wasm Clippy and a release build; and cargo-deny for dependency checks.
 

@@ -2,15 +2,38 @@
 @prefix dec: <https://example.org/vocab/decision#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix math: <http://www.w3.org/2000/10/swap/math#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix string: <http://www.w3.org/2000/10/swap/string#> .
 @prefix util: <https://example.org/vocab/util#> .
 
-:pol_vacc_nomask a dec:OptimalPolicy .
-:policySTAR owl:sameAs :pol_vacc_nomask .
 :answer :text "Optimal decisions (MEU):\n  - vaccinate: 1\n  - mask: 0\n\nMaximum expected utility: -3.00" .
+
+{ :answer :text "Optimal decisions (MEU):\n  - vaccinate: 1\n  - mask: 0\n\nMaximum expected utility: -3.00" . }
+  pe:rule
+    {
+        {
+            ?P a dec:OptimalPolicy .
+            ?P :vaccinate ?V .
+            ?P :mask ?M .
+            ?P util:expectedUtility ?EU .
+            ("Optimal decisions (MEU):\n  - vaccinate: " ?V "\n  - mask: " ?M "\n\nMaximum expected utility: " ?EU) string:concatenation ?Msg .
+        } => {
+            :answer :text ?Msg .
+        } .
+    };
+  pe:binding
+    [ pe:var "EU"; pe:value -3.00 ],
+    [ pe:var "M"; pe:value 0 ],
+    [ pe:var "Msg"; pe:value "Optimal decisions (MEU):\n  - vaccinate: 1\n  - mask: 0\n\nMaximum expected utility: -3.00" ],
+    [ pe:var "P"; pe:value :pol_vacc_nomask ],
+    [ pe:var "V"; pe:value 1 ];
+  pe:uses
+    { :pol_vacc_nomask a dec:OptimalPolicy . },
+    { :pol_vacc_nomask :vaccinate 1 . },
+    { :pol_vacc_nomask :mask 0 . },
+    { :pol_vacc_nomask util:expectedUtility -3.00 . },
+    { ("Optimal decisions (MEU):\n  - vaccinate: " 1 "\n  - mask: " 0 "\n\nMaximum expected utility: " -3.00) string:concatenation "Optimal decisions (MEU):\n  - vaccinate: 1\n  - mask: 0\n\nMaximum expected utility: -3.00" . }.
 
 { :pol_vacc_nomask a dec:OptimalPolicy . }
   pe:rule 3;
@@ -43,37 +66,6 @@
   } .
 }
   pe:builtin log:notIncludes.
-
-{ :policySTAR owl:sameAs :pol_vacc_nomask . }
-  pe:rule 4;
-  pe:binding [ pe:var "P"; pe:value :pol_vacc_nomask ];
-  pe:uses { :pol_vacc_nomask a dec:OptimalPolicy . }.
-
-{ :answer :text "Optimal decisions (MEU):\n  - vaccinate: 1\n  - mask: 0\n\nMaximum expected utility: -3.00" . }
-  pe:rule
-    {
-        {
-            ?P a dec:OptimalPolicy .
-            ?P :vaccinate ?V .
-            ?P :mask ?M .
-            ?P util:expectedUtility ?EU .
-            ("Optimal decisions (MEU):\n  - vaccinate: " ?V "\n  - mask: " ?M "\n\nMaximum expected utility: " ?EU) string:concatenation ?Msg .
-        } => {
-            :answer :text ?Msg .
-        } .
-    };
-  pe:binding
-    [ pe:var "EU"; pe:value -3.00 ],
-    [ pe:var "M"; pe:value 0 ],
-    [ pe:var "Msg"; pe:value "Optimal decisions (MEU):\n  - vaccinate: 1\n  - mask: 0\n\nMaximum expected utility: -3.00" ],
-    [ pe:var "P"; pe:value :pol_vacc_nomask ],
-    [ pe:var "V"; pe:value 1 ];
-  pe:uses
-    { :pol_vacc_nomask a dec:OptimalPolicy . },
-    { :pol_vacc_nomask :vaccinate 1 . },
-    { :pol_vacc_nomask :mask 0 . },
-    { :pol_vacc_nomask util:expectedUtility -3.00 . },
-    { ("Optimal decisions (MEU):\n  - vaccinate: " 1 "\n  - mask: " 0 "\n\nMaximum expected utility: " -3.00) string:concatenation "Optimal decisions (MEU):\n  - vaccinate: 1\n  - mask: 0\n\nMaximum expected utility: -3.00" . }.
 
 { :pol_vacc_nomask :vaccinate 1 . }
   pe:fact "epidemic-policy.n3".

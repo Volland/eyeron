@@ -17,7 +17,7 @@ user-facing text direct.
   - `reasoner.rs`: forward agenda, backward rules, built-ins, indexes, and
     proof capture.
   - `proof_writer.rs`, `proof_check.rs`, `proof_check_n3.rs`: N3 proof
-    output, the generic validity conditions C1–C4, and the N3 proof reader
+    output, the generic validity conditions C1–C7, and the N3 proof reader
     and step checker.
   - `printing.rs`, `rdf_compat.rs`, `error.rs`, `sudoku.rs`, `w3c_rdf.rs`.
   - `main.rs`: CLI. `lib.rs`: library API. `wasm.rs`: browser bindings.
@@ -85,11 +85,12 @@ parts rather than flooding the terminal.
   golden. When adding an example, add it to `bundledExamplesN3` in
   `playground.html`; a companion input goes in `examples/input/` and in
   `bundledCompanionInputs`. `tests/playground.rs` checks both lists.
-- There is no golden-update command. Tests only read goldens; when output
-  changes intentionally, regenerate the affected goldens deliberately, review
-  the diff, and confirm a new proof golden checks with `eyeron -c`. The
-  example harness parses with no base IRI, so examples that use `<>` must be
-  regenerated the same way, not with the CLI's file-based base.
+- Ordinary test runs only read goldens. After an intentional output change,
+  `EYERON_UPDATE_GOLDENS=1 cargo test --release --test examples` rewrites the
+  output (`.n3`) and proof goldens that no longer match, exactly as the
+  harness produces them (with no base IRI). Review the diff: no output golden
+  should change unless intended, and `cargo test --release --test
+  proof_checking` must still pass.
 
 ## Implementation and verification
 
@@ -98,10 +99,14 @@ that say why. Prefer small, direct changes over new machinery, and fix the
 code that produces a wrong result rather than patching its output.
 
 Proof checking must stay sound: a forged proof must never report `checked`.
-Matching against a recorded step is one-way, so only the rule's variables
-bind. An existential witness must be a fresh blank node tied to one firing.
-Pure built-ins are re-evaluated only with closed arguments. Query answers are
-output, never premises. For every new check, add a forged proof to
+The seven conditions C1–C7 of `docs/proof-checking.md` match eyeon's. Matching
+against a recorded step is one-way, so only the rule's variables bind. An
+existential witness must be a fresh blank node tied to one firing. Built-ins
+are re-decided with closed arguments, including tests on quoted graphs; only
+those that read outside the proof, and tests over the current graph, are
+obligations, and the latter must not be contradicted by the proof's own
+evidence (C6). Query answers are output, never premises, and a proof claims
+exactly what the run outputs. For every new check, add a forged proof to
 `tests/proof_validation.rs` and confirm that all packaged proofs still check.
 
 eyeron is expected to run about as fast as its JavaScript sibling eyeling; a

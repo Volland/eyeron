@@ -3,12 +3,22 @@
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-{
-    ?x a :glitter .
-} => {
-    ?x :notNecessarilyA :gold .
-} .
 :northStar :notNecessarilyA :gold .
+
+{ :northStar :notNecessarilyA :gold . }
+  pe:rule
+    {
+        {
+            ?x a :glitter .
+        } => {
+            ?x :notNecessarilyA :gold .
+        } .
+    };
+  pe:binding [ pe:var "x"; pe:value :northStar ];
+  pe:uses { :northStar a :glitter . }.
+
+{ :northStar a :glitter . }
+  pe:fact "qiana.n3".
 
 {
   {
@@ -46,19 +56,4 @@
       } .
   } .
 }
-  pe:fact "qiana.n3".
-
-{ :northStar :notNecessarilyA :gold . }
-  pe:rule
-    {
-        {
-            ?x a :glitter .
-        } => {
-            ?x :notNecessarilyA :gold .
-        } .
-    };
-  pe:binding [ pe:var "x"; pe:value :northStar ];
-  pe:uses { :northStar a :glitter . }.
-
-{ :northStar a :glitter . }
   pe:fact "qiana.n3".

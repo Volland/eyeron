@@ -15,14 +15,14 @@ use crate::ast::{Term, Triple};
 use crate::error::{EyeronError, Result};
 use crate::reasoner::Bindings;
 
-use crate::proof_check::{check, Checked, Document as ProofDocument, Kind, Report, Resolution};
+use crate::proof_check::{check, Checked, Document as ProofDocument, Kind, Report, Resolution, StepCheck};
 
 const PE: &str = "https://eyereasoner.github.io/pe#";
 
 /// Built-ins whose value is not a function of the triple they appear in, so
-/// re-evaluating them cannot confirm anything (specification §5.3, §6.1).
-/// Each reads something outside the proof: the clock, the process, or the
-/// network.
+/// re-evaluating them cannot confirm anything (specification §5.3, §6).
+/// Each reads something outside the proof: the clock, the network, a random
+/// source, or the reasoner itself.
 const IMPURE_BUILTINS: &[&str] = &[
     // Read the clock.
     "http://www.w3.org/2000/10/swap/time#localTime",
@@ -34,22 +34,46 @@ const IMPURE_BUILTINS: &[&str] = &[
     "http://www.w3.org/2000/10/swap/log#semanticsOrError",
     // Read a random source.
     "http://www.w3.org/2000/10/swap/math#random",
-    // Read the rest of the fact set, which is the reasoner's state rather
-    // than anything the step itself carries: whether these hold depends on
-    // what else had been derived at the time, so a checker looking only at
-    // this triple cannot re-establish them.
-    "http://www.w3.org/2000/10/swap/log#collectAllIn",
-    "http://www.w3.org/2000/10/swap/log#forAllIn",
-    "http://www.w3.org/2000/10/swap/log#includes",
-    "http://www.w3.org/2000/10/swap/log#notIncludes",
+    // Runs the reasoner on a graph: re-deciding it would trust the engine
+    // the proof is checked against.
     "http://www.w3.org/2000/10/swap/log#conclusion",
-    "http://www.w3.org/2000/10/swap/log#conjunction",
     // Applies a predicate to each element, which means looking the
     // predicate up in the fact set.
     "http://www.w3.org/2000/10/swap/list#map",
 ];
 
+const LOG_INCLUDES: &str = "http://www.w3.org/2000/10/swap/log#includes";
+const LOG_NOT_INCLUDES: &str = "http://www.w3.org/2000/10/swap/log#notIncludes";
+const LOG_COLLECT_ALL_IN: &str = "http://www.w3.org/2000/10/swap/log#collectAllIn";
+const LOG_FOR_ALL_IN: &str = "http://www.w3.org/2000/10/swap/log#forAllIn";
+
+/// What kind of obligation a scoped built-in is, when the scope it tests is
+/// the current graph rather than a quoted one: the subject of `log:includes` and
+/// `log:notIncludes`, the object of `log:collectAllIn` and `log:forAllIn`.
+/// Whether such a test held depends on everything derived, which no proof
+/// records, so it is an obligation (§6) — but one the proof's own evidence
+/// can still contradict (C6). `None` for any other built-in, or a quoted
+/// scope, which makes the test a function of its arguments (C5).
+fn current_graph_test(triple: &Triple) -> Option<&'static str> {
+    let Term::Iri(name) = &triple.p else { return None };
+    // Anything but a quoted graph — a variable, a blank, a scope level such
+    // as `1` — names the current graph.
+    let open = |scope: &Term| !matches!(scope, Term::Formula(_));
+    match name.as_str() {
+        LOG_INCLUDES if open(&triple.s) => Some("current graph"),
+        // An unbound subject is bound to a stand-in graph once the current
+        // graph has been tested, so the stand-in marks that test.
+        LOG_NOT_INCLUDES if open(&triple.s) || crate::reasoner::is_not_includes_witness(&triple.s) => Some("absent"),
+        LOG_COLLECT_ALL_IN | LOG_FOR_ALL_IN if open(&triple.o) => Some("collected"),
+        _ => None,
+    }
+}
+
 type Verdict = std::result::Result<Checked, String>;
+
+fn under(condition: &'static str, outcome: Verdict) -> StepCheck {
+    StepCheck { condition, outcome }
+}
 
 fn pe(name: &str) -> Term {
     Term::Iri(format!("{}{}", PE, name).into())
@@ -93,11 +117,21 @@ pub struct N3Proof {
     /// Query rules, as the implications a step answering one carries. An
     /// answer is output, so no step may use it as a premise.
     query_rules: Vec<Triple>,
+    /// What the query rules output, as patterns a relevant claim instantiates.
+    query_patterns: Vec<Triple>,
     /// Blank nodes the source mentions, which no existential can stand for.
     source_blanks: BTreeSet<crate::ast::Name>,
+    /// The source's facts, which with the step conclusions are the
+    /// evidence C6 looks for contradictions in.
+    facts: Vec<Triple>,
+    /// Premises of the source's inference fuses, `{ ... } => false`.
+    fuses: Vec<crate::ast::Graph>,
     steps: Vec<Step>,
     claims: Vec<Triple>,
     index: BTreeMap<Triple, usize>,
+    /// Steps whose conclusion has free variables, which each conclude every
+    /// instance of itself.
+    general_steps: Vec<usize>,
     /// Each existential witness, with the firing that introduced it.
     witnesses: RefCell<BTreeMap<crate::ast::Name, Firing>>,
 }
@@ -135,6 +169,8 @@ impl N3Proof {
         given.extend(rule_statements.iter().cloned());
         let query_rules: Vec<Triple> = document.rules.iter().filter(|rule| rule.is_query).map(crate::proof_writer::rule_statement).collect();
         let source_blanks = triple_blank_labels(&document.facts);
+        let query_patterns = document.rules.iter().filter(|rule| rule.is_query).flat_map(|rule| rule.conclusion.triples.clone()).collect();
+        let fuses = document.rules.iter().filter(|rule| rule.is_fuse).map(|rule| rule.premise.clone()).collect();
         let general: Vec<Triple> = document.facts.iter().filter(|fact| !fact.is_ground()).cloned().collect();
 
         let parsed = crate::parser::parse_n3(proof, None)?;
@@ -153,7 +189,11 @@ impl N3Proof {
         for (position, step) in steps.iter().enumerate() {
             index.entry(step.conclusion.clone()).or_insert(position);
         }
-        Ok(Self { rules, given, rule_statements, general, query_rules, source_blanks, steps, claims, index, witnesses: RefCell::default() })
+        let general_steps = (0..steps.len()).filter(|&position| !steps[position].conclusion.is_ground()).collect();
+        Ok(Self {
+            rules, given, rule_statements, general, query_rules, query_patterns, source_blanks,
+            facts: document.facts.clone(), fuses, steps, claims, index, general_steps, witnesses: RefCell::default(),
+        })
     }
 
     fn resolve(&self, statement: &Triple) -> Resolution {
@@ -168,6 +208,12 @@ impl N3Proof {
             if let Some(position) = self.steps.iter().position(|step| ground_statements_equal(&step.conclusion, statement)) {
                 return Resolution::Step(position);
             }
+        }
+        // An instance of a step that concludes a general statement is that
+        // step's, so the step is what it depends on (C2, C7).
+        if let Some(&position) = self.general_steps.iter()
+            .find(|&&position| match_triple(&self.steps[position].conclusion, statement, &mut Bindings::new())) {
+            return Resolution::Step(position);
         }
         if self.given.contains(statement) || self.gives_rule(statement) {
             return Resolution::Given;
@@ -332,10 +378,19 @@ impl N3Proof {
         if IMPURE_BUILTINS.contains(&name.as_str()) {
             return Ok(Checked::Trusted("impure built-in"));
         }
+        if let Some(kind) = current_graph_test(&step.conclusion) {
+            return Ok(Checked::Trusted(kind));
+        }
         // Re-evaluation fills in whatever is left open, which would turn a
-        // computed value into a universal claim.
+        // computed value into a universal claim. A collection's template
+        // and condition are meant to be open; only its result is a value.
         let triple = &step.conclusion;
-        if [&triple.s, &triple.p, &triple.o].into_iter().any(has_open_variable) {
+        let values: Vec<&Term> = match (&triple.s, name.as_str()) {
+            (Term::List(parts), LOG_COLLECT_ALL_IN) if parts.len() == 3 => vec![&parts[2], &triple.o],
+            (_, LOG_FOR_ALL_IN) => vec![&triple.o],
+            _ => vec![&triple.s, &triple.p, &triple.o],
+        };
+        if values.into_iter().any(has_open_variable) {
             return Err(format!("leaves a variable of {} unbound", name));
         }
         if crate::reasoner::verify_builtin_triple(&step.conclusion) {
@@ -744,15 +799,104 @@ impl ProofDocument for N3Proof {
         self.resolve(&self.claims[index])
     }
 
-    fn check_step(&self, index: usize) -> Verdict {
+    fn check_step(&self, index: usize) -> StepCheck {
         let step = &self.steps[index];
         match step.kind {
-            Kind::Rule => self.check_rule(step),
-            Kind::Fact => self.check_fact(step),
-            Kind::Builtin => self.check_builtin(step),
-            Kind::Unproven => Err("is recorded as unproven: the engine could not justify it".to_string()),
-            Kind::Absent | Kind::Collected => Ok(Checked::Trusted(step.kind.label())),
+            Kind::Rule if step.rule.is_none() && step.carried.is_none() => under("C3", Err("cites no rule".to_string())),
+            Kind::Rule => under("C1", self.check_rule(step)),
+            Kind::Fact if !step.uses.is_empty() => under("C3", self.check_fact(step)),
+            Kind::Fact => under("C1", self.check_fact(step)),
+            Kind::Builtin if step.builtin.as_ref() != Some(&step.conclusion.p) => under("C3", self.check_builtin(step)),
+            Kind::Builtin => under("C5", self.check_builtin(step)),
+            Kind::Unproven => under("C3", Err("is recorded as unproven: the engine could not justify it".to_string())),
+            Kind::Absent | Kind::Collected => under("C3", Ok(Checked::Trusted(step.kind.label()))),
         }
+    }
+
+    fn boundary(&self) -> (usize, Vec<(String, String)>) {
+        let tests: Vec<&Step> = self.steps.iter()
+            .filter(|step| step.kind == Kind::Builtin && current_graph_test(&step.conclusion).is_some())
+            .collect();
+        if tests.is_empty() && self.fuses.is_empty() {
+            return (0, Vec::new());
+        }
+        let evidence = crate::reasoner::Evidence::new(
+            self.facts.iter().cloned().chain(self.steps.iter().map(|step| step.conclusion.clone())).collect());
+        let mut contradictions = Vec::new();
+        for step in &tests {
+            if let Some(detail) = contradiction(&evidence, &step.conclusion) {
+                contradictions.push((describe(&step.conclusion), detail));
+            }
+        }
+        // A fuse forbids its premise outright, so evidence satisfying one
+        // records a situation the source rules out.
+        for fuse in &self.fuses {
+            if !evidence.solutions(fuse).is_empty() {
+                let statement = Triple::new(Term::Formula(fuse.clone()), Term::iri(crate::ast::LOG_IMPLIES), Term::Literal(crate::ast::Literal {
+                    value: "false".into(),
+                    datatype: Some("http://www.w3.org/2001/XMLSchema#boolean".into()),
+                    language: None,
+                }));
+                contradictions.push((describe(&statement), "the proof's own evidence satisfies the premise of this inference fuse".to_string()));
+            }
+        }
+        (tests.len() + self.fuses.len(), contradictions)
+    }
+
+    fn claim_relevance(&self, index: usize) -> std::result::Result<(), String> {
+        // A program with queries asks for their answers, and its output is
+        // those answers alone. That the claim was derived is C4's concern.
+        if self.query_patterns.is_empty() {
+            return Ok(());
+        }
+        let claim = &self.claims[index];
+        if self.query_patterns.iter().any(|pattern| match_triple(pattern, claim, &mut Bindings::new())) {
+            Ok(())
+        } else {
+            Err("answers none of the source's log:query rules".to_string())
+        }
+    }
+}
+
+/// What in `evidence` contradicts the current-graph test `test` records,
+/// if anything. The evidence is only what the proof records, so a test it
+/// does not contradict may still have been wrong; one it does contradict
+/// cannot have held.
+fn contradiction(evidence: &crate::reasoner::Evidence, test: &Triple) -> Option<String> {
+    let Term::Iri(name) = &test.p else { return None };
+    let scope = Term::blank("current_graph");
+    match name.as_str() {
+        LOG_NOT_INCLUDES => {
+            let retest = Triple::new(scope, test.p.clone(), test.o.clone());
+            evidence.evaluate(&retest).is_empty()
+                .then(|| "assumes the current graph lacks this, but the proof's own evidence includes it".to_string())
+        }
+        LOG_INCLUDES => None,
+        LOG_COLLECT_ALL_IN => {
+            let Term::List(parts) = &test.s else { return None };
+            let [template, condition, Term::List(collected)] = parts.as_slice() else { return None };
+            let result = Term::var("__collected");
+            let retest = Triple::new(Term::List(vec![template.clone(), condition.clone(), result]), test.p.clone(), scope);
+            let visible = evidence.evaluate(&retest).into_iter()
+                .find_map(|bindings| bindings.get("__collected").cloned())?;
+            let Term::List(visible) = visible else { return None };
+            let missing = visible.iter().find(|item| !collected.contains(item))?;
+            Some(format!("omits {}, which the proof's own evidence supplies",
+                crate::printing::term_to_n3_object(missing, &BTreeMap::new())))
+        }
+        LOG_FOR_ALL_IN => {
+            let Term::List(parts) = &test.s else { return None };
+            let [Term::Formula(condition), Term::Formula(conclusion)] = parts.as_slice() else { return None };
+            // Only a conclusion made of built-ins can be refuted: an
+            // ordinary triple the proof does not record may still hold.
+            evidence.solutions(condition).into_iter().find_map(|bindings| {
+                let mapping: BTreeMap<Term, Term> = bindings.iter().map(|(name, value)| (Term::Var(name.clone()), value.clone())).collect();
+                let instance = conclusion.substitute(&mapping);
+                (crate::reasoner::Evidence::is_decidable(&instance) && evidence.solutions(&instance).is_empty())
+                    .then(|| format!("has a counterexample in the proof's own evidence: {}", describe(&instance.triples[0])))
+            })
+        }
+        _ => None,
     }
 }
 

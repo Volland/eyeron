@@ -3,71 +3,7 @@
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix t: <https://eyereasoner.github.io/eye/reasoning/tfcontext#> .
 
-h:traveler1 h:location (51.2192 4.4029) .
-h:traveler1 h:location (42.3584 -71.0598) .
-h:traveler1 h:location (42.3736 -71.1097) .
 h:traveler1 h:location (51.0535 3.7304) .
-h:traveler1 h:location (51.2154 2.9286) .
-
-{ h:traveler1 h:location (51.2192 4.4029) . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "C"; pe:value t:Antwerp-Belgium ],
-    [ pe:var "LA"; pe:value 51.2192 ],
-    [ pe:var "LIST"; pe:value (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) ],
-    [ pe:var "LO"; pe:value 4.4029 ],
-    [ pe:var "T"; pe:value h:traveler1 ];
-  pe:uses
-    { h:traveler1 h:inOneOf (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Antwerp-Belgium list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Antwerp-Belgium t:position-tensor (51.2192 4.4029) . }.
-
-{ h:traveler1 h:inOneOf (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . }
-  pe:fact "water-chemistry.n3".
-
-{ t:Antwerp-Belgium list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . }
-  pe:builtin list:in.
-
-{ t:Antwerp-Belgium t:position-tensor (51.2192 4.4029) . }
-  pe:fact "water-chemistry.n3".
-
-{ h:traveler1 h:location (42.3584 -71.0598) . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "C"; pe:value t:Boston-USA ],
-    [ pe:var "LA"; pe:value 42.3584 ],
-    [ pe:var "LIST"; pe:value (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) ],
-    [ pe:var "LO"; pe:value -71.0598 ],
-    [ pe:var "T"; pe:value h:traveler1 ];
-  pe:uses
-    { h:traveler1 h:inOneOf (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Boston-USA list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Boston-USA t:position-tensor (42.3584 -71.0598) . }.
-
-{ t:Boston-USA list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . }
-  pe:builtin list:in.
-
-{ t:Boston-USA t:position-tensor (42.3584 -71.0598) . }
-  pe:fact "water-chemistry.n3".
-
-{ h:traveler1 h:location (42.3736 -71.1097) . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "C"; pe:value t:Cambridge-USA ],
-    [ pe:var "LA"; pe:value 42.3736 ],
-    [ pe:var "LIST"; pe:value (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) ],
-    [ pe:var "LO"; pe:value -71.1097 ],
-    [ pe:var "T"; pe:value h:traveler1 ];
-  pe:uses
-    { h:traveler1 h:inOneOf (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Cambridge-USA list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Cambridge-USA t:position-tensor (42.3736 -71.1097) . }.
-
-{ t:Cambridge-USA list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . }
-  pe:builtin list:in.
-
-{ t:Cambridge-USA t:position-tensor (42.3736 -71.1097) . }
-  pe:fact "water-chemistry.n3".
 
 { h:traveler1 h:location (51.0535 3.7304) . }
   pe:rule 1;
@@ -82,27 +18,11 @@ h:traveler1 h:location (51.2154 2.9286) .
     { t:Ghent-Belgium list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
     { t:Ghent-Belgium t:position-tensor (51.0535 3.7304) . }.
 
+{ h:traveler1 h:inOneOf (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . }
+  pe:fact "water-chemistry.n3".
+
 { t:Ghent-Belgium list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . }
   pe:builtin list:in.
 
 { t:Ghent-Belgium t:position-tensor (51.0535 3.7304) . }
-  pe:fact "water-chemistry.n3".
-
-{ h:traveler1 h:location (51.2154 2.9286) . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "C"; pe:value t:Ostend-Belgium ],
-    [ pe:var "LA"; pe:value 51.2154 ],
-    [ pe:var "LIST"; pe:value (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) ],
-    [ pe:var "LO"; pe:value 2.9286 ],
-    [ pe:var "T"; pe:value h:traveler1 ];
-  pe:uses
-    { h:traveler1 h:inOneOf (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Ostend-Belgium list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . },
-    { t:Ostend-Belgium t:position-tensor (51.2154 2.9286) . }.
-
-{ t:Ostend-Belgium list:in (t:Antwerp-Belgium t:Boston-USA t:Cambridge-USA t:Ghent-Belgium t:Ostend-Belgium) . }
-  pe:builtin list:in.
-
-{ t:Ostend-Belgium t:position-tensor (51.2154 2.9286) . }
   pe:fact "water-chemistry.n3".

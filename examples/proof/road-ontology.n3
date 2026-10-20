@@ -4,115 +4,76 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-:paris :path :orleans .
-:paris :path :chartres .
-:paris :path :amiens .
-:orleans :path :blois .
-:orleans :path :bourges .
-:blois :path :tours .
-:chartres :path :lemans .
-:lemans :path :angers .
-:lemans :path :tours .
-:angers :path :nantes .
-:oneway a rdf:Property .
-:path a rdf:Property .
-:paris :path :blois .
-:paris :path :bourges .
-:orleans :path :tours .
-:paris :path :lemans .
-:chartres :path :angers .
-:chartres :path :tours .
-:lemans :path :nantes .
-:paris :path :tours .
-:paris :path :angers .
-:chartres :path :nantes .
 :paris :path :nantes .
 
-{ :paris :path :orleans . }
+{ :paris :path :nantes . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "O"; pe:value :nantes ],
+    [ pe:var "P"; pe:value :path ],
+    [ pe:var "S"; pe:value :paris ],
+    [ pe:var "X"; pe:value :angers ];
+  pe:uses
+    { :path a owl:TransitiveProperty . },
+    { :angers :path :nantes . },
+    { :paris :path :angers . }.
+
+{ :path a owl:TransitiveProperty . }
+  pe:fact "road-ontology.n3".
+
+{ :angers :path :nantes . }
   pe:rule 4;
   pe:binding
-    [ pe:var "O"; pe:value :orleans ],
+    [ pe:var "O"; pe:value :nantes ],
     [ pe:var "P"; pe:value :oneway ],
     [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ];
+    [ pe:var "S"; pe:value :angers ];
   pe:uses
     { :oneway rdfs:subPropertyOf :path . },
-    { :paris :oneway :orleans . }.
+    { :angers :oneway :nantes . }.
 
 { :oneway rdfs:subPropertyOf :path . }
   pe:fact "road-ontology.n3".
 
-{ :paris :oneway :orleans . }
+{ :angers :oneway :nantes . }
   pe:fact "road-ontology.n3".
 
-{ :paris :path :chartres . }
+{ :paris :path :angers . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "O"; pe:value :angers ],
+    [ pe:var "P"; pe:value :path ],
+    [ pe:var "S"; pe:value :paris ],
+    [ pe:var "X"; pe:value :chartres ];
+  pe:uses
+    { :path a owl:TransitiveProperty . },
+    { :chartres :path :angers . },
+    { :paris :path :chartres . }.
+
+{ :chartres :path :angers . }
+  pe:rule 7;
+  pe:binding
+    [ pe:var "O"; pe:value :angers ],
+    [ pe:var "P"; pe:value :path ],
+    [ pe:var "S"; pe:value :chartres ],
+    [ pe:var "X"; pe:value :lemans ];
+  pe:uses
+    { :path a owl:TransitiveProperty . },
+    { :lemans :path :angers . },
+    { :chartres :path :lemans . }.
+
+{ :lemans :path :angers . }
   pe:rule 4;
   pe:binding
-    [ pe:var "O"; pe:value :chartres ],
+    [ pe:var "O"; pe:value :angers ],
     [ pe:var "P"; pe:value :oneway ],
     [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ];
+    [ pe:var "S"; pe:value :lemans ];
   pe:uses
     { :oneway rdfs:subPropertyOf :path . },
-    { :paris :oneway :chartres . }.
+    { :lemans :oneway :angers . }.
 
-{ :paris :oneway :chartres . }
-  pe:fact "road-ontology.n3".
-
-{ :paris :path :amiens . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "O"; pe:value :amiens ],
-    [ pe:var "P"; pe:value :oneway ],
-    [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ];
-  pe:uses
-    { :oneway rdfs:subPropertyOf :path . },
-    { :paris :oneway :amiens . }.
-
-{ :paris :oneway :amiens . }
-  pe:fact "road-ontology.n3".
-
-{ :orleans :path :blois . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "O"; pe:value :blois ],
-    [ pe:var "P"; pe:value :oneway ],
-    [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :orleans ];
-  pe:uses
-    { :oneway rdfs:subPropertyOf :path . },
-    { :orleans :oneway :blois . }.
-
-{ :orleans :oneway :blois . }
-  pe:fact "road-ontology.n3".
-
-{ :orleans :path :bourges . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "O"; pe:value :bourges ],
-    [ pe:var "P"; pe:value :oneway ],
-    [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :orleans ];
-  pe:uses
-    { :oneway rdfs:subPropertyOf :path . },
-    { :orleans :oneway :bourges . }.
-
-{ :orleans :oneway :bourges . }
-  pe:fact "road-ontology.n3".
-
-{ :blois :path :tours . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "O"; pe:value :tours ],
-    [ pe:var "P"; pe:value :oneway ],
-    [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :blois ];
-  pe:uses
-    { :oneway rdfs:subPropertyOf :path . },
-    { :blois :oneway :tours . }.
-
-{ :blois :oneway :tours . }
+{ :lemans :oneway :angers . }
   pe:fact "road-ontology.n3".
 
 { :chartres :path :lemans . }
@@ -129,207 +90,16 @@
 { :chartres :oneway :lemans . }
   pe:fact "road-ontology.n3".
 
-{ :lemans :path :angers . }
+{ :paris :path :chartres . }
   pe:rule 4;
   pe:binding
-    [ pe:var "O"; pe:value :angers ],
+    [ pe:var "O"; pe:value :chartres ],
     [ pe:var "P"; pe:value :oneway ],
     [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :lemans ];
+    [ pe:var "S"; pe:value :paris ];
   pe:uses
     { :oneway rdfs:subPropertyOf :path . },
-    { :lemans :oneway :angers . }.
+    { :paris :oneway :chartres . }.
 
-{ :lemans :oneway :angers . }
+{ :paris :oneway :chartres . }
   pe:fact "road-ontology.n3".
-
-{ :lemans :path :tours . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "O"; pe:value :tours ],
-    [ pe:var "P"; pe:value :oneway ],
-    [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :lemans ];
-  pe:uses
-    { :oneway rdfs:subPropertyOf :path . },
-    { :lemans :oneway :tours . }.
-
-{ :lemans :oneway :tours . }
-  pe:fact "road-ontology.n3".
-
-{ :angers :path :nantes . }
-  pe:rule 4;
-  pe:binding
-    [ pe:var "O"; pe:value :nantes ],
-    [ pe:var "P"; pe:value :oneway ],
-    [ pe:var "R"; pe:value :path ],
-    [ pe:var "S"; pe:value :angers ];
-  pe:uses
-    { :oneway rdfs:subPropertyOf :path . },
-    { :angers :oneway :nantes . }.
-
-{ :angers :oneway :nantes . }
-  pe:fact "road-ontology.n3".
-
-{ :oneway a rdf:Property . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "C"; pe:value rdf:Property ],
-    [ pe:var "O"; pe:value :path ],
-    [ pe:var "P"; pe:value rdfs:subPropertyOf ],
-    [ pe:var "S"; pe:value :oneway ];
-  pe:uses
-    { rdfs:subPropertyOf rdfs:domain rdf:Property . },
-    { :oneway rdfs:subPropertyOf :path . }.
-
-{ rdfs:subPropertyOf rdfs:domain rdf:Property . }
-  pe:fact "road-ontology.n3".
-
-{ :path a rdf:Property . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value rdf:Property ],
-    [ pe:var "O"; pe:value :path ],
-    [ pe:var "P"; pe:value rdfs:subPropertyOf ],
-    [ pe:var "S"; pe:value :oneway ];
-  pe:uses
-    { rdfs:subPropertyOf rdfs:range rdf:Property . },
-    { :oneway rdfs:subPropertyOf :path . }.
-
-{ rdfs:subPropertyOf rdfs:range rdf:Property . }
-  pe:fact "road-ontology.n3".
-
-{ :paris :path :blois . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :blois ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :orleans ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :orleans :path :blois . },
-    { :paris :path :orleans . }.
-
-{ :path a owl:TransitiveProperty . }
-  pe:fact "road-ontology.n3".
-
-{ :paris :path :bourges . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :bourges ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :orleans ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :orleans :path :bourges . },
-    { :paris :path :orleans . }.
-
-{ :orleans :path :tours . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :tours ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :orleans ],
-    [ pe:var "X"; pe:value :blois ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :blois :path :tours . },
-    { :orleans :path :blois . }.
-
-{ :paris :path :lemans . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :lemans ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :chartres ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :chartres :path :lemans . },
-    { :paris :path :chartres . }.
-
-{ :chartres :path :angers . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :angers ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :chartres ],
-    [ pe:var "X"; pe:value :lemans ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :lemans :path :angers . },
-    { :chartres :path :lemans . }.
-
-{ :chartres :path :tours . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :tours ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :chartres ],
-    [ pe:var "X"; pe:value :lemans ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :lemans :path :tours . },
-    { :chartres :path :lemans . }.
-
-{ :lemans :path :nantes . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :nantes ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :lemans ],
-    [ pe:var "X"; pe:value :angers ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :angers :path :nantes . },
-    { :lemans :path :angers . }.
-
-{ :paris :path :tours . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :tours ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :orleans ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :orleans :path :tours . },
-    { :paris :path :orleans . }.
-
-{ :paris :path :angers . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :angers ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :chartres ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :chartres :path :angers . },
-    { :paris :path :chartres . }.
-
-{ :chartres :path :nantes . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :nantes ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :chartres ],
-    [ pe:var "X"; pe:value :lemans ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :lemans :path :nantes . },
-    { :chartres :path :lemans . }.
-
-{ :paris :path :nantes . }
-  pe:rule 7;
-  pe:binding
-    [ pe:var "O"; pe:value :nantes ],
-    [ pe:var "P"; pe:value :path ],
-    [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :angers ];
-  pe:uses
-    { :path a owl:TransitiveProperty . },
-    { :angers :path :nantes . },
-    { :paris :path :angers . }.
