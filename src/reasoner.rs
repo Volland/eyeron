@@ -382,7 +382,11 @@ impl std::hash::Hasher for FxHasher {
     fn write_u32(&mut self, i: u32) { self.add(i as u64); }
     fn write_u64(&mut self, i: u64) { self.add(i); }
     fn write_usize(&mut self, i: usize) { self.add(i as u64); }
-    fn finish(&self) -> u64 { self.0 }
+    // A product's low bits depend only on its factors' low bits, and a hash
+    // table picks its bucket from the low bits. Rotating the well-mixed high
+    // bits down keeps keys that differ only there from sharing buckets, as
+    // rustc-hash 2 does.
+    fn finish(&self) -> u64 { self.0.rotate_left(26) }
 }
 
 type FxHashMap<K, V> = HashMap<K, V, std::hash::BuildHasherDefault<FxHasher>>;
