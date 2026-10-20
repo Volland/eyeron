@@ -1,97 +1,118 @@
-# ============================================================
-# A decision you do not have to trust
-#
-# Half two of two. verifiable-decision.n3 decided; this reads the
-# proof of that decision back in and asks what it rests on.
-#
-# The proof is supplied as examples/input/verifiable-decision-audit.n3,
-# which is a copy of examples/proof/verifiable-decision.n3 -- the
-# engine's own output, nothing written by hand. A test keeps the two
-# identical, so this audit is always of the current proof.
-#
-# Why this is worth doing at all: a proof is not a debugging aid. It
-# is a list of exactly what a conclusion stands on, in the same
-# language as everything else, so a policy can be written *about* it.
-# The decision here is permitted; the question this half answers is
-# whether it is permitted on grounds we are prepared to stand behind.
-#
-# Every step of an eyeron proof is an ordinary triple whose subject
-# is the quoted claim, so no traversal is needed -- `?claim pe:uses
-# ?dep` matches the steps directly.
+# A research-data decision with a checkable proof (second of two examples).
+# This audit reads the decision proof as N3 data, follows its dependencies,
+# and checks the identified source documents against an ODRL use policy.
 #
 #   eyeron examples/verifiable-decision-audit.n3 \
 #          examples/input/verifiable-decision-audit.n3
 #
-# Take away one `:policy :trusts` line and the run stops: the last
-# rule is an inference fuse, and a decision resting on a document
-# outside the policy is the situation it forbids. The report names
-# the document and the policy it was weighed against.
-# ============================================================
+# The companion input is an exact copy of examples/proof/verifiable-decision.n3.
+# A test keeps them identical. You can instead supply a freshly generated proof.
+# Check that proof against verifiable-decision.n3 before auditing its sources.
+#
+# DPV describes the audit, its scope, policy, inputs, and justifications.
+# PROV records primary sources and derived dependencies. ODRL permissions
+# identify which records this auditor may use as evidence. Local :says holds
+# the closed policy graph; ODRL/DPV do not define this N3 quotation relation.
+# pe: and log: retain their engine-specific proof and evaluation meanings.
+#
+# Remove ':trust-policy odrl:permission :use-registry.' from the quoted policy
+# and the fuse fires (exit 65). Missing source attribution is a separate gap:
+# this example checks identified sources, not completeness of their attribution.
+# Source mappings are supplied assertions, not authenticated digital signatures.
+#
+# Vocabulary references:
+# https://www.w3.org/TR/odrl-model/
+# https://w3id.org/dpv/2.3
+# https://www.w3.org/TR/prov-o/
 
-@prefix :    <https://example.org/access#>.
-@prefix doc: <https://example.org/doc/>.
-@prefix pe:  <https://eyereasoner.github.io/pe#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix :     <https://example.org/access#>.
+@prefix doc:  <https://example.org/doc/>.
+@prefix odrl: <http://www.w3.org/ns/odrl/2/>.
+@prefix dpv:  <https://w3id.org/dpv#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix pe:   <https://eyereasoner.github.io/pe#>.
+@prefix log:  <http://www.w3.org/2000/10/swap/log#>.
 
-# ---------------------------------------------------------
-# The claim under audit
-# ---------------------------------------------------------
+# Audit the fact that the Agreement was derived, rather than the mere existence
+# of a requested Permission. ODRL Request policies do not grant privileges.
+:audit a dpv:Audit ;
+    dpv:hasScope { :agreement-42 a odrl:Agreement } ;
+    dpv:hasPolicy :trust-policy ;
+    dpv:hasResponsibleEntity :auditor .
 
-:audit :of { :request-42 :decision :permit }.
+doc:consent a dpv:ConsentRecord .
 
-# ---------------------------------------------------------
-# Who said what. Each authority vouches for the claims it
-# put its name to, quoted exactly as the proof records them.
-# ---------------------------------------------------------
+# Primary sources for the exact assertions recorded in the decision proof.
+{ :request-42 a odrl:Request } prov:hadPrimarySource doc:intake .
+{ :request-42 odrl:profile :research-profile } prov:hadPrimarySource doc:intake .
+{ :request-42 odrl:permission :research-use-42 } prov:hadPrimarySource doc:intake .
+{ :research-use-42 a odrl:Permission } prov:hadPrimarySource doc:intake .
+{ :research-use-42 odrl:assigner :hospital } prov:hadPrimarySource doc:intake .
+{ :research-use-42 odrl:assignee :dr-okafor } prov:hadPrimarySource doc:intake .
+{ :research-use-42 odrl:target :cohort-b } prov:hadPrimarySource doc:intake .
+{ :research-use-42 odrl:action odrl:use } prov:hadPrimarySource doc:intake .
+{ :research-use-42 odrl:constraint :purpose-42 } prov:hadPrimarySource doc:intake .
+{ :purpose-42 a odrl:Constraint } prov:hadPrimarySource doc:intake .
+{ :purpose-42 odrl:leftOperand odrl:purpose } prov:hadPrimarySource doc:intake .
+{ :purpose-42 odrl:operator odrl:eq } prov:hadPrimarySource doc:intake .
+{ :purpose-42 odrl:rightOperand dpv:ScientificResearch } prov:hadPrimarySource doc:intake .
 
-doc:intake   :asserts { :request-42 :asksFor :cohort-b . }.
-doc:intake   :asserts { :request-42 :madeBy :dr-okafor . }.
-doc:intake   :asserts { :request-42 :purpose :secondaryResearch . }.
-doc:ethics   :asserts { :dr-okafor :holdsApproval :eth-2026-118 . }.
-doc:ethics   :asserts { :eth-2026-118 :coversPurpose :secondaryResearch . }.
-doc:consent  :asserts { :cohort-b :consentCovers :secondaryResearch . }.
-doc:registry :asserts { :cohort-b :deidentified true . }.
+{ :dr-okafor :holdsApproval :eth-2026-118 } prov:hadPrimarySource doc:ethics .
+{ :eth-2026-118 dpv:hasData :cohort-b } prov:hadPrimarySource doc:ethics .
+{ :eth-2026-118 dpv:hasPurpose dpv:ScientificResearch } prov:hadPrimarySource doc:ethics .
 
-# ---------------------------------------------------------
-# What we are prepared to stand behind. The policy is a quoted
-# graph rather than loose triples, so "not trusted" can be
-# asked of it by name: not in this graph, not vouched for.
-# ---------------------------------------------------------
+{ :consent-b a dpv:Consent } prov:hadPrimarySource doc:consent .
+{ :consent-b dpv:hasData :cohort-b } prov:hadPrimarySource doc:consent .
+{ :consent-b dpv:hasPurpose dpv:ScientificResearch } prov:hadPrimarySource doc:consent .
+{ :consent-b dpv:hasConsentStatus dpv:ConsentGiven } prov:hadPrimarySource doc:consent .
 
-:policy :says {
-  :policy :trusts doc:intake .
-  :policy :trusts doc:ethics .
-  :policy :trusts doc:consent .
-  :policy :trusts doc:registry .
+{ :cohort-b dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification }
+    prov:hadPrimarySource doc:registry .
+
+# A closed ODRL Set: this auditor may use these four records as evidence.
+# Each Permission has one assignee, action, and target. The local executable
+# profile interprets this Set as the audit's accepted evidence sources.
+:trust-policy :says {
+    :trust-policy a odrl:Set .
+    :trust-policy odrl:permission :use-intake .
+    :trust-policy odrl:permission :use-ethics .
+    :trust-policy odrl:permission :use-consent .
+    :trust-policy odrl:permission :use-registry .
+
+    :use-intake a odrl:Permission ; odrl:assignee :auditor ;
+        odrl:action odrl:use ; odrl:target doc:intake .
+    :use-ethics a odrl:Permission ; odrl:assignee :auditor ;
+        odrl:action odrl:use ; odrl:target doc:ethics .
+    :use-consent a odrl:Permission ; odrl:assignee :auditor ;
+        odrl:action odrl:use ; odrl:target doc:consent .
+    :use-registry a odrl:Permission ; odrl:assignee :auditor ;
+        odrl:action odrl:use ; odrl:target doc:registry .
 }.
 
-# ---------------------------------------------------------
-# What the decision rests on, followed to the ground
-# ---------------------------------------------------------
+# Follow recorded dependencies to the assertions supporting the scoped claim.
+{ ?claim pe:uses ?premise }
+    => { ?claim prov:wasDerivedFrom ?premise }.
+{ ?claim prov:wasDerivedFrom ?premise . ?premise prov:wasDerivedFrom ?source }
+    => { ?claim prov:wasDerivedFrom ?source }.
 
-{ ?claim pe:uses ?dep } => { ?claim :restsOn ?dep }.
-{ ?a :restsOn ?b. ?b :restsOn ?c } => { ?a :restsOn ?c }.
+{ ?audit a dpv:Audit ; dpv:hasScope ?root .
+  ?root prov:wasDerivedFrom ?claim .
+  ?claim pe:fact ?label ; prov:hadPrimarySource ?doc .
+} => {
+    ?audit dpv:hasDataSource ?doc .
+}.
 
-{ :audit :of ?root. ?root :restsOn ?claim. ?claim pe:fact ?src }
-    => { :audit :restsOnAssertion ?claim }.
-
-{ :audit :restsOnAssertion ?claim. ?doc :asserts ?claim }
-    => { :audit :vouchedBy ?doc }.
-
-# ---------------------------------------------------------
-# The constraint: nothing unvouched-for underneath a permit
-# ---------------------------------------------------------
-
-{ :audit :vouchedBy ?doc.
-  :policy :says ?trusted.
-  ?trusted log:notIncludes { :policy :trusts ?doc }.
+# Reject an identified source unless the policy permits this auditor to use it.
+{ ?audit a dpv:Audit ; dpv:hasDataSource ?doc ;
+    dpv:hasPolicy ?policy ; dpv:hasResponsibleEntity ?auditor .
+  ?policy :says ?permitted .
+  ?permitted log:notIncludes {
+      ?policy odrl:permission _:permission .
+      _:permission a odrl:Permission ; odrl:assignee ?auditor ;
+          odrl:action odrl:use ; odrl:target ?doc .
+  }.
 } => false.
 
-# ---------------------------------------------------------
-# Report only the audit's own conclusions. Naming the answer
-# something the premise does not already say keeps it a
-# derivation, so `-p` writes a proof of the audit too: the
-# checking is no more to be taken on trust than the decision.
-# ---------------------------------------------------------
-
-{ :audit :vouchedBy ?doc } log:query { :audit :standsOn ?doc }.
+# A derived report claim, so the audit can itself have a proof.
+{ :audit dpv:hasDataSource ?doc }
+    log:query { :audit dpv:hasJustification ?doc }.

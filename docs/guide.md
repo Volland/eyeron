@@ -66,21 +66,21 @@ A proof records derived claims and steps with their justifications, bindings, an
 
 ### Example: audit a decision
 
-[verifiable-decision.n3](../examples/verifiable-decision.n3) combines consent, privacy, and ethics assertions to permit a request. Generate and check its proof:
+[verifiable-decision.n3](../examples/verifiable-decision.n3) combines DPV descriptions of consent and safeguards with ethics assertions to derive an ODRL Agreement from an ODRL Request. The [slide deck](../examples/deck/verifiable-decision.md) explains the decision and its audit. Generate and check its proof:
 
 ```bash
 eyeron -p examples/verifiable-decision.n3 > /tmp/decision.why.n3
 eyeron --check-proof /tmp/decision.why.n3 examples/verifiable-decision.n3
 ```
 
-The report contains `checked: 11 steps, 11 verified, 0 trusted`. Proofs are N3 data, so another program can follow `pe:uses` and apply a policy to the assertions supporting a decision:
+The report contains `checked: 30 steps, 30 verified, 0 trusted`. Proofs are N3 data, so another program can follow `pe:uses` and apply a policy to the assertions supporting a decision:
 
 ```bash
 eyeron examples/verifiable-decision-audit.n3 \
        examples/input/verifiable-decision-audit.n3
 ```
 
-This bundled audit reads a saved copy of the decision proof and identifies its supporting authorities. Removing an authority from its quoted trust policy triggers an inference fuse. To audit the proof you just generated, replace the second input with `/tmp/decision.why.n3`.
+This bundled audit reads a saved copy of the decision proof and identifies its supporting authorities. Removing a record's use-permission link from its quoted ODRL evidence policy triggers an inference fuse. To audit the proof you just generated, replace the second input with `/tmp/decision.why.n3`.
 
 ## Rust library
 

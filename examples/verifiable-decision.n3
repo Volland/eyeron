@@ -1,51 +1,106 @@
-# ============================================================
-# A decision you do not have to trust
+# A research-data decision with a checkable proof (first of two examples).
+# verifiable-decision-audit.n3 reads the proof and audits its supporting sources.
 #
-# Half one of two. This half decides; verifiable-decision-audit.n3
-# reads the proof of this decision back in and asks what it rests on.
-#
-# A research-data request is permitted when three separate
-# authorities have each said their piece: an ethics committee, the
-# cohort's consent record, and the de-identification registry. No
-# single rule decides it -- the permit is the end of a chain, which
-# is what makes its proof worth reading.
+# ODRL describes the proposed use and the resulting grant. A Request does not
+# grant permission: the Agreement is derived only when all three checks pass.
+# DPV describes the research purpose, consent, and de-identification measure.
+# The local :research-profile is the small executable profile defined below;
+# :holdsApproval is the example-specific link to an accepted ethics approval.
+# No external ontology or profile is fetched. This is an illustrative policy,
+# not a complete assessment of research law, consent validity, or anonymity.
 #
 #   eyeron examples/verifiable-decision.n3
-#   eyeron -p examples/verifiable-decision.n3 > proof.n3
-#   eyeron --check-proof proof.n3 examples/verifiable-decision.n3
+#   eyeron -p examples/verifiable-decision.n3 > /tmp/decision.why.n3
+#   eyeron --check-proof /tmp/decision.why.n3 examples/verifiable-decision.n3
 #
-# The third command checks the proof against this program without
-# reasoning at all: it re-performs the steps the document records,
-# and says so. Nothing about it trusts the engine that wrote it.
-# ============================================================
+# Vocabulary references:
+# https://www.w3.org/TR/odrl-model/
+# https://www.w3.org/TR/odrl-vocab/
+# https://w3id.org/dpv/2.3
 
-@prefix : <https://example.org/access#>.
+@prefix :     <https://example.org/access#>.
+@prefix odrl: <http://www.w3.org/ns/odrl/2/>.
+@prefix dpv:  <https://w3id.org/dpv#>.
 
-# ---------------------------------------------------------
-# What the authorities assert
-# ---------------------------------------------------------
+# Intake: the request proposes one use, by one researcher, for one purpose.
+:request-42 a odrl:Request ;
+    odrl:profile :research-profile ;
+    odrl:permission :research-use-42 .
 
-:request-42 :asksFor :cohort-b .
-:request-42 :madeBy  :dr-okafor .
-:request-42 :purpose :secondaryResearch .
+:research-use-42 a odrl:Permission ;
+    odrl:assigner :hospital ;
+    odrl:assignee :dr-okafor ;
+    odrl:target :cohort-b ;
+    odrl:action odrl:use ;
+    odrl:constraint :purpose-42 .
 
-:dr-okafor    :holdsApproval  :eth-2026-118 .
-:eth-2026-118 :coversPurpose  :secondaryResearch .
-:cohort-b     :consentCovers  :secondaryResearch .
-:cohort-b     :deidentified   true .
+# odrl:purpose is a constraint operand, not a predicate. DPV supplies its value.
+:purpose-42 a odrl:Constraint ;
+    odrl:leftOperand odrl:purpose ;
+    odrl:operator odrl:eq ;
+    odrl:rightOperand dpv:ScientificResearch .
 
-# ---------------------------------------------------------
-# What it takes to say yes
-# ---------------------------------------------------------
+# Ethics: this accepted approval covers the same dataset and purpose.
+:dr-okafor :holdsApproval :eth-2026-118 .
+:eth-2026-118 dpv:hasData :cohort-b ;
+    dpv:hasPurpose dpv:ScientificResearch .
 
-{ ?r :madeBy ?who. ?who :holdsApproval ?a. ?r :purpose ?p. ?a :coversPurpose ?p }
-    => { ?r :hasEthicsCover true }.
+# Consent: a simplified, cohort-level assertion, scoped to dataset and purpose.
+# The audit separately identifies the document recording these assertions.
+:consent-b a dpv:Consent ;
+    dpv:hasData :cohort-b ;
+    dpv:hasPurpose dpv:ScientificResearch ;
+    dpv:hasConsentStatus dpv:ConsentGiven .
 
-{ ?r :asksFor ?ds. ?r :purpose ?p. ?ds :consentCovers ?p }
-    => { ?r :hasConsent true }.
+# Registry: a recorded safeguard, not an assertion that the data is anonymous.
+:cohort-b dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification .
 
-{ ?r :asksFor ?ds. ?ds :deidentified true }
-    => { ?r :meetsPrivacyBar true }.
+# Check 1: the requesting researcher holds an approval for this data and purpose.
+{
+    ?request a odrl:Request ; odrl:permission ?use .
+    ?use odrl:assignee ?who ; odrl:target ?data ; odrl:constraint ?constraint .
+    ?constraint a odrl:Constraint ;
+        odrl:leftOperand odrl:purpose ; odrl:operator odrl:eq ;
+        odrl:rightOperand ?purpose .
+    ?who :holdsApproval ?approval .
+    ?approval dpv:hasData ?data ; dpv:hasPurpose ?purpose .
+} => {
+    ?use dpv:hasJustification ?approval .
+}.
 
-{ ?r :hasEthicsCover true. ?r :hasConsent true. ?r :meetsPrivacyBar true }
-    => { ?r :decision :permit }.
+# Check 2: given consent covers the same data and purpose.
+{
+    ?request a odrl:Request ; odrl:permission ?use .
+    ?use odrl:target ?data ; odrl:constraint ?constraint .
+    ?constraint a odrl:Constraint ;
+        odrl:leftOperand odrl:purpose ; odrl:operator odrl:eq ;
+        odrl:rightOperand ?purpose .
+    ?consent a dpv:Consent ; dpv:hasData ?data ; dpv:hasPurpose ?purpose ;
+        dpv:hasConsentStatus dpv:ConsentGiven .
+} => {
+    ?use dpv:hasLegalBasis ?consent .
+}.
+
+# Check 3: the requested dataset has the policy's required safeguard.
+{
+    ?request a odrl:Request ; odrl:permission ?use .
+    ?use odrl:target ?data .
+    ?data dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification .
+} => {
+    ?use dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification .
+}.
+
+# This demonstration handles request 42. Its Agreement grants the proposed
+# use only after all three checks; the Request itself remains a proposal.
+{
+    :request-42 a odrl:Request ; odrl:profile :research-profile ;
+        odrl:permission ?use .
+    ?use a odrl:Permission ; odrl:assigner ?holder ; odrl:assignee ?researcher ;
+        odrl:target ?data ; odrl:action odrl:use ; odrl:constraint ?constraint ;
+        dpv:hasJustification ?approval ; dpv:hasLegalBasis ?consent ;
+        dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification .
+} => {
+    :agreement-42 a odrl:Agreement ; odrl:profile :research-profile ;
+        odrl:assigner ?holder ; odrl:assignee ?researcher ; odrl:permission ?use .
+    :request-42 dpv:hasOutcome :agreement-42 .
+}.

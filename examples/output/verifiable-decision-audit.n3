@@ -1,7 +1,8 @@
 @prefix : <https://example.org/access#> .
 @prefix doc: <https://example.org/doc/> .
+@prefix dpv: <https://w3id.org/dpv#> .
 
-:audit :standsOn doc:intake .
-:audit :standsOn doc:consent .
-:audit :standsOn doc:registry .
-:audit :standsOn doc:ethics .
+:audit dpv:hasJustification doc:intake .
+:audit dpv:hasJustification doc:ethics .
+:audit dpv:hasJustification doc:consent .
+:audit dpv:hasJustification doc:registry .
