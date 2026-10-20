@@ -1,19 +1,22 @@
-# ==================
-# Socrates inference
-# ==================
+# Socrates is mortal
+#
+# The classic syllogism. Socrates is a human, and the class of humans is a
+# subclass of the mortals. One general rule says that whatever belongs to a
+# class also belongs to every superclass of it, so eyeron derives that
+# Socrates is mortal.
 
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <http://example.org/socrates#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <http://example.org/socrates#> .
 
-# facts
-:Socrates a :Human.
-:Human rdfs:subClassOf :Mortal.
+# Facts
+:Socrates a :Human .
+:Human rdfs:subClassOf :Mortal .
 
-# subclass rule
+# Membership carries over from a class to its superclass.
 {
-    ?S a ?A.
-    ?A rdfs:subClassOf ?B.
+    ?S a ?A .
+    ?A rdfs:subClassOf ?B .
 } => {
-    ?S a ?B.
-}.
+    ?S a ?B .
+} .

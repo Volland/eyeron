@@ -1,4 +1,4 @@
-# Eyeron guide
+# <img src="https://josd.github.io/images/eye.png" alt="" width="32" height="32"> Eyeron guide
 
 Build, run, embed, and test Eyeron here. The [language reference](n3.md) describes evaluation and built-ins; the [proof-checking contract](proof-checking.md) describes what verification establishes.
 

@@ -1,4 +1,4 @@
-# Proof-checking contract
+# <img src="https://josd.github.io/images/eye.png" alt="" width="32" height="32"> Proof-checking contract
 
 This is the validity contract implemented by [proof_check.rs](../src/proof_check.rs) and its [N3 reader](../src/proof_check_n3.rs). The numbered sections are also referenced by code comments. [The guide](guide.md#proofs-and-their-limits) covers commands and a decision/audit example.
 

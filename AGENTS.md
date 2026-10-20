@@ -81,6 +81,17 @@ parts rather than flooding the terminal.
 - RDF syntaxes follow their grammars strictly: undeclared prefixes, prefixed
   names in N-Triples/N-Quads, and misplaced dots after `@version`/`VERSION`
   are errors. N3 keeps its conventional prefixes.
+- Every example starts with a header comment for a wide audience: a short
+  title line, a blank `#` line, then a few lines saying what situation it
+  models, what eyeron derives, and which N3 feature it shows. Describe the
+  example as it is; do not mention where it came from or sibling projects.
+  External references that help the reader go on a `# See <url>` line.
+- Examples use the layout eyeron's N3 printer writes: `@prefix p: <iri> .`,
+  statements ending in ` .`, rules as `{ ... } => { ... } .` with four-space
+  indentation inside `{ }`, `[ ]` and wrapped lists, plain `# Section`
+  comments without banners, and no trailing whitespace. `examples/socrates.n3`
+  is the reference. Reformatting is whitespace and comments only, so every
+  golden must stay unchanged.
 - Every example that derives anything has an output golden and a proof
   golden. When adding an example, add it to `bundledExamplesN3` in
   `playground.html`; a companion input goes in `examples/input/` and in
