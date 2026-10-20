@@ -1,4 +1,6 @@
-# cargo-deny policy. Run locally with `cargo deny check`.
+# cargo-deny policy, checked by the CI Dependencies job. To run it locally,
+# install the tool once with `cargo install --locked cargo-deny`, then run
+# `cargo deny check`.
 
 [graph]
 all-features = true
