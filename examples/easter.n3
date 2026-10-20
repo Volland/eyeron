@@ -1,11 +1,10 @@
-# easter. Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/arcus/easter/easter.ttl
-# The finite 2024--2050 range is enumerated with list:member.
+# Calculating Easter dates
+#
+# The years 2024 through 2050 supply a finite calendar calculation. A
+# backward N3 rule applies integer arithmetic to derive the Easter month
+# and day for each selected year.
 
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Sources: https://eyereasoner.github.io/eye/reasoning/arcus/easter/easter.ttl
-# Premise blank nodes are named variables; backward answers are materialized.
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
 
 @prefix : <http://example.org/#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .

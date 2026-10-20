@@ -1,61 +1,81 @@
-# =================================================
-# Gray code counter
-# Taken from the book "Clause and Effect" Chapter 8
-# =================================================
+# Following a three-bit Gray-code counter
+#
+# Truth-table facts describe logic gates and a flip-flop. Recursive
+# backward N3 rules combine them into a counter and derive its successive
+# three-bit states for the supplied clock sequence.
 
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix : <https://eyereasoner.github.io/eye/reasoning#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix : <https://eyereasoner.github.io/eye/reasoning#> .
 
-(0 0) :and 0.
-(0 1) :and 0.
-(1 0) :and 0.
-(1 1) :and 1.
+(0 0) :and 0 .
+(0 1) :and 0 .
+(1 0) :and 0 .
+(1 1) :and 1 .
 
-(0 0) :or 0.
-(0 1) :or 1.
-(1 0) :or 1.
-(1 1) :or 1.
+(0 0) :or 0 .
+(0 1) :or 1 .
+(1 0) :or 1 .
+(1 1) :or 1 .
 
-0 :inv 1.
-1 :inv 0.
+0 :inv 1 .
+1 :inv 0 .
 
-{(?D 0 ?Q) :dff ?Q} <= true.
-{(?D 1 ?Q) :dff ?D} <= true.
+{
+    (?D 0 ?Q) :dff ?Q
+} <= true .
 
-{(?A ?B) :neta ?Q} <= {
-    (?A ?B) :and ?T1.
-    ?A :inv ?NA.
-    ?B :inv ?NB.
-    (?NA ?NB) :and ?T2.
-    (?T1 ?T2) :or ?Q.
-}.
+{
+    (?D 1 ?Q) :dff ?D
+} <= true .
 
-{(?A ?B ?C) :netb (?Q1 ?Q2)} <= {
-    (?A ?C) :and ?T1.
-    ?C :inv ?NC.
-    (?B ?NC) :and ?T2.
-    ?A :inv ?NA.
-    (?NA ?C) :and ?T3.
-    (?T1 ?T2) :or ?Q1.
-    (?T2 ?T3) :or ?Q2.
-}.
+{
+    (?A ?B) :neta ?Q
+} <= {
+    (?A ?B) :and ?T1 .
+    ?A :inv ?NA .
+    ?B :inv ?NB .
+    (?NA ?NB) :and ?T2 .
+    (?T1 ?T2) :or ?Q .
+} .
 
-{(?C (?Qa ?Qb ?Qc)) :gcc (?Za ?Zb ?Zc)} <= {
-    (?Qa ?Qb ?Qc) :netb (?D1 ?D2).
-    (?Qa ?Qb) :neta ?D3.
-    (?D1 ?C ?Qa) :dff ?Za.
-    (?D2 ?C ?Qb) :dff ?Zb.
-    (?D3 ?C ?Qc) :dff ?Zc.
-}.
+{
+    (?A ?B ?C) :netb (?Q1 ?Q2)
+} <= {
+    (?A ?C) :and ?T1 .
+    ?C :inv ?NC .
+    (?B ?NC) :and ?T2 .
+    ?A :inv ?NA .
+    (?NA ?C) :and ?T3 .
+    (?T1 ?T2) :or ?Q1 .
+    (?T2 ?T3) :or ?Q2 .
+} .
 
-{(() ?S) :testgcc ()} <= true.
+{
+    (?C (?Qa ?Qb ?Qc)) :gcc (?Za ?Zb ?Zc)
+} <= {
+    (?Qa ?Qb ?Qc) :netb (?D1 ?D2) .
+    (?Qa ?Qb) :neta ?D3 .
+    (?D1 ?C ?Qa) :dff ?Za .
+    (?D2 ?C ?Qb) :dff ?Zb .
+    (?D3 ?C ?Qc) :dff ?Zc .
+} .
 
-{(?Cc ?S) :testgcc ?Nc} <= {
-    ?Cc list:firstRest (?C ?Cs).
-    ?Nc list:firstRest (?N ?Ns).
-    (?C ?S) :gcc ?N.
-    (?Cs ?N) :testgcc ?Ns.
-}.
+{
+    (() ?S) :testgcc ()
+} <= true .
+
+{
+    (?Cc ?S) :testgcc ?Nc
+} <= {
+    ?Cc list:firstRest (?C ?Cs) .
+    ?Nc list:firstRest (?N ?Ns) .
+    (?C ?S) :gcc ?N .
+    (?Cs ?N) :testgcc ?Ns .
+} .
 
 # test
-{((1 1 1 1 1 1 1 1 1) (0 0 0)) :testgcc ?Q} => {((1 1 1 1 1 1 1 1 1) (0 0 0)) :isgcc ?Q}.
+{
+    ((1 1 1 1 1 1 1 1 1) (0 0 0)) :testgcc ?Q
+} => {
+    ((1 1 1 1 1 1 1 1 1) (0 0 0)) :isgcc ?Q
+} .

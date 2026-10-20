@@ -1,17 +1,17 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/rgb/
-# Standalone program; EYE answer directives use log:query.
+# Returning rules as query answers
+#
+# A small relation supplies bindings for two queries. Their N3 conclusions
+# are quoted implications, showing how a query can return a chain of rules
+# as structured output.
 
-# Source file: rgb/redgraph001.n3
-@base <https://eyereasoner.github.io/eye/reasoning/rgb/redgraph001.n3>.
-@prefix : <http://example.org/try#>.
+@base <https://eyereasoner.github.io/eye/reasoning/rgb/redgraph001.n3> .
+@prefix : <http://example.org/try#> .
 
-:s :p :o.
-:o :p :p.
-:p :p :s.
+:s :p :o .
+:o :p :p .
+:p :p :s .
 
-
-# Query: rgb/greenquery001.n3
+# Query
 @prefix : <http://example.org/try#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
@@ -34,4 +34,3 @@
         ?S :r ?O .
     } .
 } .
-

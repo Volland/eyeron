@@ -1,17 +1,19 @@
-# ================
-# Existential rule
-# ================
+# Creating a witness for each person
+#
+# Socrates and Plato are both humans. An N3 rule introduces a fresh blank-
+# node witness for each rule application, showing an existential variable
+# in a rule conclusion.
 
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix : <http://example.org/socrates#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/socrates#> .
 
 # facts
-:Socrates a :Human.
-:Plato a :Human.
+:Socrates a :Human .
+:Plato a :Human .
 
 # subclass rule
 {
-    ?S a :Human.
+    ?S a :Human .
 } => {
-    ?S :is _:B.
-}.
+    ?S :is _:B .
+} .

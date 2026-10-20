@@ -1,26 +1,42 @@
-# N3 example: derivative.
-# Symbolic differentiation over
-# constructor terms, here represented as N3 lists (:const N), (:var X),
-# (:add U V), (:mul U V) matched structurally by each backward rule's own
-# head pattern (mirroring hanoi.n3's (?N ?X ?Y ?Z) style), since
-# constructing a blank-node property bag in a backward (<=) rule's
-# conclusion was found not to work (confirmed by testing in isolation).
+# Differentiating symbolic expressions
+#
+# Constants, variables, sums, and products are represented as nested lists.
+# Recursive backward N3 rules apply differentiation rules and derive a
+# symbolic derivative for each requested expression.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/derivative#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/derivative#> .
 
-{((:const ?n) ?x) :derivative (:const 0)} <= true.
-{((:var ?x) ?x) :derivative (:const 1)} <= true.
-{((:var ?y) ?x) :derivative (:const 0)} <= {?y log:notEqualTo ?x}.
+{
+    ((:const ?n) ?x) :derivative (:const 0)
+} <= true .
 
-{((:add ?u ?v) ?x) :derivative (:add ?du ?dv)} <= {
-    (?u ?x) :derivative ?du.
-    (?v ?x) :derivative ?dv.
-}.
+{
+    ((:var ?x) ?x) :derivative (:const 1)
+} <= true .
 
-{((:mul ?u ?v) ?x) :derivative (:add (:mul ?du ?v) (:mul ?u ?dv))} <= {
-    (?u ?x) :derivative ?du.
-    (?v ?x) :derivative ?dv.
-}.
+{
+    ((:var ?y) ?x) :derivative (:const 0)
+} <= {
+    ?y log:notEqualTo ?x
+} .
 
-{((:mul (:var :x) (:var :x)) :x) :derivative ?d} => {:query :derivative ?d}.
+{
+    ((:add ?u ?v) ?x) :derivative (:add ?du ?dv)
+} <= {
+    (?u ?x) :derivative ?du .
+    (?v ?x) :derivative ?dv .
+} .
+
+{
+    ((:mul ?u ?v) ?x) :derivative (:add (:mul ?du ?v) (:mul ?u ?dv))
+} <= {
+    (?u ?x) :derivative ?du .
+    (?v ?x) :derivative ?dv .
+} .
+
+{
+    ((:mul (:var :x) (:var :x)) :x) :derivative ?d
+} => {
+    :query :derivative ?d
+} .

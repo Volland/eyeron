@@ -1,6 +1,8 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Sources: https://eyereasoner.github.io/eye/reasoning/arcus/eulers-identity/eulers-identity.ttl
-# Premise blank nodes are named variables; backward answers are materialized.
+# Raising complex numbers to powers
+#
+# Complex numbers are represented as real and imaginary pairs. Backward N3
+# rules combine polar conversion and arithmetic to calculate the requested
+# complex powers.
 
 @prefix complex: <http://eyereasoner.github.io/eye/complex#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .

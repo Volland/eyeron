@@ -1,20 +1,27 @@
-# ===================
-# Quoted head unquote
-# ===================
+# Activating a quoted rule
 #
-# Allow RHS of => to be a term (e.g., ?C) that resolves to a quoted formula.
+# A fact stores a graph containing a cat-to-animal rule. An N3 rule uses
+# that graph value directly as its conclusion, allowing the stored rule to
+# classify the sample cat.
 
 @prefix : <http://example.org/ns#> .
 
 :a :b {
-  { ?X a :Cat } => { ?X a :Animal }.
-}.
+    {
+        ?X a :Cat
+    } => {
+        ?X a :Animal
+    } .
+} .
 
 {
-  :a :b ?C.
-}
-=> ?C.
+    :a :b ?C .
+} => ?C .
 
 :c a :Cat .
 
-{ :c a :Animal } => { :test :is true }.
+{
+    :c a :Animal
+} => {
+    :test :is true
+} .

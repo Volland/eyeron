@@ -1,14 +1,19 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/iq/
-# Standalone program; EYE answer directives use log:query.
+# Activating a stored graph
+#
+# A fact stores a quoted graph as its value. An N3 rule binds that value
+# and uses it directly as the conclusion, making the graph's statement
+# available as a derived fact.
 
-# Source file: iq/iq-extra.n3
-@base <https://eyereasoner.github.io/eye/reasoning/iq/iq-extra.n3>.
+@base <https://eyereasoner.github.io/eye/reasoning/iq/iq-extra.n3> .
+
 # implicit quantification
 # extra cases
+@prefix : <http://example.org/test#> .
 
-@prefix : <http://example.org/test#>.
+:a :b {
+    :c :d :e
+} .
 
-:a :b {:c :d :e}.
-{?x :b ?y} => ?y.
-
+{
+    ?x :b ?y
+} => ?y .

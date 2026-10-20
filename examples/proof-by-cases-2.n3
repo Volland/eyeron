@@ -1,47 +1,77 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/proof-by-cases/
-# Standalone program; EYE answer directives use log:query.
+# Finding a conclusion shared by possible cases
+#
+# Water is assigned solid, liquid, and gas as alternative cases, each
+# implying observability. N3 rules represent the case list and test the
+# common conclusion within those alternatives.
 
-# Source file: proof-by-cases/example2.n3
-@base <https://eyereasoner.github.io/eye/reasoning/proof-by-cases/example2.n3>.
-# See https://en.wikipedia.org/wiki/Disjunction_elimination
+@base <https://eyereasoner.github.io/eye/reasoning/proof-by-cases/example2.n3> .
 
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/ns#>.
+# See <https://en.wikipedia.org/wiki/Disjunction_elimination>
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/ns#> .
 
 # water is an inorganic compound
-:water a :InorganicCompound.
+:water a :InorganicCompound .
 
 # water is solid or liquid or gas
 {
-    ?A a :InorganicCompound.
+    ?A a :InorganicCompound .
 } => {
     (?A) log:allPossibleCases (
-        { ?A :is :solid }
-        { ?A :is :liquid }
-        { ?A :is :gas }
+        {
+            ?A :is :solid
+        }
+        {
+            ?A :is :liquid
+        }
+        {
+            ?A :is :gas
+        }
     )
-}.
+} .
 
 # solid, liquid and gas things are observable
-{ ?A :is :solid } => { ?A :is :observable }.
-{ ?A :is :liquid } => { ?A :is :observable }.
-{ ?A :is :gas } => { ?A :is :observable }.
+{
+    ?A :is :solid
+} => {
+    ?A :is :observable
+} .
+
+{
+    ?A :is :liquid
+} => {
+    ?A :is :observable
+} .
+
+{
+    ?A :is :gas
+} => {
+    ?A :is :observable
+} .
 
 # proof by cases
 {
-    (?A) log:allPossibleCases ?B.
+    (?A) log:allPossibleCases ?B .
     (
-        { ?B list:member { ?A :is ?C } }
-        { { ?A :is ?C } => { ?A :is :observable } }
-    ) log:forAllIn ?SCOPE.
+        {
+            ?B list:member {
+                ?A :is ?C
+            }
+        }
+        {
+            {
+                ?A :is ?C
+            } => {
+                ?A :is :observable
+            }
+        }
+    ) log:forAllIn ?SCOPE .
 } => {
-    ?A :is :observable.
-}.
+    ?A :is :observable .
+} .
 
-
-# Query: proof-by-cases/example2-query.n3
+# Query
 @prefix : <https://eyereasoner.github.io/ns#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
@@ -50,4 +80,3 @@
 } log:query {
     ?A :is ?B .
 } .
-

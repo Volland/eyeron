@@ -1,17 +1,46 @@
-# N3 example: graph-term-emulation.
-# Unlike those two (which have
-# to emulate a closed graph term with a list of triples/compound terms),
-# N3 has a native closed graph term -- a quoted formula (`{...}`) -- so
-# this uses one directly, with `log:includes` doing the subgraph-pattern
-# membership check both siblings otherwise have to build by hand.
+# Inspecting quoted graph terms
+#
+# Quoted graphs serve as values that rules can inspect. The N3 example
+# matches their internal statements and derives results while keeping the
+# quoted evidence distinct from asserted facts.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <http://example/>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <http://example/> .
 
-:g1 :graphTerm {:alice :knows :bob. :bob :knows :carol}.
-:g2 :graphTerm {:alice :likes :tea}.
-:note1 :aboutGraphTerm :g1.
+:g1 :graphTerm {
+    :alice :knows :bob .
+    :bob :knows :carol
+} .
 
-{?g :graphTerm ?formula. ?formula log:includes {?s :knows ?o}} => {?g a :SocialGraphTerm}.
-{?g :graphTerm ?formula. ?formula log:includes {?s ?p ?o}} => {?g :mentions ?s}.
-{?g :graphTerm ?formula. ?formula log:includes {?s ?p ?o}} => {?g :mentions ?o}.
+:g2 :graphTerm {
+    :alice :likes :tea
+} .
+
+:note1 :aboutGraphTerm :g1 .
+
+{
+    ?g :graphTerm ?formula .
+    ?formula log:includes {
+        ?s :knows ?o
+    }
+} => {
+    ?g a :SocialGraphTerm
+} .
+
+{
+    ?g :graphTerm ?formula .
+    ?formula log:includes {
+        ?s ?p ?o
+    }
+} => {
+    ?g :mentions ?s
+} .
+
+{
+    ?g :graphTerm ?formula .
+    ?formula log:includes {
+        ?s ?p ?o
+    }
+} => {
+    ?g :mentions ?o
+} .

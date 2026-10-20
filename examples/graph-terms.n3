@@ -1,13 +1,37 @@
-# Quoted conjunctions, local blank nodes, and unquoting.
-@prefix : <http://example.org/>.
+# Activating statements from a quoted graph
+#
+# Bob's statements are stored as quoted graphs, including one with an
+# unnamed subject. N3 rules activate the stored graphs and derive further
+# food preferences, showing graph values used as rule conclusions.
 
-:alice :likes :pasta.
-:bob :says { :alice :likes :pizza, :pasta }.
-:bob :says { _:x :likes :pizza. _:x :likes :pasta }.
-{ ?x :likes :pasta } => { ?x :likes :spaghetti }.
-{ :bob :says ?x } => ?x.
+@prefix : <http://example.org/> .
+
+:alice :likes :pasta .
+:bob :says {
+    :alice :likes :pizza, :pasta
+} .
+
+:bob :says {
+    _:x :likes :pizza .
+    _:x :likes :pasta
+} .
+
+{
+    ?x :likes :pasta
+} => {
+    ?x :likes :spaghetti
+} .
+
+{
+    :bob :says ?x
+} => ?x .
 
 # Applying the unquoting rule yields Alice's likes for pasta and pizza.
 # This is the corresponding instantiated implication.
-{ :bob :says { :alice :likes :pasta, :pizza } }
-    => { :alice :likes :pasta, :pizza }.
+{
+    :bob :says {
+        :alice :likes :pasta, :pizza
+    }
+} => {
+    :alice :likes :pasta, :pizza
+} .

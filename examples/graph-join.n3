@@ -1,16 +1,23 @@
-# N3 example: graph-join.
-# RDF-shaped values are ordinary
-# constructors there; here they are reified quad records (subject,
-# predicate, object, graph) joined on a shared subject across two named
-# graphs, since eyeron's N3 front end has no named-graph-literal syntax to
-# quote a graph directly by name.
+# Joining reviewer and approval evidence
+#
+# Two statement records describe a reviewer's role in one graph and an
+# approval in another. An N3 rule joins the records through the reviewer
+# and derives that the approved claim is trusted.
 
-@prefix : <https://eyereasoner.github.io/eyepl/examples/graph-join#>.
+@prefix : <https://eyereasoner.github.io/eyepl/examples/graph-join#> .
 
-[:subject :alice; :predicate :role; :object :reviewer; :graph :staff] a :Quad.
-[:subject :alice; :predicate :approved; :object :claim1; :graph :reviews] a :Quad.
+[ :subject :alice ; :predicate :role ; :object :reviewer ; :graph :staff ] a :Quad .
+[ :subject :alice ; :predicate :approved ; :object :claim1 ; :graph :reviews ] a :Quad .
 
 {
-    ?q1 :subject ?person; :predicate :role; :object :reviewer; :graph :staff.
-    ?q2 :subject ?person; :predicate :approved; :object ?claim; :graph :reviews.
-} => { ?claim :trusted true }.
+    ?q1 :subject ?person ;
+        :predicate :role ;
+        :object :reviewer ;
+        :graph :staff .
+    ?q2 :subject ?person ;
+        :predicate :approved ;
+        :object ?claim ;
+        :graph :reviews .
+} => {
+    ?claim :trusted true
+} .

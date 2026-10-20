@@ -1,37 +1,28 @@
-# =================================================
-# jsonterm example
+# Representing JSON-shaped structures in N3
 #
-# Mapping used:
-# - JSON objects become anonymous node structures.
-# - JSON arrays become N3 lists.
-# - JSON null becomes a normal symbol here, j:null.
-# =================================================
+# Blank-node property structures and lists stand for JSON-like objects and
+# arrays. An N3 rule matches the supplied nested structures, including a
+# named null symbol, and records a test result.
 
 @prefix ex: <https://example.org/#> .
 @prefix j: <https://example.org/json#> .
 
 [
-  j:user "alice";
-  j:roles ("admin" j:null)
-]
-("likes" 1)
-[
-  j:city "Paris";
-  j:coords (2.35 48.85)
+    j:user "alice" ;
+    j:roles ("admin" j:null)
+] ("likes" 1) [
+    j:city "Paris" ;
+    j:coords (2.35 48.85)
 ] .
 
 {
-  [
-    j:user ?U;
-    j:roles ("admin" j:null)
-  ]
-  ("likes" 1)
-  [
-    j:city "Paris";
-    j:coords (2.35 48.85)
-  ] .
-}
-=>
-{
-  ex:test ex:is true .
+    [
+        j:user ?U ;
+        j:roles ("admin" j:null)
+    ] ("likes" 1) [
+        j:city "Paris" ;
+        j:coords (2.35 48.85)
+    ] .
+} => {
+    ex:test ex:is true .
 } .

@@ -1,16 +1,8 @@
-# ==============================================================================
-# ACT gravity mediator witness — explicit can and can't version
+# An entanglement witness for a mediator
 #
-# Concrete applied-constructor-theory case:
-# Two quantum sensors become entangled even though they have no direct coupling.
-# They interact only through a mediator interpreted as gravitational.
-#
-# This example therefore includes both sides:
-#   - CAN   : a mediator-only entanglement witness is possible when the mediator
-#             is treated as non-classical under locality and interoperability
-#   - CAN'T : a purely classical mediator model cannot generate the same witness
-#             under the same mediator-only conditions
-# ==============================================================================
+# Two quantum sensors interact only through a mediator. Under the stated
+# locality and information assumptions, N3 rules distinguish a nonclassical
+# mediator from a classical model that cannot produce the witness.
 
 @prefix : <http://example.org/act-gravity/> .
 @prefix arc: <https://example.org/arc#> .
@@ -19,197 +11,234 @@
 :000_md_title log:outputString "# act-gravity-mediator-witness\n\n## Source files\n\n- [N3 rules](../act-gravity-mediator-witness.n3)\n\n" .
 
 :case a arc:Case ;
-  arc:question "If two quantum sensors become entangled only through a gravitational mediator, while locality and interoperability hold, what can be concluded, and what can't a purely classical mediator model do?" .
+    arc:question "If two quantum sensors become entangled only through a gravitational mediator, while locality and interoperability hold, what can be concluded, and what can't a purely classical mediator model do?" .
 
-# -----------------------
 # Shared physical systems
-# -----------------------
-
 :leftSensor a :QuantumSystem .
 :rightSensor a :QuantumSystem .
 
-# ----------------------------------
 # Positive mediator and positive run
-# ----------------------------------
-
 :gravityMediator a :Mediator ;
-  :couplingMode :Gravitational ;
-  :mediatorModel :NonClassicalCandidate .
+    :couplingMode :Gravitational ;
+    :mediatorModel :NonClassicalCandidate .
 
 :run a :ExperimentRun ;
-  :leftSystem :leftSensor ;
-  :rightSystem :rightSensor ;
-  :usesMediator :gravityMediator ;
-  :assumes :Locality ;
-  :assumes :Interoperability ;
-  :directCouplingStatus :NoDirectCoupling ;
-  :observed :EntanglementWitnessPassed ;
-  :probeStatus :LocalProbeReadoutPresent ;
-  :controlStatus :CopyLikeControlPresent .
+    :leftSystem :leftSensor ;
+    :rightSystem :rightSensor ;
+    :usesMediator :gravityMediator ;
+    :assumes :Locality ;
+    :assumes :Interoperability ;
+    :directCouplingStatus :NoDirectCoupling ;
+    :observed :EntanglementWitnessPassed ;
+    :probeStatus :LocalProbeReadoutPresent ;
+    :controlStatus :CopyLikeControlPresent .
 
-# ----------------------------------
 # Contrast mediator and contrast run
-# ----------------------------------
-
 :classicalGravityMediator a :Mediator ;
-  :couplingMode :Gravitational ;
-  :mediatorModel :PurelyClassical .
+    :couplingMode :Gravitational ;
+    :mediatorModel :PurelyClassical .
 
 :contrastRun a :ExperimentRun ;
-  :leftSystem :leftSensor ;
-  :rightSystem :rightSensor ;
-  :usesMediator :classicalGravityMediator ;
-  :assumes :Locality ;
-  :assumes :Interoperability ;
-  :directCouplingStatus :NoDirectCoupling ;
-  :observed :NoEntanglementWitness ;
-  :probeStatus :LocalProbeReadoutPresent ;
-  :controlStatus :CopyLikeControlPresent .
+    :leftSystem :leftSensor ;
+    :rightSystem :rightSensor ;
+    :usesMediator :classicalGravityMediator ;
+    :assumes :Locality ;
+    :assumes :Interoperability ;
+    :directCouplingStatus :NoDirectCoupling ;
+    :observed :NoEntanglementWitness ;
+    :probeStatus :LocalProbeReadoutPresent ;
+    :controlStatus :CopyLikeControlPresent .
 
-# -------------------------------------------------------------
 # CAN rules — what becomes possible in the positive witness run
-# -------------------------------------------------------------
-
 # Under locality and no direct coupling, interaction is mediated only through M.
-{ ?R a :ExperimentRun ;
-     :assumes :Locality ;
-     :directCouplingStatus :NoDirectCoupling ;
-     :usesMediator ?M . }
-=>
-{ ?R :interactionPath :MediatorOnlyPath .
-  ?R :pathMediator ?M . } .
+{
+    ?R a :ExperimentRun ;
+        :assumes :Locality ;
+        :directCouplingStatus :NoDirectCoupling ;
+        :usesMediator ?M .
+} => {
+    ?R :interactionPath :MediatorOnlyPath .
+    ?R :pathMediator ?M .
+} .
 
 # Interoperability plus copy-like control gives an information-transfer interface.
-{ ?R a :ExperimentRun ;
-     :assumes :Interoperability ;
-     :controlStatus :CopyLikeControlPresent . }
-=>
-{ ?R :supports :InformationTransferInterface . } .
+{
+    ?R a :ExperimentRun ;
+        :assumes :Interoperability ;
+        :controlStatus :CopyLikeControlPresent .
+} => {
+    ?R :supports :InformationTransferInterface .
+} .
 
 # Local probe readout provides a local measurement interface.
-{ ?R a :ExperimentRun ;
-     :probeStatus :LocalProbeReadoutPresent . }
-=>
-{ ?R :supports :LocalReadoutInterface . } .
+{
+    ?R a :ExperimentRun ;
+        :probeStatus :LocalProbeReadoutPresent .
+} => {
+    ?R :supports :LocalReadoutInterface .
+} .
 
 # Core ACT witness rule:
 # locality + interoperability + mediator-only interaction + observed entanglement
 # imply a non-classical mediator.
-{ ?R a :ExperimentRun ;
-     :assumes :Locality ;
-     :assumes :Interoperability ;
-     :interactionPath :MediatorOnlyPath ;
-     :usesMediator ?M ;
-     :observed :EntanglementWitnessPassed . }
-=>
-{ ?M a :NonClassicalMediator .
-  ?R :can :SupportMediatorOnlyEntanglementWitness .
-  ?R :supportsConclusion :MediatorNonClassical . } .
+{
+    ?R a :ExperimentRun ;
+        :assumes :Locality ;
+        :assumes :Interoperability ;
+        :interactionPath :MediatorOnlyPath ;
+        :usesMediator ?M ;
+        :observed :EntanglementWitnessPassed .
+} => {
+    ?M a :NonClassicalMediator .
+    ?R :can :SupportMediatorOnlyEntanglementWitness .
+    ?R :supportsConclusion :MediatorNonClassical .
+} .
 
 # If the mediator is non-classical, a purely classical mediator model is ruled out.
-{ ?R :supportsConclusion :MediatorNonClassical ;
-     :usesMediator ?M .
-  ?M a :NonClassicalMediator . }
-=>
-{ ?R :rulesOut :PurelyClassicalMediatorModel . } .
+{
+    ?R :supportsConclusion :MediatorNonClassical ;
+        :usesMediator ?M .
+    ?M a :NonClassicalMediator .
+} => {
+    ?R :rulesOut :PurelyClassicalMediatorModel .
+} .
 
 # The witness is specifically about the gravitational mediator in this run.
-{ ?R :usesMediator ?M .
-  ?M :couplingMode :Gravitational .
-  ?M a :NonClassicalMediator . }
-=>
-{ ?R :supportsConclusion :GravityMediatorNonClassical . } .
+{
+    ?R :usesMediator ?M .
+    ?M :couplingMode :Gravitational .
+    ?M a :NonClassicalMediator .
+} => {
+    ?R :supportsConclusion :GravityMediatorNonClassical .
+} .
 
-# --------------------------------------------------------------
 # CAN'T rules — what a purely classical mediator model cannot do
-# --------------------------------------------------------------
-
 # Under the same locality/interoperability/mediator-only conditions, a purely
 # classical mediator model cannot support the mediator-only entanglement witness.
-{ ?R a :ExperimentRun ;
-     :assumes :Locality ;
-     :assumes :Interoperability ;
-     :interactionPath :MediatorOnlyPath ;
-     :usesMediator ?M .
-  ?M :mediatorModel :PurelyClassical . }
-=>
-{ ?R :cannot :SupportMediatorOnlyEntanglementWitness .
-  ?M :cannot :MediateEntanglementUnderWitnessConditions . } .
+{
+    ?R a :ExperimentRun ;
+        :assumes :Locality ;
+        :assumes :Interoperability ;
+        :interactionPath :MediatorOnlyPath ;
+        :usesMediator ?M .
+    ?M :mediatorModel :PurelyClassical .
+} => {
+    ?R :cannot :SupportMediatorOnlyEntanglementWitness .
+    ?M :cannot :MediateEntanglementUnderWitnessConditions .
+} .
 
 # If the witness cannot be supported, the run cannot justify a non-classicality conclusion.
-{ ?R :cannot :SupportMediatorOnlyEntanglementWitness . }
-=>
-{ ?R :cannot :SupportMediatorNonClassicalConclusion . } .
+{
+    ?R :cannot :SupportMediatorOnlyEntanglementWitness .
+} => {
+    ?R :cannot :SupportMediatorNonClassicalConclusion .
+} .
 
-# ------
 # Checks
-# ------
-
 # Positive checks for the successful witness run.
-{ :run :assumes :Locality . }
-=> { :case :checkC1 :Passed . } .
+{
+    :run :assumes :Locality .
+} => {
+    :case :checkC1 :Passed .
+} .
 
-{ :run :assumes :Interoperability . }
-=> { :case :checkC2 :Passed . } .
+{
+    :run :assumes :Interoperability .
+} => {
+    :case :checkC2 :Passed .
+} .
 
-{ :run :directCouplingStatus :NoDirectCoupling . }
-=> { :case :checkC3 :Passed . } .
+{
+    :run :directCouplingStatus :NoDirectCoupling .
+} => {
+    :case :checkC3 :Passed .
+} .
 
-{ :run :interactionPath :MediatorOnlyPath . }
-=> { :case :checkC4 :Passed . } .
+{
+    :run :interactionPath :MediatorOnlyPath .
+} => {
+    :case :checkC4 :Passed .
+} .
 
-{ :run :observed :EntanglementWitnessPassed . }
-=> { :case :checkC5 :Passed . } .
+{
+    :run :observed :EntanglementWitnessPassed .
+} => {
+    :case :checkC5 :Passed .
+} .
 
-{ :run :supports :InformationTransferInterface . }
-=> { :case :checkC6 :Passed . } .
+{
+    :run :supports :InformationTransferInterface .
+} => {
+    :case :checkC6 :Passed .
+} .
 
-{ :run :supports :LocalReadoutInterface . }
-=> { :case :checkC7 :Passed . } .
+{
+    :run :supports :LocalReadoutInterface .
+} => {
+    :case :checkC7 :Passed .
+} .
 
-{ :gravityMediator a :NonClassicalMediator . }
-=> { :case :checkC8 :Passed . } .
+{
+    :gravityMediator a :NonClassicalMediator .
+} => {
+    :case :checkC8 :Passed .
+} .
 
-{ :run :rulesOut :PurelyClassicalMediatorModel . }
-=> { :case :checkC9 :Passed . } .
+{
+    :run :rulesOut :PurelyClassicalMediatorModel .
+} => {
+    :case :checkC9 :Passed .
+} .
 
-{ :run :supportsConclusion :GravityMediatorNonClassical . }
-=> { :case :checkC10 :Passed . } .
+{
+    :run :supportsConclusion :GravityMediatorNonClassical .
+} => {
+    :case :checkC10 :Passed .
+} .
 
 # Negative checks for the purely classical contrast model.
-{ :contrastRun :interactionPath :MediatorOnlyPath . }
-=> { :case :checkC11 :Passed . } .
-
-{ :contrastRun :cannot :SupportMediatorOnlyEntanglementWitness . }
-=> { :case :checkC12 :Passed . } .
-
-{ :classicalGravityMediator :cannot :MediateEntanglementUnderWitnessConditions . }
-=> { :case :checkC13 :Passed . } .
-
-{ :contrastRun :cannot :SupportMediatorNonClassicalConclusion . }
-=> { :case :checkC14 :Passed . } .
-
-# ----------------
-# ARC-style output
-# ----------------
-
-{ :case :checkC1 :Passed .
-  :case :checkC2 :Passed .
-  :case :checkC3 :Passed .
-  :case :checkC4 :Passed .
-  :case :checkC5 :Passed .
-  :case :checkC6 :Passed .
-  :case :checkC7 :Passed .
-  :case :checkC8 :Passed .
-  :case :checkC9 :Passed .
-  :case :checkC10 :Passed .
-  :case :checkC11 :Passed .
-  :case :checkC12 :Passed .
-  :case :checkC13 :Passed .
-  :case :checkC14 :Passed . }
-=>
 {
-  :out log:outputString """ACT gravity mediator witness
+    :contrastRun :interactionPath :MediatorOnlyPath .
+} => {
+    :case :checkC11 :Passed .
+} .
+
+{
+    :contrastRun :cannot :SupportMediatorOnlyEntanglementWitness .
+} => {
+    :case :checkC12 :Passed .
+} .
+
+{
+    :classicalGravityMediator :cannot :MediateEntanglementUnderWitnessConditions .
+} => {
+    :case :checkC13 :Passed .
+} .
+
+{
+    :contrastRun :cannot :SupportMediatorNonClassicalConclusion .
+} => {
+    :case :checkC14 :Passed .
+} .
+
+# ARC-style output
+{
+    :case :checkC1 :Passed .
+    :case :checkC2 :Passed .
+    :case :checkC3 :Passed .
+    :case :checkC4 :Passed .
+    :case :checkC5 :Passed .
+    :case :checkC6 :Passed .
+    :case :checkC7 :Passed .
+    :case :checkC8 :Passed .
+    :case :checkC9 :Passed .
+    :case :checkC10 :Passed .
+    :case :checkC11 :Passed .
+    :case :checkC12 :Passed .
+    :case :checkC13 :Passed .
+    :case :checkC14 :Passed .
+} => {
+    :out log:outputString """ACT gravity mediator witness
 
 ## Answer
 YES for the mediator-only witness run.

@@ -1,31 +1,26 @@
-# =================================
-# Self referential
-# Example from Patrick Hochstenbach
-# =================================
+# Rules that inspect their own vocabulary
+#
+# A rule collects predicates from available statements, while another
+# recognizes implication statements. Their N3 conclusions become further
+# data to inspect, allowing a test of the resulting vocabulary summary.
 
-@prefix : <https://eyereasoner.github.io/ns#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <https://eyereasoner.github.io/ns#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 {
     ?X ?Y ?Z
-}
-=>
-{
+} => {
     :answer :contains ?Y
-}.
+} .
 
 {
     ?X => ?Z
-}
-=>
-{
-    :answer :contains log:implies.
-}.
+} => {
+    :answer :contains log:implies .
+} .
 
 {
     :answer :contains :contains, log:implies .
-}
-=>
-{
+} => {
     :test :is true
-}.
+} .

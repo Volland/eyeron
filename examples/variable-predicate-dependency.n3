@@ -1,19 +1,25 @@
-# N3 example: variable-predicate-dependency.
-# An intentional negative cycle (derived depends on not blocked; blocked
-# depends on derived), expressed with fixed predicate names.
+# Following a negative dependency cycle
 #
-# N3 has no stratification analysis; its deferred log:notIncludes
-# mechanism derives BOTH :Derived and :Blocked -- checking that :Blocked
-# did not hold yet at the point it deferred, then firing :Derived, only
-# for the second (ordinary, non-negated) rule to add :Blocked immediately
-# afterward, retroactively invalidating the premise :Derived relied on.
-# This is exactly the kind of unsound result stratification exists to
-# rule out.
+# One rule derives a classification when a blocked label is absent, and
+# another derives that blocked label from the classification. The N3
+# example exposes the resulting behavior of the scoped absence test.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/variable-predicate-dependency#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/variable-predicate-dependency#> .
 
-:a :source :blocked.
+:a :source :blocked .
 
-{?x :source :blocked. ?SCOPE log:notIncludes {?x a :Blocked}.} => {?x a :Derived}.
-{?x a :Derived} => {?x a :Blocked}.
+{
+    ?x :source :blocked .
+    ?SCOPE log:notIncludes {
+        ?x a :Blocked
+    } .
+} => {
+    ?x a :Derived
+} .
+
+{
+    ?x a :Derived
+} => {
+    ?x a :Blocked
+} .

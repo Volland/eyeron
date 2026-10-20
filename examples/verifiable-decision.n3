@@ -1,26 +1,16 @@
-# A research-data decision with a checkable proof (first of two examples).
-# verifiable-decision-audit.n3 reads the proof and audits its supporting sources.
+# Deriving a research-data permission with evidence
 #
-# ODRL describes the proposed use and the resulting grant. A Request does not
-# grant permission: the Agreement is derived only when all three checks pass.
-# DPV describes the research purpose, consent, and de-identification measure.
-# The local :research-profile is the small executable profile defined below;
-# :holdsApproval is the example-specific link to an accepted ethics approval.
-# No external ontology or profile is fetched. This is an illustrative policy,
-# not a complete assessment of research law, consent validity, or anonymity.
+# An ODRL request and supporting DPV facts describe a proposed research
+# use. N3 rules derive the agreement and its conditions; the proof can be
+# inspected by the companion audit example.
 #
-#   eyeron examples/verifiable-decision.n3
-#   eyeron -p examples/verifiable-decision.n3 > /tmp/decision.why.n3
-#   eyeron --check-proof /tmp/decision.why.n3 examples/verifiable-decision.n3
-#
-# Vocabulary references:
-# https://www.w3.org/TR/odrl-model/
-# https://www.w3.org/TR/odrl-vocab/
-# https://w3id.org/dpv/2.3
+# See <https://www.w3.org/TR/odrl-model/>
+# See <https://www.w3.org/TR/odrl-vocab/>
+# See <https://w3id.org/dpv/2.3>
 
-@prefix :     <https://example.org/access#>.
-@prefix odrl: <http://www.w3.org/ns/odrl/2/>.
-@prefix dpv:  <https://w3id.org/dpv#>.
+@prefix : <https://example.org/access#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix dpv: <https://w3id.org/dpv#> .
 
 # Intake: the request proposes one use, by one researcher, for one purpose.
 :request-42 a odrl:Request ;
@@ -57,50 +47,70 @@
 
 # Check 1: the requesting researcher holds an approval for this data and purpose.
 {
-    ?request a odrl:Request ; odrl:permission ?use .
-    ?use odrl:assignee ?who ; odrl:target ?data ; odrl:constraint ?constraint .
+    ?request a odrl:Request ;
+        odrl:permission ?use .
+    ?use odrl:assignee ?who ;
+        odrl:target ?data ;
+        odrl:constraint ?constraint .
     ?constraint a odrl:Constraint ;
-        odrl:leftOperand odrl:purpose ; odrl:operator odrl:eq ;
+        odrl:leftOperand odrl:purpose ;
+        odrl:operator odrl:eq ;
         odrl:rightOperand ?purpose .
     ?who :holdsApproval ?approval .
-    ?approval dpv:hasData ?data ; dpv:hasPurpose ?purpose .
+    ?approval dpv:hasData ?data ;
+        dpv:hasPurpose ?purpose .
 } => {
     ?use dpv:hasJustification ?approval .
-}.
+} .
 
 # Check 2: given consent covers the same data and purpose.
 {
-    ?request a odrl:Request ; odrl:permission ?use .
-    ?use odrl:target ?data ; odrl:constraint ?constraint .
+    ?request a odrl:Request ;
+        odrl:permission ?use .
+    ?use odrl:target ?data ;
+        odrl:constraint ?constraint .
     ?constraint a odrl:Constraint ;
-        odrl:leftOperand odrl:purpose ; odrl:operator odrl:eq ;
+        odrl:leftOperand odrl:purpose ;
+        odrl:operator odrl:eq ;
         odrl:rightOperand ?purpose .
-    ?consent a dpv:Consent ; dpv:hasData ?data ; dpv:hasPurpose ?purpose ;
+    ?consent a dpv:Consent ;
+        dpv:hasData ?data ;
+        dpv:hasPurpose ?purpose ;
         dpv:hasConsentStatus dpv:ConsentGiven .
 } => {
     ?use dpv:hasLegalBasis ?consent .
-}.
+} .
 
 # Check 3: the requested dataset has the policy's required safeguard.
 {
-    ?request a odrl:Request ; odrl:permission ?use .
+    ?request a odrl:Request ;
+        odrl:permission ?use .
     ?use odrl:target ?data .
     ?data dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification .
 } => {
     ?use dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification .
-}.
+} .
 
 # This demonstration handles request 42. Its Agreement grants the proposed
 # use only after all three checks; the Request itself remains a proposal.
 {
-    :request-42 a odrl:Request ; odrl:profile :research-profile ;
+    :request-42 a odrl:Request ;
+        odrl:profile :research-profile ;
         odrl:permission ?use .
-    ?use a odrl:Permission ; odrl:assigner ?holder ; odrl:assignee ?researcher ;
-        odrl:target ?data ; odrl:action odrl:use ; odrl:constraint ?constraint ;
-        dpv:hasJustification ?approval ; dpv:hasLegalBasis ?consent ;
+    ?use a odrl:Permission ;
+        odrl:assigner ?holder ;
+        odrl:assignee ?researcher ;
+        odrl:target ?data ;
+        odrl:action odrl:use ;
+        odrl:constraint ?constraint ;
+        dpv:hasJustification ?approval ;
+        dpv:hasLegalBasis ?consent ;
         dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification .
 } => {
-    :agreement-42 a odrl:Agreement ; odrl:profile :research-profile ;
-        odrl:assigner ?holder ; odrl:assignee ?researcher ; odrl:permission ?use .
+    :agreement-42 a odrl:Agreement ;
+        odrl:profile :research-profile ;
+        odrl:assigner ?holder ;
+        odrl:assignee ?researcher ;
+        odrl:permission ?use .
     :request-42 dpv:hasOutcome :agreement-42 .
-}.
+} .

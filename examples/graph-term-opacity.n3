@@ -1,10 +1,25 @@
-# Quoted IRIs change only through an explicit substitution rule.
-@prefix : <http://example.org/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+# Transferring a claim between equal names
+#
+# Lois knows a quoted statement about Superman, and Superman is linked to
+# Clark Kent with owl:sameAs. An explicit N3 rule transfers the quoted
+# statement to the other name; the equality fact alone does not rewrite it.
 
-:superman owl:sameAs :clarkKent.
-:loisLane :knows { :superman :can :fly }.
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+:superman owl:sameAs :clarkKent .
+:loisLane :knows {
+    :superman :can :fly
+} .
 
 # Explicitly transfer the statement about Superman to Clark Kent.
-{ ?x owl:sameAs ?y. ?s ?p { ?x ?q ?r } }
-    => { ?s ?p { ?y ?q ?r } }.
+{
+    ?x owl:sameAs ?y .
+    ?s ?p {
+        ?x ?q ?r
+    }
+} => {
+    ?s ?p {
+        ?y ?q ?r
+    }
+} .

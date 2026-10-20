@@ -1,81 +1,118 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/deontic-logic/
-# Standalone program; EYE answer directives use log:query.
+# Representing obligations across worlds
+#
+# Propositions hold in worlds linked by an accessibility relation. N3 rules
+# use a scoped universal test to derive obligations and related permissions
+# from the supplied model.
 
-# Source file: deontic-logic/deontic.n3
-@base <https://eyereasoner.github.io/eye/reasoning/deontic-logic/deontic.n3>.
+@base <https://eyereasoner.github.io/eye/reasoning/deontic-logic/deontic.n3> .
+
 # deontic logic
-
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # P is obligatory in world W if P holds in all worlds accessible from W
 {
-    ?W1 log:hasAccessTo ?W.
-    ?P log:holdsIn ?W1.
-    ({ ?W1 log:hasAccessTo ?W2 } { ?P log:holdsIn ?W2 }) log:forAllIn ?Sc.
+    ?W1 log:hasAccessTo ?W .
+    ?P log:holdsIn ?W1 .
+    (
+        {
+            ?W1 log:hasAccessTo ?W2
+        }
+        {
+            ?P log:holdsIn ?W2
+        }
+    ) log:forAllIn ?Sc .
 } => {
-    ?P log:isObligatoryIn ?W1.
-}.
+    ?P log:isObligatoryIn ?W1 .
+} .
 
 # P is permitted in world W if P holds in at least one world accessible from W
 {
-    ?W1 log:hasAccessTo ?W2.
-    ?P log:holdsIn ?W2.
+    ?W1 log:hasAccessTo ?W2 .
+    ?P log:holdsIn ?W2 .
 } => {
-    ?P log:isPermittedIn ?W1.
-}.
+    ?P log:isPermittedIn ?W1 .
+} .
 
 # P is forbidden in world W if P does not hold in any world accessible from W
 {
-    ?W1 log:hasAccessTo ?W.
-    { ?P => false } log:holdsIn ?W1.
-    ({ ?W1 log:hasAccessTo ?W2 } { { ?P => false } log:holdsIn ?W2 }) log:forAllIn ?Sc.
+    ?W1 log:hasAccessTo ?W .
+    {
+        ?P => false
+    } log:holdsIn ?W1 .
+    (
+        {
+            ?W1 log:hasAccessTo ?W2
+        }
+        {
+            {
+                ?P => false
+            } log:holdsIn ?W2
+        }
+    ) log:forAllIn ?Sc .
 } => {
-    ?P log:isForbiddenIn ?W1.
-}.
+    ?P log:isForbiddenIn ?W1 .
+} .
 
 # K axiom
 {
-    ?W1 log:hasAccessTo ?W.
-    { { ?S1 ?P1 ?O1 } => { ?S2 ?P2 ?O2 } } log:holdsIn ?W1.
-    { ?S1 ?P1 ?O1 } log:isObligatoryIn ?W1.
+    ?W1 log:hasAccessTo ?W .
+    {
+        {
+            ?S1 ?P1 ?O1
+        } => {
+            ?S2 ?P2 ?O2
+        }
+    } log:holdsIn ?W1 .
+    {
+        ?S1 ?P1 ?O1
+    } log:isObligatoryIn ?W1 .
 } => {
-    { ?S2 ?P2 ?O2 } log:isObligatoryIn ?W1.
-}.
+    {
+        ?S2 ?P2 ?O2
+    } log:isObligatoryIn ?W1 .
+} .
 
 # inconsistency detection
 {
-    ?P log:isForbiddenIn ?W.
-    ?P log:call true.
-} => false.
+    ?P log:isForbiddenIn ?W .
+    ?P log:call true .
+} => false .
 
+@base <https://eyereasoner.github.io/eye/reasoning/deontic-logic/example2.n3> .
 
-# Source file: deontic-logic/example2.n3
-@base <https://eyereasoner.github.io/eye/reasoning/deontic-logic/example2.n3>.
 # deontic logic example about not selling alcoholic beverages to non adults
-
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/ns#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/ns#> .
 
 # accessibility relations between possible worlds
-:normativeWorld1 log:hasAccessTo :normativeWorld1, :normativeWorld2.
-:normativeWorld2 log:hasAccessTo :normativeWorld2, :normativeWorld1.
+:normativeWorld1 log:hasAccessTo :normativeWorld1, :normativeWorld2 .
+:normativeWorld2 log:hasAccessTo :normativeWorld2, :normativeWorld1 .
 
 # propositions that are true in possible worlds
 # normative world1
-{ :alcoholicBeverage :sellingTo :adult } log:holdsIn :normativeWorld1.
-{ { :alcoholicBeverage :sellingTo :nonAdult } => false } log:holdsIn :normativeWorld1.
+{
+    :alcoholicBeverage :sellingTo :adult
+} log:holdsIn :normativeWorld1 .
+
+{
+    {
+        :alcoholicBeverage :sellingTo :nonAdult
+    } => false
+} log:holdsIn :normativeWorld1 .
 
 # normative world2
-{ { :alcoholicBeverage :sellingTo :nonAdult } => false } log:holdsIn :normativeWorld2.
+{
+    {
+        :alcoholicBeverage :sellingTo :nonAdult
+    } => false
+} log:holdsIn :normativeWorld2 .
 
 # observed world
-:alcoholicBeverage :sellingTo :adult.
+:alcoholicBeverage :sellingTo :adult .
+
 # the following will blow an inference fuse
-#:alcoholicBeverage :sellingTo :nonAdult.
-
-
-# Query: deontic-logic/deontic-query.n3
+# :alcoholicBeverage :sellingTo :nonAdult.
+# Query
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 {
@@ -95,4 +132,3 @@
 } log:query {
     ?Q log:isForbiddenIn ?W .
 } .
-

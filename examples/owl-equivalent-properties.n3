@@ -1,23 +1,61 @@
-# owl-equivalent-properties: a small runnable case for EYE RPO rules.
-# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-equivalentProperty.n3
-# Rules: MIT, Jos De Roo; sample data added for this example.
+# Propagating equivalent property statements
+#
+# Three parent-related properties are linked by equivalence declarations.
+# Explicit N3 rules extend the equivalence links and derive equivalent
+# statements about the sample parent relationship.
 
-@prefix : <http://example.org/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Sample data
-:parent owl:equivalentProperty :hasChild. :hasChild owl:equivalentProperty :child. :alice :parent :bob.
+:parent owl:equivalentProperty :hasChild .
+:hasChild owl:equivalentProperty :child .
+:alice :parent :bob .
 
 # Inference rules
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-{?P owl:equivalentProperty ?Q. ?S ?P ?O} => {?S ?Q ?O}.
-{?P owl:equivalentProperty ?Q. ?S ?Q ?O} => {?S ?P ?O}.
-{?P owl:equivalentProperty ?Q} => {?Q owl:equivalentProperty ?P}.
-{?P owl:equivalentProperty ?Q. ?Q owl:equivalentProperty ?R} => {?P owl:equivalentProperty ?R}.
-{?P owl:equivalentProperty ?Q} => {?P rdfs:subPropertyOf ?Q. ?Q rdfs:subPropertyOf ?P}.
-{?P rdfs:subPropertyOf ?Q. ?Q rdfs:subPropertyOf ?P} => {?P owl:equivalentProperty ?Q}.
+{
+    ?P owl:equivalentProperty ?Q .
+    ?S ?P ?O
+} => {
+    ?S ?Q ?O
+} .
+
+{
+    ?P owl:equivalentProperty ?Q .
+    ?S ?Q ?O
+} => {
+    ?S ?P ?O
+} .
+
+{
+    ?P owl:equivalentProperty ?Q
+} => {
+    ?Q owl:equivalentProperty ?P
+} .
+
+{
+    ?P owl:equivalentProperty ?Q .
+    ?Q owl:equivalentProperty ?R
+} => {
+    ?P owl:equivalentProperty ?R
+} .
+
+{
+    ?P owl:equivalentProperty ?Q
+} => {
+    ?P rdfs:subPropertyOf ?Q .
+    ?Q rdfs:subPropertyOf ?P
+} .
+
+{
+    ?P rdfs:subPropertyOf ?Q .
+    ?Q rdfs:subPropertyOf ?P
+} => {
+    ?P owl:equivalentProperty ?Q
+} .

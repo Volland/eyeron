@@ -1,20 +1,36 @@
-# owl-union-of: a small runnable case for EYE RPO rules.
-# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-unionOf.n3
-# Rules: MIT, Jos De Roo; sample data added for this example.
+# Classifying members of a union
+#
+# Pet is defined as a union of cat and dog classes. Explicit N3 rules
+# derive pet memberships for the supplied animals and subclass links for
+# the component classes.
 
-@prefix : <http://example.org/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Sample data
-:Pet owl:unionOf (:Cat :Dog). :milo a :Cat. :fido a :Dog.
+:Pet owl:unionOf (:Cat :Dog) .
+:milo a :Cat .
+:fido a :Dog .
 
 # Inference rules
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-{?C owl:unionOf ?L. ?D list:in ?L. ?X a ?D} => {?X a ?C}.
-{?C owl:unionOf ?L. ?D list:in ?L} => {?D rdfs:subClassOf ?C}.
+{
+    ?C owl:unionOf ?L .
+    ?D list:in ?L .
+    ?X a ?D
+} => {
+    ?X a ?C
+} .
+
+{
+    ?C owl:unionOf ?L .
+    ?D list:in ?L
+} => {
+    ?D rdfs:subClassOf ?C
+} .

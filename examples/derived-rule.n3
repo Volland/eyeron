@@ -1,19 +1,20 @@
-# ============
-# Derived rule
-# ============
+# A rule that produces another rule
+#
+# A cat fact activates a rule whose conclusion is itself an N3 rule. The
+# generated rule then recognizes a dog fact and derives the test result.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/ns#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/ns#> .
 
-:Minka a :Cat.
-:Charly a :Dog.
+:Minka a :Cat .
+:Charly a :Dog .
 
 {
-    ?x a :Cat.
+    ?x a :Cat .
 } => {
     {
-        ?y a :Dog.
+        ?y a :Dog .
     } => {
-        :test :is true.
-    }.
-}.
+        :test :is true .
+    } .
+} .

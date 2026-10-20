@@ -1,20 +1,65 @@
-# owl-qualified-cardinality: a small runnable case for EYE RPO rules.
-# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-maxQualifiedCardinality.n3
-# Rules: MIT, Jos De Roo; sample data added for this example.
+# Restricting the number of cat pets
+#
+# A class permits at most one cat pet, and Alice has two cat names plus a
+# dog. An explicit N3 rule applies the qualified restriction to equate the
+# cat names.
 
-@prefix : <http://example.org/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Sample data
-:SingleCatOwner owl:maxQualifiedCardinality 1; owl:onProperty :pet; owl:onClass :Cat. :alice a :SingleCatOwner; :pet :milo, :felix, :fido. :milo a :Cat. :felix a :Cat. :fido a :Dog.
+:SingleCatOwner owl:maxQualifiedCardinality 1 ;
+    owl:onProperty :pet ;
+    owl:onClass :Cat .
+:alice a :SingleCatOwner ;
+    :pet :milo, :felix, :fido .
+:milo a :Cat .
+:felix a :Cat .
+:fido a :Dog .
 
 # Inference rules
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-{?C owl:maxQualifiedCardinality 1. ?C owl:onProperty ?P. ?C owl:onClass ?D. ?U a ?C. ?U ?P ?Y. ?Y a ?D. ?U ?P ?Z. ?Z a ?D} => {?Y owl:sameAs ?Z}.
-{?C owl:maxQualifiedCardinality 1. ?C owl:onProperty ?P. ?C owl:onClass owl:Thing. ?U a ?C. ?U ?P ?Y. ?U ?P ?Z} => {?Y owl:sameAs ?Z}.
-{?C owl:maxQualifiedCardinality 0. ?C owl:onProperty ?P. ?C owl:onClass ?C. ?U a ?C. ?U ?P ?Y. ?Y a ?C} => false.
-{?C owl:maxQualifiedCardinality 0. ?C owl:onProperty ?P. ?C owl:onClass owl:Thing. ?U a ?C. ?U ?P ?Y} => false.
+{
+    ?C owl:maxQualifiedCardinality 1 .
+    ?C owl:onProperty ?P .
+    ?C owl:onClass ?D .
+    ?U a ?C .
+    ?U ?P ?Y .
+    ?Y a ?D .
+    ?U ?P ?Z .
+    ?Z a ?D
+} => {
+    ?Y owl:sameAs ?Z
+} .
+
+{
+    ?C owl:maxQualifiedCardinality 1 .
+    ?C owl:onProperty ?P .
+    ?C owl:onClass owl:Thing .
+    ?U a ?C .
+    ?U ?P ?Y .
+    ?U ?P ?Z
+} => {
+    ?Y owl:sameAs ?Z
+} .
+
+{
+    ?C owl:maxQualifiedCardinality 0 .
+    ?C owl:onProperty ?P .
+    ?C owl:onClass ?C .
+    ?U a ?C .
+    ?U ?P ?Y .
+    ?Y a ?C
+} => false .
+
+{
+    ?C owl:maxQualifiedCardinality 0 .
+    ?C owl:onProperty ?P .
+    ?C owl:onClass owl:Thing .
+    ?U a ?C .
+    ?U ?P ?Y
+} => false .

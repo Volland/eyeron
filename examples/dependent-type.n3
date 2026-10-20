@@ -1,89 +1,89 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/dependent-type/
-# Standalone program; EYE answer directives use log:query.
+# Relating terms to dependent types
+#
+# A small type model connects professions, qualified terms, and type
+# judgments. N3 rules derive the judgments supported by those facts,
+# showing types represented as ordinary linked data.
 
-# Source file: dependent-type/dependent-type.n3
-@base <https://eyereasoner.github.io/eye/reasoning/dependent-type/dependent-type.n3>.
-@prefix :     <http://example.org/dtt#> .
-@prefix ex:   <http://example.org/ex#> .
-@prefix log:  <http://www.w3.org/2000/10/swap/log#> .
+@base <https://eyereasoner.github.io/eye/reasoning/dependent-type/dependent-type.n3> .
+@prefix : <http://example.org/dtt#> .
+@prefix ex: <http://example.org/ex#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-########################################################################
-#  0.  Core universe and meta-predicates
-########################################################################
+# 0.  Core universe and meta-predicates
+:Type a log:Class .
+# universe of small types
+:hasType a log:Property .
+# judgement  t : T
+:kind a log:Property .
+# marks a type’s “category” (profession, …)
+:goodOf a log:Property .
 
-:Type        a log:Class .              # universe of small types
-:hasType     a log:Property .           # judgement  t : T
-:kind        a log:Property .           # marks a type’s “category” (profession, …)
-:goodOf      a log:Property .           # GoodP  ——►  profession P
+# GoodP  ——►  profession P
+# 1.  Professions are (first-class) types
+ex:Profession a :Type .
 
-########################################################################
-#  1.  Professions are (first-class) types
-########################################################################
+ex:Cobbler a :Type ;
+    :kind ex:Profession .
+ex:Physician a :Type ;
+    :kind ex:Profession .
 
-ex:Profession           a :Type .
+# 2.  Domain notions each profession cares about
+# Shoes and their quality
+ex:Quality a :Type .
+ex:Excellent :hasType ex:Quality .
 
-ex:Cobbler   a :Type ;  :kind ex:Profession .
-ex:Physician a :Type ;  :kind ex:Profession .
+ex:Shoe a :Type .
 
-########################################################################
-#  2.  Domain notions each profession cares about
-########################################################################
+:produces a log:Property .
+# cobbler ⟶ shoe
+:quality a log:Property .
 
-# Shoes and their quality ------------------------------------------------
-ex:Quality     a :Type .
-ex:Excellent   :hasType ex:Quality .
+# Treatments and outcomes
+ex:Outcome a :Type .
+ex:Recovered :hasType ex:Outcome .
 
-ex:Shoe        a :Type .
+:treats a log:Property .
+# physician ⟶ case
+:outcome a log:Property .
+:patientOf a log:Property .
 
-:produces      a log:Property .   # cobbler ⟶ shoe
-:quality       a log:Property .
-
-# Treatments and outcomes -----------------------------------------------
-ex:Outcome     a :Type .
-ex:Recovered   :hasType ex:Outcome .
-
-:treats        a log:Property .   # physician ⟶ case
-:outcome       a log:Property .
-:patientOf     a log:Property .   # convenience inverse
-
-########################################################################
-#  3.  (Dependent) type constructor   Good : Profession → Type
-########################################################################
-
+# convenience inverse
+# 3.  (Dependent) type constructor   Good : Profession → Type
 # For every *profession* P, create the dependent type  GoodP
-{ ?P :kind ex:Profession . } =>
-{ [ a :Type ; :goodOf ?P ] . } .
+{
+    ?P :kind ex:Profession .
+} => {
+    [ a :Type ; :goodOf ?P ] .
+} .
 
-########################################################################
-#  4.  Excellence rules (= “is a GoodCobber/GoodPhysician”)
-########################################################################
+# 4.  Excellence rules (= “is a GoodCobber/GoodPhysician”)
+# Good Cobbler
+{
+    ?x :hasType ex:Cobbler ;
+        :produces ?shoe .
+    ?shoe :quality ex:Excellent .
+} => {
+    ?x :hasType [ a :Type ; :goodOf ex:Cobbler ] .
+} .
 
-# ———————————————   Good Cobbler   ———————————————
-{ ?x :hasType   ex:Cobbler ;
-     :produces  ?shoe .
-  ?shoe :quality ex:Excellent . } =>
-{ ?x :hasType [ a :Type ; :goodOf ex:Cobbler ] . } .
+# Good Physician
+{
+    ?x :hasType ex:Physician ;
+        :treats ?case .
+    ?case :outcome ex:Recovered .
+} => {
+    ?x :hasType [ a :Type ; :goodOf ex:Physician ] .
+} .
 
-# ———————————————   Good Physician   ——————————————
-{ ?x :hasType  ex:Physician ;
-     :treats   ?case .
-  ?case :outcome ex:Recovered . } =>
-{ ?x :hasType [ a :Type ; :goodOf ex:Physician ] . } .
-
-########################################################################
-#  5.  Concrete individuals that satisfy the criteria
-########################################################################
-
+# 5.  Concrete individuals that satisfy the criteria
 # A cobbler who makes excellent shoes
-ex:alice      :hasType  ex:Cobbler .
-ex:shoe₁      :hasType  ex:Shoe ;
-              :quality  ex:Excellent .
-ex:alice      :produces ex:shoe₁ .
+ex:alice :hasType ex:Cobbler .
+ex:shoe₁ :hasType ex:Shoe ;
+    :quality ex:Excellent .
+ex:alice :produces ex:shoe₁ .
 
 # A physician who cures patients
-ex:bob        :hasType  ex:Physician .
-ex:case₁      :outcome  ex:Recovered ;
-              :patientOf ex:bob .
-ex:bob        :treats   ex:case₁ .
-
+ex:bob :hasType ex:Physician .
+ex:case₁ :outcome ex:Recovered ;
+    :patientOf ex:bob .
+ex:bob :treats ex:case₁ .

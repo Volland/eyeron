@@ -1,6 +1,8 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Sources: https://eyereasoner.github.io/eye/reasoning/backward-more/backward-more.n3, https://eyereasoner.github.io/eye/reasoning/backward-more/backward-more-query3.n3
-# Premise blank nodes are named variables; backward answers are materialized.
+# Comparing candidates by awards and scores
+#
+# Candidates can be considered more interesting because of their scores or
+# an award. Backward N3 rules answer comparisons on demand, and forward
+# rules record the requested answers.
 
 @prefix : <http://example.org/#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .

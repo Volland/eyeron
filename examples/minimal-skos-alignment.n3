@@ -1,37 +1,36 @@
-# ------------------------------------------------------------
-# Minimal SKOS alignment + propagation example
+# Propagating a category alignment
 #
-# Goal:
-#   Show how a SKOS mapping (broadMatch) lets you treat dataset-
-#   specific categories as a reference category, and how that
-#   alignment propagates to more specific (narrower) categories.
-#
-# What should be inferred:
-#   anpr:VehicleWithPlate ex:treatedAs ref:Car .
-#   anpr:PassengerCar     ex:treatedAs ref:Car .
-#
-# Run (example):
-#   eyeron minimal-skos-alignment.n3
-# ------------------------------------------------------------
+# A dataset-specific vehicle category maps to a reference concept. N3 rules
+# derive a treated-as relationship and propagate it down to a narrower
+# category using SKOS links.
 
-@prefix ex:   <http://example.org/#> .
-@prefix ref:  <http://example.org/ref/> .
+@prefix ex: <http://example.org/#> .
+@prefix ref: <http://example.org/ref/> .
 @prefix anpr: <http://example.org/anpr/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-# --- Concepts (two schemes) ---
+# Concepts (two schemes)
 ref:Car a skos:Concept .
 
 anpr:VehicleWithPlate a skos:Concept ;
-  skos:broadMatch ref:Car .
+    skos:broadMatch ref:Car .
 
 anpr:PassengerCar a skos:Concept ;
-  skos:broader anpr:VehicleWithPlate .
+    skos:broader anpr:VehicleWithPlate .
 
-# --- Rules ---
+# Rules
 # Rule 1: interpret skos:broadMatch as "treat A as B" for reporting
-{ ?a skos:broadMatch ?b. } => { ?a ex:treatedAs ?b. } .
+{
+    ?a skos:broadMatch ?b .
+} => {
+    ?a ex:treatedAs ?b .
+} .
 
 # Rule 2: propagate that treatment down the SKOS hierarchy:
 # if X has broader concept Y, and Y is treatedAs Z, then X is treatedAs Z
-{ ?x skos:broader ?y. ?y ex:treatedAs ?z. } => { ?x ex:treatedAs ?z. } .
+{
+    ?x skos:broader ?y .
+    ?y ex:treatedAs ?z .
+} => {
+    ?x ex:treatedAs ?z .
+} .

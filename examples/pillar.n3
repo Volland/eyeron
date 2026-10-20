@@ -1,23 +1,34 @@
-# =================================
-# Pillar example
-# Example from Patrick Hochstenbach
-# =================================
+# Resolving mutually recursive relations
+#
+# A post points to a pillar, and two backward rules express the relation in
+# opposite directions. A forward N3 rule asks what the pillar points to and
+# records the supported answer.
 
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix : <http://example.org/socrates#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/socrates#> .
 
 :Post :to :Pillar .
 
-{ :Pillar :to ?What } <= { ?What :to :Pillar }.
-
-{ ?What :to :Pillar } <= { :Pillar :to ?What }.
-
-{ :Pillar :to ?What } => { :result :is ?What }.
+{
+    :Pillar :to ?What
+} <= {
+    ?What :to :Pillar
+} .
 
 {
-   :result :is :Post
-}
-=>
+    ?What :to :Pillar
+} <= {
+    :Pillar :to ?What
+} .
+
 {
-   :test :is true
-}.
+    :Pillar :to ?What
+} => {
+    :result :is ?What
+} .
+
+{
+    :result :is :Post
+} => {
+    :test :is true
+} .

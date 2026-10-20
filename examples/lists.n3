@@ -1,16 +1,32 @@
-# N3 example: list append and membership over native RDF lists.
-# Backward rules resolve append when their input list is ground.
+# Appending lists and finding members
+#
+# Lists of named items supply two small queries. A recursive backward N3
+# rule appends lists, while a membership built-in enumerates the values in
+# another list.
 
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/lists#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/lists#> .
 
-{(?xs ?ys) :append ?zs} <= {
-    ?xs list:firstRest (?x ?xrest).
-    (?xrest ?ys) :append ?zsrest.
-    ?zs list:firstRest (?x ?zsrest).
-}.
+{
+    (?xs ?ys) :append ?zs
+} <= {
+    ?xs list:firstRest (?x ?xrest) .
+    (?xrest ?ys) :append ?zsrest .
+    ?zs list:firstRest (?x ?zsrest) .
+} .
 
-{(() ?ys) :append ?ys} <= true.
+{
+    (() ?ys) :append ?ys
+} <= true .
 
-{((:a) (:b)) :append ?result} => {:query :appendResult ?result}.
-{(:a :b :a) list:member ?x} => {:query :member ?x}.
+{
+    ((:a) (:b)) :append ?result
+} => {
+    :query :appendResult ?result
+} .
+
+{
+    (:a :b :a) list:member ?x
+} => {
+    :query :member ?x
+} .

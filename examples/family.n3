@@ -1,15 +1,36 @@
-# N3 example: family.
-# Family relations derived by ordinary
-# forward-chaining rules, matching the recursive descendedFrom definition
-# in both siblings.
+# Deriving descent from parent facts
+#
+# Father and mother facts describe a small family. Forward N3 rules derive
+# child relationships and recursively extend them into direct and indirect
+# descent.
 
-@prefix : <http://example/>.
+@prefix : <http://example/> .
 
-:A :fatherOf :X.
-:B :motherOf :X.
-:C :motherOf :A.
+:A :fatherOf :X .
+:B :motherOf :X .
+:C :motherOf :A .
 
-{?y :fatherOf ?x} => {?x :childOf ?y}.
-{?y :motherOf ?x} => {?x :childOf ?y}.
-{?x :childOf ?y} => {?x :descendedFrom ?y}.
-{?x :childOf ?z. ?z :descendedFrom ?y} => {?x :descendedFrom ?y}.
+{
+    ?y :fatherOf ?x
+} => {
+    ?x :childOf ?y
+} .
+
+{
+    ?y :motherOf ?x
+} => {
+    ?x :childOf ?y
+} .
+
+{
+    ?x :childOf ?y
+} => {
+    ?x :descendedFrom ?y
+} .
+
+{
+    ?x :childOf ?z .
+    ?z :descendedFrom ?y
+} => {
+    ?x :descendedFrom ?y
+} .

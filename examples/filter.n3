@@ -1,18 +1,18 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/filter/
-# Standalone program; EYE answer directives use log:query.
+# Collecting names that pass a text filter
+#
+# Three names are compared with a text threshold. Scoped N3 collection
+# gathers the matching names into a list, and the query checks its length
+# before returning it.
 
-# Source file: filter/filter.n3
-@base <https://eyereasoner.github.io/eye/reasoning/filter/filter.n3>.
-@prefix : <http://example.org/#>.
+@base <https://eyereasoner.github.io/eye/reasoning/filter/filter.n3> .
+@prefix : <http://example.org/#> .
 
 # facts
-:Let :param "Huey".
-:Let :param "Dewey".
-:Let :param "Louie".
+:Let :param "Huey" .
+:Let :param "Dewey" .
+:Let :param "Louie" .
 
-
-# Query: filter/filter-query.n3
+# Query
 @prefix : <http://example.org/#> .
 @prefix list: <http://www.w3.org/2000/10/swap/list#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
@@ -20,12 +20,14 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 {
-    (?param {
-    :Let :param ?param .
-    ?param string:lessThan "Louie" .
-} ?filteredParams) log:collectAllIn ?scope .
+    (
+        ?param {
+            :Let :param ?param .
+            ?param string:lessThan "Louie" .
+        }
+        ?filteredParams
+    ) log:collectAllIn ?scope .
     ?filteredParams list:length 2 .
 } log:query {
     :result :is ?filteredParams .
 } .
-

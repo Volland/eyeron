@@ -1,20 +1,35 @@
-# N3 example: stratified-negation.
-# The producer of :blocked
-# appears after its consumer deliberately. N3 has no stratification
-# concept of its own; its negation-as-failure feature (log:notIncludes)
-# is instead handled by deferring the negated rule until the ordinary
-# closure saturates.
+# Checking eligibility after blocking is derived
+#
+# Direct blocks and flagged people both lead to a blocked classification.
+# N3 rules derive those consequences before scoped absence tests select
+# eligible people, even when a producer rule appears later in the file.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/stratified-negation#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/stratified-negation#> .
 
-:alice a :Person.
-:bob a :Person.
-:carol a :Person.
-:alice a :DirectlyBlocked.
-:carol a :Flagged.
+:alice a :Person .
+:bob a :Person .
+:carol a :Person .
+:alice a :DirectlyBlocked .
+:carol a :Flagged .
 
-{?x a :DirectlyBlocked} => {?x a :Blocked}.
-{?x a :Flagged} => {?x a :Blocked}.
+{
+    ?x a :DirectlyBlocked
+} => {
+    ?x a :Blocked
+} .
 
-{?x a :Person. ?SCOPE log:notIncludes {?x a :Blocked}.} => {?x a :Eligible}.
+{
+    ?x a :Flagged
+} => {
+    ?x a :Blocked
+} .
+
+{
+    ?x a :Person .
+    ?SCOPE log:notIncludes {
+        ?x a :Blocked
+    } .
+} => {
+    ?x a :Eligible
+} .

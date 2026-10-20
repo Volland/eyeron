@@ -1,6 +1,8 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Sources: https://eyereasoner.github.io/eye/reasoning/gdpr-compliance/gdpr-compliance.n3, https://eyereasoner.github.io/eye/reasoning/gdpr-compliance/gdpr-compliance-query.n3
-# Premise blank nodes are named variables; backward answers are materialized.
+# Checking a sample data-processing policy
+#
+# People have personal data, processing purposes, and consent information.
+# N3 rules evaluate the example's explicit compliance conditions and return
+# supported policy judgments.
 
 @prefix : <http://example.org/gdpr#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .

@@ -1,44 +1,44 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/slide33/
-# Standalone program; EYE answer directives use log:query.
+# Inferring a restriction from a quoted rule
+#
+# Property-restriction facts accompany a rule about values reached from one
+# subject. An N3 rule matches that implication and derives a more general
+# restriction rule together with a class membership.
 
-# Source file: slide33/slide33.n3
-@base <https://eyereasoner.github.io/eye/reasoning/slide33/slide33.n3>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix : <http://example.org/#>.
+@base <https://eyereasoner.github.io/eye/reasoning/slide33/slide33.n3> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix : <http://example.org/#> .
 
 # owl restriction
-:aaa owl:onProperty :bbb.
-:aaa owl:allValuesFrom :ccc.
+:aaa owl:onProperty :bbb .
+:aaa owl:allValuesFrom :ccc .
 
 # the following should entail :xxx a :aaa.
 {
-    :xxx :bbb ?y.
+    :xxx :bbb ?y .
 } => {
-    ?y a :ccc.
-}.
+    ?y a :ccc .
+} .
 
 # owl:allValuseFrom description logic
 {
-    ?a owl:onProperty ?b.
-    ?a owl:allValuesFrom ?c.
+    ?a owl:onProperty ?b .
+    ?a owl:allValuesFrom ?c .
     {
-        ?x ?b ?y.
+        ?x ?b ?y .
     } => {
-        ?y a ?c.
-    }.
+        ?y a ?c .
+    } .
 } => {
     {
-        ?x a ?a.
-        ?x ?b ?y.
+        ?x a ?a .
+        ?x ?b ?y .
     } => {
-        ?y a ?c.
-    }.
-    ?x a ?a.
-}.
+        ?y a ?c .
+    } .
+    ?x a ?a .
+} .
 
-
-# Query: slide33/slide33-query.n3
+# Query
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 {
@@ -46,4 +46,3 @@
 } log:query {
     ?S a ?C .
 } .
-

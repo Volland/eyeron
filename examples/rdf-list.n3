@@ -1,26 +1,34 @@
-# =================================
-# RDF list
-# Example from Patrick Hochstenbach
-# =================================
+# Reading an RDF list's head and tail
+#
+# A two-item list is attached to a subject. Backward N3 rules expose its
+# rdf:first and rdf:rest values, and a forward rule checks the resulting
+# head and tail.
 
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix : <http://example.org/ns#> .
 
-:X :val (1 2).
-
-{ ?X :head ?Y } <= { ?X rdf:first ?Y }.
-{ ?X :tail ?Y } <= { ?X rdf:rest ?Y} .
+:X :val (1 2) .
 
 {
-  ?X :val ?Y.
-  ?Y :head ?H .
-  ?Y :tail ?T .
+    ?X :head ?Y
+} <= {
+    ?X rdf:first ?Y
+} .
 
-  ?H log:equalTo 1.
-  ?T log:equalTo (2).
-}
-=>
 {
-  :result :is true.
-}.
+    ?X :tail ?Y
+} <= {
+    ?X rdf:rest ?Y
+} .
+
+{
+    ?X :val ?Y .
+    ?Y :head ?H .
+    ?Y :tail ?T .
+
+    ?H log:equalTo 1 .
+    ?T log:equalTo (2) .
+} => {
+    :result :is true .
+} .

@@ -1,20 +1,33 @@
-# N3 example: dog-license.
-# Counts each person's distinct dogs
-# via log:collectAllIn (scoped per ?person, unlike aggregation.n3's global
-# collection) and requires a license once the count exceeds four.
+# Counting dogs for a license rule
+#
+# Alice owns five dogs and Bob owns two. Scoped collection counts each
+# person's distinct dogs, and an N3 rule derives a license requirement when
+# the count exceeds four.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix : <http://example/>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix : <http://example/> .
 
-:alice :hasDog :dog1, :dog2, :dog3, :dog4, :dog5.
-:bob :hasDog :dog6, :dog7.
+:alice :hasDog :dog1, :dog2, :dog3, :dog4, :dog5 .
+:bob :hasDog :dog6, :dog7 .
 
 {
-  ?person :hasDog ?anyDog.
-  (?dog {?person :hasDog ?dog} ?dogs) log:collectAllIn ?SCOPE.
-  ?dogs list:length ?count.
-} => {?person :dogCount ?count}.
+    ?person :hasDog ?anyDog .
+    (
+        ?dog {
+            ?person :hasDog ?dog
+        }
+        ?dogs
+    ) log:collectAllIn ?SCOPE .
+    ?dogs list:length ?count .
+} => {
+    ?person :dogCount ?count
+} .
 
-{?person :dogCount ?count. ?count math:greaterThan 4} => {?person :mustHave :dogLicense}.
+{
+    ?person :dogCount ?count .
+    ?count math:greaterThan 4
+} => {
+    ?person :mustHave :dogLicense
+} .

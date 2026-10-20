@@ -1,15 +1,23 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/issue141/
-# Standalone program; EYE answer directives use log:query.
+# Generating self-links from a class
+#
+# A reflexive property is associated with the class Human. N3 rules
+# generate a backward definition that gives each member of that class a
+# self-link.
 
-# Source file: issue141/test2.n3
-@base <https://eyereasoner.github.io/eye/reasoning/issue141/test2.n3>.
+@base <https://eyereasoner.github.io/eye/reasoning/issue141/test2.n3> .
 @prefix : <http://www.example.com/ns/ex#> .
 
-{?p a :Reflexive. ?p :range-include ?C} => {
-  {?x ?p ?x} <= {?x a ?C}.
-}.
+{
+    ?p a :Reflexive .
+    ?p :range-include ?C
+} => {
+    {
+        ?x ?p ?x
+    } <= {
+        ?x a ?C
+    } .
+} .
 
-:like a :Reflexive; :range-include :Human.
-:Socrates a :Human.
-
+:like a :Reflexive ;
+    :range-include :Human .
+:Socrates a :Human .

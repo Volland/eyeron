@@ -1,22 +1,21 @@
-# =================================
-# Premise reordering example
-# Example from Patrick Hochstenbach
-# =================================
+# Resolving a comparison before its inputs are written
+#
+# Alice and Bob possess different objects. An N3 rule places an inequality
+# test before the facts that bind its variables, showing that premise
+# matching can resolve those inputs before testing the comparison.
 
-@prefix : <https://eyereasoner.github.io/ns#>.
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <https://eyereasoner.github.io/ns#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-:Alice :has (:Book 1).
-:Bob :has (:Table 1).
+:Alice :has (:Book 1) .
+:Bob :has (:Table 1) .
 
 {
-    ?O1 log:notEqualTo ?O2.
+    ?O1 log:notEqualTo ?O2 .
 
-    ?W1 :has (?O1 ?N1).
-    ?W2 :has (?O2 ?N2).
-}
-=>
-{
+    ?W1 :has (?O1 ?N1) .
+    ?W2 :has (?O2 ?N2) .
+} => {
     :test :is true .
-}.
+} .

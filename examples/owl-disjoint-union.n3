@@ -1,19 +1,29 @@
-# owl-disjoint-union: a small runnable case for EYE RPO rules.
-# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-disjointUnionOf.n3
-# Rules: MIT, Jos De Roo; sample data added for this example.
+# Expanding a disjoint union of pet classes
+#
+# Pet is described as a disjoint union of cat, dog, and bird classes. An N3
+# rule traverses the class list to derive pairwise disjointness and a union
+# statement.
 
-@prefix : <http://example.org/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Sample data
-:Pet owl:disjointUnionOf (:Cat :Dog :Bird).
+:Pet owl:disjointUnionOf (:Cat :Dog :Bird) .
 
 # Inference rules
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
 
-{?C owl:disjointUnionOf ?L. ?A list:in ?L. ?B list:in ?L. ?A log:notEqualTo ?B} => {?A owl:disjointWith ?B. ?C owl:unionOf ?L}.
+{
+    ?C owl:disjointUnionOf ?L .
+    ?A list:in ?L .
+    ?B list:in ?L .
+    ?A log:notEqualTo ?B
+} => {
+    ?A owl:disjointWith ?B .
+    ?C owl:unionOf ?L
+} .

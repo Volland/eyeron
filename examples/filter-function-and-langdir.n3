@@ -1,17 +1,27 @@
-# N3 example: filter-function-and-langdir.
-# N3 has no builtin to
-# extract a literal's base direction, so (matching
-# now-and-language-builtins.n3's own `log:equalTo` trick for a language
-# tag) this confirms the directed text by comparing it against the exact
-# `fr--ltr` literal.
+# Filtering numbers and matching directed text
+#
+# One rule selects a negative number; another recognizes a French literal
+# marked left-to-right. The example shows numeric conditions and exact
+# matching of a language-and-direction-tagged literal.
 
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <http://example/>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <http://example/> .
 
-:n1 :value -3.5.
-:n2 :value 7.
-:msg :text "bonjour"@fr--ltr.
+:n1 :value -3.5 .
+:n2 :value 7 .
+:msg :text "bonjour"@fr--ltr .
 
-{?x :value ?v. ?v math:lessThan 0} => {?x :negative true}.
-{:msg :text ?text. ?text log:equalTo "bonjour"@fr--ltr} => {:msg :languageDirection "ltr"}.
+{
+    ?x :value ?v .
+    ?v math:lessThan 0
+} => {
+    ?x :negative true
+} .
+
+{
+    :msg :text ?text .
+    ?text log:equalTo "bonjour"@fr--ltr
+} => {
+    :msg :languageDirection "ltr"
+} .

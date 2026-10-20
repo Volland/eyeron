@@ -1,17 +1,8 @@
-# ===============================================================================
-# ACT isolation-breach token — broad constructor-theory coverage with can't-rules
+# Sharing an isolation-breach alert
 #
-# Concrete topic:
-# A biosafety lab has an isolation-breach token that must be propagated across
-# unlike classical media: a door beacon, a containment PLC, a nurse pager, and
-# an incident board.
-#
-# This example therefore includes both sides:
-#   - CAN   : the classical breach token can be prepared, permuted, copied,
-#             measured, and composed into serial and parallel networks
-#   - CAN'T : the quantum provenance seal cannot be universally cloned and
-#             therefore cannot be turned into an unrestricted fan-out token
-# ===============================================================================
+# A laboratory must distribute an alert across beacons, controllers,
+# pagers, and an incident board. N3 rules compose the permitted tasks and
+# contrast ordinary copying with restrictions on a quantum provenance seal.
 
 @prefix : <http://example.org/isolation-breach/> .
 @prefix arc: <https://example.org/arc#> .
@@ -20,312 +11,413 @@
 :000_md_title log:outputString "# act-isolation-breach\n\n## Source files\n\n- [N3 rules](../act-isolation-breach.n3)\n\n" .
 
 :case a arc:Case ;
-  arc:question "Can an isolation-breach token be prepared, permuted, copied, measured, and audited across unlike classical media, and what exactly can't be done with the quantum provenance seal?" .
+    arc:question "Can an isolation-breach token be prepared, permuted, copied, measured, and audited across unlike classical media, and what exactly can't be done with the quantum provenance seal?" .
 
-# ---------------------------------------------------
 # Classical media carrying the same abstract variable
-# ---------------------------------------------------
-
 :doorBeacon a :InformationMedium ;
-  :encodes :BreachBit ;
-  :zeroState :SafeGreen ;
-  :oneState :BreachRed .
+    :encodes :BreachBit ;
+    :zeroState :SafeGreen ;
+    :oneState :BreachRed .
 
 :containmentPLC a :InformationMedium ;
-  :encodes :BreachBit ;
-  :zeroState :VoltageLow ;
-  :oneState :VoltageHigh .
+    :encodes :BreachBit ;
+    :zeroState :VoltageLow ;
+    :oneState :VoltageHigh .
 
 :nursePager a :InformationMedium ;
-  :encodes :BreachBit ;
-  :zeroState :CodeNormal ;
-  :oneState :CodeBreach .
+    :encodes :BreachBit ;
+    :zeroState :CodeNormal ;
+    :oneState :CodeBreach .
 
 :incidentBoard a :InformationMedium ;
-  :encodes :BreachBit ;
-  :zeroState :BoardNormal ;
-  :oneState :BoardBreach .
+    :encodes :BreachBit ;
+    :zeroState :BoardNormal ;
+    :oneState :BoardBreach .
 
-# ---------------------------------------------------
 # Contrast medium with superinformation-like behavior
-# ---------------------------------------------------
-
 :specimenSeal a :SuperinformationMedium ;
-  :encodes :SealVariable ;
-  :state :SealAlpha ;
-  :state :SealBeta ;
-  :state :SealGamma .
+    :encodes :SealVariable ;
+    :state :SealAlpha ;
+    :state :SealBeta ;
+    :state :SealGamma .
 
-# ----------------------------------------------------------------
 # CAN rules — what becomes possible for the classical breach token
-# ----------------------------------------------------------------
-
 # Information media support computation-like preparation, permutation,
 # distinguishability, and local cloning for the designated variable.
-{ ?M a :InformationMedium ;
-     :encodes ?V ;
-     :zeroState ?Z ;
-     :oneState ?O . }
-=>
 {
-  ?M a :ComputationMedium .
-  ?M :distinguishes ?V .
-  ?M :can :PrepareInformationStates .
-  ?M :can :LocalPermutation .
-  ?M :can :LocalClone .
+    ?M a :InformationMedium ;
+        :encodes ?V ;
+        :zeroState ?Z ;
+        :oneState ?O .
+} => {
+    ?M a :ComputationMedium .
+    ?M :distinguishes ?V .
+    ?M :can :PrepareInformationStates .
+    ?M :can :LocalPermutation .
+    ?M :can :LocalClone .
 
-  [ a :PossibleTask ;
-    :kind :Prepare ;
-    :on ?M ;
-    :variable ?V ;
-    :targetState ?Z ] .
+    [
+        a :PossibleTask ;
+        :kind :Prepare ;
+        :on ?M ;
+        :variable ?V ;
+        :targetState ?Z
+    ] .
 
-  [ a :PossibleTask ;
-    :kind :Prepare ;
-    :on ?M ;
-    :variable ?V ;
-    :targetState ?O ] .
+    [
+        a :PossibleTask ;
+        :kind :Prepare ;
+        :on ?M ;
+        :variable ?V ;
+        :targetState ?O
+    ] .
 
-  [ a :PossibleTask ;
-    :kind :Permute ;
-    :on ?M ;
-    :variable ?V ;
-    :fromState ?Z ;
-    :toState ?O ] .
+    [
+        a :PossibleTask ;
+        :kind :Permute ;
+        :on ?M ;
+        :variable ?V ;
+        :fromState ?Z ;
+        :toState ?O
+    ] .
 
-  [ a :PossibleTask ;
-    :kind :Permute ;
-    :on ?M ;
-    :variable ?V ;
-    :fromState ?O ;
-    :toState ?Z ] .
+    [
+        a :PossibleTask ;
+        :kind :Permute ;
+        :on ?M ;
+        :variable ?V ;
+        :fromState ?O ;
+        :toState ?Z
+    ] .
 
-  [ a :PossibleTask ;
-    :kind :CloneLocal ;
-    :on ?M ;
-    :variable ?V ] .
+    [
+        a :PossibleTask ;
+        :kind :CloneLocal ;
+        :on ?M ;
+        :variable ?V
+    ] .
 } .
 
 # If both directions of a permutation are possible, reversible computation is possible.
-{ [ a :PossibleTask ;
-      :kind :Permute ;
-      :on ?M ;
-      :variable ?V ;
-      :fromState ?X ;
-      :toState ?Y ] .
-  [ a :PossibleTask ;
-      :kind :Permute ;
-      :on ?M ;
-      :variable ?V ;
-      :fromState ?Y ;
-      :toState ?X ] . }
-=>
-{ [ a :PossibleTask ;
-    :kind :ReversePermute ;
-    :on ?M ;
-    :variable ?V ] . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Permute ;
+        :on ?M ;
+        :variable ?V ;
+        :fromState ?X ;
+        :toState ?Y
+    ] .
+    [
+        a :PossibleTask ;
+        :kind :Permute ;
+        :on ?M ;
+        :variable ?V ;
+        :fromState ?Y ;
+        :toState ?X
+    ] .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :ReversePermute ;
+        :on ?M ;
+        :variable ?V
+    ] .
+} .
 
 # Interoperability-style copying across unlike media carrying the same variable.
-{ ?A a :InformationMedium ; :encodes ?V .
-  ?B a :InformationMedium ; :encodes ?V . }
-=>
-{ [ a :PossibleTask ;
-    :kind :Copy ;
-    :from ?A ;
-    :to ?B ;
-    :variable ?V ] . } .
+{
+    ?A a :InformationMedium ;
+        :encodes ?V .
+    ?B a :InformationMedium ;
+        :encodes ?V .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
+} .
 
 # Measurement into any information medium that carries the same variable.
-{ ?A :distinguishes ?V .
-  ?B a :InformationMedium ;
-     :encodes ?V . }
-=>
-{ [ a :PossibleTask ;
-    :kind :Measure ;
-    :from ?A ;
-    :to ?B ;
-    :variable ?V ] . } .
+{
+    ?A :distinguishes ?V .
+    ?B a :InformationMedium ;
+        :encodes ?V .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :Measure ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
+} .
 
 # Serial composition of possible tasks.
-{ [ a :PossibleTask ;
-      :kind :Copy ;
-      :from ?A ;
-      :to ?B ;
-      :variable ?V ] .
-  [ a :PossibleTask ;
-      :kind :Measure ;
-      :from ?B ;
-      :to ?C ;
-      :variable ?V ] . }
-=>
-{ [ a :PossibleTask ;
-    :kind :SerialNetwork ;
-    :from ?A ;
-    :via ?B ;
-    :to ?C ;
-    :variable ?V ] . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
+    [
+        a :PossibleTask ;
+        :kind :Measure ;
+        :from ?B ;
+        :to ?C ;
+        :variable ?V
+    ] .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :SerialNetwork ;
+        :from ?A ;
+        :via ?B ;
+        :to ?C ;
+        :variable ?V
+    ] .
+} .
 
 # Parallel composition of possible tasks.
-{ [ a :PossibleTask ;
-      :kind :Copy ;
-      :from ?A ;
-      :to ?B ;
-      :variable ?V ] .
-  [ a :PossibleTask ;
-      :kind :Copy ;
-      :from ?A ;
-      :to ?C ;
-      :variable ?V ] . }
-=>
-{ [ a :PossibleTask ;
-    :kind :ParallelNetwork ;
-    :source ?A ;
-    :left ?B ;
-    :right ?C ;
-    :variable ?V ] . } .
-
-# -------------------------------------------------------------
-# CAN'T rules — what becomes impossible for the provenance seal
-# -------------------------------------------------------------
-
-# A superinformation medium cannot have all of its states universally cloned.
-{ ?M a :SuperinformationMedium ;
-     :encodes ?V . }
-=>
 {
-  ?M :cannot :UniversalClone .
-  [ a :ImpossibleTask ;
-    :kind :CloneAllStates ;
-    :on ?M ;
-    :variable ?V ] .
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?C ;
+        :variable ?V
+    ] .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :ParallelNetwork ;
+        :source ?A ;
+        :left ?B ;
+        :right ?C ;
+        :variable ?V
+    ] .
+} .
+
+# CAN'T rules — what becomes impossible for the provenance seal
+# A superinformation medium cannot have all of its states universally cloned.
+{
+    ?M a :SuperinformationMedium ;
+        :encodes ?V .
+} => {
+    ?M :cannot :UniversalClone .
+    [
+        a :ImpossibleTask ;
+        :kind :CloneAllStates ;
+        :on ?M ;
+        :variable ?V
+    ] .
 } .
 
 # If universal cloning is unavailable, unrestricted parallel fan-out is unavailable.
-{ ?M :cannot :UniversalClone . }
-=>
-{ ?M :cannot :UnrestrictedParallelFanOut . } .
+{
+    ?M :cannot :UniversalClone .
+} => {
+    ?M :cannot :UnrestrictedParallelFanOut .
+} .
 
-# ------
 # Checks
-# ------
-
 # Positive checks for the classical breach token.
-{ :doorBeacon a :InformationMedium . }
-=> { :case :checkC1 :Passed . } .
+{
+    :doorBeacon a :InformationMedium .
+} => {
+    :case :checkC1 :Passed .
+} .
 
-{ :containmentPLC a :InformationMedium . }
-=> { :case :checkC2 :Passed . } .
+{
+    :containmentPLC a :InformationMedium .
+} => {
+    :case :checkC2 :Passed .
+} .
 
-{ :nursePager a :InformationMedium . }
-=> { :case :checkC3 :Passed . } .
+{
+    :nursePager a :InformationMedium .
+} => {
+    :case :checkC3 :Passed .
+} .
 
-{ :incidentBoard a :InformationMedium . }
-=> { :case :checkC4 :Passed . } .
+{
+    :incidentBoard a :InformationMedium .
+} => {
+    :case :checkC4 :Passed .
+} .
 
-{ :doorBeacon :distinguishes :BreachBit . }
-=> { :case :checkC5 :Passed . } .
+{
+    :doorBeacon :distinguishes :BreachBit .
+} => {
+    :case :checkC5 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Prepare ;
-    :on :nursePager ;
-    :variable :BreachBit ;
-    :targetState :CodeBreach ] . }
-=> { :case :checkC6 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Prepare ;
+        :on :nursePager ;
+        :variable :BreachBit ;
+        :targetState :CodeBreach
+    ] .
+} => {
+    :case :checkC6 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Permute ;
-    :on :doorBeacon ;
-    :variable :BreachBit ;
-    :fromState :SafeGreen ;
-    :toState :BreachRed ] . }
-=> { :case :checkC7 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Permute ;
+        :on :doorBeacon ;
+        :variable :BreachBit ;
+        :fromState :SafeGreen ;
+        :toState :BreachRed
+    ] .
+} => {
+    :case :checkC7 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :ReversePermute ;
-    :on :doorBeacon ;
-    :variable :BreachBit ] . }
-=> { :case :checkC8 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :ReversePermute ;
+        :on :doorBeacon ;
+        :variable :BreachBit
+    ] .
+} => {
+    :case :checkC8 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :CloneLocal ;
-    :on :containmentPLC ;
-    :variable :BreachBit ] . }
-=> { :case :checkC9 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :CloneLocal ;
+        :on :containmentPLC ;
+        :variable :BreachBit
+    ] .
+} => {
+    :case :checkC9 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Copy ;
-    :from :doorBeacon ;
-    :to :containmentPLC ;
-    :variable :BreachBit ] . }
-=> { :case :checkC10 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from :doorBeacon ;
+        :to :containmentPLC ;
+        :variable :BreachBit
+    ] .
+} => {
+    :case :checkC10 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Copy ;
-    :from :containmentPLC ;
-    :to :nursePager ;
-    :variable :BreachBit ] . }
-=> { :case :checkC11 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from :containmentPLC ;
+        :to :nursePager ;
+        :variable :BreachBit
+    ] .
+} => {
+    :case :checkC11 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Measure ;
-    :from :nursePager ;
-    :to :incidentBoard ;
-    :variable :BreachBit ] . }
-=> { :case :checkC12 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Measure ;
+        :from :nursePager ;
+        :to :incidentBoard ;
+        :variable :BreachBit
+    ] .
+} => {
+    :case :checkC12 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :SerialNetwork ;
-    :from :doorBeacon ;
-    :via :containmentPLC ;
-    :to :incidentBoard ;
-    :variable :BreachBit ] . }
-=> { :case :checkC13 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :SerialNetwork ;
+        :from :doorBeacon ;
+        :via :containmentPLC ;
+        :to :incidentBoard ;
+        :variable :BreachBit
+    ] .
+} => {
+    :case :checkC13 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :ParallelNetwork ;
-    :source :containmentPLC ;
-    :left :nursePager ;
-    :right :incidentBoard ;
-    :variable :BreachBit ] . }
-=> { :case :checkC14 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :ParallelNetwork ;
+        :source :containmentPLC ;
+        :left :nursePager ;
+        :right :incidentBoard ;
+        :variable :BreachBit
+    ] .
+} => {
+    :case :checkC14 :Passed .
+} .
 
 # Negative checks for the provenance seal.
-{ [ a :ImpossibleTask ;
-    :kind :CloneAllStates ;
-    :on :specimenSeal ;
-    :variable :SealVariable ] . }
-=> { :case :checkC15 :Passed . } .
-
-{ :specimenSeal :cannot :UniversalClone . }
-=> { :case :checkC16 :Passed . } .
-
-{ :specimenSeal :cannot :UnrestrictedParallelFanOut . }
-=> { :case :checkC17 :Passed . } .
-
-# ----------------
-# ARC-style report
-# ----------------
-
-{ :case :checkC1 :Passed .
-  :case :checkC2 :Passed .
-  :case :checkC3 :Passed .
-  :case :checkC4 :Passed .
-  :case :checkC5 :Passed .
-  :case :checkC6 :Passed .
-  :case :checkC7 :Passed .
-  :case :checkC8 :Passed .
-  :case :checkC9 :Passed .
-  :case :checkC10 :Passed .
-  :case :checkC11 :Passed .
-  :case :checkC12 :Passed .
-  :case :checkC13 :Passed .
-  :case :checkC14 :Passed .
-  :case :checkC15 :Passed .
-  :case :checkC16 :Passed .
-  :case :checkC17 :Passed . }
-=>
 {
-  :out log:outputString """ACT isolation-breach token — broad constructor-theory coverage case
+    [
+        a :ImpossibleTask ;
+        :kind :CloneAllStates ;
+        :on :specimenSeal ;
+        :variable :SealVariable
+    ] .
+} => {
+    :case :checkC15 :Passed .
+} .
+
+{
+    :specimenSeal :cannot :UniversalClone .
+} => {
+    :case :checkC16 :Passed .
+} .
+
+{
+    :specimenSeal :cannot :UnrestrictedParallelFanOut .
+} => {
+    :case :checkC17 :Passed .
+} .
+
+# ARC-style report
+{
+    :case :checkC1 :Passed .
+    :case :checkC2 :Passed .
+    :case :checkC3 :Passed .
+    :case :checkC4 :Passed .
+    :case :checkC5 :Passed .
+    :case :checkC6 :Passed .
+    :case :checkC7 :Passed .
+    :case :checkC8 :Passed .
+    :case :checkC9 :Passed .
+    :case :checkC10 :Passed .
+    :case :checkC11 :Passed .
+    :case :checkC12 :Passed .
+    :case :checkC13 :Passed .
+    :case :checkC14 :Passed .
+    :case :checkC15 :Passed .
+    :case :checkC16 :Passed .
+    :case :checkC17 :Passed .
+} => {
+    :out log:outputString """ACT isolation-breach token — broad constructor-theory coverage case
 
 ## Answer
 YES for the classical isolation-breach token.

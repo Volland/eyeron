@@ -1,7 +1,14 @@
-# N3 example: if-then.
+# From a person to a mortality conclusion
+#
+# Socrates is described as a man. One forward N3 rule says that every man
+# is mortal, allowing eyeron to derive the mortality statement.
 
-@prefix : <https://eyereasoner.github.io/eyepl/examples/if-then#>.
+@prefix : <https://eyereasoner.github.io/eyepl/examples/if-then#> .
 
-:socrates a :Man.
+:socrates a :Man .
 
-{?x a :Man} => {?x a :Mortal}.
+{
+    ?x a :Man
+} => {
+    ?x a :Mortal
+} .

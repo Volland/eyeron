@@ -1,37 +1,76 @@
-# peasant-arithmetic. Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/peasant/peasant.n3
-# Path expressions are expanded; samples use nonnegative operands.
+# Multiplying by halving and doubling
+#
+# Nonnegative sample operands are multiplied by repeatedly halving one and
+# doubling the other. Backward N3 rules split even and odd cases and
+# accumulate the product.
 
-@prefix : <http://example.org/>.
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Russian peasant multiplication: halve one factor and double the other.
-{ (0 ?Y) :product 0 } <= true.
-{ (?X ?Y) :product ?Result } <= {
-    ?X math:greaterThan 0. (?X 2) math:remainder 0.
-    (?X 2) math:integerQuotient ?Half. (?Y ?Y) math:sum ?Double.
-    (?Half ?Double) :product ?Result.
-}.
-{ (?X ?Y) :product ?Result } <= {
-    ?X math:greaterThan 0. (?X 2) math:remainder 1.
-    (?X 2) math:integerQuotient ?Half. (?Y ?Y) math:sum ?Double.
-    (?Half ?Double) :product ?Partial. (?Partial ?Y) math:sum ?Result.
-}.
+{
+    (0 ?Y) :product 0
+} <= true .
+
+{
+    (?X ?Y) :product ?Result
+} <= {
+    ?X math:greaterThan 0 .
+    (?X 2) math:remainder 0 .
+    (?X 2) math:integerQuotient ?Half .
+    (?Y ?Y) math:sum ?Double .
+    (?Half ?Double) :product ?Result .
+} .
+
+{
+    (?X ?Y) :product ?Result
+} <= {
+    ?X math:greaterThan 0 .
+    (?X 2) math:remainder 1 .
+    (?X 2) math:integerQuotient ?Half .
+    (?Y ?Y) math:sum ?Double .
+    (?Half ?Double) :product ?Partial .
+    (?Partial ?Y) math:sum ?Result .
+} .
+
 # Exponentiation by squaring, preserving exact integers.
-{ (?X 0) :power 1 } <= true.
-{ (?X ?Y) :power ?Result } <= {
-    ?Y math:greaterThan 0. (?Y 2) math:remainder 0.
-    (?X ?X) math:product ?Squared. (?Y 2) math:integerQuotient ?Half.
-    (?Squared ?Half) :power ?Result.
-}.
-{ (?X ?Y) :power ?Result } <= {
-    ?Y math:greaterThan 0. (?Y 2) math:remainder 1.
-    (?X ?X) math:product ?Squared. (?Y 2) math:integerQuotient ?Half.
-    (?Squared ?Half) :power ?Partial. (?Partial ?X) math:product ?Result.
-}.
-{ ((3 0) (5 6) (238 13)) list:member (?X ?Y). (?X ?Y) :product ?Result }
-    => { :arithmetic :product (?X ?Y ?Result) }.
-{ ((3 0) (5 6) (238 13) (2 64)) list:member (?X ?Y). (?X ?Y) :power ?Result }
-    => { :arithmetic :power (?X ?Y ?Result) }.
+{
+    (?X 0) :power 1
+} <= true .
+
+{
+    (?X ?Y) :power ?Result
+} <= {
+    ?Y math:greaterThan 0 .
+    (?Y 2) math:remainder 0 .
+    (?X ?X) math:product ?Squared .
+    (?Y 2) math:integerQuotient ?Half .
+    (?Squared ?Half) :power ?Result .
+} .
+
+{
+    (?X ?Y) :power ?Result
+} <= {
+    ?Y math:greaterThan 0 .
+    (?Y 2) math:remainder 1 .
+    (?X ?X) math:product ?Squared .
+    (?Y 2) math:integerQuotient ?Half .
+    (?Squared ?Half) :power ?Partial .
+    (?Partial ?X) math:product ?Result .
+} .
+
+{
+    ((3 0) (5 6) (238 13)) list:member (?X ?Y) .
+    (?X ?Y) :product ?Result
+} => {
+    :arithmetic :product (?X ?Y ?Result)
+} .
+
+{
+    ((3 0) (5 6) (238 13) (2 64)) list:member (?X ?Y) .
+    (?X ?Y) :power ?Result
+} => {
+    :arithmetic :power (?X ?Y ?Result)
+} .

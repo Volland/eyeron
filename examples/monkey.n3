@@ -1,10 +1,21 @@
-# =================================
-# Monkey example
-# Example from Patrick Hochstenbach
-# =================================
+# Classifying an unnamed monkey
+#
+# Bobo's type is an unnamed node that is itself classified as a monkey. An
+# N3 rule derives an animal classification for that node, and another rule
+# checks the combined evidence.
 
-@prefix : <https://eyereasoner.github.io/ns#>.
+@prefix : <https://eyereasoner.github.io/ns#> .
 
-:Bobo a [ a :Monkey ].
-{ ?X a :Monkey } => { ?X a :Animal }.
-{ ?X a :Monkey .  ?X a :Animal } => { :test :is true }.
+:Bobo a [ a :Monkey ] .
+{
+    ?X a :Monkey
+} => {
+    ?X a :Animal
+} .
+
+{
+    ?X a :Monkey .
+    ?X a :Animal
+} => {
+    :test :is true
+} .

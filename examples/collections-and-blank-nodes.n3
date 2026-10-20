@@ -1,16 +1,25 @@
-# N3 example: collections-and-blank-nodes.
-# An unlabeled blank
-# node (`[...]`) and an RDF list (`(...)`) in the data, matched via an
-# explicit intermediate variable and `list:firstRest` respectively (a
-# `[...]` pattern written directly in a rule body creates its own fresh
-# blank node scoped to that formula, so it cannot be used to match the
-# data's blank node).
+# Reading a contact and a member list
+#
+# Alice knows an unnamed contact, and a team has an ordered member list. N3
+# rules follow the contact's properties and split the list to derive the
+# contact name and first member.
 
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix : <http://example/>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix : <http://example/> .
 
-:alice :knows [:name "Bob"; :tag "friend"].
-:team :members (:alice :bob :carol).
+:alice :knows [ :name "Bob" ; :tag "friend" ] .
+:team :members (:alice :bob :carol) .
 
-{?person :knows ?node. ?node :name ?name} => {?person :knowsNamed ?name}.
-{:team :members ?members. ?members list:firstRest (?first ?rest)} => {:team :firstMember ?first}.
+{
+    ?person :knows ?node .
+    ?node :name ?name
+} => {
+    ?person :knowsNamed ?name
+} .
+
+{
+    :team :members ?members .
+    ?members list:firstRest (?first ?rest)
+} => {
+    :team :firstMember ?first
+} .

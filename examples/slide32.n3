@@ -1,23 +1,22 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/slide32/
-# Standalone program; EYE answer directives use log:query.
+# Classifying a city as a human community
+#
+# Ghent is described as a city. One forward N3 rule derives that every city
+# is a human community, and a query returns the resulting classifications.
 
-# Source file: slide32/slide32.n3
-@base <https://eyereasoner.github.io/eye/reasoning/slide32/slide32.n3>.
-@prefix : <http://example.org/#>.
+@base <https://eyereasoner.github.io/eye/reasoning/slide32/slide32.n3> .
+@prefix : <http://example.org/#> .
 
 # Ghent is a city
-:Ghent a :City.
+:Ghent a :City .
 
 # every city is a human community
 {
-    ?x a :City.
+    ?x a :City .
 } => {
-    ?x a :HumanCommunity.
-}.
+    ?x a :HumanCommunity .
+} .
 
-
-# Query: slide32/slide32-query.n3
+# Query
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 {
@@ -25,4 +24,3 @@
 } log:query {
     ?S a ?C .
 } .
-

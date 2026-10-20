@@ -1,6 +1,8 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Sources: https://eyereasoner.github.io/eye/reasoning/arcus/pythagoras/pythagoras.ttl
-# Premise blank nodes are named variables; backward answers are materialized.
+# Recognizing a symbolic Pythagorean relation
+#
+# Symbolic square and addition facts describe three quantities. N3 rules
+# combine those relations to derive and check the corresponding Pythagorean
+# statement.
 
 @prefix : <http://example.org/#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .

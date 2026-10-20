@@ -1,212 +1,225 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/
-# Standalone program; EYE answer directives use log:query.
+# Applying a scoped shopping insight
+#
+# A scanner receives a low-sugar insight with limits on its use. N3 rules
+# apply the insight to the sample shopping context and derive the supported
+# recommendation information.
 
-# Source file: delfour-insight-economy/insight_policy.ttl
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/insight_policy.ttl>.
-@prefix : <https://example.org/person#>.
-@prefix need: <https://example.org/need#>.
-@prefix ins: <https://example.org/insight#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix odrl: <http://www.w3.org/ns/odrl/2/>.
-@prefix profile: <https://example.org/profile/>.
-@prefix vocab: <https://example.org/vocab/>.
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/insight_policy.ttl> .
+@prefix : <https://example.org/person#> .
+@prefix need: <https://example.org/need#> .
+@prefix ins: <https://example.org/insight#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix profile: <https://example.org/profile/> .
+@prefix vocab: <https://example.org/vocab/> .
 
-:me need:needsLowSugar true.
-_:sk_0 a ins:Insight.
-_:sk_0 ins:metric "sugar_g_per_serving".
-_:sk_0 ins:threshold "10.0"^^xsd:decimal.
-_:sk_0 ins:suggestionPolicy "lower_metric_first_higher_price_ok".
-_:sk_0 ins:scopeDevice "self-scanner".
-_:sk_0 ins:scopeEvent "pick_up_scanner".
-_:sk_0 ins:retailer "Delfour".
-_:sk_0 ins:createdAt "2025-10-04T16:51:53Z"^^xsd:dateTime.
-_:sk_0 ins:expiresAt "2025-10-04T18:51:53Z"^^xsd:dateTime.
-_:sk_1 a odrl:Policy.
-_:sk_1 odrl:profile profile:Delfour-Insight-Policy.
-_:sk_1 odrl:permission _:sk_2.
-_:sk_2 a odrl:Permission.
-_:sk_2 odrl:action odrl:use.
-_:sk_2 odrl:target _:sk_0.
-_:sk_2 odrl:constraint _:sk_3.
-_:sk_3 a odrl:Constraint.
-_:sk_3 odrl:leftOperand odrl:purpose.
-_:sk_3 odrl:operator odrl:eq.
-_:sk_3 odrl:rightOperand vocab:shopping_assist.
-_:sk_1 odrl:prohibition _:sk_4.
-_:sk_4 a odrl:Prohibition.
-_:sk_4 odrl:action odrl:distribute.
-_:sk_4 odrl:target _:sk_0.
-_:sk_4 odrl:constraint _:sk_5.
-_:sk_5 a odrl:Constraint.
-_:sk_5 odrl:leftOperand odrl:purpose.
-_:sk_5 odrl:operator odrl:eq.
-_:sk_5 odrl:rightOperand vocab:marketing.
-_:sk_1 odrl:duty _:sk_6.
-_:sk_6 a odrl:Duty.
-_:sk_6 odrl:action odrl:delete.
-_:sk_6 odrl:constraint _:sk_7.
-_:sk_7 a odrl:Constraint.
-_:sk_7 odrl:leftOperand odrl:dateTime.
-_:sk_7 odrl:operator odrl:eq.
-_:sk_7 odrl:rightOperand "2025-10-04T18:51:53Z"^^xsd:dateTime.
+:me need:needsLowSugar true .
+_:sk_0 a ins:Insight .
+_:sk_0 ins:metric "sugar_g_per_serving" .
+_:sk_0 ins:threshold "10.0"^^xsd:decimal .
+_:sk_0 ins:suggestionPolicy "lower_metric_first_higher_price_ok" .
+_:sk_0 ins:scopeDevice "self-scanner" .
+_:sk_0 ins:scopeEvent "pick_up_scanner" .
+_:sk_0 ins:retailer "Delfour" .
+_:sk_0 ins:createdAt "2025-10-04T16:51:53Z"^^xsd:dateTime .
+_:sk_0 ins:expiresAt "2025-10-04T18:51:53Z"^^xsd:dateTime .
+_:sk_1 a odrl:Policy .
+_:sk_1 odrl:profile profile:Delfour-Insight-Policy .
+_:sk_1 odrl:permission _:sk_2 .
+_:sk_2 a odrl:Permission .
+_:sk_2 odrl:action odrl:use .
+_:sk_2 odrl:target _:sk_0 .
+_:sk_2 odrl:constraint _:sk_3 .
+_:sk_3 a odrl:Constraint .
+_:sk_3 odrl:leftOperand odrl:purpose .
+_:sk_3 odrl:operator odrl:eq .
+_:sk_3 odrl:rightOperand vocab:shopping_assist .
+_:sk_1 odrl:prohibition _:sk_4 .
+_:sk_4 a odrl:Prohibition .
+_:sk_4 odrl:action odrl:distribute .
+_:sk_4 odrl:target _:sk_0 .
+_:sk_4 odrl:constraint _:sk_5 .
+_:sk_5 a odrl:Constraint .
+_:sk_5 odrl:leftOperand odrl:purpose .
+_:sk_5 odrl:operator odrl:eq .
+_:sk_5 odrl:rightOperand vocab:marketing .
+_:sk_1 odrl:duty _:sk_6 .
+_:sk_6 a odrl:Duty .
+_:sk_6 odrl:action odrl:delete .
+_:sk_6 odrl:constraint _:sk_7 .
+_:sk_7 a odrl:Constraint .
+_:sk_7 odrl:leftOperand odrl:dateTime .
+_:sk_7 odrl:operator odrl:eq .
+_:sk_7 odrl:rightOperand "2025-10-04T18:51:53Z"^^xsd:dateTime .
 
-
-# Source file: delfour-insight-economy/now.ttl
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/now.ttl>.
-@prefix ex:  <https://example.org/enforce#> .
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/now.ttl> .
+@prefix ex: <https://example.org/enforce#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-[] ex:now "2025-10-04T16:51:53Z"^^xsd:dateTime .
+[ ] ex:now "2025-10-04T16:51:53Z"^^xsd:dateTime .
 
-
-# Source file: delfour-insight-economy/request.ttl
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/request.ttl>.
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/request.ttl> .
 @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
-@prefix req:  <https://example.org/request#> .
-@prefix vocab:   <https://example.org/vocab/> .
+@prefix req: <https://example.org/request#> .
+@prefix vocab: <https://example.org/vocab/> .
 
 req:r1 odrl:action odrl:use ;
-      odrl:constraint [
-        odrl:leftOperand  odrl:purpose ;
+    odrl:constraint [
+        odrl:leftOperand odrl:purpose ;
         odrl:rightOperand vocab:shopping_assist
-      ] .
+    ] .
 
-
-# Source file: delfour-insight-economy/catalog.ttl
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/catalog.ttl>.
-@prefix prod:   <https://example.org/product#> .
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/catalog.ttl> .
+@prefix prod: <https://example.org/product#> .
 @prefix schema: <http://schema.org/> .
-@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-prod:BIS_001 a schema:Product ; schema:name "Classic Tea Biscuits" ; schema:sugarContent "12.0"^^xsd:decimal .
-prod:BIS_101 a schema:Product ; schema:name "Low-Sugar Tea Biscuits" ; schema:sugarContent "3.0"^^xsd:decimal .
-prod:CHOC_050 a schema:Product ; schema:name "Milk Chocolate Bar"   ; schema:sugarContent "15.0"^^xsd:decimal .
-prod:CHOC_150 a schema:Product ; schema:name "85% Dark Chocolate"   ; schema:sugarContent "6.0"^^xsd:decimal .
+prod:BIS_001 a schema:Product ;
+    schema:name "Classic Tea Biscuits" ;
+    schema:sugarContent "12.0"^^xsd:decimal .
+prod:BIS_101 a schema:Product ;
+    schema:name "Low-Sugar Tea Biscuits" ;
+    schema:sugarContent "3.0"^^xsd:decimal .
+prod:CHOC_050 a schema:Product ;
+    schema:name "Milk Chocolate Bar" ;
+    schema:sugarContent "15.0"^^xsd:decimal .
+prod:CHOC_150 a schema:Product ;
+    schema:name "85% Dark Chocolate" ;
+    schema:sugarContent "6.0"^^xsd:decimal .
 
-
-# Source file: delfour-insight-economy/scan.ttl
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/scan.ttl>.
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/scan.ttl> .
 @prefix shop: <https://example.org/shop#> .
 @prefix prod: <https://example.org/product#> .
 
-[] shop:scannedProduct prod:BIS_001 .
+[ ] shop:scannedProduct prod:BIS_001 .
 
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/scanner.n3> .
 
-# Source file: delfour-insight-economy/scanner.n3
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/scanner.n3>.
-# =====================================================================
 # Delfour — SCANNER side
 # Inputs:
-#   - an ins:Insight (neutral envelope)
-#   - the ODRL policy (derived from the insight)
-#   - a request to use the insight with purpose=shopping_assist
-#   - "now" as xsd:dateTime (for expiry guard)
-#   - a small product catalog + a scan event (scanned product)
+# - an ins:Insight (neutral envelope)
+# - the ODRL policy (derived from the insight)
+# - a request to use the insight with purpose=shopping_assist
+# - "now" as xsd:dateTime (for expiry guard)
+# - a small product catalog + a scan event (scanned product)
 # Outputs (pass-only-new):
-#   - authorization marking (Allowed / Blocked with reason)
-#   - derived expiry flag (ex:Expired) when past expiresAt
-#   - an audit trail (act:Decision, optionally a delete_due Duty)
-#   - a runtime suggestion banner (shop:suggestedAlternative)
-# =====================================================================
-
-@prefix ins:   <https://example.org/insight#> .
-@prefix odrl:  <http://www.w3.org/ns/odrl/2/> .
-@prefix ex:    <https://example.org/enforce#> .
-@prefix act:   <https://example.org/activity#> .
-@prefix shop:  <https://example.org/shop#> .
-@prefix schema:<http://schema.org/> .
-@prefix math:  <http://www.w3.org/2000/10/swap/math#> .
-@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+# - authorization marking (Allowed / Blocked with reason)
+# - derived expiry flag (ex:Expired) when past expiresAt
+# - an audit trail (act:Decision, optionally a delete_due Duty)
+# - a runtime suggestion banner (shop:suggestedAlternative)
+@prefix ins: <https://example.org/insight#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix ex: <https://example.org/enforce#> .
+@prefix act: <https://example.org/activity#> .
+@prefix shop: <https://example.org/shop#> .
+@prefix schema: <http://schema.org/> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix vocab: <https://example.org/vocab/> .
 
-# ---------------------------------------------------------------------
 # 1) Expiry guard: mark an Insight as ex:Expired if expiresAt < now
-#    (Provide "now" using the helper triple shown below in SAMPLE INPUT.)
-# ---------------------------------------------------------------------
+# (Provide "now" using the helper triple shown below in SAMPLE INPUT.)
 {
-  ?ins a ins:Insight ; ins:expiresAt ?exp .
-  []   ex:now ?now .
-  ?exp math:lessThan ?now .
-}
-=>
-{ ?ins a ex:Expired . } .
+    ?ins a ins:Insight ;
+        ins:expiresAt ?exp .
+    [ ] ex:now ?now .
+    ?exp math:lessThan ?now .
+} => {
+    ?ins a ex:Expired .
+} .
 
-# ---------------------------------------------------------------------
 # 2) Enforcement:
-#    - Allowed if request matches the policy use@shopping_assist on the same target
-#    - Blocked if Allowed target is expired
-# ---------------------------------------------------------------------
+# - Allowed if request matches the policy use@shopping_assist on the same target
+# - Blocked if Allowed target is expired
 # Allowed
 {
-  ?pol a odrl:Policy ;
-       odrl:permission [
-         odrl:action      odrl:use ;
-         odrl:target      ?ins ;
-         odrl:constraint [
-           odrl:leftOperand  odrl:purpose ;
-           odrl:operator     odrl:eq ;
-           odrl:rightOperand vocab:shopping_assist
-         ]
-       ] .
-  ?ins a ins:Insight .
-  ?req odrl:action odrl:use ;
-       odrl:constraint [ odrl:leftOperand odrl:purpose ; odrl:rightOperand vocab:shopping_assist ] .
-}
-=>
-{ ?req a ex:Allowed ; ex:target ?ins . } .
+    ?pol a odrl:Policy ;
+        odrl:permission [
+            odrl:action odrl:use ;
+            odrl:target ?ins ;
+            odrl:constraint [
+                odrl:leftOperand odrl:purpose ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand vocab:shopping_assist
+            ]
+        ] .
+    ?ins a ins:Insight .
+    ?req odrl:action odrl:use ;
+        odrl:constraint [
+            odrl:leftOperand odrl:purpose ;
+            odrl:rightOperand vocab:shopping_assist
+        ] .
+} => {
+    ?req a ex:Allowed ;
+        ex:target ?ins .
+} .
 
 # Block on expiry
 {
-  ?req a ex:Allowed ; ex:target ?ins .
-  ?ins a ex:Expired .
-}
-=>
-{ ?req a ex:Blocked ; ex:reason "expired" . } .
-
-# ---------------------------------------------------------------------
-# 3) Audit trail: record a Decision; also record Duty when at/after expiry.
-# ---------------------------------------------------------------------
-{ ?req a ex:Allowed . [] ex:now ?now . }
-=>
-{ _:a a act:Decision ; act:at ?now ; act:request ?req ; act:outcome "Allowed" . } .
-
-{ ?req a ex:Blocked ; ex:reason ?r . [] ex:now ?now . }
-=>
-{ _:a a act:Decision ; act:at ?now ; act:request ?req ; act:outcome "Blocked" ; act:reason ?r . } .
-
-{ ?ins a ex:Expired . [] ex:now ?now . }
-=>
-{ _:d a act:Duty ; act:type "delete_due" ; act:at ?now ; act:target ?ins . } .
-
-# ---------------------------------------------------------------------
-# 4) Shopping suggestion:
-#    If Allowed and scanned product sugar >= threshold, suggest an alternative
-#    with strictly lower sugarContent.
-# ---------------------------------------------------------------------
-{
-  ?req a ex:Allowed ; ex:target ?ins .
-  ?ins a ins:Insight ;
-       ins:metric       "sugar_g_per_serving" ;
-       ins:threshold    ?thr .
-
-  # A scan event points to some product
-  ?scan shop:scannedProduct ?p .
-
-  # Product under scan
-  ?p schema:name ?name ;
-     schema:sugarContent ?sug .
-
-  # Candidate alternative (any other product with lower sugar)
-  ?alt schema:name ?an ;
-       schema:sugarContent ?as .
-  ?as math:lessThan ?sug .
-  ?sug math:notLessThan ?thr .
-}
-=>
-{
-  ?scan shop:note "High sugar" ;
-        shop:suggestedAlternative ?alt .
+    ?req a ex:Allowed ;
+        ex:target ?ins .
+    ?ins a ex:Expired .
+} => {
+    ?req a ex:Blocked ;
+        ex:reason "expired" .
 } .
 
+# 3) Audit trail: record a Decision; also record Duty when at/after expiry.
+{
+    ?req a ex:Allowed .
+    [ ] ex:now ?now .
+} => {
+    _:a a act:Decision ;
+        act:at ?now ;
+        act:request ?req ;
+        act:outcome "Allowed" .
+} .
 
+{
+    ?req a ex:Blocked ;
+        ex:reason ?r .
+    [ ] ex:now ?now .
+} => {
+    _:a a act:Decision ;
+        act:at ?now ;
+        act:request ?req ;
+        act:outcome "Blocked" ;
+        act:reason ?r .
+} .
+
+{
+    ?ins a ex:Expired .
+    [ ] ex:now ?now .
+} => {
+    _:d a act:Duty ;
+        act:type "delete_due" ;
+        act:at ?now ;
+        act:target ?ins .
+} .
+
+# 4) Shopping suggestion:
+# If Allowed and scanned product sugar >= threshold, suggest an alternative
+# with strictly lower sugarContent.
+{
+    ?req a ex:Allowed ;
+        ex:target ?ins .
+    ?ins a ins:Insight ;
+        ins:metric "sugar_g_per_serving" ;
+        ins:threshold ?thr .
+
+    # A scan event points to some product
+    ?scan shop:scannedProduct ?p .
+
+    # Product under scan
+    ?p schema:name ?name ;
+        schema:sugarContent ?sug .
+
+    # Candidate alternative (any other product with lower sugar)
+    ?alt schema:name ?an ;
+        schema:sugarContent ?as .
+    ?as math:lessThan ?sug .
+    ?sug math:notLessThan ?thr .
+} => {
+    ?scan shop:note "High sugar" ;
+        shop:suggestedAlternative ?alt .
+} .

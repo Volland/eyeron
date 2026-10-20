@@ -1,28 +1,33 @@
-# =================================
-# Cat Koko
-# Example from Patrick Hochstenbach
-# =================================
+# Fresh witnesses in generated rules
+#
+# Koko's animal classification causes two new rules to be generated. Their
+# blank nodes produce distinct cat and shorthair witnesses, and another N3
+# rule checks that they differ.
 
-@prefix : <https://eyereasoner.github.io/ns#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <https://eyereasoner.github.io/ns#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-:Koko a :Animal.
+:Koko a :Animal .
 
 {
     :Koko a :Animal
-}
-=>
-{
-    { :Koko a :Animal } => { _:x a :Cat } .
-    { :Koko a :Animal } => { _:x a :BritishShortHair } .
-}.
+} => {
+    {
+        :Koko a :Animal
+    } => {
+        _:x a :Cat
+    } .
+    {
+        :Koko a :Animal
+    } => {
+        _:x a :BritishShortHair
+    } .
+} .
 
 {
     ?X a :Cat .
     ?Y a :BritishShortHair .
-    ?X log:notEqualTo ?Y.
-}
-=>
-{
+    ?X log:notEqualTo ?Y .
+} => {
     :test :is true .
-}.
+} .

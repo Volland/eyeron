@@ -1,6 +1,7 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Sources: https://eyereasoner.github.io/eye/reasoning/arcus/graph/graph.ttl
-# Premise blank nodes are named variables; backward answers are materialized.
+# Building routes between cities
+#
+# One-way road links connect a small city network. Backward N3 rules follow
+# those links and construct path lists for the requested trips.
 
 @prefix : <http://example.org/#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .

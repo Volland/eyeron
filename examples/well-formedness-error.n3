@@ -1,14 +1,17 @@
-# N3 example: well-formedness-error.
-# The source rule body
-# deliberately uses a comparison before the variable it compares is
-# (strictly-ordered body evaluation). N3 has no such requirement: its
-# premise matcher reorders clauses by selectivity rather than evaluating
-# strictly left to right (confirmed by testing), so the very same clause
-# :alice a :Bad regardless.
+# A comparison written before its input fact
+#
+# Alice has a score, but the rule writes its numeric comparison before the
+# clause that binds that score. Eyeron resolves the premises and derives
+# the classification, illustrating premise reordering.
 
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/well-formedness-error#>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/well-formedness-error#> .
 
-:alice :score 10.
+:alice :score 10 .
 
-{?score math:greaterThan 5. :alice :score ?score.} => {:alice a :Bad}.
+{
+    ?score math:greaterThan 5 .
+    :alice :score ?score .
+} => {
+    :alice a :Bad
+} .

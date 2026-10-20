@@ -1,27 +1,30 @@
-# =================================
-# Derived backward rule
-# Example from Patrick Hochstenbach
-# =================================
+# Generating unconditional backward rules
+#
+# An unconditional rule introduces backward rules for Socrates and the
+# class hierarchy. A forward N3 rule uses their answers to derive that
+# Socrates is mortal.
 
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix : <http://example.org/socrates#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/socrates#> .
 
 true => {
-    { :Socrates a :Human. } <= true .
-    { :Human rdfs:subClassOf :Mortal } <= true.
-}.
+    {
+        :Socrates a :Human .
+    } <= true .
+    {
+        :Human rdfs:subClassOf :Mortal
+    } <= true .
+} .
 
 {
-    ?S a ?A.
-    ?A rdfs:subClassOf ?B.
+    ?S a ?A .
+    ?A rdfs:subClassOf ?B .
 } => {
-    ?S a ?B.
-}.
+    ?S a ?B .
+} .
 
 {
     :Socrates a :Mortal .
-}
-=>
-{
+} => {
     :test :is true .
 } .

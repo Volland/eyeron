@@ -1,18 +1,29 @@
-# N3 example: policy.
-# The producer of :Blocked appears after its
-# consumer deliberately. N3 has no stratification concept of its own; its
-# negation-as-failure feature (log:notIncludes) is instead handled by
-# deferring the negated rule until the ordinary closure saturates.
+# Applying a blocking policy before eligibility
+#
+# People can be blocked directly or through a flagged classification. N3
+# rules derive the blocking consequences and use a scoped absence test to
+# identify the remaining eligible people.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/policy#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/policy#> .
 
-:alice a :Person.
-:bob a :Person.
-:carol a :Person.
-:alice a :Blocked.
-:carol a :Flagged.
+:alice a :Person .
+:bob a :Person .
+:carol a :Person .
+:alice a :Blocked .
+:carol a :Flagged .
 
-{?x a :Flagged} => {?x a :Blocked}.
+{
+    ?x a :Flagged
+} => {
+    ?x a :Blocked
+} .
 
-{?x a :Person. ?SCOPE log:notIncludes {?x a :Blocked}.} => {?x a :Eligible}.
+{
+    ?x a :Person .
+    ?SCOPE log:notIncludes {
+        ?x a :Blocked
+    } .
+} => {
+    ?x a :Eligible
+} .

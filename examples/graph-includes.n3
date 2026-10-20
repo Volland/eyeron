@@ -1,14 +1,44 @@
-# Graph inclusion tests existential consequence without universal instantiation.
-@prefix : <http://example.org/>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+# Testing consequences within quoted graphs
+#
+# Quoted graphs contain facts and explicitly quantified statements. N3
+# rules use log:includes to test supported graph consequences while
+# respecting universal and existential scopes.
 
-{ { :s :p :o. :a :b :c } log:includes { :a :b :c } }
-    => { :subset :holds true }.
+@prefix : <http://example.org/> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-{ { @forAll :x. :x :p :o }
-    log:includes { @forAll :x. @forSome :y. :x :p :y } }
-    => { :existentialGeneralisation :holds true }.
+{
+    {
+        :s :p :o .
+        :a :b :c
+    } log:includes {
+        :a :b :c
+    }
+} => {
+    :subset :holds true
+} .
+
+{
+    {
+        @forAll :x .
+        :x :p :o
+    } log:includes {
+        @forAll :x .
+        @forSome :y .
+        :x :p :y
+    }
+} => {
+    :existentialGeneralisation :holds true
+} .
 
 # A universal instance is a basic consequence, not an existential consequence.
-{ { @forAll :x. :x :p :o } log:includes { :s :p :o } }
-    => { :incorrectUniversalInstantiation :holds true }.
+{
+    {
+        @forAll :x .
+        :x :p :o
+    } log:includes {
+        :s :p :o
+    }
+} => {
+    :incorrectUniversalInstantiation :holds true
+} .

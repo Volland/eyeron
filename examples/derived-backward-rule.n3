@@ -1,9 +1,11 @@
-# =====================
-# Derived backward rule
-# =====================
+# Generating an inverse relation
+#
+# A property is declared the inverse of another property. An N3 rule
+# generates a backward rule from that declaration, allowing a parent fact
+# to answer a child-to-parent question.
 
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
-@prefix :    <https://eyereasoner.github.io/ns#> .
+@prefix : <https://eyereasoner.github.io/ns#> .
 
 :parentOf :invOf :childOf .
 
@@ -12,7 +14,7 @@
 # Meta-rule:
 # For every inverse pair (?p :invOf ?q),
 # create a backward rule:
-#   { ?x ?q ?y } <= { ?y ?p ?x } .
+# { ?x ?q ?y } <= { ?y ?p ?x } .
 {
     ?p :invOf ?q .
 } => {

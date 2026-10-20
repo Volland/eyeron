@@ -1,17 +1,24 @@
-# N3 example: builtin-call-complete.
-# A smoke test for absolute value, exponentiation (used as a square root
-# via a 0.5 exponent, since N3 has no dedicated sqrt builtin), list
-# length, and list sorting.
+# Combining arithmetic and list operations
+#
+# A short list supplies a small calculation. One N3 rule derives an
+# absolute value, a square root through exponentiation, the list length,
+# and a sorted list using built-in operations.
 
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix : <http://example/>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix : <http://example/> .
 
-:numbers :values (-3.7 7 2).
+:numbers :values (-3.7 7 2) .
 
-{:numbers :values ?values.
- -3.7 math:absoluteValue ?absolute.
- (9 0.5) math:exponentiation ?root.
- ?values list:length ?count.
- ?values list:sort ?sorted.
-} => {:summary :absolute ?absolute; :root ?root; :count ?count; :sorted ?sorted}.
+{
+    :numbers :values ?values .
+    -3.7 math:absoluteValue ?absolute .
+    (9 0.5) math:exponentiation ?root .
+    ?values list:length ?count .
+    ?values list:sort ?sorted .
+} => {
+    :summary :absolute ?absolute ;
+        :root ?root ;
+        :count ?count ;
+        :sorted ?sorted
+} .

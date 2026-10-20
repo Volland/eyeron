@@ -1,12 +1,32 @@
-# Universals precede existentials declared in the same graph.
-@prefix : <http://example.org/>.
+# Instantiating universally quantified statements
+#
+# Explicit quantifiers describe a general property and a mother
+# relationship. N3 rules request concrete instances and expose how
+# existential witnesses depend on the universally quantified subject.
 
-@forAll :x.
-@forSome :y.
-:x :p :o.
-:x :hasMother :y.
+@prefix : <http://example.org/> .
 
-{ :s :p :o } => { :universalInstance :holds true }.
-{ :bob :hasMother ?mother } => { :bob :mother ?mother }.
-{ :liz :hasMother ?mother } => { :liz :mother ?mother }.
+@forAll :x .
+@forSome :y .
+:x :p :o .
+:x :hasMother :y .
+
+{
+    :s :p :o
+} => {
+    :universalInstance :holds true
+} .
+
+{
+    :bob :hasMother ?mother
+} => {
+    :bob :mother ?mother
+} .
+
+{
+    :liz :hasMother ?mother
+} => {
+    :liz :mother ?mother
+} .
+
 # The witnesses for Bob's and Liz's mothers may differ.

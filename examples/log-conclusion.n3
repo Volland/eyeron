@@ -1,20 +1,24 @@
-# ======================
-# log:conclusion example
-# ======================
+# Reasoning inside a quoted graph
+#
+# A quoted graph contains a cat fact and a rule that cats say meow. The
+# log:conclusion built-in computes that graph's consequences, and an N3
+# rule returns the resulting graph.
 
-@prefix : <http://example.org/>.
+@prefix : <http://example.org/> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 :let :param {
     :Felix a :Cat .
-    { ?X a :Cat . } => { ?X :says "Meow" . } .
+    {
+        ?X a :Cat .
+    } => {
+        ?X :says "Meow" .
+    } .
 } .
 
 {
     :let :param ?param .
     ?param log:conclusion ?conclusion .
-}
-=>
-{
+} => {
     :result :is ?conclusion .
 } .

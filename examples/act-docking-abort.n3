@@ -1,16 +1,8 @@
-# ============================================================================
-# ACT docking abort token — broad constructor-theory coverage with can't-rules
+# Propagating a docking abort signal
 #
-# Concrete topic:
-# A spacecraft docking bay has an emergency abort bit that must be propagated
-# across unlike classical media and recorded for audit.
-#
-# This example therefore includes both sides:
-#   - CAN   : the classical abort token can be permuted, copied, measured,
-#             cloned locally, and composed into serial and parallel networks
-#   - CAN'T : the quantum authenticity seal cannot be universally cloned and
-#             therefore cannot be used as an unrestricted fan-out audit token
-# ============================================================================
+# A spacecraft docking bay must distribute an emergency signal and record
+# it for audit. N3 rules combine permitted information tasks and show why
+# the modeled quantum seal cannot support unrestricted copying.
 
 @prefix : <http://example.org/docking-abort/> .
 @prefix arc: <https://example.org/arc#> .
@@ -19,249 +11,310 @@
 :000_md_title log:outputString "# act-docking-abort\n\n## Source files\n\n- [N3 rules](../act-docking-abort.n3)\n\n" .
 
 :case a arc:Case ;
-  arc:question "Can a docking-abort token be propagated, permuted, measured and audited across unlike classical media, and what exactly can't be done with the quantum authenticity seal?" .
+    arc:question "Can a docking-abort token be propagated, permuted, measured and audited across unlike classical media, and what exactly can't be done with the quantum authenticity seal?" .
 
-# --------------------------------------------------------
 # Classical substrates carrying the same abstract variable
-# --------------------------------------------------------
-
 :abortLamp a :InformationMedium ;
-  :encodes :AbortBit ;
-  :zeroState :Green ;
-  :oneState :Red .
+    :encodes :AbortBit ;
+    :zeroState :Green ;
+    :oneState :Red .
 
 :flightPLC a :InformationMedium ;
-  :encodes :AbortBit ;
-  :zeroState :LowVoltage ;
-  :oneState :HighVoltage .
+    :encodes :AbortBit ;
+    :zeroState :LowVoltage ;
+    :oneState :HighVoltage .
 
 :radioFrame a :InformationMedium ;
-  :encodes :AbortBit ;
-  :zeroState :Frame0 ;
-  :oneState :Frame1 .
+    :encodes :AbortBit ;
+    :zeroState :Frame0 ;
+    :oneState :Frame1 .
 
 :auditDisplay a :InformationMedium ;
-  :encodes :AbortBit ;
-  :zeroState :DisplayOK ;
-  :oneState :DisplayABORT .
+    :encodes :AbortBit ;
+    :zeroState :DisplayOK ;
+    :oneState :DisplayABORT .
 
-# ------------------------------------------------------
 # Contrast substrate with superinformation-like behavior
-# ------------------------------------------------------
-
 :quantumSeal a :SuperinformationMedium ;
-  :encodes :SealVariable .
+    :encodes :SealVariable .
 
-# ---------------------------------------------------------------
 # CAN rules — what becomes possible for the classical abort token
-# ---------------------------------------------------------------
-
 # Information media are treated here as computation media for the same variable.
 # They support permutation of the variable, local cloning, and distinguishability.
-{ ?M a :InformationMedium ;
-     :encodes ?V ;
-     :zeroState ?Z ;
-     :oneState ?O . }
-=>
 {
-  ?M a :ComputationMedium .
-  ?M :distinguishes ?V .
-  ?M :can :LocalPermutation .
-  ?M :can :LocalClone .
+    ?M a :InformationMedium ;
+        :encodes ?V ;
+        :zeroState ?Z ;
+        :oneState ?O .
+} => {
+    ?M a :ComputationMedium .
+    ?M :distinguishes ?V .
+    ?M :can :LocalPermutation .
+    ?M :can :LocalClone .
 
-  [ a :PossibleTask ;
-    :kind :Permute ;
-    :on ?M ;
-    :variable ?V ;
-    :fromState ?Z ;
-    :toState ?O ] .
+    [
+        a :PossibleTask ;
+        :kind :Permute ;
+        :on ?M ;
+        :variable ?V ;
+        :fromState ?Z ;
+        :toState ?O
+    ] .
 
-  [ a :PossibleTask ;
-    :kind :CloneLocal ;
-    :on ?M ;
-    :variable ?V ] .
+    [
+        a :PossibleTask ;
+        :kind :CloneLocal ;
+        :on ?M ;
+        :variable ?V
+    ] .
 } .
 
 # Interoperability-like copying across unlike media carrying the same variable.
-{ ?A a :InformationMedium ; :encodes ?V .
-  ?B a :InformationMedium ; :encodes ?V . }
-=>
 {
-  [ a :PossibleTask ;
-    :kind :Copy ;
-    :from ?A ;
-    :to ?B ;
-    :variable ?V ] .
+    ?A a :InformationMedium ;
+        :encodes ?V .
+    ?B a :InformationMedium ;
+        :encodes ?V .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
 } .
 
 # Measurement: if a substrate distinguishes a variable, it can be measured into
 # an information medium carrying that same variable.
-{ ?A :distinguishes ?V .
-  ?B a :InformationMedium ; :encodes ?V . }
-=>
 {
-  [ a :PossibleTask ;
-    :kind :Measure ;
-    :from ?A ;
-    :to ?B ;
-    :variable ?V ] .
+    ?A :distinguishes ?V .
+    ?B a :InformationMedium ;
+        :encodes ?V .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :Measure ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
 } .
 
 # Serial composition: copy into an intermediate medium, then measure from there.
-{ [ a :PossibleTask ;
-      :kind :Copy ;
-      :from ?A ;
-      :to ?B ;
-      :variable ?V ] .
-  [ a :PossibleTask ;
-      :kind :Measure ;
-      :from ?B ;
-      :to ?C ;
-      :variable ?V ] . }
-=>
 {
-  [ a :PossibleTask ;
-    :kind :SerialNetwork ;
-    :from ?A ;
-    :via ?B ;
-    :to ?C ;
-    :variable ?V ] .
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
+    [
+        a :PossibleTask ;
+        :kind :Measure ;
+        :from ?B ;
+        :to ?C ;
+        :variable ?V
+    ] .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :SerialNetwork ;
+        :from ?A ;
+        :via ?B ;
+        :to ?C ;
+        :variable ?V
+    ] .
 } .
 
 # Parallel composition: fan out the same variable into two target media.
-{ [ a :PossibleTask ;
-      :kind :Copy ;
-      :from ?A ;
-      :to ?B ;
-      :variable ?V ] .
-  [ a :PossibleTask ;
-      :kind :Copy ;
-      :from ?A ;
-      :to ?C ;
-      :variable ?V ] . }
-=>
 {
-  [ a :PossibleTask ;
-    :kind :ParallelNetwork ;
-    :source ?A ;
-    :left ?B ;
-    :right ?C ;
-    :variable ?V ] .
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?B ;
+        :variable ?V
+    ] .
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from ?A ;
+        :to ?C ;
+        :variable ?V
+    ] .
+} => {
+    [
+        a :PossibleTask ;
+        :kind :ParallelNetwork ;
+        :source ?A ;
+        :left ?B ;
+        :right ?C ;
+        :variable ?V
+    ] .
 } .
 
-# ----------------------------------------------------------
 # CAN'T rules — what becomes impossible for the quantum seal
-# ----------------------------------------------------------
-
 # A superinformation medium cannot have all of its states universally cloned.
-{ ?M a :SuperinformationMedium ;
-     :encodes ?V . }
-=>
 {
-  ?M :cannot :UniversalClone .
-  [ a :ImpossibleTask ;
-    :kind :CloneAllStates ;
-    :on ?M ;
-    :variable ?V ] .
+    ?M a :SuperinformationMedium ;
+        :encodes ?V .
+} => {
+    ?M :cannot :UniversalClone .
+    [
+        a :ImpossibleTask ;
+        :kind :CloneAllStates ;
+        :on ?M ;
+        :variable ?V
+    ] .
 } .
 
 # If universal cloning is unavailable, unrestricted audit fan-out is unavailable.
-{ ?M :cannot :UniversalClone . }
-=>
-{ ?M :cannot :UnrestrictedAuditFanOut . } .
+{
+    ?M :cannot :UniversalClone .
+} => {
+    ?M :cannot :UnrestrictedAuditFanOut .
+} .
 
-# ------
 # Checks
-# ------
-
 # Positive checks for the classical abort token.
-{ :abortLamp a :ComputationMedium . }
-=> { :case :checkC1 :Passed . } .
+{
+    :abortLamp a :ComputationMedium .
+} => {
+    :case :checkC1 :Passed .
+} .
 
-{ :abortLamp :distinguishes :AbortBit . }
-=> { :case :checkC2 :Passed . } .
+{
+    :abortLamp :distinguishes :AbortBit .
+} => {
+    :case :checkC2 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Permute ;
-    :on :abortLamp ;
-    :variable :AbortBit ] . }
-=> { :case :checkC3 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Permute ;
+        :on :abortLamp ;
+        :variable :AbortBit
+    ] .
+} => {
+    :case :checkC3 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :CloneLocal ;
-    :on :flightPLC ;
-    :variable :AbortBit ] . }
-=> { :case :checkC4 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :CloneLocal ;
+        :on :flightPLC ;
+        :variable :AbortBit
+    ] .
+} => {
+    :case :checkC4 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Copy ;
-    :from :abortLamp ;
-    :to :flightPLC ;
-    :variable :AbortBit ] . }
-=> { :case :checkC5 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from :abortLamp ;
+        :to :flightPLC ;
+        :variable :AbortBit
+    ] .
+} => {
+    :case :checkC5 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Copy ;
-    :from :flightPLC ;
-    :to :radioFrame ;
-    :variable :AbortBit ] . }
-=> { :case :checkC6 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Copy ;
+        :from :flightPLC ;
+        :to :radioFrame ;
+        :variable :AbortBit
+    ] .
+} => {
+    :case :checkC6 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :Measure ;
-    :from :radioFrame ;
-    :to :auditDisplay ;
-    :variable :AbortBit ] . }
-=> { :case :checkC7 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :Measure ;
+        :from :radioFrame ;
+        :to :auditDisplay ;
+        :variable :AbortBit
+    ] .
+} => {
+    :case :checkC7 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :SerialNetwork ;
-    :from :abortLamp ;
-    :via :flightPLC ;
-    :to :auditDisplay ;
-    :variable :AbortBit ] . }
-=> { :case :checkC8 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :SerialNetwork ;
+        :from :abortLamp ;
+        :via :flightPLC ;
+        :to :auditDisplay ;
+        :variable :AbortBit
+    ] .
+} => {
+    :case :checkC8 :Passed .
+} .
 
-{ [ a :PossibleTask ;
-    :kind :ParallelNetwork ;
-    :source :flightPLC ;
-    :left :radioFrame ;
-    :right :auditDisplay ;
-    :variable :AbortBit ] . }
-=> { :case :checkC9 :Passed . } .
+{
+    [
+        a :PossibleTask ;
+        :kind :ParallelNetwork ;
+        :source :flightPLC ;
+        :left :radioFrame ;
+        :right :auditDisplay ;
+        :variable :AbortBit
+    ] .
+} => {
+    :case :checkC9 :Passed .
+} .
 
 # Negative checks for the quantum seal.
-{ [ a :ImpossibleTask ;
-    :kind :CloneAllStates ;
-    :on :quantumSeal ;
-    :variable :SealVariable ] . }
-=> { :case :checkC10 :Passed . } .
-
-{ :quantumSeal :cannot :UniversalClone . }
-=> { :case :checkC11 :Passed . } .
-
-{ :quantumSeal :cannot :UnrestrictedAuditFanOut . }
-=> { :case :checkC12 :Passed . } .
-
-# ----------------
-# ARC-style report
-# ----------------
-
-{ :case :checkC1 :Passed .
-  :case :checkC2 :Passed .
-  :case :checkC3 :Passed .
-  :case :checkC4 :Passed .
-  :case :checkC5 :Passed .
-  :case :checkC6 :Passed .
-  :case :checkC7 :Passed .
-  :case :checkC8 :Passed .
-  :case :checkC9 :Passed .
-  :case :checkC10 :Passed .
-  :case :checkC11 :Passed .
-  :case :checkC12 :Passed . }
-=>
 {
-  :out log:outputString """ACT docking abort token — constructor-theory coverage case
+    [
+        a :ImpossibleTask ;
+        :kind :CloneAllStates ;
+        :on :quantumSeal ;
+        :variable :SealVariable
+    ] .
+} => {
+    :case :checkC10 :Passed .
+} .
+
+{
+    :quantumSeal :cannot :UniversalClone .
+} => {
+    :case :checkC11 :Passed .
+} .
+
+{
+    :quantumSeal :cannot :UnrestrictedAuditFanOut .
+} => {
+    :case :checkC12 :Passed .
+} .
+
+# ARC-style report
+{
+    :case :checkC1 :Passed .
+    :case :checkC2 :Passed .
+    :case :checkC3 :Passed .
+    :case :checkC4 :Passed .
+    :case :checkC5 :Passed .
+    :case :checkC6 :Passed .
+    :case :checkC7 :Passed .
+    :case :checkC8 :Passed .
+    :case :checkC9 :Passed .
+    :case :checkC10 :Passed .
+    :case :checkC11 :Passed .
+    :case :checkC12 :Passed .
+} => {
+    :out log:outputString """ACT docking abort token — constructor-theory coverage case
 
 ## Answer
 YES for the classical abort token.

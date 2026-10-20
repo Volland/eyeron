@@ -1,10 +1,17 @@
-# N3 example: filter-town.
-# Selects towns above a population threshold.
+# Selecting towns by population
+#
+# Two towns have different populations. An N3 rule uses a numeric
+# comparison to classify the town whose population is greater than 1,500.
 
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/filter-town#>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/filter-town#> .
 
-:town1 :population 1000.
-:town2 :population 2000.
+:town1 :population 1000 .
+:town2 :population 2000 .
 
-{?x :population ?p. ?p math:greaterThan 1500.} => {?x a :largeTown}.
+{
+    ?x :population ?p .
+    ?p math:greaterThan 1500 .
+} => {
+    ?x a :largeTown
+} .

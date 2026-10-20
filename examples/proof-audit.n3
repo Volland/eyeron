@@ -1,35 +1,69 @@
-# N3 example: proof-audit.
-# golden proof document (a flat `step(conclusion, by, bindings, uses)`
-# relation) and queries it for dependency chains, supporting source facts,
-# and the bindings a rule application used. N3's own `-p/--proof` output
-# (examples/proof/socrates.n3, supplied here via
-# examples/input/proof-audit.n3, the same "extra input file" mechanism
-# the rdf-message-*.n3 examples use) writes each step as an ordinary
-# top-level triple whose subject is the quoted conclusion: `{claim}
-# pe:rule 1; pe:binding ...; pe:uses ...`. So auditing a proof needs no
-# special traversal at all -- the steps are already facts in the graph,
-# and matching `?step pe:uses ?dep` searches them directly, mirroring the
-# exactly one justification: `pe:fact` (an original source assertion) or
-# `pe:rule` (the number of the rule the engine applied); the proof's root
-# is the one step of the latter kind.
+# Following the evidence in an N3 proof
+#
+# A companion proof records how Socrates' mortality was derived. N3 rules
+# follow proof dependencies, identify supporting source facts, and inspect
+# the bindings used by rule applications.
 
-@prefix pe: <https://eyereasoner.github.io/pe#>.
-@prefix pa: <http://example.org/proof-audit#>.
-
-{?step pe:uses ?dep} => {?step pa:dependsOn ?dep}.
-{?a pa:dependsOn ?b. ?b pa:dependsOn ?c} => {?a pa:dependsOn ?c}.
-
-{?step pe:fact ?src} => {?step pa:sourceFact true}.
-
-{?step pa:sourceFact true} => {?step pa:supportedBy ?step}.
-{?step pa:dependsOn ?anc. ?anc pa:sourceFact true} => {?step pa:supportedBy ?anc}.
-
-{?root pe:rule ?ruleName} => {pa:test pa:root ?root}.
-
-{pa:test pa:root ?root. ?root pa:dependsOn ?anc} => {pa:test pa:queryDependency ?anc}.
-{pa:test pa:root ?root. ?root pa:supportedBy ?fact} => {pa:test pa:support ?fact}.
+@prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix pa: <http://example.org/proof-audit#> .
 
 {
-  ?root pe:binding ?bindingNode. ?bindingNode pe:var ?name. ?bindingNode pe:value ?value.
-  pa:test pa:root ?root.
-} => {pa:test pa:answerApplied (?name ?value)}.
+    ?step pe:uses ?dep
+} => {
+    ?step pa:dependsOn ?dep
+} .
+
+{
+    ?a pa:dependsOn ?b .
+    ?b pa:dependsOn ?c
+} => {
+    ?a pa:dependsOn ?c
+} .
+
+{
+    ?step pe:fact ?src
+} => {
+    ?step pa:sourceFact true
+} .
+
+{
+    ?step pa:sourceFact true
+} => {
+    ?step pa:supportedBy ?step
+} .
+
+{
+    ?step pa:dependsOn ?anc .
+    ?anc pa:sourceFact true
+} => {
+    ?step pa:supportedBy ?anc
+} .
+
+{
+    ?root pe:rule ?ruleName
+} => {
+    pa:test pa:root ?root
+} .
+
+{
+    pa:test pa:root ?root .
+    ?root pa:dependsOn ?anc
+} => {
+    pa:test pa:queryDependency ?anc
+} .
+
+{
+    pa:test pa:root ?root .
+    ?root pa:supportedBy ?fact
+} => {
+    pa:test pa:support ?fact
+} .
+
+{
+    ?root pe:binding ?bindingNode .
+    ?bindingNode pe:var ?name .
+    ?bindingNode pe:value ?value .
+    pa:test pa:root ?root .
+} => {
+    pa:test pa:answerApplied (?name ?value)
+} .

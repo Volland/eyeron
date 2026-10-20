@@ -1,10 +1,18 @@
-# N3 example: assignment.
-# The grade is a compound term built from the score.
+# Building a passing grade
+#
+# Alice and Bob have different scores. A numeric condition selects passing
+# scores, and an N3 rule constructs a list containing the pass label and
+# the original score.
 
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/assignment#>.
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/assignment#> .
 
-:alice :score 7.
-:bob :score 3.
+:alice :score 7 .
+:bob :score 3 .
 
-{?x :score ?score. ?score math:notLessThan 5.} => {?x :grade (:pass ?score)}.
+{
+    ?x :score ?score .
+    ?score math:notLessThan 5 .
+} => {
+    ?x :grade (:pass ?score)
+} .

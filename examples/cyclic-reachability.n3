@@ -1,13 +1,23 @@
-# N3 example: cyclic-reachability.
-# A graph cycle reasoned over
-# with a plain transitive-closure rule, no visited list needed since the
-# forward fixpoint just stops once no pass adds an unseen fact.
+# Finding paths around a cycle
+#
+# Three edges form a directed cycle. Recursive forward N3 rules derive
+# reachable pairs, stopping when every consequence is already present.
 
-@prefix : <https://eyereasoner.github.io/eyepl/examples/cyclic-reachability#>.
+@prefix : <https://eyereasoner.github.io/eyepl/examples/cyclic-reachability#> .
 
-:a :edge :b.
-:b :edge :c.
-:c :edge :a.
+:a :edge :b .
+:b :edge :c .
+:c :edge :a .
 
-{?x :edge ?y} => {?x :path ?y}.
-{?x :path ?y. ?y :edge ?z} => {?x :path ?z}.
+{
+    ?x :edge ?y
+} => {
+    ?x :path ?y
+} .
+
+{
+    ?x :path ?y .
+    ?y :edge ?z
+} => {
+    ?x :path ?z
+} .

@@ -1,17 +1,22 @@
-# ========================================================================
-# Good cobbler
-# Example from https://shs.hal.science/halshs-04148373/document
-# Using term logic http://intrologic.stanford.edu/chapters/chapter_11.html
-# ========================================================================
+# Keeping a qualified description together
+#
+# Joe is described as a good cobbler using a two-item list. An N3 rule
+# preserves that qualified description in a quoted conclusion instead of
+# treating good and cobbler as separate facts.
+#
+# See <https://shs.hal.science/halshs-04148373/document>
+# See <http://intrologic.stanford.edu/chapters/chapter_11.html>
 
-@prefix : <https://eyereasoner.github.io/ns#>.
+@prefix : <https://eyereasoner.github.io/ns#> .
 
 # joe is a good cobbler
-:joe :is (:good :Cobbler).
+:joe :is (:good :Cobbler) .
 
 # is there some x which is good at some y
 {
-    ?X :is (:good ?Y).
+    ?X :is (:good ?Y) .
 } => {
-    :test :is { ?X :is (:good ?Y) }.
-}.
+    :test :is {
+        ?X :is (:good ?Y)
+    } .
+} .

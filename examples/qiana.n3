@@ -1,25 +1,37 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/qiana/
-# Standalone program; EYE answer directives use log:query.
+# Reasoning with a quoted belief
+#
+# Einstein is represented as stating a quoted rule about glitter and gold.
+# N3 rules expose the statement as a belief, activate its contents, and
+# derive a consequence for the north star.
 
-# Source file: qiana/qiana.n3
-@base <https://eyereasoner.github.io/eye/reasoning/qiana/qiana.n3>.
-@prefix : <https://eyereasoner.github.io/ns#>.
+@base <https://eyereasoner.github.io/eye/reasoning/qiana/qiana.n3> .
+@prefix : <https://eyereasoner.github.io/ns#> .
 
 # forall phi, x: says(Einstein, phi) => believes(x, phi)
-{ ?x :believes ?phi } <= { :Einstein :says ?phi }.
+{
+    ?x :believes ?phi
+} <= {
+    :Einstein :says ?phi
+} .
 
 # forall phi: says(Einstein, phi) => phi
-{ :Einstein :says ?phi } => ?phi.
+{
+    :Einstein :says ?phi
+} => ?phi .
 
 # says(Einstein, not (forall x: glitters(x) => gold(x)))
-:Einstein :says { { ?x a :glitter } => { ?x :notNecessarilyA :gold } }.
+:Einstein :says {
+    {
+        ?x a :glitter
+    } => {
+        ?x :notNecessarilyA :gold
+    }
+} .
 
 # example
-:northStar a :glitter.
+:northStar a :glitter .
 
-
-# Query: qiana/qiana-query.n3
+# Query
 @prefix : <https://eyereasoner.github.io/ns#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
@@ -34,4 +46,3 @@
 } log:query {
     ?x :notNecessarilyA ?what .
 } .
-

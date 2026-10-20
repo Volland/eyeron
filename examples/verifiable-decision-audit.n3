@@ -1,73 +1,116 @@
-# A research-data decision with a checkable proof (second of two examples).
-# This audit reads the decision proof as N3 data, follows its dependencies,
-# and checks the identified source documents against an ODRL use policy.
+# Auditing the evidence for a research-data decision
 #
-#   eyeron examples/verifiable-decision-audit.n3 \
-#          examples/input/verifiable-decision-audit.n3
+# A companion proof records a research-data permission decision. N3 rules
+# follow its dependencies and compare the identified source documents with
+# a use policy to derive the audit result.
 #
-# The companion input is an exact copy of examples/proof/verifiable-decision.n3.
-# A test keeps them identical. You can instead supply a freshly generated proof.
-# Check that proof against verifiable-decision.n3 before auditing its sources.
-#
-# DPV describes the audit, its scope, policy, inputs, and justifications.
-# PROV records primary sources and derived dependencies. ODRL permissions
-# identify which records this auditor may use as evidence. Local :says holds
-# the closed policy graph; ODRL/DPV do not define this N3 quotation relation.
-# pe: and log: retain their engine-specific proof and evaluation meanings.
-#
-# Remove ':trust-policy odrl:permission :use-registry.' from the quoted policy
-# and the fuse fires (exit 65). Missing source attribution is a separate gap:
-# this example checks identified sources, not completeness of their attribution.
-# Source mappings are supplied assertions, not authenticated digital signatures.
-#
-# Vocabulary references:
-# https://www.w3.org/TR/odrl-model/
-# https://w3id.org/dpv/2.3
-# https://www.w3.org/TR/prov-o/
+# See <https://www.w3.org/TR/odrl-model/>
+# See <https://w3id.org/dpv/2.3>
+# See <https://www.w3.org/TR/prov-o/>
 
-@prefix :     <https://example.org/access#>.
-@prefix doc:  <https://example.org/doc/>.
-@prefix odrl: <http://www.w3.org/ns/odrl/2/>.
-@prefix dpv:  <https://w3id.org/dpv#>.
-@prefix prov: <http://www.w3.org/ns/prov#>.
-@prefix pe:   <https://eyereasoner.github.io/pe#>.
-@prefix log:  <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <https://example.org/access#> .
+@prefix doc: <https://example.org/doc/> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix dpv: <https://w3id.org/dpv#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Audit the fact that the Agreement was derived, rather than the mere existence
 # of a requested Permission. ODRL Request policies do not grant privileges.
 :audit a dpv:Audit ;
-    dpv:hasScope { :agreement-42 a odrl:Agreement } ;
+    dpv:hasScope {
+        :agreement-42 a odrl:Agreement
+    } ;
     dpv:hasPolicy :trust-policy ;
     dpv:hasResponsibleEntity :auditor .
 
 doc:consent a dpv:ConsentRecord .
 
 # Primary sources for the exact assertions recorded in the decision proof.
-{ :request-42 a odrl:Request } prov:hadPrimarySource doc:intake .
-{ :request-42 odrl:profile :research-profile } prov:hadPrimarySource doc:intake .
-{ :request-42 odrl:permission :research-use-42 } prov:hadPrimarySource doc:intake .
-{ :research-use-42 a odrl:Permission } prov:hadPrimarySource doc:intake .
-{ :research-use-42 odrl:assigner :hospital } prov:hadPrimarySource doc:intake .
-{ :research-use-42 odrl:assignee :dr-okafor } prov:hadPrimarySource doc:intake .
-{ :research-use-42 odrl:target :cohort-b } prov:hadPrimarySource doc:intake .
-{ :research-use-42 odrl:action odrl:use } prov:hadPrimarySource doc:intake .
-{ :research-use-42 odrl:constraint :purpose-42 } prov:hadPrimarySource doc:intake .
-{ :purpose-42 a odrl:Constraint } prov:hadPrimarySource doc:intake .
-{ :purpose-42 odrl:leftOperand odrl:purpose } prov:hadPrimarySource doc:intake .
-{ :purpose-42 odrl:operator odrl:eq } prov:hadPrimarySource doc:intake .
-{ :purpose-42 odrl:rightOperand dpv:ScientificResearch } prov:hadPrimarySource doc:intake .
+{
+    :request-42 a odrl:Request
+} prov:hadPrimarySource doc:intake .
 
-{ :dr-okafor :holdsApproval :eth-2026-118 } prov:hadPrimarySource doc:ethics .
-{ :eth-2026-118 dpv:hasData :cohort-b } prov:hadPrimarySource doc:ethics .
-{ :eth-2026-118 dpv:hasPurpose dpv:ScientificResearch } prov:hadPrimarySource doc:ethics .
+{
+    :request-42 odrl:profile :research-profile
+} prov:hadPrimarySource doc:intake .
 
-{ :consent-b a dpv:Consent } prov:hadPrimarySource doc:consent .
-{ :consent-b dpv:hasData :cohort-b } prov:hadPrimarySource doc:consent .
-{ :consent-b dpv:hasPurpose dpv:ScientificResearch } prov:hadPrimarySource doc:consent .
-{ :consent-b dpv:hasConsentStatus dpv:ConsentGiven } prov:hadPrimarySource doc:consent .
+{
+    :request-42 odrl:permission :research-use-42
+} prov:hadPrimarySource doc:intake .
 
-{ :cohort-b dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification }
-    prov:hadPrimarySource doc:registry .
+{
+    :research-use-42 a odrl:Permission
+} prov:hadPrimarySource doc:intake .
+
+{
+    :research-use-42 odrl:assigner :hospital
+} prov:hadPrimarySource doc:intake .
+
+{
+    :research-use-42 odrl:assignee :dr-okafor
+} prov:hadPrimarySource doc:intake .
+
+{
+    :research-use-42 odrl:target :cohort-b
+} prov:hadPrimarySource doc:intake .
+
+{
+    :research-use-42 odrl:action odrl:use
+} prov:hadPrimarySource doc:intake .
+
+{
+    :research-use-42 odrl:constraint :purpose-42
+} prov:hadPrimarySource doc:intake .
+
+{
+    :purpose-42 a odrl:Constraint
+} prov:hadPrimarySource doc:intake .
+
+{
+    :purpose-42 odrl:leftOperand odrl:purpose
+} prov:hadPrimarySource doc:intake .
+
+{
+    :purpose-42 odrl:operator odrl:eq
+} prov:hadPrimarySource doc:intake .
+
+{
+    :purpose-42 odrl:rightOperand dpv:ScientificResearch
+} prov:hadPrimarySource doc:intake .
+
+{
+    :dr-okafor :holdsApproval :eth-2026-118
+} prov:hadPrimarySource doc:ethics .
+
+{
+    :eth-2026-118 dpv:hasData :cohort-b
+} prov:hadPrimarySource doc:ethics .
+
+{
+    :eth-2026-118 dpv:hasPurpose dpv:ScientificResearch
+} prov:hadPrimarySource doc:ethics .
+
+{
+    :consent-b a dpv:Consent
+} prov:hadPrimarySource doc:consent .
+
+{
+    :consent-b dpv:hasData :cohort-b
+} prov:hadPrimarySource doc:consent .
+
+{
+    :consent-b dpv:hasPurpose dpv:ScientificResearch
+} prov:hadPrimarySource doc:consent .
+
+{
+    :consent-b dpv:hasConsentStatus dpv:ConsentGiven
+} prov:hadPrimarySource doc:consent .
+
+{
+    :cohort-b dpv:hasTechnicalOrganisationalMeasure dpv:Deidentification
+} prov:hadPrimarySource doc:registry .
 
 # A closed ODRL Set: this auditor may use these four records as evidence.
 # Each Permission has one assignee, action, and target. The local executable
@@ -79,40 +122,67 @@ doc:consent a dpv:ConsentRecord .
     :trust-policy odrl:permission :use-consent .
     :trust-policy odrl:permission :use-registry .
 
-    :use-intake a odrl:Permission ; odrl:assignee :auditor ;
-        odrl:action odrl:use ; odrl:target doc:intake .
-    :use-ethics a odrl:Permission ; odrl:assignee :auditor ;
-        odrl:action odrl:use ; odrl:target doc:ethics .
-    :use-consent a odrl:Permission ; odrl:assignee :auditor ;
-        odrl:action odrl:use ; odrl:target doc:consent .
-    :use-registry a odrl:Permission ; odrl:assignee :auditor ;
-        odrl:action odrl:use ; odrl:target doc:registry .
-}.
+    :use-intake a odrl:Permission ;
+        odrl:assignee :auditor ;
+        odrl:action odrl:use ;
+        odrl:target doc:intake .
+    :use-ethics a odrl:Permission ;
+        odrl:assignee :auditor ;
+        odrl:action odrl:use ;
+        odrl:target doc:ethics .
+    :use-consent a odrl:Permission ;
+        odrl:assignee :auditor ;
+        odrl:action odrl:use ;
+        odrl:target doc:consent .
+    :use-registry a odrl:Permission ;
+        odrl:assignee :auditor ;
+        odrl:action odrl:use ;
+        odrl:target doc:registry .
+} .
 
 # Follow recorded dependencies to the assertions supporting the scoped claim.
-{ ?claim pe:uses ?premise }
-    => { ?claim prov:wasDerivedFrom ?premise }.
-{ ?claim prov:wasDerivedFrom ?premise . ?premise prov:wasDerivedFrom ?source }
-    => { ?claim prov:wasDerivedFrom ?source }.
+{
+    ?claim pe:uses ?premise
+} => {
+    ?claim prov:wasDerivedFrom ?premise
+} .
 
-{ ?audit a dpv:Audit ; dpv:hasScope ?root .
-  ?root prov:wasDerivedFrom ?claim .
-  ?claim pe:fact ?label ; prov:hadPrimarySource ?doc .
+{
+    ?claim prov:wasDerivedFrom ?premise .
+    ?premise prov:wasDerivedFrom ?source
+} => {
+    ?claim prov:wasDerivedFrom ?source
+} .
+
+{
+    ?audit a dpv:Audit ;
+        dpv:hasScope ?root .
+    ?root prov:wasDerivedFrom ?claim .
+    ?claim pe:fact ?label ;
+        prov:hadPrimarySource ?doc .
 } => {
     ?audit dpv:hasDataSource ?doc .
-}.
+} .
 
 # Reject an identified source unless the policy permits this auditor to use it.
-{ ?audit a dpv:Audit ; dpv:hasDataSource ?doc ;
-    dpv:hasPolicy ?policy ; dpv:hasResponsibleEntity ?auditor .
-  ?policy :says ?permitted .
-  ?permitted log:notIncludes {
-      ?policy odrl:permission _:permission .
-      _:permission a odrl:Permission ; odrl:assignee ?auditor ;
-          odrl:action odrl:use ; odrl:target ?doc .
-  }.
-} => false.
+{
+    ?audit a dpv:Audit ;
+        dpv:hasDataSource ?doc ;
+        dpv:hasPolicy ?policy ;
+        dpv:hasResponsibleEntity ?auditor .
+    ?policy :says ?permitted .
+    ?permitted log:notIncludes {
+        ?policy odrl:permission _:permission .
+        _:permission a odrl:Permission ;
+            odrl:assignee ?auditor ;
+            odrl:action odrl:use ;
+            odrl:target ?doc .
+    } .
+} => false .
 
 # A derived report claim, so the audit can itself have a proof.
-{ :audit dpv:hasDataSource ?doc }
-    log:query { :audit dpv:hasJustification ?doc }.
+{
+    :audit dpv:hasDataSource ?doc
+} log:query {
+    :audit dpv:hasJustification ?doc
+} .

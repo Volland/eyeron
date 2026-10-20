@@ -1,13 +1,27 @@
-# N3 example: collection-nesting.
-# A 3-element list nesting a
-# compound term (encoded as a 2-element list, `(:node ?value)`, matching
-# the project's established compound-term-as-list convention) and a
-# nested list, matched structurally.
+# Matching nested lists
+#
+# A list contains a number, a two-item term, and another list. N3 rule
+# patterns match each structure and derive the values found at the
+# different nesting levels.
 
-@prefix : <http://example/>.
+@prefix : <http://example/> .
 
-:root :nested (1 (:node :q) (2)).
+:root :nested (1 (:node :q) (2)) .
 
-{:root :nested (?first ?second ?third)} => {:test :first ?first}.
-{:root :nested (?first (:node ?value) ?third)} => {:test :secondProperty ?value}.
-{:root :nested (?first ?second (?value))} => {:test :thirdFirst ?value}.
+{
+    :root :nested (?first ?second ?third)
+} => {
+    :test :first ?first
+} .
+
+{
+    :root :nested (?first (:node ?value) ?third)
+} => {
+    :test :secondProperty ?value
+} .
+
+{
+    :root :nested (?first ?second (?value))
+} => {
+    :test :thirdFirst ?value
+} .

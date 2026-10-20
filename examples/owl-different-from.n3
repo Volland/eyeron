@@ -1,17 +1,23 @@
-# owl-different-from: a small runnable case for EYE RPO rules.
-# Source: https://eyereasoner.github.io/eye/reasoning/rpo/owl-differentFrom.n3
-# Rules: MIT, Jos De Roo; sample data added for this example.
+# Making a difference statement symmetric
+#
+# Alice is declared different from Bob. An explicit N3 rule derives that
+# Bob is different from Alice, using the supplied owl:differentFrom
+# vocabulary.
 
-@prefix : <http://example.org/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Sample data
-:alice owl:differentFrom :bob.
+:alice owl:differentFrom :bob .
 
 # Inference rules
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-{?A owl:differentFrom ?B} => {?B owl:differentFrom ?A}.
+{
+    ?A owl:differentFrom ?B
+} => {
+    ?B owl:differentFrom ?A
+} .

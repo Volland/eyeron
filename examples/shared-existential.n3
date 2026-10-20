@@ -1,9 +1,27 @@
-# There exists someone who is loved by everyone.
-@prefix : <http://example.org/>.
+# One witness shared by universal statements
+#
+# A top-level existential denotes someone loved by everyone. Explicit N3
+# quantifiers keep that witness shared when rules ask for Bob's and Liz's
+# beloved.
 
-@forSome :y.
-{} => { @forAll :x. :x :loves :y }.
+@prefix : <http://example.org/> .
 
-{ :bob :loves ?beloved } => { :bob :beloved ?beloved }.
-{ :liz :loves ?beloved } => { :liz :beloved ?beloved }.
+@forSome :y .
+{} => {
+    @forAll :x .
+    :x :loves :y
+} .
+
+{
+    :bob :loves ?beloved
+} => {
+    :bob :beloved ?beloved
+} .
+
+{
+    :liz :loves ?beloved
+} => {
+    :liz :beloved ?beloved
+} .
+
 # Both conclusions refer to the same existential witness.

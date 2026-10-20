@@ -1,15 +1,37 @@
-# Explicitly scoped variables and an existential rule conclusion.
-@prefix : <http://example.org/>.
+# A universally quantified rule with fresh mothers
+#
+# A rule says that each human has some mother, and Tom is a human. Explicit
+# N3 quantifiers distinguish the universally bound person from a fresh
+# existential witness in the conclusion.
 
-@forAll :x.
-{ :x a :Human } => { @forSome :y. :x :hasMother :y }.
-:tom a :Human.
+@prefix : <http://example.org/> .
+
+@forAll :x .
+{
+    :x a :Human
+} => {
+    @forSome :y .
+    :x :hasMother :y
+} .
+
+:tom a :Human .
+
 # Derives :tom :hasMother _:witness.
-
 # Substituting :tom for the free variable preserves the local existential.
 :universalRule :graph {
-    { :x a :Human } => { @forSome :y. :x :hasMother :y }.
-}.
+    {
+        :x a :Human
+    } => {
+        @forSome :y .
+        :x :hasMother :y
+    } .
+} .
+
 :instantiatedRule :graph {
-    { :tom a :Human } => { @forSome :y. :tom :hasMother :y }.
-}.
+    {
+        :tom a :Human
+    } => {
+        @forSome :y .
+        :tom :hasMother :y
+    } .
+} .

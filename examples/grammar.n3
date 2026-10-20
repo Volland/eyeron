@@ -1,22 +1,45 @@
-# N3 example: grammar.
-# input and remainder lists.
+# Parsing a tiny command language
 #
-# Adapted, not literal: like lists.n3's append, N3's backward chaining only
-# resolves a call when its input side is ground, so it cannot run
-# matching input words). This instead demonstrates the supported (words
-# query, `ask sentence(?ast, [open, door], [])`.
+# Commands consist of a supported verb followed by a supported noun.
+# Backward N3 rules consume input lists and derive a structured command
+# together with any unconsumed words.
 
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/grammar#>.
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/grammar#> .
 
-{?input :verbMatch (:open ?rest)} <= {?input list:firstRest (:open ?rest).}.
-{?input :verbMatch (:close ?rest)} <= {?input list:firstRest (:close ?rest).}.
-{?input :nounMatch (:door ?rest)} <= {?input list:firstRest (:door ?rest).}.
-{?input :nounMatch (:window ?rest)} <= {?input list:firstRest (:window ?rest).}.
+{
+    ?input :verbMatch (:open ?rest)
+} <= {
+    ?input list:firstRest (:open ?rest) .
+} .
 
-{(?input ?rest) :sentence (:command ?verb ?object)} <= {
-    ?input :verbMatch (?verb ?middle).
-    ?middle :nounMatch (?object ?rest).
-}.
+{
+    ?input :verbMatch (:close ?rest)
+} <= {
+    ?input list:firstRest (:close ?rest) .
+} .
 
-{((:open :door) ()) :sentence ?ast} => {:query :parsed ?ast}.
+{
+    ?input :nounMatch (:door ?rest)
+} <= {
+    ?input list:firstRest (:door ?rest) .
+} .
+
+{
+    ?input :nounMatch (:window ?rest)
+} <= {
+    ?input list:firstRest (:window ?rest) .
+} .
+
+{
+    (?input ?rest) :sentence (:command ?verb ?object)
+} <= {
+    ?input :verbMatch (?verb ?middle) .
+    ?middle :nounMatch (?object ?rest) .
+} .
+
+{
+    ((:open :door) ()) :sentence ?ast
+} => {
+    :query :parsed ?ast
+} .

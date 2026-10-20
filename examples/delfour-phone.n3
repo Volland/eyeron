@@ -1,136 +1,121 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/
-# Standalone program; EYE answer directives use log:query.
+# Deriving a shopping insight on a phone
+#
+# A household health condition and a scanner-use context support a low-
+# sugar shopping need. N3 rules derive a limited insight and its device,
+# event, and validity information.
 
-# Source file: delfour-insight-economy/profile.ttl
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/profile.ttl>.
-@prefix :       <https://example.org/person#> .
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/profile.ttl> .
+@prefix : <https://example.org/person#> .
 @prefix health: <https://example.org/health#> .
 
-:me  health:householdCondition  health:Diabetes .
+:me health:householdCondition health:Diabetes .
 
-
-# Source file: delfour-insight-economy/context.ttl
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/context.ttl>.
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/context.ttl> .
 @prefix ctx: <https://example.org/context#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-[] ctx:retailer "Delfour" ;
-   ctx:device   "self-scanner" ;
-   ctx:event    "pick_up_scanner" ;
-   ctx:createdAt "2025-10-04T16:51:53Z"^^xsd:dateTime ;
-   ctx:expiresAt "2025-10-04T18:51:53Z"^^xsd:dateTime .
+[ ] ctx:retailer "Delfour" ;
+    ctx:device "self-scanner" ;
+    ctx:event "pick_up_scanner" ;
+    ctx:createdAt "2025-10-04T16:51:53Z"^^xsd:dateTime ;
+    ctx:expiresAt "2025-10-04T18:51:53Z"^^xsd:dateTime .
 
+@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/phone.n3> .
 
-# Source file: delfour-insight-economy/phone.n3
-@base <https://eyereasoner.github.io/eye/reasoning/delfour-insight-economy/phone.n3>.
-# =====================================================================
 # Delfour — PHONE side
 # Inputs:
-#   - profile graph (may contain sensitive facts)
-#   - session context (retailer/device/event + created/expiry timestamps)
+# - profile graph (may contain sensitive facts)
+# - session context (retailer/device/event + created/expiry timestamps)
 # Outputs (pass-only-new):
-#   - a neutral ins:Insight (no sensitive terms)
-#   - an ODRL policy envelope derived from the insight
-# =====================================================================
-
-@prefix health:  <https://example.org/health#> .
-@prefix need:    <https://example.org/need#> .
-@prefix ctx:     <https://example.org/context#> .
-@prefix ins:     <https://example.org/insight#> .
-@prefix odrl:    <http://www.w3.org/ns/odrl/2/> .
-@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
-@prefix vocab:   <https://example.org/vocab/> .
+# - a neutral ins:Insight (no sensitive terms)
+# - an ODRL policy envelope derived from the insight
+@prefix health: <https://example.org/health#> .
+@prefix need: <https://example.org/need#> .
+@prefix ctx: <https://example.org/context#> .
+@prefix ins: <https://example.org/insight#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vocab: <https://example.org/vocab/> .
 @prefix profile: <https://example.org/profile/> .
 
-# ---------------------------------------------------------------------
 # 1) Desensitization: private health -> neutral need
-#    (kept on device; only the neutral need leaves the POD)
-# ---------------------------------------------------------------------
-{ ?p health:householdCondition health:Diabetes. }
-=>
-{ ?p need:needsLowSugar true. } .
-
-# ---------------------------------------------------------------------
-# 2) Derive a neutral Insight "envelope" for this concrete session
-#    The envelope is scoped by device/event/retailer and limited in time.
-#    Note: here we mint a blank insight _:ins; in practice you may prefer a stable IRI.
-# ---------------------------------------------------------------------
+# (kept on device; only the neutral need leaves the POD)
 {
-  ?p need:needsLowSugar true.
-
-  # concrete session context is provided as data (see sample below)
-  ?c  ctx:retailer   ?ret ;
-      ctx:device     ?dev ;
-      ctx:event      ?ev ;
-      ctx:createdAt  ?ts  ;
-      ctx:expiresAt  ?exp .
-}
-=>
-{
-  _:ins a                 ins:Insight ;
-        ins:metric        "sugar_g_per_serving" ;
-        ins:threshold     "10.0"^^xsd:decimal ;
-        ins:suggestionPolicy "lower_metric_first_higher_price_ok" ;
-        ins:scopeDevice   ?dev ;
-        ins:scopeEvent    ?ev ;
-        ins:retailer      ?ret ;
-        ins:createdAt     ?ts ;
-        ins:expiresAt     ?exp .
+    ?p health:householdCondition health:Diabetes .
+} => {
+    ?p need:needsLowSugar true .
 } .
 
-# ---------------------------------------------------------------------
+# 2) Derive a neutral Insight "envelope" for this concrete session
+# The envelope is scoped by device/event/retailer and limited in time.
+# Note: here we mint a blank insight _:ins; in practice you may prefer a stable IRI.
+{
+    ?p need:needsLowSugar true .
+
+    # concrete session context is provided as data (see sample below)
+    ?c ctx:retailer ?ret ;
+        ctx:device ?dev ;
+        ctx:event ?ev ;
+        ctx:createdAt ?ts ;
+        ctx:expiresAt ?exp .
+} => {
+    _:ins a ins:Insight ;
+        ins:metric "sugar_g_per_serving" ;
+        ins:threshold "10.0"^^xsd:decimal ;
+        ins:suggestionPolicy "lower_metric_first_higher_price_ok" ;
+        ins:scopeDevice ?dev ;
+        ins:scopeEvent ?ev ;
+        ins:retailer ?ret ;
+        ins:createdAt ?ts ;
+        ins:expiresAt ?exp .
+} .
+
 # 3) From the Insight, emit an ODRL policy with:
-#    - permission: use@shopping_assist (targeting the insight)
-#    - prohibition: share@marketing
-#    - duty: delete at expiresAt
-# ---------------------------------------------------------------------
+# - permission: use@shopping_assist (targeting the insight)
+# - prohibition: share@marketing
+# - duty: delete at expiresAt
 {
-  ?ins a ins:Insight ;
-       ins:retailer     ?ret ;
-       ins:scopeDevice  ?dev ;
-       ins:scopeEvent   ?ev ;
-       ins:expiresAt    ?exp .
-}
-=>
-{
-  _:pol a odrl:Policy ;
+    ?ins a ins:Insight ;
+        ins:retailer ?ret ;
+        ins:scopeDevice ?dev ;
+        ins:scopeEvent ?ev ;
+        ins:expiresAt ?exp .
+} => {
+    _:pol a odrl:Policy ;
         odrl:profile profile:Delfour-Insight-Policy ;
 
         odrl:permission [
-          a odrl:Permission ;
-          odrl:action  odrl:use ;
-          odrl:target  ?ins ;
-          odrl:constraint [
-            a odrl:Constraint ;
-            odrl:leftOperand  odrl:purpose ;
-            odrl:operator     odrl:eq ;
-            odrl:rightOperand vocab:shopping_assist
-          ]
+            a odrl:Permission ;
+            odrl:action odrl:use ;
+            odrl:target ?ins ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand odrl:purpose ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand vocab:shopping_assist
+            ]
         ] ;
 
         odrl:prohibition [
-          a odrl:Prohibition ;
-          odrl:action  odrl:distribute ;
-          odrl:target  ?ins ;
-          odrl:constraint [
-            a odrl:Constraint ;
-            odrl:leftOperand  odrl:purpose ;
-            odrl:operator     odrl:eq ;
-            odrl:rightOperand vocab:marketing
-          ]
+            a odrl:Prohibition ;
+            odrl:action odrl:distribute ;
+            odrl:target ?ins ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand odrl:purpose ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand vocab:marketing
+            ]
         ] ;
 
         odrl:duty [
-          a odrl:Duty ;
-          odrl:action  odrl:delete ;
-          odrl:constraint [
-            a odrl:Constraint ;
-            odrl:leftOperand  odrl:dateTime ;
-            odrl:operator     odrl:eq ;
-            odrl:rightOperand ?exp
-          ]
+            a odrl:Duty ;
+            odrl:action odrl:delete ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand odrl:dateTime ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand ?exp
+            ]
         ] .
 } .
-
-

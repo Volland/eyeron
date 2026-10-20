@@ -1,11 +1,21 @@
-# N3 example: negation-orphan.
-# Stratified negation as failure.
+# Finding people with no recorded parent
+#
+# Two people are known, but only one has a child-of link. An N3 rule uses
+# scoped negation as failure to label the person with no parent recorded in
+# this graph.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <https://eyereasoner.github.io/eyepl/examples/negation-orphan#>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <https://eyereasoner.github.io/eyepl/examples/negation-orphan#> .
 
-:alice a :Person.
-:bob a :Person.
-:alice :childOf :carol.
+:alice a :Person .
+:bob a :Person .
+:alice :childOf :carol .
 
-{?x a :Person. ?SCOPE log:notIncludes {?x :childOf ?y}.} => {?x a :Orphan}.
+{
+    ?x a :Person .
+    ?SCOPE log:notIncludes {
+        ?x :childOf ?y
+    } .
+} => {
+    ?x a :Orphan
+} .

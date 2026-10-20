@@ -1,19 +1,55 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/n3gl/
-# Standalone program; EYE answer directives use log:query.
+# Carrying a symmetric relation into quoted evidence
+#
+# A marriage relation is marked symmetric and appears both as a fact and
+# inside quoted evidence. N3 rules derive the reverse relationship and
+# carry the attached metadata to the reversed graph.
 
-# Source file: n3gl/example.n3
-@base <https://eyereasoner.github.io/eye/reasoning/n3gl/example.n3>.
-@prefix : <https://eyereasoner.github.io/eye/reasoning#>.
+@base <https://eyereasoner.github.io/eye/reasoning/n3gl/example.n3> .
+@prefix : <https://eyereasoner.github.io/eye/reasoning#> .
 
-{?p a :SymetricRelation. ?s ?p ?o} => {?o ?p ?s}.
-{?p a :SymetricRelation. {?s ?p ?o} ?p2 ?o2} => {{?o ?p ?s} ?p2 ?o2}.
-:marriedTo a :SymetricRelation.
+{
+    ?p a :SymetricRelation .
+    ?s ?p ?o
+} => {
+    ?o ?p ?s
+} .
 
-:alice :marriedTo :bob.
-{:alice :marriedTo :bob} :since "1999".
+{
+    ?p a :SymetricRelation .
+    {
+        ?s ?p ?o
+    } ?p2 ?o2
+} => {
+    {
+        ?o ?p ?s
+    } ?p2 ?o2
+} .
 
-{:bob :marriedTo :alice} => {:TEST :PASS 1}.
-{{:bob :marriedTo :alice} :since "1999"} => {:TEST :PASS 2}.
-{{:alice ?p :bob} :since "1999"} => {:TEST :PASS 3}.
+:marriedTo a :SymetricRelation .
 
+:alice :marriedTo :bob .
+{
+    :alice :marriedTo :bob
+} :since "1999" .
+
+{
+    :bob :marriedTo :alice
+} => {
+    :TEST :PASS 1
+} .
+
+{
+    {
+        :bob :marriedTo :alice
+    } :since "1999"
+} => {
+    :TEST :PASS 2
+} .
+
+{
+    {
+        :alice ?p :bob
+    } :since "1999"
+} => {
+    :TEST :PASS 3
+} .

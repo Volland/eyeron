@@ -1,22 +1,28 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/issue118/
-# Standalone program; EYE answer directives use log:query.
+# Generating a rule for a named copy
+#
+# A source has a value and a named copy. An N3 rule generates a backward
+# rule that exposes the source's value through the copy, showing a bound
+# name carried into a new rule.
 
-# Source file: issue118/issue118.n3
-@base <https://eyereasoner.github.io/eye/reasoning/issue118/issue118.n3>.
-@prefix : <http:/example.org/>.
-@prefix skolem: <https://eyereasoner.github.io/.well-known/genid/d983461b-11b7-4e52-89c1-328e91bf1de1#>.
+@base <https://eyereasoner.github.io/eye/reasoning/issue118/issue118.n3> .
+@prefix : <http:/example.org/> .
+@prefix skolem: <https://eyereasoner.github.io/.well-known/genid/d983461b-11b7-4e52-89c1-328e91bf1de1#> .
 
 :s :value 1 .
-:s :copy skolem:bn_5.
+:s :copy skolem:bn_5 .
 
-{ ?s :value ?value } => { ?s a :Success } .
+{
+    ?s :value ?value
+} => {
+    ?s a :Success
+} .
 
 {
     :s :copy ?o
-}
-=>
-{
-    { ?o :value ?value } <= { :s :value ?value }
+} => {
+    {
+        ?o :value ?value
+    } <= {
+        :s :value ?value
+    }
 } .
-

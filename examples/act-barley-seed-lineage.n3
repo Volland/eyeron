@@ -1,22 +1,8 @@
-# ========================================================================
-# ACT barley seed lineage — "can and can't"
+# What a barley seed lineage can do
 #
-# This is a constructor-theory-of-life example with both:
-#   - CAN  : tasks that are possible for a viable lineage
-#   - CAN'T: tasks that are impossible for contrast lineages
-#
-# The positive lineage:
-#   mainLine
-#
-# The contrast lineages:
-#   analogLine   - hereditary information is not digitally instantiated
-#   fragileLine  - there is no repair support
-#   coatlessLine - there is no protected dormant stage
-#   staticLine   - there is no heritable variation
-#
-# The point is to show not only what a successful lineage can do, but also
-# what other lineages cannot do under explicitly stated conditions.
-# ========================================================================
+# A barley lineage needs hereditary information, repair, protection, and
+# variation. N3 rules derive the possible life-cycle tasks and explain
+# which missing conditions block the contrast lineages.
 
 @prefix : <http://example.org/act/barley/cancant/> .
 @prefix arc: <https://example.org/arc#> .
@@ -25,12 +11,9 @@
 :000_md_title log:outputString "# act-barley-seed-lineage\n\n## Source files\n\n- [N3 rules](../act-barley-seed-lineage.n3)\n\n" .
 
 :case a arc:Case ;
-  arc:question "Can a barley seed lineage achieve accurate self-reproduction, dormancy, development, and adaptive persistence under no-design laws — and what exactly can't happen when key ingredients are missing?" .
+    arc:question "Can a barley seed lineage achieve accurate self-reproduction, dormancy, development, and adaptive persistence under no-design laws — and what exactly can't happen when key ingredients are missing?" .
 
-# ------------------------
 # Shared world assumptions
-# -------------------------
-
 # The background law-like assumption used in constructor theory of life.
 :world :obeys :NoDesignLaws .
 
@@ -44,501 +27,556 @@
 :zygote a :DevelopmentalBottleneck .
 
 :greenhouse a :GrowthEnvironment ;
-  :condition :WarmthAvailable ;
-  :condition :MoistureAvailable ;
-  :condition :LightAvailable .
+    :condition :WarmthAvailable ;
+    :condition :MoistureAvailable ;
+    :condition :LightAvailable .
 
 :nutrientBed a :RawMaterialSupply .
 :pollinationLoop a :ReproductionSupport .
 :mutationSource a :VariationSource .
 
 :salineBench a :SelectionEnvironment ;
-  :favours :SaltTolerant .
+    :favours :SaltTolerant .
 
-# ---------------------
 # 1. The viable lineage
-# ---------------------
-
 # The hereditary information is digitally instantiated.
 :mainGenome a :Replicator ;
-  :accuracy :High ;
-  :storedIn :dnaRegister ;
-  :variant :SaltTolerant .
+    :accuracy :High ;
+    :storedIn :dnaRegister ;
+    :variant :SaltTolerant .
 
 # Repair support is present.
 :mainRepair a :RepairVehicle .
 
 # Embryo-side vehicle functions.
 :mainEmbryoVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :CopyingSupport ;
-  :function :CompartmentControl ;
-  :usesRepair :mainRepair .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :CopyingSupport ;
+    :function :CompartmentControl ;
+    :usesRepair :mainRepair .
 
 # Adult-side vehicle functions.
 :mainAdultVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :GameteProduction ;
-  :function :SeedConstruction .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :GameteProduction ;
+    :function :SeedConstruction .
 
 # Protected dormant stage.
 :mainSeedCoat a :Compartment ;
-  :function :DormancyProtection .
+    :function :DormancyProtection .
 
 :mainSeed a :Organism ;
-  :lifeStage :DormantSeed ;
-  :hasReplicator :mainGenome ;
-  :hasVehicle :mainEmbryoVehicle ;
-  :hasCompartment :mainSeedCoat .
+    :lifeStage :DormantSeed ;
+    :hasReplicator :mainGenome ;
+    :hasVehicle :mainEmbryoVehicle ;
+    :hasCompartment :mainSeedCoat .
 
 # Adult stage.
 :mainAdult a :Organism ;
-  :lifeStage :AdultPlant ;
-  :hasReplicator :mainGenome ;
-  :hasVehicle :mainAdultVehicle .
+    :lifeStage :AdultPlant ;
+    :hasReplicator :mainGenome ;
+    :hasVehicle :mainAdultVehicle .
 
 # The lineage object ties stages together.
 :mainLine a :Lineage ;
-  :seedStage :mainSeed ;
-  :adultStage :mainAdult ;
-  :replicator :mainGenome ;
-  :variant :SaltTolerant ;
-  :variationStatus :Present .
+    :seedStage :mainSeed ;
+    :adultStage :mainAdult ;
+    :replicator :mainGenome ;
+    :variant :SaltTolerant ;
+    :variationStatus :Present .
 
-# ----------------------------------------------
 # 2. Contrast lineages used for the "can't" side
-# ----------------------------------------------
-
-# ----------------------------------------------------------------
 # 2a. analogLine
-#     Same broad biological pattern, but heredity is not digital.
-#     This is the line that cannot achieve accurate genome copying
-#     under no-design laws.
-# ----------------------------------------------------------------
-
+# Same broad biological pattern, but heredity is not digital.
+# This is the line that cannot achieve accurate genome copying
+# under no-design laws.
 :analogGenome a :Replicator ;
-  :accuracy :High ;
-  :storedIn :analogRegister ;
-  :variant :SaltTolerant .
+    :accuracy :High ;
+    :storedIn :analogRegister ;
+    :variant :SaltTolerant .
 
 :analogRepair a :RepairVehicle .
 
 :analogEmbryoVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :CopyingSupport ;
-  :usesRepair :analogRepair .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :CopyingSupport ;
+    :usesRepair :analogRepair .
 
 :analogAdultVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :GameteProduction ;
-  :function :SeedConstruction .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :GameteProduction ;
+    :function :SeedConstruction .
 
 :analogSeedCoat a :Compartment ;
-  :function :DormancyProtection .
+    :function :DormancyProtection .
 
 :analogSeed a :Organism ;
-  :lifeStage :DormantSeed ;
-  :hasReplicator :analogGenome ;
-  :hasVehicle :analogEmbryoVehicle ;
-  :hasCompartment :analogSeedCoat .
+    :lifeStage :DormantSeed ;
+    :hasReplicator :analogGenome ;
+    :hasVehicle :analogEmbryoVehicle ;
+    :hasCompartment :analogSeedCoat .
 
 :analogAdult a :Organism ;
-  :lifeStage :AdultPlant ;
-  :hasReplicator :analogGenome ;
-  :hasVehicle :analogAdultVehicle .
+    :lifeStage :AdultPlant ;
+    :hasReplicator :analogGenome ;
+    :hasVehicle :analogAdultVehicle .
 
 :analogLine a :Lineage ;
-  :seedStage :analogSeed ;
-  :adultStage :analogAdult ;
-  :replicator :analogGenome ;
-  :variant :SaltTolerant ;
-  :variationStatus :Present .
+    :seedStage :analogSeed ;
+    :adultStage :analogAdult ;
+    :replicator :analogGenome ;
+    :variant :SaltTolerant ;
+    :variationStatus :Present .
 
-# ----------------------------------------------------------------
 # 2b. fragileLine
-#     Heredity is digital, but there is no repair support.
-#     This line cannot achieve reliable damage correction and thus
-#     cannot achieve accurate self-reproduction.
-# ----------------------------------------------------------------
-
+# Heredity is digital, but there is no repair support.
+# This line cannot achieve reliable damage correction and thus
+# cannot achieve accurate self-reproduction.
 :fragileGenome a :Replicator ;
-  :accuracy :High ;
-  :storedIn :dnaRegister ;
-  :variant :SaltTolerant .
+    :accuracy :High ;
+    :storedIn :dnaRegister ;
+    :variant :SaltTolerant .
 
 :fragileEmbryoVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :CopyingSupport .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :CopyingSupport .
 
 :fragileAdultVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :GameteProduction ;
-  :function :SeedConstruction .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :GameteProduction ;
+    :function :SeedConstruction .
 
 :fragileSeedCoat a :Compartment ;
-  :function :DormancyProtection .
+    :function :DormancyProtection .
 
 :fragileSeed a :Organism ;
-  :lifeStage :DormantSeed ;
-  :hasReplicator :fragileGenome ;
-  :hasVehicle :fragileEmbryoVehicle ;
-  :hasCompartment :fragileSeedCoat .
+    :lifeStage :DormantSeed ;
+    :hasReplicator :fragileGenome ;
+    :hasVehicle :fragileEmbryoVehicle ;
+    :hasCompartment :fragileSeedCoat .
 
 :fragileAdult a :Organism ;
-  :lifeStage :AdultPlant ;
-  :hasReplicator :fragileGenome ;
-  :hasVehicle :fragileAdultVehicle .
+    :lifeStage :AdultPlant ;
+    :hasReplicator :fragileGenome ;
+    :hasVehicle :fragileAdultVehicle .
 
 :fragileLine a :Lineage ;
-  :seedStage :fragileSeed ;
-  :adultStage :fragileAdult ;
-  :replicator :fragileGenome ;
-  :variant :SaltTolerant ;
-  :variationStatus :Present ;
-  :lacksRepair true .
+    :seedStage :fragileSeed ;
+    :adultStage :fragileAdult ;
+    :replicator :fragileGenome ;
+    :variant :SaltTolerant ;
+    :variationStatus :Present ;
+    :lacksRepair true .
 
-# -------------------------------------------------------------------
 # 2c. coatlessLine
-#     Heredity is digital and repair exists, but the dormant seed
-#     lacks a protective compartment. This line cannot achieve
-#     protected dormancy and therefore cannot achieve lineage closure
-#     through a protected seed phase.
-# -------------------------------------------------------------------
-
+# Heredity is digital and repair exists, but the dormant seed
+# lacks a protective compartment. This line cannot achieve
+# protected dormancy and therefore cannot achieve lineage closure
+# through a protected seed phase.
 :coatlessGenome a :Replicator ;
-  :accuracy :High ;
-  :storedIn :dnaRegister ;
-  :variant :SaltTolerant .
+    :accuracy :High ;
+    :storedIn :dnaRegister ;
+    :variant :SaltTolerant .
 
 :coatlessRepair a :RepairVehicle .
 
 :coatlessEmbryoVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :CopyingSupport ;
-  :usesRepair :coatlessRepair .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :CopyingSupport ;
+    :usesRepair :coatlessRepair .
 
 :coatlessAdultVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :GameteProduction ;
-  :function :SeedConstruction .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :GameteProduction ;
+    :function :SeedConstruction .
 
 :coatlessSeed a :Organism ;
-  :lifeStage :DormantSeed ;
-  :hasReplicator :coatlessGenome ;
-  :hasVehicle :coatlessEmbryoVehicle .
+    :lifeStage :DormantSeed ;
+    :hasReplicator :coatlessGenome ;
+    :hasVehicle :coatlessEmbryoVehicle .
 
 :coatlessAdult a :Organism ;
-  :lifeStage :AdultPlant ;
-  :hasReplicator :coatlessGenome ;
-  :hasVehicle :coatlessAdultVehicle .
+    :lifeStage :AdultPlant ;
+    :hasReplicator :coatlessGenome ;
+    :hasVehicle :coatlessAdultVehicle .
 
 :coatlessLine a :Lineage ;
-  :seedStage :coatlessSeed ;
-  :adultStage :coatlessAdult ;
-  :replicator :coatlessGenome ;
-  :variant :SaltTolerant ;
-  :variationStatus :Present ;
-  :lacksDormancyProtection true .
+    :seedStage :coatlessSeed ;
+    :adultStage :coatlessAdult ;
+    :replicator :coatlessGenome ;
+    :variant :SaltTolerant ;
+    :variationStatus :Present ;
+    :lacksDormancyProtection true .
 
-# ------------------------------------------------------------------
 # 2d. staticLine
-#     Heredity is digital, repair exists, and dormancy is protected,
-#     but there is no heritable variation. This line cannot be an
-#     adaptively evolving lineage.
-# ------------------------------------------------------------------
-
+# Heredity is digital, repair exists, and dormancy is protected,
+# but there is no heritable variation. This line cannot be an
+# adaptively evolving lineage.
 :staticGenome a :Replicator ;
-  :accuracy :High ;
-  :storedIn :dnaRegister ;
-  :variant :SaltTolerant .
+    :accuracy :High ;
+    :storedIn :dnaRegister ;
+    :variant :SaltTolerant .
 
 :staticRepair a :RepairVehicle .
 
 :staticEmbryoVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :CopyingSupport ;
-  :usesRepair :staticRepair .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :CopyingSupport ;
+    :usesRepair :staticRepair .
 
 :staticAdultVehicle a :Vehicle ;
-  :function :Metabolism ;
-  :function :Development ;
-  :function :GameteProduction ;
-  :function :SeedConstruction .
+    :function :Metabolism ;
+    :function :Development ;
+    :function :GameteProduction ;
+    :function :SeedConstruction .
 
 :staticSeedCoat a :Compartment ;
-  :function :DormancyProtection .
+    :function :DormancyProtection .
 
 :staticSeed a :Organism ;
-  :lifeStage :DormantSeed ;
-  :hasReplicator :staticGenome ;
-  :hasVehicle :staticEmbryoVehicle ;
-  :hasCompartment :staticSeedCoat .
+    :lifeStage :DormantSeed ;
+    :hasReplicator :staticGenome ;
+    :hasVehicle :staticEmbryoVehicle ;
+    :hasCompartment :staticSeedCoat .
 
 :staticAdult a :Organism ;
-  :lifeStage :AdultPlant ;
-  :hasReplicator :staticGenome ;
-  :hasVehicle :staticAdultVehicle .
+    :lifeStage :AdultPlant ;
+    :hasReplicator :staticGenome ;
+    :hasVehicle :staticAdultVehicle .
 
 :staticLine a :Lineage ;
-  :seedStage :staticSeed ;
-  :adultStage :staticAdult ;
-  :replicator :staticGenome ;
-  :variant :SaltTolerant ;
-  :variationStatus :None .
+    :seedStage :staticSeed ;
+    :adultStage :staticAdult ;
+    :replicator :staticGenome ;
+    :variant :SaltTolerant ;
+    :variationStatus :None .
 
-# ------------------------------------
 # 3. CAN rules — what a lineage can do
-# ------------------------------------
-
 # If hereditary information is digital and no-design laws
 # hold, accurate genome copying is possible in principle.
-{ :world :obeys :NoDesignLaws .
-  ?Genome a :Replicator ;
-          :storedIn ?Medium .
-  ?Medium a :DigitalInformationMedium . }
-=>
-{ ?Genome :can :GenomeCopyUnderNoDesignLaws . } .
+{
+    :world :obeys :NoDesignLaws .
+    ?Genome a :Replicator ;
+        :storedIn ?Medium .
+    ?Medium a :DigitalInformationMedium .
+} => {
+    ?Genome :can :GenomeCopyUnderNoDesignLaws .
+} .
 
 # A protected seed compartment makes protected dormancy
 # possible for that seed stage.
-{ ?Seed a :Organism ;
+{
+    ?Seed a :Organism ;
         :lifeStage :DormantSeed ;
         :hasCompartment ?Compartment .
-  ?Compartment :function :DormancyProtection . }
-=>
-{ ?Seed :can :ProtectedDormancy . } .
+    ?Compartment :function :DormancyProtection .
+} => {
+    ?Seed :can :ProtectedDormancy .
+} .
 
 # Germination needs a dormant seed plus warmth, moisture,
 # and raw materials.
-{ ?Seed a :Organism ;
+{
+    ?Seed a :Organism ;
         :lifeStage :DormantSeed .
-  :greenhouse :condition :WarmthAvailable .
-  :greenhouse :condition :MoistureAvailable .
-  :nutrientBed a :RawMaterialSupply . }
-=>
-{ ?Seed :can :Germinate . } .
+    :greenhouse :condition :WarmthAvailable .
+    :greenhouse :condition :MoistureAvailable .
+    :nutrientBed a :RawMaterialSupply .
+} => {
+    ?Seed :can :Germinate .
+} .
 
 # Adult propagule production needs adult-stage vehicle
 # functions plus pollination support and light.
-{ ?Adult a :Organism ;
-         :lifeStage :AdultPlant ;
-         :hasVehicle ?Vehicle .
-  ?Vehicle :function :GameteProduction .
-  ?Vehicle :function :SeedConstruction .
-  :pollinationLoop a :ReproductionSupport .
-  :greenhouse :condition :LightAvailable . }
-=>
-{ ?Adult :can :PropaguleProduction . } .
+{
+    ?Adult a :Organism ;
+        :lifeStage :AdultPlant ;
+        :hasVehicle ?Vehicle .
+    ?Vehicle :function :GameteProduction .
+    ?Vehicle :function :SeedConstruction .
+    :pollinationLoop a :ReproductionSupport .
+    :greenhouse :condition :LightAvailable .
+} => {
+    ?Adult :can :PropaguleProduction .
+} .
 
 # Accurate self-reproduction needs:
 # - genome copying under no-design laws
 # - repair support
 # - a developmental bottleneck
-{ ?Line a :Lineage ;
+{
+    ?Line a :Lineage ;
         :seedStage ?Seed ;
         :replicator ?Genome .
-  ?Genome :can :GenomeCopyUnderNoDesignLaws .
-  ?Seed :hasVehicle ?Vehicle .
-  ?Vehicle :usesRepair ?Repair .
-  ?Repair a :RepairVehicle .
-  :zygote a :DevelopmentalBottleneck . }
-=>
-{ ?Line :can :AccurateSelfReproduction . } .
+    ?Genome :can :GenomeCopyUnderNoDesignLaws .
+    ?Seed :hasVehicle ?Vehicle .
+    ?Vehicle :usesRepair ?Repair .
+    ?Repair a :RepairVehicle .
+    :zygote a :DevelopmentalBottleneck .
+} => {
+    ?Line :can :AccurateSelfReproduction .
+} .
 
 # Lineage closure needs:
 # - protected dormancy at the seed stage
 # - germination from the seed stage
 # - propagule production at the adult stage
-{ ?Line a :Lineage ;
+{
+    ?Line a :Lineage ;
         :seedStage ?Seed ;
         :adultStage ?Adult .
-  ?Seed :can :ProtectedDormancy .
-  ?Seed :can :Germinate .
-  ?Adult :can :PropaguleProduction . }
-=>
-{ ?Line :can :LineageClosure . } .
+    ?Seed :can :ProtectedDormancy .
+    ?Seed :can :Germinate .
+    ?Adult :can :PropaguleProduction .
+} => {
+    ?Line :can :LineageClosure .
+} .
 
 # Heritable variation is possible when the lineage is not
 # static with respect to variants.
-{ ?Line a :Lineage ;
-        :variationStatus :Present . }
-=>
-{ ?Line :can :HeritableVariation . } .
+{
+    ?Line a :Lineage ;
+        :variationStatus :Present .
+} => {
+    ?Line :can :HeritableVariation .
+} .
 
 # Adaptive persistence needs:
 # - accurate self-reproduction
 # - heritable variation
 # - a matching selection environment
-{ ?Line a :Lineage ;
+{
+    ?Line a :Lineage ;
         :variant ?Variant .
-  ?Line :can :AccurateSelfReproduction .
-  ?Line :can :HeritableVariation .
-  :salineBench :favours ?Variant . }
-=>
-{ ?Line :can :AdaptivePersistence . } .
+    ?Line :can :AccurateSelfReproduction .
+    ?Line :can :HeritableVariation .
+    :salineBench :favours ?Variant .
+} => {
+    ?Line :can :AdaptivePersistence .
+} .
 
 # A lineage is evolvable when it closes its life cycle and
 # can adaptively persist.
-{ ?Line :can :LineageClosure .
-  ?Line :can :AdaptivePersistence . }
-=>
-{ ?Line a :EvolvableLineage . } .
+{
+    ?Line :can :LineageClosure .
+    ?Line :can :AdaptivePersistence .
+} => {
+    ?Line a :EvolvableLineage .
+} .
 
-# --------------------------------------------------------------------
 # 4. CAN'T rules — what cannot happen when key ingredients are missing
-# --------------------------------------------------------------------
-
 # No digital hereditary medium under no-design laws:
 # accurate genome copying cannot be achieved.
-{ :world :obeys :NoDesignLaws .
-  ?Genome a :Replicator ;
-          :storedIn ?Medium .
-  ?Medium a :NonDigitalInformationMedium . }
-=>
-{ ?Genome :cannot :AccurateGenomeCopyUnderNoDesignLaws . } .
+{
+    :world :obeys :NoDesignLaws .
+    ?Genome a :Replicator ;
+        :storedIn ?Medium .
+    ?Medium a :NonDigitalInformationMedium .
+} => {
+    ?Genome :cannot :AccurateGenomeCopyUnderNoDesignLaws .
+} .
 
 # If the genome cannot be accurately copied, the lineage
 # cannot achieve accurate self-reproduction.
-{ ?Line :replicator ?Genome .
-  ?Genome :cannot :AccurateGenomeCopyUnderNoDesignLaws . }
-=>
-{ ?Line :cannot :AccurateSelfReproduction . } .
+{
+    ?Line :replicator ?Genome .
+    ?Genome :cannot :AccurateGenomeCopyUnderNoDesignLaws .
+} => {
+    ?Line :cannot :AccurateSelfReproduction .
+} .
 
 # No repair support:
 # reliable damage correction cannot be achieved.
-{ ?Line a :Lineage ;
-        :lacksRepair true . }
-=>
-{ ?Line :cannot :ReliableDamageCorrection . } .
+{
+    ?Line a :Lineage ;
+        :lacksRepair true .
+} => {
+    ?Line :cannot :ReliableDamageCorrection .
+} .
 
 # If reliable damage correction cannot be achieved, then
 # accurate self-reproduction cannot be achieved.
-{ ?Line :cannot :ReliableDamageCorrection . }
-=>
-{ ?Line :cannot :AccurateSelfReproduction . } .
+{
+    ?Line :cannot :ReliableDamageCorrection .
+} => {
+    ?Line :cannot :AccurateSelfReproduction .
+} .
 
 # No protected dormant compartment:
 # protected dormancy cannot be achieved.
-{ ?Line a :Lineage ;
-        :lacksDormancyProtection true . }
-=>
-{ ?Line :cannot :ProtectedDormancy . } .
+{
+    ?Line a :Lineage ;
+        :lacksDormancyProtection true .
+} => {
+    ?Line :cannot :ProtectedDormancy .
+} .
 
 # If protected dormancy cannot be achieved, lineage closure
 # through a protected seed phase cannot be achieved.
-{ ?Line :cannot :ProtectedDormancy . }
-=>
-{ ?Line :cannot :LineageClosure . } .
+{
+    ?Line :cannot :ProtectedDormancy .
+} => {
+    ?Line :cannot :LineageClosure .
+} .
 
 # No heritable variation:
 # adaptive evolution cannot be achieved.
-{ ?Line a :Lineage ;
-        :variationStatus :None . }
-=>
-{ ?Line :cannot :AdaptiveEvolution . } .
+{
+    ?Line a :Lineage ;
+        :variationStatus :None .
+} => {
+    ?Line :cannot :AdaptiveEvolution .
+} .
 
 # If adaptive evolution cannot be achieved, adaptive
 # persistence cannot be achieved either.
-{ ?Line :cannot :AdaptiveEvolution . }
-=>
-{ ?Line :cannot :AdaptivePersistence . } .
+{
+    ?Line :cannot :AdaptiveEvolution .
+} => {
+    ?Line :cannot :AdaptivePersistence .
+} .
 
 # If either accurate self-reproduction or adaptive
 # persistence is impossible, the lineage is not evolvable.
-{ ?Line :cannot :AccurateSelfReproduction . }
-=>
-{ ?Line :cannot :EvolvableLineage . } .
+{
+    ?Line :cannot :AccurateSelfReproduction .
+} => {
+    ?Line :cannot :EvolvableLineage .
+} .
 
-{ ?Line :cannot :AdaptivePersistence . }
-=>
-{ ?Line :cannot :EvolvableLineage . } .
+{
+    ?Line :cannot :AdaptivePersistence .
+} => {
+    ?Line :cannot :EvolvableLineage .
+} .
 
-{ ?Line :cannot :LineageClosure . }
-=>
-{ ?Line :cannot :EvolvableLineage . } .
+{
+    ?Line :cannot :LineageClosure .
+} => {
+    ?Line :cannot :EvolvableLineage .
+} .
 
-# ---------
 # 5. Checks
-# ---------
-
 # Positive checks for the viable lineage.
-{ :world :obeys :NoDesignLaws . }
-=> { :case :checkC1 :Passed . } .
+{
+    :world :obeys :NoDesignLaws .
+} => {
+    :case :checkC1 :Passed .
+} .
 
-{ :mainGenome :can :GenomeCopyUnderNoDesignLaws . }
-=> { :case :checkC2 :Passed . } .
+{
+    :mainGenome :can :GenomeCopyUnderNoDesignLaws .
+} => {
+    :case :checkC2 :Passed .
+} .
 
-{ :mainSeed :can :ProtectedDormancy . }
-=> { :case :checkC3 :Passed . } .
+{
+    :mainSeed :can :ProtectedDormancy .
+} => {
+    :case :checkC3 :Passed .
+} .
 
-{ :mainSeed :can :Germinate . }
-=> { :case :checkC4 :Passed . } .
+{
+    :mainSeed :can :Germinate .
+} => {
+    :case :checkC4 :Passed .
+} .
 
-{ :mainAdult :can :PropaguleProduction . }
-=> { :case :checkC5 :Passed . } .
+{
+    :mainAdult :can :PropaguleProduction .
+} => {
+    :case :checkC5 :Passed .
+} .
 
-{ :mainLine :can :AccurateSelfReproduction . }
-=> { :case :checkC6 :Passed . } .
+{
+    :mainLine :can :AccurateSelfReproduction .
+} => {
+    :case :checkC6 :Passed .
+} .
 
-{ :mainLine :can :LineageClosure . }
-=> { :case :checkC7 :Passed . } .
+{
+    :mainLine :can :LineageClosure .
+} => {
+    :case :checkC7 :Passed .
+} .
 
-{ :mainLine :can :HeritableVariation . }
-=> { :case :checkC8 :Passed . } .
+{
+    :mainLine :can :HeritableVariation .
+} => {
+    :case :checkC8 :Passed .
+} .
 
-{ :mainLine :can :AdaptivePersistence . }
-=> { :case :checkC9 :Passed . } .
+{
+    :mainLine :can :AdaptivePersistence .
+} => {
+    :case :checkC9 :Passed .
+} .
 
-{ :mainLine a :EvolvableLineage . }
-=> { :case :checkC10 :Passed . } .
+{
+    :mainLine a :EvolvableLineage .
+} => {
+    :case :checkC10 :Passed .
+} .
 
 # Negative checks for the contrast lineages.
-{ :analogLine :cannot :AccurateSelfReproduction . }
-=> { :case :checkC11 :Passed . } .
-
-{ :fragileLine :cannot :AccurateSelfReproduction . }
-=> { :case :checkC12 :Passed . } .
-
-{ :coatlessLine :cannot :LineageClosure . }
-=> { :case :checkC13 :Passed . } .
-
-{ :staticLine :cannot :AdaptiveEvolution . }
-=> { :case :checkC14 :Passed . } .
-
-{ :staticLine :cannot :EvolvableLineage . }
-=> { :case :checkC15 :Passed . } .
-
-# -------------------
-# 6. ARC-style output
-# -------------------
-
-{ :case :checkC1 :Passed .
-  :case :checkC2 :Passed .
-  :case :checkC3 :Passed .
-  :case :checkC4 :Passed .
-  :case :checkC5 :Passed .
-  :case :checkC6 :Passed .
-  :case :checkC7 :Passed .
-  :case :checkC8 :Passed .
-  :case :checkC9 :Passed .
-  :case :checkC10 :Passed .
-  :case :checkC11 :Passed .
-  :case :checkC12 :Passed .
-  :case :checkC13 :Passed .
-  :case :checkC14 :Passed .
-  :case :checkC15 :Passed . }
-=>
 {
-  :out log:outputString """ACT barley seed lineage — can and can't
+    :analogLine :cannot :AccurateSelfReproduction .
+} => {
+    :case :checkC11 :Passed .
+} .
+
+{
+    :fragileLine :cannot :AccurateSelfReproduction .
+} => {
+    :case :checkC12 :Passed .
+} .
+
+{
+    :coatlessLine :cannot :LineageClosure .
+} => {
+    :case :checkC13 :Passed .
+} .
+
+{
+    :staticLine :cannot :AdaptiveEvolution .
+} => {
+    :case :checkC14 :Passed .
+} .
+
+{
+    :staticLine :cannot :EvolvableLineage .
+} => {
+    :case :checkC15 :Passed .
+} .
+
+# 6. ARC-style output
+{
+    :case :checkC1 :Passed .
+    :case :checkC2 :Passed .
+    :case :checkC3 :Passed .
+    :case :checkC4 :Passed .
+    :case :checkC5 :Passed .
+    :case :checkC6 :Passed .
+    :case :checkC7 :Passed .
+    :case :checkC8 :Passed .
+    :case :checkC9 :Passed .
+    :case :checkC10 :Passed .
+    :case :checkC11 :Passed .
+    :case :checkC12 :Passed .
+    :case :checkC13 :Passed .
+    :case :checkC14 :Passed .
+    :case :checkC15 :Passed .
+} => {
+    :out log:outputString """ACT barley seed lineage — can and can't
 
 ## Answer
 YES for the viable barley lineage.

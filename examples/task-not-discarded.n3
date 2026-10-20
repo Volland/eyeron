@@ -1,20 +1,29 @@
-# task-not-discarded. Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/n3c/notIn_query.n3
-# The task document is embedded; absence is checked within that graph.
+# Checking for a discarded task in one document
+#
+# An embedded graph lists tasks without discarded classifications. N3 rules
+# use log:notIncludes within that graph to derive the sample not-discarded
+# conclusions.
 
-@prefix : <http://example.org/test#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/test#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-:task1 a :CompositeTask.
+:task1 a :CompositeTask .
 
-:task2 a :CompositeTask.
+:task2 a :CompositeTask .
 
 :tasks :graph {
 
-:task1 a :CompositeTask.
+    :task1 a :CompositeTask .
 
-:task2 a :CompositeTask.
+    :task2 a :CompositeTask .
+} .
 
-}.
-{ ?Task a :CompositeTask. :tasks :graph ?Graph. ?Graph log:notIncludes {?Task a :DiscardedTask} }
-    => { ?Task a :NotDiscardedTask }.
+{
+    ?Task a :CompositeTask .
+    :tasks :graph ?Graph .
+    ?Graph log:notIncludes {
+        ?Task a :DiscardedTask
+    }
+} => {
+    ?Task a :NotDiscardedTask
+} .

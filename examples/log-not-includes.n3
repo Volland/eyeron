@@ -1,6 +1,8 @@
-# =======================
-# log:notIncludes example
-# =======================
+# Testing absence after generated rules run
+#
+# An arithmetic condition introduces a fact and another rule. A scoped
+# absence test asks whether a later conclusion is missing, illustrating how
+# N3 negation interacts with newly generated consequences.
 
 @prefix : <http://example.org/#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
@@ -8,25 +10,21 @@
 @prefix math: <http://www.w3.org/2000/10/swap/math#> .
 
 {
-  1 math:equalTo 1.
-}
-=>
-{
-  :x :y 1 .
+    1 math:equalTo 1 .
+} => {
+    :x :y 1 .
 
-  {
-    :x :y 1
-  }
-  =>
-  {
-    :a :b :c
-  }.
-}.
+    {
+        :x :y 1
+    } => {
+        :a :b :c
+    } .
+} .
 
 {
-  ?SCOPE log:notIncludes { :a :b :c }.
-}
-=>
-{
-  :test :is false
-}.
+    ?SCOPE log:notIncludes {
+        :a :b :c
+    } .
+} => {
+    :test :is false
+} .

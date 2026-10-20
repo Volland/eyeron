@@ -1,15 +1,23 @@
-# N3 example: now-and-language-builtins.
-# N3 has no builtin to extract a literal's language tag, so this confirms
-# the language-tagged text by comparing it against a French-tagged copy of
-# the same string via `log:equalTo`, rather than introspecting the tag
-# directly. The datetime is encoded as a plain RDF list of its components,
-# which the rules then destructure to pull out the year.
+# Matching a language tag and reading a date tuple
+#
+# A French-tagged greeting and a fixed date-time tuple supply the data. N3
+# rules compare the complete literal and extract the year by list matching.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <http://example/>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <http://example/> .
 
-:msg :text "bonjour"@fr.
-:clock :event (2026 5 15 10 20 30).
+:msg :text "bonjour"@fr .
+:clock :event (2026 5 15 10 20 30) .
 
-{?msg :text ?text. ?text log:equalTo "bonjour"@fr} => {?msg :sameLanguageAs true}.
-{?event :event (?year ?month ?day ?hour ?minute ?second)} => {?event :eventYear ?year}.
+{
+    ?msg :text ?text .
+    ?text log:equalTo "bonjour"@fr
+} => {
+    ?msg :sameLanguageAs true
+} .
+
+{
+    ?event :event (?year ?month ?day ?hour ?minute ?second)
+} => {
+    ?event :eventYear ?year
+} .

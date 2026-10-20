@@ -1,16 +1,47 @@
-# N3 example: annotation-evidence.
-# Like reifiers.n3, a reified
-# statement is a quoted formula (`{...}`) attached to its claim, here
-# additionally annotated with provenance (who stated it, when it was
-# recorded).
+# Finding the source of a quoted statement
+#
+# A claim records a statement, its author, and a date. N3 rules inspect the
+# quoted graph and its metadata to derive which claim and source support
+# the statement.
 
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix : <http://example/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://example/> .
 
-:alice :name "Alice".
-:claim :statement {:alice :name "Alice"}; :statedBy :bob; :recorded "2021-07-07"^^xsd:date.
+:alice :name "Alice" .
+:claim :statement {
+    :alice :name "Alice"
+} ;
+    :statedBy :bob ;
+    :recorded "2021-07-07"^^xsd:date .
 
-{:alice :name "Alice"} => {:test :hasStatement true}.
-{?claim :statement {:alice :name "Alice"}} => {:test :hasNamedStatement ?claim}.
-{?claim :statement {:alice :name "Alice"}. ?claim :statedBy ?who} => {:test :statementAuthor ?who}.
-{?claim :statement {:alice :name "Alice"}. ?claim :recorded ?date} => {:test :statementDate ?date}.
+{
+    :alice :name "Alice"
+} => {
+    :test :hasStatement true
+} .
+
+{
+    ?claim :statement {
+        :alice :name "Alice"
+    }
+} => {
+    :test :hasNamedStatement ?claim
+} .
+
+{
+    ?claim :statement {
+        :alice :name "Alice"
+    } .
+    ?claim :statedBy ?who
+} => {
+    :test :statementAuthor ?who
+} .
+
+{
+    ?claim :statement {
+        :alice :name "Alice"
+    } .
+    ?claim :recorded ?date
+} => {
+    :test :statementDate ?date
+} .

@@ -1,25 +1,47 @@
-# goldbach. Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/goldbach/goldbach.n3
-# Lists all prime partitions of selected even integers, rather than cutting after the first.
+# Finding prime pairs for selected even numbers
+#
+# Selected even integers are tested for decompositions into two primes.
+# Recursive backward N3 rules check factors and enumerate the prime pairs;
+# the finite results do not prove Goldbach's conjecture.
 
-@prefix : <http://example.org/>.
-@prefix math: <http://www.w3.org/2000/10/swap/math#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Trial division: reaching a divisor above sqrt(N) establishes primality.
-{ (?N ?Divisor) :hasNoFactor true } <= {
-    (?Divisor ?Divisor) math:product ?Square. ?Square math:greaterThan ?N.
-}.
-{ (?N ?Divisor) :hasNoFactor true } <= {
-    (?Divisor ?Divisor) math:product ?Square. ?Square math:notGreaterThan ?N.
-    (?N ?Divisor) math:remainder ?Remainder. ?Remainder math:notEqualTo 0.
-    (?Divisor 1) math:sum ?Next. (?N ?Next) :hasNoFactor true.
-}.
-{ ?N :prime true } <= { ?N math:greaterThan 1. (?N 2) :hasNoFactor true }.
 {
-    (4 6 8 10 12 20 28 50) list:member ?N.
-    (2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25) list:member ?P.
-    (?N ?P) math:difference ?Q. ?P math:notGreaterThan ?Q.
-    ?P :prime true. ?Q :prime true.
-} => { :partitions :goldbach (?N ?P ?Q) }.
+    (?N ?Divisor) :hasNoFactor true
+} <= {
+    (?Divisor ?Divisor) math:product ?Square .
+    ?Square math:greaterThan ?N .
+} .
+
+{
+    (?N ?Divisor) :hasNoFactor true
+} <= {
+    (?Divisor ?Divisor) math:product ?Square .
+    ?Square math:notGreaterThan ?N .
+    (?N ?Divisor) math:remainder ?Remainder .
+    ?Remainder math:notEqualTo 0 .
+    (?Divisor 1) math:sum ?Next .
+    (?N ?Next) :hasNoFactor true .
+} .
+
+{
+    ?N :prime true
+} <= {
+    ?N math:greaterThan 1 .
+    (?N 2) :hasNoFactor true
+} .
+
+{
+    (4 6 8 10 12 20 28 50) list:member ?N .
+    (2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25) list:member ?P .
+    (?N ?P) math:difference ?Q .
+    ?P math:notGreaterThan ?Q .
+    ?P :prime true .
+    ?Q :prime true .
+} => {
+    :partitions :goldbach (?N ?P ?Q)
+} .

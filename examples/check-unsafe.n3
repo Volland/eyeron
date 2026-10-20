@@ -1,10 +1,15 @@
-# N3 example: check-unsafe.
-# ?someone is deliberately not bound by the antecedent. Eyeron silently
-# derives nothing at all for this unsafe pattern -- no error, no leaked
-# variable, and no :Seen fact for any binding of ?someone.
+# An unbound rule conclusion
+#
+# A rule recognizes that Alice knows Bob but leaves its conclusion's person
+# variable unbound. Eyeron derives no new fact, illustrating how this
+# unsafe conclusion is handled.
 
-@prefix : <https://eyereasoner.github.io/eyepl/examples/check-unsafe#>.
+@prefix : <https://eyereasoner.github.io/eyepl/examples/check-unsafe#> .
 
-:alice :knows :bob.
+:alice :knows :bob .
 
-{:alice :knows :bob} => {?someone a :Seen}.
+{
+    :alice :knows :bob
+} => {
+    ?someone a :Seen
+} .

@@ -1,8 +1,18 @@
-@prefix : <https://eyereasoner.github.io/eyeron/examples/collection#>.
+# Representing a nested collection
+#
+# A collection contains numbers, a blank node, and a nested list. The N3
+# source and companion RDF input show these structures and produce a short
+# report linking the example files.
+
+@prefix : <https://eyereasoner.github.io/eyeron/examples/collection#> .
 
 (1 _:b2 (2)) :p2 :q2 .
 _:b2 :p :q .
 
 # Markdown rendering via log:outputString.
 :__md_output :text "# collection\n\n## Source files\n\n- [N3 rules](../collection.n3)\n- [Input TriG](../input/collection.trig)\n\n" .
-{ :__md_output :text ?text } log:query { :__md_output log:outputString ?text } .
+{
+    :__md_output :text ?text
+} log:query {
+    :__md_output log:outputString ?text
+} .

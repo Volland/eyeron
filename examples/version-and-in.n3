@@ -1,15 +1,33 @@
-# N3 example: version-and-in.
-# Membership in a fixed set of levels is expressed as two ordinary
-# alternative rules, and "not priority" uses the standard log:notIncludes
-# negation-as-failure idiom.
+# Selecting priority levels with alternative rules
+#
+# People hold gold, bronze, or platinum levels. Two N3 rules recognize
+# priority levels, and a scoped absence test derives the nonpriority
+# classification for the remaining case.
 
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <http://example/>.
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <http://example/> .
 
-:alice :level "gold".
-:bob :level "bronze".
-:carol :level "platinum".
+:alice :level "gold" .
+:bob :level "bronze" .
+:carol :level "platinum" .
 
-{?x :level "gold"} => {?x :priority true}.
-{?x :level "platinum"} => {?x :priority true}.
-{?x :level ?level. ?SCOPE log:notIncludes {?x :priority true}} => {?x :ordinary true}.
+{
+    ?x :level "gold"
+} => {
+    ?x :priority true
+} .
+
+{
+    ?x :level "platinum"
+} => {
+    ?x :priority true
+} .
+
+{
+    ?x :level ?level .
+    ?SCOPE log:notIncludes {
+        ?x :priority true
+    }
+} => {
+    ?x :ordinary true
+} .

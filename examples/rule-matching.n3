@@ -1,14 +1,13 @@
-# =================================
-# Rule matching
-# Example from Patrick Hochstenbach
-# =================================
+# Matching a rule as data
+#
+# An N3 rule pattern asks whether an implication is present. Matching that
+# quoted rule structure derives a result, showing that rules can themselves
+# be inspected by rules.
 
-@prefix : <https://eyereasoner.github.io/ns#>.
+@prefix : <https://eyereasoner.github.io/ns#> .
 
 {
     ?A => ?B .
-}
-=>
-{
+} => {
     :result :is true .
-}.
+} .

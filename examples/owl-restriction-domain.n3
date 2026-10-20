@@ -1,16 +1,27 @@
-# owl-restriction-domain: a small runnable case for EYE RPO rules.
-# Source: https://eyereasoner.github.io/eye/reasoning/rpo/x-owl-hasValue.n3
-# Rules: MIT, Jos De Roo; sample data added for this example.
-# Anonymous premise nodes are written as named variables.
+# Deriving a class from a property's domain
+#
+# A pet-owner class has a fixed-value restriction on a property whose
+# domain is Person. An explicit N3 rule follows the linked restriction
+# structure to derive a subclass relationship.
 
-@prefix : <http://example.org/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix list: <http://www.w3.org/2000/10/swap/list#>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
+@prefix : <http://example.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Sample data
-:PetOwner rdfs:subClassOf [ owl:onProperty [rdfs:domain :Person]; owl:hasValue :milo ].
+:PetOwner rdfs:subClassOf [
+    owl:onProperty [ rdfs:domain :Person ] ;
+    owl:hasValue :milo
+] .
 
 # Inference rules
-{?C rdfs:subClassOf ?Restriction. ?Restriction owl:onProperty ?Property; owl:hasValue ?Value. ?Property rdfs:domain ?Domain} => {?C rdfs:subClassOf ?Domain}.
+{
+    ?C rdfs:subClassOf ?Restriction .
+    ?Restriction owl:onProperty ?Property ;
+        owl:hasValue ?Value .
+    ?Property rdfs:domain ?Domain
+} => {
+    ?C rdfs:subClassOf ?Domain
+} .

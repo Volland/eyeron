@@ -1,15 +1,24 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/issue141/
-# Standalone program; EYE answer directives use log:query.
+# Generating a pair of reflexive rules
+#
+# A property is marked reflexive. One N3 rule generates two backward rules
+# that can answer self-link questions for the endpoints of that property.
 
-# Source file: issue141/test1.n3
-@base <https://eyereasoner.github.io/eye/reasoning/issue141/test1.n3>.
+@base <https://eyereasoner.github.io/eye/reasoning/issue141/test1.n3> .
 @prefix : <http://www.example.com/ns/ex#> .
 
-{?p a :Reflexive} => {
-    {?x ?p ?x} <= {?x ?p ?y}.
-    {?y ?p ?y} <= {?x ?p ?y}.
-}.
+{
+    ?p a :Reflexive
+} => {
+    {
+        ?x ?p ?x
+    } <= {
+        ?x ?p ?y
+    } .
+    {
+        ?y ?p ?y
+    } <= {
+        ?x ?p ?y
+    } .
+} .
 
-:p a :Reflexive.
-
+:p a :Reflexive .

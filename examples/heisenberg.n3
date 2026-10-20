@@ -1,6 +1,8 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Sources: https://eyereasoner.github.io/eye/reasoning/arcus/heisenberg/heisenberg.ttl
-# Premise blank nodes are named variables; backward answers are materialized.
+# Checking supplied uncertainty bounds
+#
+# A quantum-state model provides uncertainties and comparison bounds. N3
+# arithmetic rules multiply the supplied values and check which modeled
+# uncertainty relations they satisfy.
 
 @prefix : <http://example.org/#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .

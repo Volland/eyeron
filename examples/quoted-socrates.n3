@@ -1,15 +1,20 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/rdf-star-reasoning/
-# Standalone program; EYE answer directives use log:query.
+# Classifying a quoted Socrates statement
+#
+# A triple term says that Socrates is human, and a class link relates
+# humans to mortals. An N3 rule derives the corresponding quoted mortality
+# statement.
 
-# Source file: rdf-star-reasoning/socrates.n3
-@base <https://eyereasoner.github.io/eye/reasoning/rdf-star-reasoning/socrates.n3>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix : <http://example.org/socrates#>.
+@base <https://eyereasoner.github.io/eye/reasoning/rdf-star-reasoning/socrates.n3> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/socrates#> .
 
-:we :have <<( :Socrates rdf:type :Human )>>.
-:Human rdfs:subClassOf :Mortal.
+:we :have <<(:Socrates rdf:type :Human)>> .
+:Human rdfs:subClassOf :Mortal .
 
-{?A rdfs:subClassOf ?B. :we :have <<( ?S rdf:type ?A )>>} => {:we :have <<( ?S rdf:type ?B )>>}.
-
+{
+    ?A rdfs:subClassOf ?B .
+    :we :have <<(?S rdf:type ?A)>>
+} => {
+    :we :have <<(?S rdf:type ?B)>>
+} .

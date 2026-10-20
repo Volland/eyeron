@@ -1,19 +1,27 @@
-# Adapted from EYE reasoning examples (MIT, Jos De Roo).
-# Source: https://eyereasoner.github.io/eye/reasoning/twf/
-# Standalone program; EYE answer directives use log:query.
+# Collecting a workflow's completed tasks
+#
+# A workflow includes two completed tasks. An N3 rule collects their names
+# into a list, showing how a type condition and a scoped collection work
+# together.
 
-# Source file: twf/example28.n3
-@base <https://eyereasoner.github.io/eye/reasoning/twf/example28.n3>.
-@prefix log: <http://www.w3.org/2000/10/swap/log#>.
-@prefix : <http://example.com/>.
+@base <https://eyereasoner.github.io/eye/reasoning/twf/example28.n3> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <http://example.com/> .
 
 :workflowA a :Workflow ;
-    :includes :taskA , :taskB .
+    :includes :taskA, :taskB .
 :taskA a :Completed .
 :taskB a :Completed .
 
-{ ?workflow a :Workflow.
-  (?task { ?workflow :includes ?task . ?task a :Completed } ?completed) log:collectAllIn ?SCOPE .
-
-} => { ?workflow :completed ?completed } .
-
+{
+    ?workflow a :Workflow .
+    (
+        ?task {
+            ?workflow :includes ?task .
+            ?task a :Completed
+        }
+        ?completed
+    ) log:collectAllIn ?SCOPE .
+} => {
+    ?workflow :completed ?completed
+} .
