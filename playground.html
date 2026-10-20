@@ -7,266 +7,67 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css" />
     <style>
       * { box-sizing: border-box; }
-      :root {
-        color-scheme: light;
-        --bg: #f5f5f7;
-        --panel: #ffffff;
-        --panel-soft: #f9fafb;
-        --border: #d1d5db;
-        --border-soft: #e5e7eb;
-        --text: #111827;
-        --muted: #6b7280;
-        --accent: #2563eb;
-        --accent-dark: #1d4ed8;
-        --danger: #b91c1c;
-        --ok: #047857;
-      }
-      html { min-height: 100%; }
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        -webkit-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-        overflow-x: hidden;
-      }
-      input, select, textarea, button { font: inherit; }
-      .page {
-        max-width: 1500px;
-        margin: 0 auto;
-        padding: calc(1.5rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) calc(3rem + env(safe-area-inset-bottom)) calc(1rem + env(safe-area-inset-left));
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-      header { text-align: center; }
-      header .logo { display: block; margin: 0 auto 0.5rem; border-radius: 50%; }
+      :root { color-scheme: light; --bg: #f5f5f7; --panel: #fff; --border: #d1d5db; --text: #111827; --muted: #6b7280; --accent: #2563eb; }
+      body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      input, select, button { font: inherit; }
+      button, select, input[type="text"], input[type="url"], input[type="number"] { min-height: 40px; border-radius: 0.5rem; }
+      button { cursor: pointer; border: 0; padding: 0.5rem 0.85rem; background: var(--accent); color: #fff; font-weight: 600; }
+      button.secondary { background: #e5e7eb; color: var(--text); }
+      button:disabled { cursor: default; opacity: 0.5; }
+      button:hover:not(:disabled) { filter: brightness(0.95); }
+      input[type="text"], input[type="url"], input[type="number"], select { min-width: 0; border: 1px solid var(--border); padding: 0.45rem 0.6rem; background: var(--panel); color: var(--text); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      [hidden] { display: none !important; }
+      .page { max-width: 1500px; margin: 0 auto; padding: calc(1.5rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) calc(1rem + env(safe-area-inset-left)); display: grid; gap: 1rem; }
+      header { display: flex; align-items: center; gap: 1rem; text-align: left; }
+      header .logo { display: block; flex: none; border-radius: 50%; }
+      header .header-copy { min-width: 0; }
       header h1 { margin: 0; font-size: 1.9rem; font-weight: 650; letter-spacing: -0.02em; }
-      header p { max-width: 58rem; margin: 0.35rem auto 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
-      header a { color: var(--accent); text-decoration: none; }
-      header a:hover { text-decoration: underline; }
-      .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1rem; align-items: start; }
-      .card {
-        grid-column: span 12;
-        background: var(--panel);
-        border: 1px solid rgba(148, 163, 184, 0.25);
-        border-radius: 1rem;
-        padding: 1rem 1.25rem 1.25rem;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-        overflow: hidden;
-      }
-      @media (min-width: 980px) {
-        .input-card { grid-column: span 7; }
-        .output-card { grid-column: span 5; position: sticky; top: 1rem; }
-      }
-      .section-title { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 600; color: var(--text); }
-      .panel-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem; }
-      .panel-header .hint { margin-top: 0.15rem; }
-      .CodeMirror {
-        border: 1px solid var(--border);
-        border-radius: 0.75rem;
-        height: 22rem;
-        background: #ffffff;
-        color: #111827;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        font-size: 0.9rem;
-        line-height: 1.4;
-      }
-      .data-editor .CodeMirror { height: 8rem; }
-      .output .CodeMirror { background: var(--panel); height: 36rem; }
-      .CodeMirror-gutters {
-        border-right: 1px solid var(--border-soft);
-        background: #f8fafc;
-      }
-      .CodeMirror-linenumber { color: #94a3b8; }
-      .CodeMirror-cursor { border-left-color: #111827; }
-      .CodeMirror-selected { background: #dbeafe !important; }
-      .cm-s-default .cm-meta { color: #9333ea; }
-      .cm-s-default .cm-atom { color: #0369a1; }
-      .cm-s-default .cm-string { color: #047857; }
-      .cm-s-default .cm-number { color: #b45309; }
-      .cm-s-default .cm-variable,
-      .cm-s-default .cm-variable-2,
-      .cm-s-default .cm-variable-3 { color: #1d4ed8; }
-      .cm-s-default .cm-operator { color: #475569; }
-      .cm-s-default .cm-comment { color: #64748b; }
-      .output-header-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.65rem; }
-      .output-header-row .section-title { margin-bottom: 0; }
-      .output-tabs { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; padding: 0.2rem; border: 1px solid var(--border); border-radius: 999px; background: var(--panel-soft); }
-      button.output-tab {
-        min-height: 32px;
-        padding: 0.3rem 0.75rem;
-        border-radius: 999px;
-        background: transparent;
-        color: #4b5563;
-        box-shadow: none;
-        font-size: 0.8rem;
-      }
-      button.output-tab:hover:not(:disabled) { background: #eef2ff; color: #1d4ed8; }
-      button.output-tab.active { background: #2563eb; color: #ffffff; }
-      .markdown-output {
-        margin: 0.25rem 0 0;
-        border-radius: 0.75rem;
-        border: 1px solid var(--border);
-        padding: 1rem;
-        background: var(--panel);
-        color: var(--text);
-        font-size: 0.92rem;
-        line-height: 1.55;
-        min-height: 5rem;
-        max-height: 48rem;
-        overflow: auto;
-      }
-      .markdown-output.is-empty { color: #6b7280; }
-      .markdown-output h1, .markdown-output h2, .markdown-output h3, .markdown-output h4, .markdown-output h5, .markdown-output h6 { margin: 1rem 0 0.5rem; line-height: 1.25; color: inherit; }
-      .markdown-output h1:first-child, .markdown-output h2:first-child, .markdown-output h3:first-child { margin-top: 0; }
-      .markdown-output h1 { font-size: 1.45rem; }
-      .markdown-output h2 { font-size: 1.2rem; }
-      .markdown-output h3 { font-size: 1.05rem; }
-      .markdown-output p { margin: 0.6rem 0; }
-      .markdown-output ul, .markdown-output ol { margin: 0.55rem 0 0.75rem 1.35rem; padding: 0; }
-      .markdown-output li { margin: 0.2rem 0; }
-      .markdown-output a { color: var(--accent); text-decoration: none; }
-      .markdown-output a:hover { text-decoration: underline; }
-      .markdown-output code { border-radius: 0.35rem; padding: 0.1rem 0.25rem; background: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.88em; }
-      .markdown-output pre { overflow: auto; border-radius: 0.65rem; padding: 0.75rem; background: #f9fafb; border: 1px solid #e5e7eb; }
-      .markdown-output pre code { padding: 0; background: transparent; }
-      .markdown-output blockquote { margin: 0.75rem 0; padding-left: 0.85rem; border-left: 3px solid #d1d5db; color: #4b5563; }
-      .markdown-output table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.88rem; }
-      .markdown-output th, .markdown-output td { border: 1px solid #d1d5db; padding: 0.4rem 0.5rem; vertical-align: top; }
-      .markdown-output th { background: #f9fafb; font-weight: 600; }
-      .markdown-source-hidden { display: none !important; }
-      .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; margin-top: 0.8rem; }
-      button, select {
-        min-height: 42px;
-        border-radius: 999px;
-        font: inherit;
-      }
-      button {
-        border: 0;
-        padding: 0.55rem 1.25rem;
-        cursor: pointer;
-        background: var(--accent);
-        color: #fff;
-        font-weight: 600;
-        box-shadow: 0 10px 15px rgba(37, 99, 235, 0.22);
-        transition: transform 0.05s ease-out, box-shadow 0.05s ease-out, opacity 0.1s;
-      }
-      button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 14px 24px rgba(37, 99, 235, 0.3); }
-      button:active:not(:disabled) { transform: translateY(0); }
-      button.secondary { background: #e5e7eb; color: var(--text); box-shadow: none; }
-      button.secondary:hover:not(:disabled) { box-shadow: 0 10px 15px rgba(17, 24, 39, 0.12); }
-      button.danger { background: #dc2626; color: #ffffff; box-shadow: 0 10px 15px rgba(220, 38, 38, 0.2); }
-      button.mini-button { min-height: 36px; padding: 0.35rem 0.9rem; font-size: 0.82rem; box-shadow: none; }
-      button:disabled { opacity: 0.6; cursor: default; box-shadow: none; }
-      select, input[type="url"] { border: 1px solid var(--border); padding: 0.5rem 0.85rem; background: var(--panel-soft); color: var(--text); outline: none; }
-      select:focus, input[type="url"]:focus { border-color: var(--accent); background: var(--panel); box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25); }
-      label.toggle { display: inline-flex; gap: 0.45rem; align-items: center; color: #374151; font-size: 0.9rem; font-weight: 500; user-select: none; cursor: pointer; }
-      label.toggle input { width: 1rem; height: 1rem; accent-color: var(--accent); }
-      .status { color: var(--muted); font-size: 0.85rem; flex: 1 1 16rem; line-height: 1.45; }
-      .runtime-stats {
-        flex: 1 1 100%;
-        color: #475569;
-        font-size: 0.82rem;
-        line-height: 1.45;
-      }
-      .example-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
-      .example-row label { font-weight: 650; color: #374151; }
-      .example-row select { flex: 1 1 18rem; min-width: 14rem; }
-      .share-status { flex: 1 1 14rem; }
-      .hint { color: var(--muted); font-size: 0.82rem; margin-top: 0.7rem; line-height: 1.45; }
-      .hint code { background: #f3f4f6; padding: 0.1rem 0.25rem; border-radius: 0.3rem; }
-      .error { color: var(--danger); }
-      .ok { color: var(--ok); }
-      .advanced-panel {
-        margin: 0.85rem 0 0;
-        border: 1px solid var(--border-soft);
-        border-radius: 0.9rem;
-        background: linear-gradient(180deg, #fbfcff 0%, #f8fafc 100%);
-      }
-      .advanced-panel summary {
-        cursor: pointer;
-        padding: 0.8rem 0.95rem;
-        color: var(--text);
-        font-size: 0.9rem;
-        font-weight: 650;
-      }
-      .advanced-panel[open] summary { color: var(--accent-dark); }
-      .advanced-panel-body {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-        gap: 0.75rem;
-        padding: 0 0.95rem 0.95rem;
-      }
-      .option-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.65rem;
-        padding: 0.75rem;
-        border: 1px solid var(--border-soft);
-        border-radius: 0.75rem;
-        background: var(--panel);
-      }
-      .option-copy { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
-      .option-copy label { margin: 0; font-size: 0.9rem; font-weight: 600; color: #374151; }
-      .option-copy .hint { margin: 0; }
-      .source-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-      .source-row label { flex: 0 0 6rem; margin: 0; color: #374151; font-size: 0.9rem; font-weight: 600; }
-      .source-row input { flex: 1 1 18rem; min-height: 42px; border-radius: 999px; }
-      .source-row button { min-height: 42px; }
-      .background-strip {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem;
-        align-items: center;
-        padding: 0.65rem 0.75rem;
-        border: 1px solid var(--border-soft);
-        border-radius: 0.75rem;
-        background: var(--panel);
-      }
-      .background-strip .hint { flex: 1 1 18rem; margin: 0; }
-      .advanced-note {
-        grid-column: 1 / -1;
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.82rem;
-        line-height: 1.45;
-      }
-      .cm-error-line {
-        background: rgba(239, 68, 68, 0.18) !important;
-      }
-      .CodeMirror-linebackground.cm-error-line {
-        background: rgba(239, 68, 68, 0.18) !important;
-        box-shadow: inset 3px 0 0 rgba(239, 68, 68, 0.65) !important;
-      }
-      .cm-error-token {
-        outline: 1px solid rgba(220, 38, 38, 0.9);
-        background: rgba(239, 68, 68, 0.24);
-      }
-      button.share-gist[hidden] { display: none; }
-      @media (max-width: 900px) {
-        .grid { grid-template-columns: 1fr; }
-        .CodeMirror { height: 22rem; }
-        .output .CodeMirror { height: 18rem; }
-        .panel-header, .output-header-row { flex-direction: column; align-items: stretch; }
-        .output-tabs { width: 100%; }
-        button.output-tab { flex: 1; }
-      }
+      header p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
+      header a { color: var(--accent); }
+      .card { min-width: 0; padding: 1rem 1.25rem; border: 1px solid #e5e7eb; border-radius: 0.85rem; background: var(--panel); }
+      h2, legend { margin: 0 0 0.75rem; padding: 0; font-size: 1rem; font-weight: 650; }
+      .row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+      .row + .row { margin-top: 0.75rem; }
+      .grow { flex: 1 1 12rem; }
+      .field { display: grid; gap: 0.3rem; }
+      .field > span, .field > label { font-size: 0.85rem; font-weight: 600; }
+      .options-fields { display: grid; grid-template-columns: minmax(15rem, 1.3fr) minmax(12rem, 1fr) minmax(10rem, 0.6fr); gap: 0.85rem; }
+      .flags { gap: 0.8rem 1.5rem; }
+      .toggle { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
+      .toggle input { width: 1rem; height: 1rem; accent-color: var(--accent); }
+      .hint, .status { color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
+      .hint { margin: 0.65rem 0 0; }
+      .command { margin: 0.8rem 0 0; padding: 0.65rem 0.8rem; background: #f9fafb; border-radius: 0.5rem; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 0.85rem; }
+      .grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 1rem; align-items: start; }
+      .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 0.65rem; margin-bottom: 0.75rem; }
+      .panel-heading h2 { margin: 0; }
+      .example-select { flex: 0 1 20rem; }
+      .source-toolbar { margin-bottom: 0.75rem; }
+      #source-select { flex: 1 1 10rem; }
+      .source-name { flex: 2 1 14rem; }
+      .url-row { margin-bottom: 0.75rem; }
+      .url-row input { flex: 1 1 14rem; }
+      .proof-input { margin-top: 1rem; }
+      .CodeMirror { height: 25rem; border: 1px solid var(--border); border-radius: 0.5rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.87rem; line-height: 1.45; }
+      .CodeMirror-gutters { background: #f9fafb; border-right: 1px solid #e5e7eb; }
+      #proof-panel .CodeMirror { height: 15rem; }
+      .output-card .CodeMirror { height: 35rem; }
+      .messages { margin: 0.85rem 0 0; max-height: 18rem; padding: 0.75rem; border-radius: 0.5rem; background: #fef2f2; color: #991b1b; font-size: 0.82rem; line-height: 1.45; white-space: pre-wrap; overflow: auto; overflow-wrap: anywhere; }
+      .actions { margin-top: 0.85rem; }
+      #stop { background: #b91c1c; }
+      .error { color: #b91c1c; }
+      .ok { color: #047857; }
+      @media (max-width: 980px) { .grid { grid-template-columns: minmax(0, 1fr); } .output-card .CodeMirror { height: 24rem; } }
       @media (max-width: 640px) {
-        .card { padding: 0.95rem 1rem 1.05rem; }
-        .controls {
-          position: sticky;
-          bottom: calc(env(safe-area-inset-bottom) + 10px);
-          padding: 0.75rem 0;
-          background: rgba(245, 245, 247, 0.88);
-          backdrop-filter: blur(10px);
-          border-top: 1px solid rgba(148, 163, 184, 0.35);
-          flex-direction: column;
-          align-items: stretch;
-        }
-        button, select, input[type="url"] { min-height: 44px; font-size: 16px; }
-        label.toggle, .status { width: 100%; }
+        header { align-items: flex-start; gap: 0.75rem; }
+        header .logo { width: 48px; height: 48px; }
+        .card { padding: 1rem; }
+        .options-fields { grid-template-columns: minmax(0, 1fr); }
+        .panel-heading { flex-wrap: wrap; }
+        .example-select { flex: 1 1 100%; }
+        button, select, input[type="text"], input[type="url"], input[type="number"] { min-height: 44px; font-size: 16px; }
+        .flags { align-items: flex-start; flex-direction: column; }
       }
     </style>
   </head>
@@ -274,200 +75,82 @@
     <main class="page">
       <header>
         <img class="logo" src="https://josd.github.io/images/eye.png" alt="" width="64" height="64">
-        <h1>The Eyeron Playground</h1>
-        <p>
-          Run <a href="https://github.com/eyereasoner/eyeron" target="_blank" rel="noopener noreferrer">eyeron</a>
-          in your browser — the same native Notation3 reasoner core, compiled to WebAssembly.
-        </p>
-        <p class="hint">Version <strong id="version">…</strong></p>
+        <div class="header-copy">
+          <h1>The Eyeron Playground</h1>
+          <p>Run <a href="https://github.com/eyereasoner/eyeron">eyeron</a> in your browser. Load inputs, choose the command-line options, and run.</p>
+          <p class="hint">Version <strong id="version">…</strong></p>
+        </div>
       </header>
+
+      <section class="card" aria-labelledby="options-heading">
+        <h2 id="options-heading">Options</h2>
+        <div class="options-fields">
+          <label class="field" for="mode"><span>Output</span>
+            <select id="mode">
+              <option value="">Conclusions (default)</option>
+              <option value="--ast">-a, --ast · Parsed AST</option>
+              <option value="--proof">-p, --proof · N3 proof</option>
+              <option value="--prove-and-check">-c, --prove-and-check · Generate and check a proof</option>
+              <option value="--check-proof">--check-proof FILE · Check a saved proof</option>
+            </select>
+          </label>
+          <label class="field" for="base-iri"><span>--base-iri IRI</span><input id="base-iri" type="text" placeholder="Use each input's base" spellcheck="false" /></label>
+          <label class="field" for="max-backward-depth"><span>--max-backward-depth N</span><input id="max-backward-depth" type="number" min="0" step="1" placeholder="32 (default)" /></label>
+        </div>
+        <div class="row flags" style="margin-top:0.85rem">
+          <label class="toggle"><input id="rdf" type="checkbox" /><span><code>-r, --rdf</code> · RDF/TriG compatibility</span></label>
+          <label class="toggle"><input id="stream" type="checkbox" /><span><code>-s, --stream</code> · Output after fixpoint</span></label>
+          <label class="toggle"><input id="stream-messages" type="checkbox" /><span><code>--stream-messages</code> · Independent RDF Messages</span></label>
+        </div>
+        <pre class="command" aria-label="Equivalent command"><code id="command">eyeron -</code></pre>
+      </section>
 
       <section class="grid">
         <div class="card input-card">
-          <div class="panel-header">
-            <div>
-              <h2 class="section-title">Program and data</h2>
-              <span class="hint">Load a bundled example or write your own, and optionally add RDF/TriG data.</span>
-            </div>
-            <span id="engine-summary" class="status">Engine: eyeron</span>
+          <div class="panel-heading">
+            <h2>Inputs</h2>
+            <select id="examples" class="example-select" aria-label="Load a bundled example"><option value="">Load an example…</option></select>
           </div>
-          <div class="example-row">
-            <label for="examples">Example</label>
-            <select id="examples" aria-label="Load a bundled example">
-              <option value="">Choose an example…</option>
-            </select>
+          <div class="row source-toolbar">
+            <button id="open-files" class="secondary" type="button">Open files</button>
+            <input id="files" type="file" multiple hidden />
+            <button id="add-input" class="secondary" type="button">Add input</button>
+            <button id="remove-input" class="secondary" type="button">Remove input</button>
           </div>
-          <h2 class="section-title">Rules / program</h2>
-          <textarea id="input" spellcheck="false"></textarea>
-          <div class="data-editor" style="margin-top:0.8rem">
-            <h2 class="section-title">Inline data / RDF Message log</h2>
-            <textarea id="data" spellcheck="false"></textarea>
+          <div class="row url-row">
+            <input id="input-url" type="url" placeholder="https://example.org/input.n3" aria-label="Input URL" />
+            <button id="load-url" class="secondary" type="button">Load URL</button>
           </div>
-          <details class="advanced-panel">
-            <summary>Advanced options</summary>
-            <div class="advanced-panel-body">
-              <p class="advanced-note">These mirror the Eyeling playground workflow: keep reusable knowledge in the background, reason over the editor, and optionally provide RDF Message logs separately.</p>
-              <div class="option-row">
-                <input id="engine-eyeling" type="checkbox" />
-                <div class="option-copy">
-                  <label for="engine-eyeling">Use Eyeling instead of eyeron</label>
-                  <span class="hint">Enables the browser Eyeling engine for log:query output, log:outputString rendering, and Eyeling-compatible proof/RDF execution.</span>
-                </div>
-              </div>
-              <div class="option-row">
-                <input id="proof" type="checkbox" />
-                <div class="option-copy">
-                  <label for="proof">Proof explanations</label>
-                  <span class="hint">Emit proof output instead of only inferred conclusions.</span>
-                </div>
-              </div>
-              <div class="option-row">
-                <input id="rdf" type="checkbox" />
-                <div class="option-copy">
-                  <label for="rdf">RDF/TriG compatibility</label>
-                  <span class="hint">Parse RDF syntax and use the selected RDF format.</span>
-                </div>
-              </div>
-              <div class="source-row">
-                <label for="rdf-format">RDF format</label>
-                <select id="rdf-format" title="RDF format used when RDF/TriG mode is enabled">
-                  <option value="auto">auto RDF format</option>
-                  <option value="turtle">Turtle</option>
-                  <option value="trig">TriG</option>
-                  <option value="ntriples">N-Triples</option>
-                  <option value="nquads">N-Quads</option>
-                </select>
-              </div>
-              <div class="source-row">
-                <label for="program-url">Program URL</label>
-                <input id="program-url" type="url" placeholder="https://.../rules.n3" />
-                <button id="load-program-url" class="secondary" type="button">Load</button>
-              </div>
-              <div class="option-row">
-                <input id="load-as-background" type="checkbox" />
-                <div class="option-copy">
-                  <label for="load-as-background">Load URL as background knowledge</label>
-                  <span class="hint">The next Program URL load is kept separate and merged only when reasoning runs.</span>
-                </div>
-              </div>
-              <div class="background-strip">
-                <span id="background-status" class="hint">No background knowledge loaded.</span>
-                <button id="clear-background" class="secondary mini-button" type="button" disabled>Clear background</button>
-              </div>
-              <div class="source-row">
-                <label for="data-url">Data URL</label>
-                <input id="data-url" type="url" placeholder="https://.../input.trig" />
-                <button id="load-data-url" class="secondary" type="button">Load</button>
-              </div>
-              <div class="source-row" id="message-log-url-row">
-                <label for="message-log-url">Message log URL</label>
-                <input id="message-log-url" type="url" placeholder="https://.../messages.trig" />
-                <button id="load-message-log-url" class="secondary" type="button">Load</button>
-              </div>
-              <div class="option-row">
-                <input id="stream-messages" type="checkbox" />
-                <div class="option-copy">
-                  <label for="stream-messages">Stream RDF Messages</label>
-                  <span class="hint">Uses the inline data or Message log URL as message input. Eyeling mode can use message-oriented examples; eyeron receives the log as RDF/TriG data.</span>
-                </div>
-              </div>
-              <div class="option-row">
-                <input id="enforce-https" type="checkbox" checked />
-                <div class="option-copy">
-                  <label for="enforce-https">Enforce HTTPS for dereferencing</label>
-                  <span class="hint">Passed to Eyeling when selected, matching its browser mixed-content-safe dereferencing option.</span>
-                </div>
-              </div>
-            </div>
-          </details>
-          <div class="controls">
-            <button id="run">Run reasoning</button>
-            <button id="pause" class="secondary" type="button" disabled>Pause</button>
-            <button id="stop" class="danger" type="button" disabled>Stop</button>
-            <button id="example" class="secondary">Reset example</button>
-            <button id="copy-share-link" class="secondary" type="button">Copy share link</button>
-            <button
-              id="create-gist-share"
-              class="secondary share-gist"
-              type="button"
-              hidden
-              title="Store an oversized playground state in a secret GitHub Gist and copy a short stateurl= share link."
-            >Create Gist share</button>
-            <span id="share-status" class="status share-status"></span>
-            <span id="status" class="status">Loading wasm module…</span>
-            <span id="runtime-stats" class="runtime-stats" aria-live="polite"></span>
+          <div class="row source-toolbar">
+            <select id="source-select" aria-label="Select an input"></select>
+            <label class="field source-name" for="source-name"><span>File name or URL</span><input id="source-name" type="text" value="-" spellcheck="false" /></label>
           </div>
-          <p class="hint">
-            Build the browser module with <code>wasm-pack build --target web --out-dir pkg</code>, then serve this directory over HTTP.
-          </p>
+          <textarea id="input" spellcheck="false" aria-label="Input text"></textarea>
+          <p class="hint">Inputs are parsed separately, then merged in order. File extensions select the syntax; <code>-</code> is standard input.</p>
+          <section id="proof-panel" class="proof-input" aria-labelledby="proof-heading" hidden>
+            <div class="panel-heading"><h2 id="proof-heading">Proof to check</h2><button id="open-proof" class="secondary" type="button">Open proof</button><input id="proof-file" type="file" hidden /></div>
+            <div class="row url-row"><input id="proof-url" type="url" placeholder="https://example.org/proof.n3" aria-label="Proof URL" /><button id="load-proof-url" class="secondary" type="button">Load URL</button></div>
+            <label class="field" for="proof-name"><span>--check-proof FILE</span><input id="proof-name" type="text" value="proof.n3" spellcheck="false" /></label>
+            <textarea id="proof-input" spellcheck="false" aria-label="Saved N3 proof"></textarea>
+          </section>
+          <div class="row actions">
+            <button id="run" type="button" disabled>Run</button>
+            <button id="stop" type="button" disabled>Stop</button>
+            <button id="help" class="secondary" type="button" disabled>Help (-h)</button>
+            <button id="show-version" class="secondary" type="button" disabled>Version (-v)</button>
+          </div>
+          <p id="status" class="status" role="status">Loading eyeron…</p>
         </div>
-
-        <div class="card output output-card">
-          <div class="output-header-row">
-            <h2 class="section-title">Output</h2>
-            <div class="output-tabs" role="tablist" aria-label="Output view" hidden>
-              <button
-                id="output-rendered-tab"
-                type="button"
-                class="output-tab active"
-                role="tab"
-                aria-selected="true"
-                aria-controls="output-rendered"
-              >Rendered</button>
-              <button
-                id="output-source-tab"
-                type="button"
-                class="output-tab"
-                role="tab"
-                aria-selected="false"
-                aria-controls="output-source"
-              >Markdown source</button>
-            </div>
-          </div>
-          <div id="output-rendered" class="markdown-output is-empty" role="tabpanel" aria-labelledby="output-rendered-tab" hidden>(no output yet)</div>
-          <div id="output-source" role="tabpanel" aria-labelledby="output-source-tab">
-            <textarea id="output" spellcheck="false"></textarea>
-          </div>
+        <div class="card output-card">
+          <div class="panel-heading"><h2>Output</h2><button id="save-output" class="secondary" type="button" disabled>Save output</button></div>
+          <textarea id="output" spellcheck="false" aria-label="Command output"></textarea>
+          <pre id="messages" class="messages" aria-label="Command messages" hidden></pre>
         </div>
       </section>
     </main>
-
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/turtle/turtle.min.js"></script>
     <script type="module">
-      const defaultProgram = `@prefix : <http://example.org/#> .\n\n:Socrates a :Man .\n\n{\n  ?x a :Man .\n} => {\n  ?x a :Mortal .\n} .\n`;
-      const trigExample = `PREFIX : <http://example.org/#>\n\n:g { :s :p :o }\n`;
-      const queryExample = `@prefix log: <http://www.w3.org/2000/10/swap/log#>.\nPREFIX : <http://example.org/#>\n\n{ ?S ?P ?O } log:query { ?S ?P ?O }.\n`;
-      const GIST_SHARE_THRESHOLD = 2000;
-      const GITHUB_GIST_API_TOKEN_KEY = 'eyeron.playground.github.gistToken.v1';
-      const GITHUB_GIST_CREATE_API_URL = 'https://api.github.com/gists';
-      const EYELING_BROWSER_MODULE_URLS = [
-        '../eyeling/dist/browser/index.mjs',
-        'https://cdn.jsdelivr.net/npm/eyeling@2/dist/browser/index.mjs',
-      ];
-      // Companion inputs in examples/input/, loaded with the example of the same stem.
-      const bundledCompanionInputs = [
-        "annotation.trig",
-        "builtin-coverage.trig",
-        "dijkstra-risk-path.trig",
-        "eco-route-insight.trig",
-        "genetic-knapsack-selection.trig",
-        "proof-audit.n3",
-        "rc-discharge-envelope.trig",
-        "rdf-dataset.trig",
-        "rdf-message-cold-chain-recall.trig",
-        "rdf-message-flow.trig",
-        "rdf-message-ldes-incremental.trig",
-        "rdf-message-microgrid.trig",
-        "rdf-message-window-repair.trig",
-        "rdf-messages.trig",
-        "school-placement-audit.trig",
-        "smoke-arithmetic.trig",
-        "triple-terms.trig",
-        "verifiable-decision-audit.n3",
-      ];
-      let oversizedStateShareUrlForGist = '';
-
       const bundledExamplesN3 = [
         "access-control-policy.n3",
         "ackermann.n3",
@@ -807,1519 +490,351 @@
         "zebra.n3",
       ];
 
+      const bundledCompanionInputs = [
+        "annotation.trig",
+        "builtin-coverage.trig",
+        "dijkstra-risk-path.trig",
+        "eco-route-insight.trig",
+        "genetic-knapsack-selection.trig",
+        "proof-audit.n3",
+        "rc-discharge-envelope.trig",
+        "rdf-dataset.trig",
+        "rdf-message-cold-chain-recall.trig",
+        "rdf-message-flow.trig",
+        "rdf-message-ldes-incremental.trig",
+        "rdf-message-microgrid.trig",
+        "rdf-message-window-repair.trig",
+        "rdf-messages.trig",
+        "school-placement-audit.trig",
+        "smoke-arithmetic.trig",
+        "triple-terms.trig",
+        "verifiable-decision-audit.n3",
+      ];
 
-      const bundledExamples = bundledExamplesN3;
+      const byId = (id) => document.getElementById(id);
+      const editorOptions = { mode: 'turtle', lineNumbers: true, lineWrapping: true };
+      const input = CodeMirror.fromTextArea(byId('input'), editorOptions);
+      const proof = CodeMirror.fromTextArea(byId('proof-input'), editorOptions);
+      const output = CodeMirror.fromTextArea(byId('output'), { ...editorOptions, readOnly: true });
+      const defaultProgram = '@prefix : <http://example.org/socrates#> .\n\n:Socrates a :Human .\n\n{\n    ?person a :Human .\n} => {\n    ?person a :Mortal .\n} .\n';
+      const stateKey = 'eyeron.playground.cli.v1';
+      let sources = [{ name: '-', text: defaultProgram, baseIri: null }];
+      let selectedSource = 0;
+      let restoring = false;
+      let busy = false;
+      let worker = null;
+      let workerReady = null;
+      let workerUrl = null;
+      let failReady = null;
+      let finishRun = null;
+      let failRun = null;
+      let saveTimer;
+      let loadController = null;
 
-      const input = CodeMirror.fromTextArea(document.getElementById('input'), {
-        mode: 'turtle',
-        lineNumbers: true,
-        lineWrapping: true,
-        viewportMargin: Infinity,
-      });
-      const data = CodeMirror.fromTextArea(document.getElementById('data'), {
-        mode: 'turtle',
-        lineNumbers: true,
-        lineWrapping: true,
-        viewportMargin: Infinity,
-      });
-      const output = CodeMirror.fromTextArea(document.getElementById('output'), {
-        mode: 'turtle',
-        lineNumbers: true,
-        lineWrapping: true,
-        readOnly: true,
-        viewportMargin: Infinity,
-      });
-
-      const runButton = document.getElementById('run');
-      const exampleButton = document.getElementById('example');
-      const exampleSelect = document.getElementById('examples');
-      const copyShareLinkButton = document.getElementById('copy-share-link');
-      const createGistShareButton = document.getElementById('create-gist-share');
-      const pauseButton = document.getElementById('pause');
-      const stopButton = document.getElementById('stop');
-      const engineEyelingCheckbox = document.getElementById('engine-eyeling');
-      const proofCheckbox = document.getElementById('proof');
-      const rdfCheckbox = document.getElementById('rdf');
-      const rdfFormatSelect = document.getElementById('rdf-format');
-      const programUrlInput = document.getElementById('program-url');
-      const dataUrlInput = document.getElementById('data-url');
-      const messageLogUrlInput = document.getElementById('message-log-url');
-      const loadProgramUrlButton = document.getElementById('load-program-url');
-      const loadDataUrlButton = document.getElementById('load-data-url');
-      const loadMessageLogUrlButton = document.getElementById('load-message-log-url');
-      const loadAsBackgroundCheckbox = document.getElementById('load-as-background');
-      const streamMessagesCheckbox = document.getElementById('stream-messages');
-      const enforceHttpsCheckbox = document.getElementById('enforce-https');
-      const clearBackgroundButton = document.getElementById('clear-background');
-      const backgroundStatus = document.getElementById('background-status');
-      const status = document.getElementById('status');
-      const runtimeStats = document.getElementById('runtime-stats');
-      const shareStatus = document.getElementById('share-status');
-      const version = document.getElementById('version');
-      const engineSummary = document.getElementById('engine-summary');
-      const outputRenderedPanel = document.getElementById('output-rendered');
-      const outputSourcePanel = document.getElementById('output-source');
-      const outputTabs = document.querySelector('.output-tabs');
-      const outputRenderedTab = document.getElementById('output-rendered-tab');
-      const outputSourceTab = document.getElementById('output-source-tab');
-
-      let outputMarkdownMode = false;
-      let outputMarkdownAutoDetect = false;
-      let outputView = 'source';
-      let eyeronModule = null;
-      let eyelingModule = null;
-      let eyelingLoadPromise = null;
-      let backgroundKnowledgeText = '';
-      let backgroundKnowledgeSource = '';
-      let backgroundKnowledgeRdfMode = false;
-      let activeWorker = null;
-      let activeRunReject = null;
-      let runPaused = false;
-      let pausedRunResult = null;
-      let currentExample = '';
-      let currentExampleText = '';
-      runButton.disabled = true;
-
-      function exampleUrl(name) {
-        return new URL('examples/' + encodeURIComponent(name), window.location.href).toString();
+      function setStatus(text, kind = '') {
+        byId('status').textContent = text;
+        byId('status').className = 'status ' + kind;
       }
 
-      function getQueryParam(names) {
-        try {
-          const params = new URL(window.location.href).searchParams;
-          for (const name of names) {
-            const value = params.get(name);
-            if (value !== null) return value;
-          }
-        } catch (_) {}
-        return null;
+      function baseForName(name) {
+        return name === '-' ? null : new URL(name, location.href).href;
       }
 
-      function parseBooleanParam(value) {
-        if (value === null || value === undefined) return null;
-        if (value === true || value === false) return value;
-        const normalized = String(value).trim().toLowerCase();
-        if (!normalized) return null;
-        if (['1', 'true', 'yes', 'on'].includes(normalized)) return true;
-        if (['0', 'false', 'no', 'off'].includes(normalized)) return false;
-        return null;
+      function syncSourceList() {
+        byId('source-select').replaceChildren(...sources.map((source, index) => {
+          const option = new Option(source.name || '(unnamed input)', String(index));
+          option.selected = index === selectedSource;
+          return option;
+        }));
       }
 
-      function normalizeExampleName(name) {
-        const value = String(name || '').trim();
-        if (!value || value.includes('/') || value.includes('\\')) return '';
-        return bundledExamples.includes(value) ? value : '';
+      function showSource(index) {
+        selectedSource = index;
+        restoring = true;
+        byId('source-name').value = sources[index].name;
+        input.setValue(sources[index].text);
+        restoring = false;
+        syncSourceList();
+        updateOptions();
       }
 
-      function populateExamples() {
-        exampleSelect.innerHTML = '<option value="">Choose an example…</option>';
-        for (const name of bundledExamples) {
-          const option = document.createElement('option');
-          option.value = name;
-          option.textContent = name;
-          exampleSelect.appendChild(option);
+      function argumentsForRun() {
+        const args = [];
+        const mode = byId('mode').value;
+        if (mode) args.push(mode);
+        if (mode === '--check-proof') args.push(byId('proof-name').value.trim() || 'proof.n3');
+        if (byId('rdf').checked) args.push('--rdf');
+        if (byId('stream').checked) args.push('--stream');
+        if (byId('stream-messages').checked) args.push('--stream-messages');
+        const base = byId('base-iri').value.trim();
+        if (base) args.push('--base-iri', base);
+        const depth = byId('max-backward-depth').value;
+        if (depth !== '') args.push('--max-backward-depth', depth);
+        return args.concat(sources.map((source) => source.name.trim() || '-'));
+      }
+
+      function quoteArgument(value) {
+        return /^[a-zA-Z0-9_./:=@%+-]+$/.test(value) ? value : "'" + value.replaceAll("'", "'\\''") + "'";
+      }
+
+      function updateOptions() {
+        const checking = byId('mode').value === '--check-proof';
+        byId('proof-panel').hidden = !checking;
+        if (checking) requestAnimationFrame(() => proof.refresh());
+        byId('command').textContent = 'eyeron ' + argumentsForRun().map(quoteArgument).join(' ');
+        scheduleSave();
+      }
+
+      function state() {
+        return { sources, selectedSource, mode: byId('mode').value, rdf: byId('rdf').checked,
+          stream: byId('stream').checked, streamMessages: byId('stream-messages').checked,
+          baseIri: byId('base-iri').value, maxBackwardDepth: byId('max-backward-depth').value,
+          proof: { name: byId('proof-name').value, text: proof.getValue() }, example: byId('examples').value };
+      }
+
+      function scheduleSave() {
+        if (restoring) return;
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => { try { localStorage.setItem(stateKey, JSON.stringify(state())); } catch {} }, 200);
+      }
+
+      function setBusy(value) {
+        busy = value;
+        for (const element of document.querySelectorAll('button, input, select')) {
+          if (element.id !== 'stop' && element.id !== 'save-output') element.disabled = value;
         }
-        exampleSelect.value = bundledExamples.includes(currentExample) ? currentExample : '';
-      }
-
-      function escapeHtml(value) {
-        return String(value == null ? '' : value)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      }
-
-      function escapeAttr(value) {
-        return escapeHtml(value).replace(/'/g, '&#39;');
-      }
-
-      function isSafeMarkdownHref(href) {
-        const value = String(href || '').trim();
-        if (!value) return false;
-        if (/^(https?:|mailto:)/i.test(value)) return true;
-        if (/^(#|\/|\.\/|\.\.\/)/.test(value)) return true;
-        return !/^[a-z][a-z0-9+.-]*:/i.test(value);
-      }
-
-      function renderInlineMarkdownNoLinks(value) {
-        const codeTokens = [];
-        let text = String(value == null ? '' : value).replace(/`([^`\n]+)`/g, (_m, code) => {
-          const token = String.fromCharCode(0) + 'CODE' + codeTokens.length + String.fromCharCode(0);
-          codeTokens.push('<code>' + escapeHtml(code) + '</code>');
-          return token;
-        });
-
-        text = escapeHtml(text);
-        text = text.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-        text = text.replace(/__([^_\n]+)__/g, '<strong>$1</strong>');
-        text = text.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
-        text = text.replace(/(^|[^_])_([^_\n]+)_(?!_)/g, '$1<em>$2</em>');
-
-        for (let i = 0; i < codeTokens.length; i += 1) {
-          text = text.split(String.fromCharCode(0) + 'CODE' + i + String.fromCharCode(0)).join(codeTokens[i]);
-        }
-        return text;
-      }
-
-      function renderInlineMarkdown(value) {
-        const linkTokens = [];
-        let text = String(value == null ? '' : value).replace(/\[([^\]\n]+)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g, (_m, label, href) => {
-          const token = String.fromCharCode(0) + 'LINK' + linkTokens.length + String.fromCharCode(0);
-          const cleanHref = String(href || '').trim();
-          const htmlLabel = renderInlineMarkdownNoLinks(label);
-          linkTokens.push(
-            isSafeMarkdownHref(cleanHref)
-              ? '<a href="' + escapeAttr(cleanHref) + '" target="_blank" rel="noopener noreferrer">' + htmlLabel + '</a>'
-              : htmlLabel,
-          );
-          return token;
-        });
-
-        text = renderInlineMarkdownNoLinks(text);
-        for (let i = 0; i < linkTokens.length; i += 1) {
-          text = text.split(String.fromCharCode(0) + 'LINK' + i + String.fromCharCode(0)).join(linkTokens[i]);
-        }
-        return text;
-      }
-
-      function splitMarkdownTableRow(line) {
-        let value = String(line || '').trim();
-        if (value.startsWith('|')) value = value.slice(1);
-        if (value.endsWith('|')) value = value.slice(0, -1);
-        return value.split('|').map((cell) => cell.trim());
-      }
-
-      function isMarkdownTableSeparator(line) {
-        const cells = splitMarkdownTableRow(line);
-        return cells.length > 1 && cells.every((cell) => /^:?-{3,}:?$/.test(cell));
-      }
-
-      function renderMarkdownTable(lines, start) {
-        const header = splitMarkdownTableRow(lines[start]);
-        const rows = [];
-        let i = start + 2;
-        while (i < lines.length && /\|/.test(lines[i] || '') && String(lines[i] || '').trim()) {
-          rows.push(splitMarkdownTableRow(lines[i]));
-          i += 1;
-        }
-        const headHtml = header.map((cell) => '<th>' + renderInlineMarkdown(cell) + '</th>').join('');
-        const bodyHtml = rows
-          .map((row) => '<tr>' + row.map((cell) => '<td>' + renderInlineMarkdown(cell) + '</td>').join('') + '</tr>')
-          .join('');
-        return {
-          html: '<table><thead><tr>' + headHtml + '</tr></thead><tbody>' + bodyHtml + '</tbody></table>',
-          next: i,
-        };
-      }
-
-      function renderMarkdownToHtml(markdown) {
-        const source = String(markdown == null ? '' : markdown).replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-        if (!source.trim()) return '<p>(no output yet)</p>';
-
-        const lines = source.split('\n');
-        const blocks = [];
-        let i = 0;
-
-        function paragraphFrom(start) {
-          const parts = [];
-          let j = start;
-          while (j < lines.length) {
-            const line = lines[j];
-            const trimmed = String(line || '').trim();
-            if (!trimmed) break;
-            if (/^```/.test(trimmed)) break;
-            if (/^#{1,6}\s+/.test(trimmed)) break;
-            if (/^[-*_]{3,}\s*$/.test(trimmed)) break;
-            if (/^\s*([-*+])\s+/.test(line) || /^\s*\d+\.\s+/.test(line)) break;
-            if (/^>\s?/.test(line)) break;
-            if (/\|/.test(line || '') && j + 1 < lines.length && isMarkdownTableSeparator(lines[j + 1])) break;
-
-            parts.push(renderInlineMarkdown(line.replace(/\s+$/, '')));
-            j += 1;
-          }
-          return { html: '<p>' + parts.join('<br>') + '</p>', next: j };
-        }
-
-        while (i < lines.length) {
-          const line = lines[i];
-          const trimmed = String(line || '').trim();
-
-          if (!trimmed) { i += 1; continue; }
-
-          const fence = trimmed.match(/^```([^`]*)$/);
-          if (fence) {
-            const code = [];
-            i += 1;
-            while (i < lines.length && !/^```\s*$/.test(String(lines[i] || '').trim())) {
-              code.push(lines[i]);
-              i += 1;
-            }
-            if (i < lines.length) i += 1;
-            blocks.push('<pre><code>' + escapeHtml(code.join('\n')) + '</code></pre>');
-            continue;
-          }
-
-          const heading = trimmed.match(/^(#{1,6})\s+(.*?)\s*#*$/);
-          if (heading) {
-            const level = heading[1].length;
-            blocks.push('<h' + level + '>' + renderInlineMarkdown(heading[2]) + '</h' + level + '>');
-            i += 1;
-            continue;
-          }
-
-          if (/^[-*_]{3,}\s*$/.test(trimmed)) { blocks.push('<hr>'); i += 1; continue; }
-
-          if (/\|/.test(line || '') && i + 1 < lines.length && isMarkdownTableSeparator(lines[i + 1])) {
-            const table = renderMarkdownTable(lines, i);
-            blocks.push(table.html);
-            i = table.next;
-            continue;
-          }
-
-          if (/^\s*([-*+])\s+/.test(line)) {
-            const items = [];
-            while (i < lines.length) {
-              const m = String(lines[i] || '').match(/^\s*[-*+]\s+(.*)$/);
-              if (!m) break;
-              items.push('<li>' + renderInlineMarkdown(m[1]) + '</li>');
-              i += 1;
-            }
-            blocks.push('<ul>' + items.join('') + '</ul>');
-            continue;
-          }
-
-          if (/^\s*\d+\.\s+/.test(line)) {
-            const items = [];
-            while (i < lines.length) {
-              const m = String(lines[i] || '').match(/^\s*\d+\.\s+(.*)$/);
-              if (!m) break;
-              items.push('<li>' + renderInlineMarkdown(m[1]) + '</li>');
-              i += 1;
-            }
-            blocks.push('<ol>' + items.join('') + '</ol>');
-            continue;
-          }
-
-          if (/^>\s?/.test(line)) {
-            const quoted = [];
-            while (i < lines.length && /^>\s?/.test(String(lines[i] || ''))) {
-              quoted.push(String(lines[i] || '').replace(/^>\s?/, ''));
-              i += 1;
-            }
-            blocks.push('<blockquote>' + renderMarkdownToHtml(quoted.join('\n')) + '</blockquote>');
-            continue;
-          }
-
-          const paragraph = paragraphFrom(i);
-          blocks.push(paragraph.html);
-          i = paragraph.next > i ? paragraph.next : i + 1;
-        }
-
-        return blocks.join('\n');
-      }
-
-      function isLikelyTurtleOutput(value) {
-        const text = String(value == null ? '' : value).trim();
-        if (!text) return false;
-        if (/^@prefix\s+[^\s]+\s+<[^>]+>\s*\./im.test(text)) return true;
-        if (/^prefix\s+[^\s]+\s+<[^>]+>\s*$/im.test(text)) return true;
-        const lines = text.split(/\r\n|\n|\r/).map((line) => line.trim()).filter(Boolean);
-        let tripleLike = 0;
-        const turtleSubject = '(?:<[^>]+>|_:[A-Za-z][\\w-]*|:[^\\s]+|[A-Za-z_][\\w.-]*:[^\\s]*)';
-        const turtlePredicate = '(?:a|=|<[^>]+>|:[^\\s]+|[A-Za-z_][\\w.-]*:[^\\s]+)';
-        const turtleObject = "(?:<[^>]+>|_:[A-Za-z][\\w-]*|:[^\\s]+|[A-Za-z_][\\w.-]*:[^\\s]+|[\"']|[-+]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][-+]?\\d+)?|true|false|\\(|\\[|\\{)";
-        const turtleTripleStart = new RegExp('^' + turtleSubject + '\\s+' + turtlePredicate + '\\s+' + turtleObject + '(?:\\s|[.;,]|$)');
-        for (const line of lines) {
-          if (!line || line.startsWith('#') || !/\.\s*$/.test(line)) continue;
-          if (turtleTripleStart.test(line)) tripleLike += 1;
-        }
-        return tripleLike > 0;
-      }
-
-      function isLikelyMarkdownOutput(value) {
-        const text = String(value == null ? '' : value).trim();
-        if (!text || text === '(no output yet)' || isLikelyTurtleOutput(text)) return false;
-        if (/^#{1,6}\s+\S/m.test(text)) return true;
-        if (/^```/m.test(text)) return true;
-        if (/^>\s+\S/m.test(text)) return true;
-        if (/^\s*[-*+]\s+\S/m.test(text)) return true;
-        if (/^\s*\d+\.\s+\S/m.test(text)) return true;
-        if (/\[[^\]\n]+\]\((?:https?:|mailto:|#|\/|\.\/|\.\.\/)[^)]+\)/i.test(text)) return true;
-        if (/\*\*[^*\n]+\*\*/.test(text) || /__[^_\n]+__/.test(text)) return true;
-        if (/\|/.test(text)) {
-          const lines = text.split(/\r\n|\n|\r/);
-          for (let i = 0; i + 1 < lines.length; i += 1) {
-            if (/\|/.test(lines[i]) && isMarkdownTableSeparator(lines[i + 1])) return true;
-          }
-        }
-        return false;
-      }
-
-      function syncRenderedOutput() {
-        if (!outputRenderedPanel) return;
-        const value = output.getValue();
-        outputRenderedPanel.innerHTML = renderMarkdownToHtml(value);
-        outputRenderedPanel.classList.toggle('is-empty', !String(value || '').trim() || String(value).trim() === '(no output yet)');
-      }
-
-      function setOutputMarkdownMode(enabled) {
-        outputMarkdownMode = !!enabled;
-        if (outputTabs) outputTabs.hidden = !outputMarkdownMode;
-      }
-
-      function setOutputView(nextView) {
-        outputView = outputMarkdownMode && nextView !== 'source' ? 'rendered' : 'source';
-        const showRendered = outputMarkdownMode && outputView === 'rendered';
-        if (outputRenderedPanel) outputRenderedPanel.hidden = !showRendered;
-        if (outputSourcePanel) outputSourcePanel.classList.toggle('markdown-source-hidden', showRendered);
-        if (outputRenderedTab) {
-          outputRenderedTab.classList.toggle('active', showRendered);
-          outputRenderedTab.setAttribute('aria-selected', showRendered ? 'true' : 'false');
-        }
-        if (outputSourceTab) {
-          outputSourceTab.classList.toggle('active', outputMarkdownMode && !showRendered);
-          outputSourceTab.setAttribute('aria-selected', outputMarkdownMode && !showRendered ? 'true' : 'false');
-        }
-        if (showRendered) syncRenderedOutput();
-        else if (output && typeof output.refresh === 'function') output.refresh();
-      }
-
-      function setOutputText(text, preferredView = 'auto') {
-        outputMarkdownAutoDetect = preferredView === 'auto';
-        output.setValue(String(text == null ? '' : text));
-        syncRenderedOutput();
-        if (outputMarkdownAutoDetect) {
-          const markdownMode = isLikelyMarkdownOutput(output.getValue());
-          setOutputMarkdownMode(markdownMode);
-          setOutputView(markdownMode ? 'rendered' : 'source');
-        } else {
-          const markdownMode = preferredView !== 'source';
-          setOutputMarkdownMode(markdownMode);
-          setOutputView(markdownMode && preferredView !== 'source' ? 'rendered' : 'source');
-        }
-      }
-
-      function setStatus(message, className = 'status') {
-        status.textContent = message;
-        status.className = className;
-      }
-
-      function setShareStatus(message, className = 'status share-status') {
-        shareStatus.textContent = message;
-        shareStatus.className = className;
-      }
-
-      function formatDuration(ms) {
-        const value = Number(ms);
-        if (!Number.isFinite(value) || value < 0) return '0 ms';
-        if (value < 1000) return Math.max(1, Math.round(value)).toLocaleString() + ' ms';
-        return (value / 1000).toFixed(value < 10000 ? 2 : 1) + ' s';
-      }
-
-      function formatDerivedCount(count) {
-        const value = Number(count);
-        return Number.isFinite(value) && value >= 0 ? Math.round(value).toLocaleString() : 'unknown';
-      }
-
-      function setRuntimeStats(derivedCount, elapsedMs) {
-        runtimeStats.textContent =
-          'Derived statements: ' + formatDerivedCount(derivedCount) + ' · Time: ' + formatDuration(elapsedMs);
-      }
-
-      function clearRuntimeStats() {
-        runtimeStats.textContent = '';
-      }
-
-      function countOutputStatements(text) {
-        const source = String(text || '').trim();
-        if (!source || source === '(no output yet)') return 0;
-        const lines = source.split(/\r\n|\n|\r/);
-        let count = 0;
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed || trimmed.startsWith('#')) continue;
-          if (/^(?:@?prefix|@?base|PREFIX|BASE)\b/i.test(trimmed)) continue;
-          if (/[.]\s*$/.test(trimmed)) count += 1;
-        }
-        if (count > 0) return count;
-        return lines.filter((line) => line.trim() && !line.trim().startsWith('#')).length;
-      }
-
-      function derivedCountFromReport(report) {
-        if (!report || typeof report !== 'object') return 0;
-        for (const key of ['derivedCount', 'derived_count', 'derived', 'count']) {
-          const value = report[key];
-          if (typeof value === 'number' && Number.isFinite(value)) return value;
-          if (Array.isArray(value)) return value.length;
-        }
-        return countOutputStatements(report.output || '');
-      }
-
-      function shortenMiddle(text, maxLen = 90) {
-        const value = String(text || '');
-        if (value.length <= maxLen) return value;
-        const keep = Math.max(8, Math.floor((maxLen - 1) / 2));
-        return value.slice(0, keep) + '…' + value.slice(value.length - keep);
-      }
-
-      function urlLooksRdfCompatibleInput(url) {
-        return /\.(?:trig|ttl|rdf|nt|nq)(?:$|[?#])/i.test(String(url || ''));
-      }
-
-      function parseExampleStemFromUrl(url) {
-        const text = String(url || '');
-        const match = text.match(/\/examples\/([^/?#]+)\.n3(?:$|[?#])/i) || text.match(/(?:^|\/)([^/?#]+)\.n3(?:$|[?#])?/i);
-        return match && match[1] ? decodeURIComponent(match[1]) : '';
-      }
-
-      // An example's companion is examples/input/<stem>.n3, else <stem>.trig,
-      // the same lookup the example tests use.
-      function companionInputUrlForProgramUrl(url) {
-        const stem = parseExampleStemFromUrl(url);
-        const name = [stem + '.n3', stem + '.trig'].find((candidate) => bundledCompanionInputs.includes(candidate));
-        if (!stem || !name) return '';
-        try {
-          const u = new URL(url, window.location.href);
-          if (!/\/examples\/[^/]+\.n3$/i.test(u.pathname)) return '';
-          u.pathname = u.pathname.replace(/\/examples\/[^/]+\.n3$/i, '/examples/input/' + encodeURIComponent(name));
-          u.search = '';
-          u.hash = '';
-          return u.toString();
-        } catch (_) {
-          return '';
-        }
-      }
-
-      function injectBaseDirective(text, fetchedUrl) {
-        if (!fetchedUrl) return text;
-        let base = fetchedUrl;
-        try {
-          const url = new URL(fetchedUrl);
-          url.hash = '';
-          base = url.toString();
-        } catch (_) {}
-        const source = String(text || '');
-        if (/^\s*(?:@base|BASE)\s+<[^>]+>\s*\.?\s*$/im.test(source)) return source;
-        return `@base <${base}> .\n` + source;
-      }
-
-      function updateBackgroundStatus() {
-        const hasBackground = !!backgroundKnowledgeText.trim();
-        clearBackgroundButton.disabled = !hasBackground;
-        backgroundStatus.textContent = hasBackground
-          ? 'Background knowledge ready from ' + shortenMiddle(backgroundKnowledgeSource || 'manual source') + '.'
-          : 'No background knowledge loaded.';
-      }
-
-      function clearBackgroundKnowledge() {
-        backgroundKnowledgeText = '';
-        backgroundKnowledgeSource = '';
-        backgroundKnowledgeRdfMode = false;
-        updateBackgroundStatus();
-      }
-
-      function effectiveRdfMode() {
-        return !!(rdfCheckbox.checked || backgroundKnowledgeRdfMode || streamMessagesCheckbox.checked);
-      }
-
-      function buildEffectiveProgram() {
-        const parts = [];
-        if (backgroundKnowledgeText.trim()) {
-          parts.push('# Background knowledge loaded from URL');
-          parts.push(backgroundKnowledgeText);
-          parts.push('');
-        }
-        parts.push('# Editable N3 program');
-        parts.push(input.getValue());
-        return parts.join('\n');
-      }
-
-      function programMayProduceRenderedText(programText) {
-        return /\blog:outputString\b|swap\/log#outputString/.test(String(programText || ''));
-      }
-
-      function programIsQueryMode(programText) {
-        return /\blog:query\b|swap\/log#query/.test(String(programText || ''));
-      }
-
-      const errorHighlights = [];
-
-      function clearErrorHighlight() {
-        while (errorHighlights.length) {
-          const item = errorHighlights.pop();
-          if (item.lineHandle) item.editor.removeLineClass(item.lineHandle, 'background', 'cm-error-line');
-          if (item.mark) item.mark.clear();
-        }
-      }
-
-      function highlightEditorError(editor, line1, column1) {
-        clearErrorHighlight();
-        const line = Number.isFinite(line1) ? Math.max(0, line1 - 1) : 0;
-        const ch = Number.isFinite(column1) ? Math.max(0, column1 - 1) : 0;
-        if (line < 0 || line >= editor.lineCount()) return;
-        const lineHandle = editor.getLineHandle(line);
-        editor.addLineClass(lineHandle, 'background', 'cm-error-line');
-        const lineText = editor.getLine(line) || '';
-        const to = { line, ch: Math.min(lineText.length, ch + 1) };
-        const mark = editor.markText({ line, ch: Math.min(lineText.length, ch) }, to, { className: 'cm-error-token' });
-        errorHighlights.push({ editor, lineHandle, mark });
-        editor.scrollIntoView({ line, ch }, 90);
-        editor.setCursor({ line, ch });
-        editor.focus();
-      }
-
-      function showReasoningError(report) {
-        const err = report && report.error ? report.error : {};
-        setOutputText(String(err.display || err.message || 'Unknown error'), 'source');
-        const editor = err.editor === 'data' ? data : input;
-        if (Number.isFinite(err.line) && err.line > 0) {
-          highlightEditorError(editor, err.line, Number.isFinite(err.column) ? err.column : 1);
-        } else {
-          clearErrorHighlight();
-        }
-      }
-
-      function setExampleMarker(name, text) {
-        currentExample = name || '';
-        currentExampleText = text || '';
-        exampleSelect.value = currentExample;
-      }
-
-      async function loadExample(name) {
-        if (!name) return;
-        setStatus('Loading example…');
-        const response = await fetch(exampleUrl(name), { cache: 'no-store' });
-        if (!response.ok) throw new Error('Could not load examples/' + name + ' (' + response.status + ')');
-        const text = await response.text();
-        input.setValue(text);
-        data.setValue('');
-        programUrlInput.value = '';
-        dataUrlInput.value = '';
-        messageLogUrlInput.value = '';
-        setExampleMarker(name, text);
-        const companionLoaded = await tryLoadCompanionInput(exampleUrl(name));
-        setStatus(companionLoaded ? 'Loaded example with companion RDF/TriG input' : 'Loaded examples/' + name, 'status ok');
-        localStorage.setItem('eyeron.playground.example', name);
-        localStorage.setItem('eyeron.playground.input', text);
-        localStorage.setItem('eyeron.playground.data', data.getValue());
-        localStorage.setItem('eyeron.playground.programUrl', '');
-        localStorage.setItem('eyeron.playground.dataUrl', dataUrlInput.value.trim());
-      }
-
-      async function fetchTextUrl(url, label) {
-        const value = String(url || '').trim();
-        if (!value) throw new Error(label + ' URL is empty.');
-        const response = await fetch(value, { cache: 'no-store', redirect: 'follow', referrerPolicy: 'no-referrer' });
-        if (!response.ok) throw new Error('Could not load ' + label + ' URL (' + response.status + ').');
-        return { text: await response.text(), url: response.url || value };
-      }
-
-      async function tryLoadCompanionInput(programUrl) {
-        const candidate = companionInputUrlForProgramUrl(programUrl);
-        if (!candidate) return false;
-        try {
-          const loaded = await fetchTextUrl(candidate, 'companion data');
-          data.setValue(injectBaseDirective(loaded.text, loaded.url));
-          dataUrlInput.value = loaded.url;
-          rdfCheckbox.checked = /\.trig$/i.test(new URL(candidate).pathname);
-          if (rdfCheckbox.checked && rdfFormatSelect.value === 'auto') rdfFormatSelect.value = 'trig';
-          return true;
-        } catch (_) {
-          return false;
-        }
-      }
-
-      async function loadProgramUrl() {
-        loadProgramUrlButton.disabled = true;
-        setStatus('Loading program URL…');
-        try {
-          const loaded = await fetchTextUrl(programUrlInput.value, 'program');
-          const text = injectBaseDirective(loaded.text, loaded.url);
-          if (loadAsBackgroundCheckbox.checked) {
-            backgroundKnowledgeText = text;
-            backgroundKnowledgeSource = loaded.url;
-            backgroundKnowledgeRdfMode = urlLooksRdfCompatibleInput(loaded.url);
-            if (backgroundKnowledgeRdfMode) rdfCheckbox.checked = true;
-            updateBackgroundStatus();
-            setStatus('Loaded URL as background knowledge', 'status ok');
-          } else {
-            input.setValue(text);
-            programUrlInput.value = loaded.url;
-            setExampleMarker('', '');
-            const companionLoaded = await tryLoadCompanionInput(loaded.url);
-            setStatus(companionLoaded ? 'Loaded program URL with companion RDF/TriG input' : 'Loaded program URL', 'status ok');
-          }
-        } catch (err) {
-          setStatus(String(err && err.message ? err.message : err), 'status error');
-        } finally {
-          loadProgramUrlButton.disabled = false;
-        }
-      }
-
-      async function loadDataUrl() {
-        loadDataUrlButton.disabled = true;
-        setStatus('Loading data URL…');
-        try {
-          const loaded = await fetchTextUrl(dataUrlInput.value, 'data');
-          data.setValue(injectBaseDirective(loaded.text, loaded.url));
-          dataUrlInput.value = loaded.url;
-          setExampleMarker('', '');
-          rdfCheckbox.checked = true;
-          if (rdfFormatSelect.value === 'auto' && /\.trig(?:$|[?#])/i.test(loaded.url)) rdfFormatSelect.value = 'trig';
-          setStatus('Loaded data URL', 'status ok');
-        } catch (err) {
-          setStatus(String(err && err.message ? err.message : err), 'status error');
-        } finally {
-          loadDataUrlButton.disabled = false;
-        }
-      }
-
-      async function loadMessageLogUrl() {
-        loadMessageLogUrlButton.disabled = true;
-        setStatus('Loading RDF Message log URL…');
-        try {
-          const loaded = await fetchTextUrl(messageLogUrlInput.value, 'message log');
-          data.setValue(injectBaseDirective(loaded.text, loaded.url));
-          messageLogUrlInput.value = loaded.url;
-          dataUrlInput.value = loaded.url;
-          rdfCheckbox.checked = true;
-          streamMessagesCheckbox.checked = true;
-          if (rdfFormatSelect.value === 'auto') rdfFormatSelect.value = 'trig';
-          setStatus('Loaded RDF Message log URL', 'status ok');
-        } catch (err) {
-          setStatus(String(err && err.message ? err.message : err), 'status error');
-        } finally {
-          loadMessageLogUrlButton.disabled = false;
-        }
-      }
-
-      function bytesToBase64Url(bytes) {
-        let binary = '';
-        const chunkSize = 0x8000;
-        for (let i = 0; i < bytes.length; i += chunkSize) {
-          binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
-        }
-        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
-      }
-
-      function base64UrlToBytes(value) {
-        const padded = String(value || '').replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (String(value || '').length % 4)) % 4);
-        const binary = atob(padded);
-        const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
-        return bytes;
-      }
-
-      function encodeUtf8(text) {
-        return new TextEncoder().encode(String(text));
-      }
-
-      function decodeUtf8(bytes) {
-        return new TextDecoder('utf-8').decode(bytes);
-      }
-
-      async function gzipText(text) {
-        if (!window.CompressionStream || !window.Response || !window.Blob) return null;
-        const stream = new Blob([String(text)]).stream().pipeThrough(new CompressionStream('gzip'));
-        return new Uint8Array(await new Response(stream).arrayBuffer());
-      }
-
-      async function gunzipText(bytes) {
-        if (!window.DecompressionStream || !window.Response || !window.Blob) {
-          throw new Error('This browser cannot open compressed playground state links.');
-        }
-        const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-        return new Response(stream).text();
-      }
-
-      function base64UrlEncode(text) {
-        return bytesToBase64Url(encodeUtf8(text));
-      }
-
-      function base64UrlDecode(text) {
-        return decodeUtf8(base64UrlToBytes(text));
-      }
-
-      function compactPlaygroundState(state) {
-        const compact = { v: 1 };
-        if (state.engine && state.engine !== 'eyeron') compact.n = state.engine;
-        if (state.proof) compact.p = true;
-        if (state.rdf) compact.r = true;
-        if (state.format && state.format !== 'auto') compact.f = state.format;
-        if (state.example) compact.x = state.example;
-        if (state.programUrl) compact.u = state.programUrl;
-        if (state.dataUrl) compact.l = state.dataUrl;
-        if (state.messageLogUrl) compact.m = state.messageLogUrl;
-        if (state.streamMessages) compact.s = true;
-        if (state.enforceHttps === false) compact.h = false;
-        if (state.background) compact.b = state.background;
-        if (state.backgroundSource) compact.o = state.backgroundSource;
-        if (typeof state.input === 'string') compact.i = state.input;
-        if (typeof state.data === 'string' && state.data) compact.d = state.data;
-        return compact;
-      }
-
-      async function packPlaygroundState(state) {
-        const json = JSON.stringify(compactPlaygroundState(state));
-        const jsonToken = 'j.' + base64UrlEncode(json);
-        try {
-          const gz = await gzipText(json);
-          if (gz) {
-            const gzipToken = 'g.' + bytesToBase64Url(gz);
-            if (gzipToken.length < jsonToken.length) return gzipToken;
-          }
-        } catch (_) {
-          // Fall through to universal JSON payload.
-        }
-        return jsonToken;
-      }
-
-      async function unpackPlaygroundState(token) {
-        const value = String(token || '').trim();
-        if (!value) return null;
-        let json;
-        if (value.startsWith('g.')) json = await gunzipText(base64UrlToBytes(value.slice(2)));
-        else if (value.startsWith('j.')) json = base64UrlDecode(value.slice(2));
-        else json = base64UrlDecode(value);
-        return JSON.parse(json);
-      }
-
-      function normalizePlaygroundState(raw) {
-        if (!raw || typeof raw !== 'object') return null;
-        return {
-          v: raw.v || 1,
-          engine: String(raw.n ?? raw.engine ?? 'eyeron') === 'eyeling' ? 'eyeling' : 'eyeron',
-          proof: !!(raw.p ?? raw.proof),
-          rdf: !!(raw.r ?? raw.rdf),
-          format: String(raw.f ?? raw.format ?? 'auto'),
-          example: typeof (raw.x ?? raw.example) === 'string' ? (raw.x ?? raw.example) : '',
-          programUrl: typeof (raw.u ?? raw.programUrl) === 'string' ? (raw.u ?? raw.programUrl) : '',
-          dataUrl: typeof (raw.l ?? raw.dataUrl) === 'string' ? (raw.l ?? raw.dataUrl) : '',
-          messageLogUrl: typeof (raw.m ?? raw.messageLogUrl) === 'string' ? (raw.m ?? raw.messageLogUrl) : '',
-          streamMessages: !!(raw.s ?? raw.streamMessages),
-          enforceHttps: (raw.h ?? raw.enforceHttps) === false ? false : true,
-          background: typeof (raw.b ?? raw.background) === 'string' ? (raw.b ?? raw.background) : '',
-          backgroundSource: typeof (raw.o ?? raw.backgroundSource) === 'string' ? (raw.o ?? raw.backgroundSource) : '',
-          input: typeof (raw.i ?? raw.input) === 'string' ? (raw.i ?? raw.input) : null,
-          data: typeof (raw.d ?? raw.data) === 'string' ? (raw.d ?? raw.data) : '',
-        };
-      }
-
-      function getShareStateTokenFromLocation() {
-        const url = new URL(window.location.href);
-        return url.searchParams.get('state') || url.searchParams.get('s') || (window.location.hash || '').match(/^#state=([^&]+)/)?.[1] || '';
-      }
-
-      function getStateUrlFromLocation() {
-        const url = new URL(window.location.href);
-        return url.searchParams.get('stateurl') || url.searchParams.get('stateuri') || url.searchParams.get('state-url') || '';
-      }
-
-      function getExampleFromLocation() {
-        return normalizeExampleName(getQueryParam(['example', 'ex']));
-      }
-
-      async function fetchPlaygroundStateFromUrl(stateUrl) {
-        const url = String(stateUrl || '').trim();
-        if (!url) return null;
-        const res = await fetch(url, { cache: 'no-store', redirect: 'follow', referrerPolicy: 'no-referrer' });
-        if (!res.ok) throw new Error(`HTTP ${res.status} when fetching shared state.`);
-        return JSON.parse(await res.text());
-      }
-
-      async function readShareState() {
-        try {
-          const token = getShareStateTokenFromLocation();
-          if (token) return normalizePlaygroundState(await unpackPlaygroundState(token));
-          const stateUrl = getStateUrlFromLocation();
-          if (stateUrl) return normalizePlaygroundState(await fetchPlaygroundStateFromUrl(stateUrl));
-        } catch (err) {
-          console.warn('Ignoring invalid playground share state', err);
-          setShareStatus('Could not open shared state: ' + String(err && err.message ? err.message : err), 'status share-status error');
-        }
-        return null;
-      }
-
-      function currentStateForShare() {
-        const program = input.getValue();
-        const facts = data.getValue();
-        const state = {
-          v: 1,
-          engine: engineEyelingCheckbox.checked ? 'eyeling' : 'eyeron',
-          proof: proofCheckbox.checked,
-          rdf: rdfCheckbox.checked,
-          format: rdfFormatSelect.value,
-          programUrl: programUrlInput.value.trim(),
-          dataUrl: dataUrlInput.value.trim(),
-          messageLogUrl: messageLogUrlInput.value.trim(),
-          streamMessages: streamMessagesCheckbox.checked,
-          enforceHttps: enforceHttpsCheckbox.checked,
-          background: backgroundKnowledgeText,
-          backgroundSource: backgroundKnowledgeSource,
-        };
-        if (currentExample && program === currentExampleText && !facts.trim()) {
-          state.example = currentExample;
-          state.programUrl = '';
-          state.dataUrl = '';
-          state.messageLogUrl = '';
-        } else {
-          state.input = program;
-          state.data = facts;
-        }
-        return state;
-      }
-
-      async function playgroundShareUrl() {
-        const url = new URL(window.location.href);
-        for (const name of ['state', 's', 'stateurl', 'stateuri', 'state-url']) url.searchParams.delete(name);
-        for (const name of ['example', 'ex', 'engine', 'proof', 'rdf', 'format']) url.searchParams.delete(name);
-        const state = currentStateForShare();
-        const canUseExampleUrl =
-          state.example &&
-          !state.programUrl &&
-          !state.dataUrl &&
-          !state.messageLogUrl &&
-          !state.streamMessages &&
-          !state.background &&
-          !state.proof &&
-          !state.rdf &&
-          state.format === 'auto' &&
-          state.engine === 'eyeron';
-        if (canUseExampleUrl) {
-          url.searchParams.set('example', state.example);
-        } else {
-          url.searchParams.set('state', await packPlaygroundState(state));
-        }
-        url.hash = '';
-        return url.toString();
-      }
-
-      function shareUrlHasEmbeddedState(shareUrl) {
-        try {
-          const url = new URL(String(shareUrl || ''), window.location.href);
-          return !!(url.searchParams.get('state') || url.searchParams.get('s') || (url.hash || '').startsWith('#state='));
-        } catch (_) {
-          return false;
-        }
-      }
-
-      function shouldOfferGistShare(shareUrl) {
-        return String(shareUrl || '').length > GIST_SHARE_THRESHOLD && shareUrlHasEmbeddedState(shareUrl);
-      }
-
-      function setShareGistOption(shareUrl) {
-        oversizedStateShareUrlForGist = shouldOfferGistShare(shareUrl) ? String(shareUrl) : '';
-        if (createGistShareButton) {
-          createGistShareButton.hidden = !oversizedStateShareUrlForGist;
-          createGistShareButton.disabled = !oversizedStateShareUrlForGist;
-        }
-      }
-
-      function normalizeGithubGistToken(token) {
-        const value = String(token || '').trim();
-        return value
-          .replace(/^Bearer\s+/i, '')
-          .replace(/^token\s+/i, '')
-          .replace(/^['"]|['"]$/g, '')
-          .trim();
-      }
-
-      function getGithubGistToken() {
-        let token = '';
-        try {
-          token = localStorage.getItem(GITHUB_GIST_API_TOKEN_KEY) || '';
-        } catch (_) {}
-        token = normalizeGithubGistToken(token);
-        if (token) return token;
-        token = normalizeGithubGistToken(window.prompt('GitHub token with gist scope for creating a secret share gist:') || '');
-        if (token) {
-          try { localStorage.setItem(GITHUB_GIST_API_TOKEN_KEY, token); } catch (_) {}
-        }
-        return token;
-      }
-
-      function rawUrlFromGistApiResponse(payload) {
-        if (!payload || typeof payload !== 'object' || !payload.files) return '';
-        for (const file of Object.values(payload.files)) {
-          if (file && typeof file.raw_url === 'string') return file.raw_url;
-        }
-        return '';
-      }
-
-      function makeShareUrlFromStateUrl(stateUrl) {
-        const url = new URL(window.location.href);
-        for (const name of ['state', 's', 'stateurl', 'stateuri', 'state-url']) url.searchParams.delete(name);
-        for (const name of ['example', 'ex', 'engine', 'proof', 'rdf', 'format']) url.searchParams.delete(name);
-        url.searchParams.set('stateurl', stateUrl);
-        url.hash = '';
-        return url.toString();
-      }
-
-      async function createGistBackedShareUrl(state, token) {
-        if (!token) throw new Error('GitHub Gist token was not provided.');
-        const controller = window.AbortController ? new AbortController() : null;
-        const timeout = controller ? setTimeout(() => controller.abort(), 20000) : null;
-        const content = JSON.stringify(compactPlaygroundState(state), null, 2) + '\n';
-        let res;
-        try {
-          res = await fetch(GITHUB_GIST_CREATE_API_URL, {
-            method: 'POST',
-            headers: {
-              Accept: 'application/vnd.github+json',
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + token,
-            },
-            body: JSON.stringify({
-              description: 'Eyeron playground shared state',
-              public: false,
-              files: { 'eyeron-playground-state.json': { content } },
-            }),
-            cache: 'no-store',
-            referrerPolicy: 'no-referrer',
-            signal: controller ? controller.signal : undefined,
-          });
-        } catch (err) {
-          if (err && err.name === 'AbortError') throw new Error('GitHub Gist API request timed out.');
-          throw new Error('GitHub Gist API request failed: ' + String(err && err.message ? err.message : err || 'network error'));
-        } finally {
-          if (timeout) clearTimeout(timeout);
-        }
-        let payload = null;
-        try { payload = await res.json(); } catch (_) {}
-        if (!res.ok) {
-          const detail = payload && typeof payload === 'object' ? String(payload.message || payload.error || '').trim() : '';
-          if (res.status === 401 || res.status === 403) {
-            try { localStorage.removeItem(GITHUB_GIST_API_TOKEN_KEY); } catch (_) {}
-          }
-          throw new Error(detail || `GitHub Gist API returned HTTP ${res.status}.`);
-        }
-        const rawUrl = rawUrlFromGistApiResponse(payload);
-        if (!rawUrl) throw new Error('GitHub Gist API did not return a raw_url.');
-        return makeShareUrlFromStateUrl(rawUrl);
-      }
-
-      async function copyTextToClipboard(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(text);
-          return;
-        }
-        const temporary = document.createElement('textarea');
-        temporary.value = text;
-        temporary.setAttribute('readonly', '');
-        temporary.style.position = 'fixed';
-        temporary.style.left = '-9999px';
-        temporary.style.top = '0';
-        document.body.appendChild(temporary);
-        temporary.focus();
-        temporary.select();
-        let ok = false;
-        try { ok = document.execCommand('copy'); } finally { document.body.removeChild(temporary); }
-        if (!ok) throw new Error('Clipboard copy was blocked by the browser.');
-      }
-
-      async function copyShareLink() {
-        copyShareLinkButton.disabled = true;
-        setShareStatus('Creating compact share link…');
-        let url = '';
-        try {
-          url = await playgroundShareUrl();
-          setShareGistOption(url);
-          await copyTextToClipboard(url);
-          setShareStatus(
-            shouldOfferGistShare(url)
-              ? `Copied compact share link (${url.length} chars). Use Create Gist share for a practical public URL.`
-              : 'Share link copied.',
-            'status share-status ok',
-          );
-        } catch (err) {
-          try {
-            if (!url) url = await playgroundShareUrl();
-            setShareGistOption(url);
-            setShareStatus(
-              shouldOfferGistShare(url)
-                ? `Share link is ${url.length} chars; use Create Gist share for a practical public URL.`
-                : 'Could not copy automatically; use your browser copy command on this generated link.',
-              shouldOfferGistShare(url) ? 'status share-status' : 'status share-status error',
-            );
-            window.prompt('Copy this compact share link:', url);
-          } catch (_) {
-            setShareStatus('Could not create a share link.', 'status share-status error');
-          }
-        } finally {
-          copyShareLinkButton.disabled = false;
-        }
-      }
-
-      async function createGistShare() {
-        if (!oversizedStateShareUrlForGist) {
-          setShareStatus('Create or copy an oversized playground state link first.');
-          return;
-        }
-        const token = getGithubGistToken();
-        if (!token) {
-          setShareStatus('GitHub Gist token was not provided; oversized state was not uploaded.', 'status share-status error');
-          return;
-        }
-        createGistShareButton.disabled = true;
-        setShareStatus('Creating secret GitHub Gist share…');
-        try {
-          const gistUrl = await createGistBackedShareUrl(currentStateForShare(), token);
-          await copyTextToClipboard(gistUrl);
-          oversizedStateShareUrlForGist = '';
-          createGistShareButton.hidden = true;
-          setShareStatus(`Created Gist-backed share link and copied it (${gistUrl.length} chars).`, 'status share-status ok');
-        } catch (err) {
-          setShareStatus('GitHub Gist share failed: ' + String(err && err.message ? err.message : err), 'status share-status error');
-        } finally {
-          createGistShareButton.disabled = !oversizedStateShareUrlForGist;
-        }
-      }
-
-      async function restoreInitialState() {
-        populateExamples();
-        const shared = await readShareState();
-        if (shared) {
-          engineEyelingCheckbox.checked = shared.engine === 'eyeling';
-          proofCheckbox.checked = !!shared.proof;
-          rdfCheckbox.checked = !!shared.rdf;
-          rdfFormatSelect.value = shared.format || 'auto';
-          programUrlInput.value = shared.programUrl || '';
-          dataUrlInput.value = shared.dataUrl || '';
-          messageLogUrlInput.value = shared.messageLogUrl || '';
-          streamMessagesCheckbox.checked = !!shared.streamMessages;
-          enforceHttpsCheckbox.checked = shared.enforceHttps !== false;
-          backgroundKnowledgeText = shared.background || '';
-          backgroundKnowledgeSource = shared.backgroundSource || '';
-          backgroundKnowledgeRdfMode = !!backgroundKnowledgeText && urlLooksRdfCompatibleInput(backgroundKnowledgeSource);
-          updateBackgroundStatus();
-          if (shared.example) {
-            await loadExample(shared.example);
-          } else {
-            populateExamples();
-            input.setValue(typeof shared.input === 'string' ? shared.input : defaultProgram);
-            data.setValue(typeof shared.data === 'string' ? shared.data : '');
-            setExampleMarker('', '');
-          }
-          setShareStatus('Loaded shared playground state.');
-          syncEngineSummary();
-          return;
-        }
-
-        const queryExample = getExampleFromLocation();
-        if (queryExample) {
-          await loadExample(queryExample);
-          syncEngineSummary();
-          setShareStatus('Loaded short example URL.');
-          return;
-        }
-
-        const savedInput = localStorage.getItem('eyeron.playground.input');
-        const savedData = localStorage.getItem('eyeron.playground.data');
-        input.setValue(savedInput || defaultProgram);
-        data.setValue(savedData || '');
-        engineEyelingCheckbox.checked = localStorage.getItem('eyeron.playground.engine') === 'eyeling';
-        proofCheckbox.checked = localStorage.getItem('eyeron.playground.proof') === '1';
-        rdfCheckbox.checked = localStorage.getItem('eyeron.playground.rdf') === '1';
-        rdfFormatSelect.value = localStorage.getItem('eyeron.playground.rdfFormat') || 'auto';
-        programUrlInput.value = localStorage.getItem('eyeron.playground.programUrl') || '';
-        dataUrlInput.value = localStorage.getItem('eyeron.playground.dataUrl') || '';
-        messageLogUrlInput.value = localStorage.getItem('eyeron.playground.messageLogUrl') || '';
-        streamMessagesCheckbox.checked = localStorage.getItem('eyeron.playground.streamMessages') === '1';
-        enforceHttpsCheckbox.checked = localStorage.getItem('eyeron.playground.enforceHttps') !== '0';
-        backgroundKnowledgeText = localStorage.getItem('eyeron.playground.background') || '';
-        backgroundKnowledgeSource = localStorage.getItem('eyeron.playground.backgroundSource') || '';
-        backgroundKnowledgeRdfMode = !!backgroundKnowledgeText && urlLooksRdfCompatibleInput(backgroundKnowledgeSource);
-        updateBackgroundStatus();
-        const savedExample = localStorage.getItem('eyeron.playground.example') || '';
-        if (savedExample && savedInput) {
-          setExampleMarker(savedExample, savedInput);
-        }
-        populateExamples();
-        syncEngineSummary();
-      }
-
-      async function loadEyeron() {
-        try {
-          const mod = await import('./pkg/eyeron.js');
-          await mod.default();
-          eyeronModule = mod;
-          version.textContent = mod.version ? `v${mod.version()}` : 'loaded';
-          setStatus('Ready', 'status ok');
-          runButton.disabled = false;
-        } catch (err) {
-          version.textContent = 'not loaded';
-          setStatus('Build the wasm package first: wasm-pack build --target web --out-dir pkg', 'status error');
-          setOutputText(String(err && err.message ? err.message : err), 'source');
-        }
-      }
-
-      function selectedEngine() {
-        return engineEyelingCheckbox.checked ? 'eyeling' : 'eyeron';
-      }
-
-      function syncEngineSummary() {
-        engineSummary.textContent = 'Engine: ' + selectedEngine();
-      }
-
-      async function loadEyeling() {
-        if (eyelingModule) return eyelingModule;
-        if (eyelingLoadPromise) return eyelingLoadPromise;
-        eyelingLoadPromise = (async () => {
-          let lastError = null;
-          for (const moduleUrl of EYELING_BROWSER_MODULE_URLS) {
+        byId('stop').disabled = !value;
+        byId('save-output').disabled = !output.getValue();
+        input.setOption('readOnly', value);
+        proof.setOption('readOnly', value);
+      }
+
+      function ensureWorker() {
+        if (worker) return workerReady;
+        const moduleUrl = new URL('./pkg/eyeron.js', location.href).href;
+        const code = `
+          let engine;
+          self.onmessage = (event) => {
             try {
-              const mod = await import(moduleUrl);
-              if (!mod || typeof mod.reasonStream !== 'function') {
-                throw new Error('Eyeling reasonStream API is missing.');
-              }
-              eyelingModule = mod;
-              return mod;
-            } catch (err) {
-              lastError = err;
-            }
-          }
-          throw lastError || new Error('Could not load Eyeling browser module.');
-        })();
-        try {
-          return await eyelingLoadPromise;
-        } catch (err) {
-          eyelingLoadPromise = null;
-          throw err;
-        }
-      }
-
-      function eyelingWorkerSource(moduleUrls) {
-        return `
-          const moduleUrls = ${JSON.stringify(moduleUrls)};
-          async function loadEyeling() {
-            let lastError = null;
-            for (const url of moduleUrls) {
-              try {
-                const mod = await import(url);
-                if (!mod || typeof mod.reasonStream !== 'function') throw new Error('Eyeling reasonStream API is missing.');
-                return mod;
-              } catch (err) {
-                lastError = err;
-              }
-            }
-            throw lastError || new Error('Could not load Eyeling browser module.');
-          }
-          self.onmessage = async (event) => {
-            const msg = event.data || {};
-            if (msg.type !== 'run') return;
-            try {
-              const mod = await loadEyeling();
-              const result = mod.reasonStream(msg.program || '', {
-                proof: !!msg.proof,
-                rdf: !!msg.rdf,
-                enforceHttps: !!msg.enforceHttps,
-                sourceLabel: 'eyeron playground',
-              });
-              const renderedTriples = result && result.queryMode ? result.queryTriples || [] : result.facts || [];
-              const outputStrings =
-                msg.renderOutputStrings && typeof mod.collectOutputStringsFromFacts === 'function'
-                  ? String(mod.collectOutputStringsFromFacts(renderedTriples, result.prefixes) || '')
-                  : '';
-              const output = outputStrings
-                ? outputStrings
-                : result && result.queryMode && typeof mod.prettyPrintQueryTriples === 'function'
-                  ? mod.prettyPrintQueryTriples(result.queryTriples || [], result.prefixes)
-                  : String(result && result.closureN3 != null ? result.closureN3 : '');
-              self.postMessage({
-                type: 'done',
-                output,
-                derived: result && Array.isArray(result.derived) ? result.derived.length : 0,
-                queryMode: !!(result && result.queryMode),
-              });
-            } catch (err) {
-              self.postMessage({ type: 'error', message: String(err && err.message ? err.message : err) });
+              const report = engine.runCliReport(JSON.stringify(event.data), (text) => self.postMessage({ type: 'output', text }));
+              self.postMessage({ type: 'done', report: JSON.parse(report) });
+            } catch (error) { self.postMessage({ type: 'error', message: String(error.message || error) }); }
+          };
+          import(${JSON.stringify(moduleUrl)}).then(async (module) => {
+            await module.default(); engine = module;
+            self.postMessage({ type: 'ready', version: module.version() });
+          }).catch((error) => self.postMessage({ type: 'error', message: String(error.message || error) }));
+        `;
+        workerUrl = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+        worker = new Worker(workerUrl, { type: 'module' });
+        workerReady = new Promise((resolve, reject) => {
+          failReady = reject;
+          worker.onmessage = (event) => {
+            const message = event.data;
+            if (message.type === 'ready') {
+              URL.revokeObjectURL(workerUrl); workerUrl = null;
+              byId('version').textContent = message.version;
+              failReady = null;
+              resolve();
+            } else if (message.type === 'output') {
+              const line = output.lastLine();
+              output.replaceRange(message.text, { line, ch: output.getLine(line).length });
+              if (message.text) byId('save-output').disabled = false;
+            } else if (message.type === 'done') {
+              if (finishRun) finishRun(message.report);
+              finishRun = failRun = null;
+            } else if (message.type === 'error') {
+              if (failRun) failRun(new Error(message.message));
+              reject(new Error(message.message));
+              terminateWorker();
             }
           };
-        `;
-      }
-
-      function absoluteModuleUrls(urls) {
-        return urls.map((url) => {
-          try {
-            return new URL(url, window.location.href).toString();
-          } catch (_) {
-            return url;
-          }
+          worker.onerror = (event) => {
+            const error = new Error(event.message || 'Could not start eyeron.');
+            if (failRun) failRun(error);
+            reject(error);
+            terminateWorker();
+          };
         });
+        return workerReady;
       }
 
-      function setRunningControls(running) {
-        stopButton.disabled = !(running && selectedEngine() === 'eyeling');
-        pauseButton.disabled = !(running && selectedEngine() === 'eyeling');
-        pauseButton.textContent = runPaused ? 'Resume' : 'Pause';
+      function terminateWorker() {
+        if (failReady) failReady(new Error('Stopped.'));
+        failReady = null;
+        if (worker) worker.terminate();
+        if (workerUrl) URL.revokeObjectURL(workerUrl);
+        worker = workerReady = workerUrl = null;
       }
 
-      function stopActiveRun() {
-        if (activeWorker) {
-          activeWorker.terminate();
-          activeWorker = null;
-        }
-        if (activeRunReject) {
-          activeRunReject(new Error('Stopped.'));
-          activeRunReject = null;
-        }
-        pausedRunResult = null;
-        runPaused = false;
-        setRunningControls(false);
-        runButton.disabled = false;
-        setStatus('Stopped.');
-      }
-
-      function combinedProgramForEyeling() {
-        const facts = data.getValue();
-        const program = buildEffectiveProgram();
-        if (!facts.trim()) return program;
-        return facts.replace(/\s*$/, '\n\n') + program;
-      }
-
-      async function runEyeling() {
-        const program = combinedProgramForEyeling();
-        const workerSource = eyelingWorkerSource(absoluteModuleUrls(EYELING_BROWSER_MODULE_URLS));
-        const workerUrl = URL.createObjectURL(new Blob([workerSource], { type: 'text/javascript' }));
-        const worker = new Worker(workerUrl, { type: 'module' });
-        activeWorker = worker;
-        try {
-          return await new Promise((resolve, reject) => {
-            activeRunReject = reject;
-            worker.onmessage = (event) => {
-              const msg = event.data || {};
-              if (msg.type === 'done') {
-                activeRunReject = null;
-                const text = String(msg.output || '');
-                const result = { output: text, derivedCount: Number.isFinite(msg.derived) ? msg.derived : countOutputStatements(text) };
-                if (runPaused) {
-                  pausedRunResult = result;
-                  setStatus('Done, paused. Click Resume to display buffered output.');
-                  resolve(null);
-                } else {
-                  resolve(result);
-                }
-              } else if (msg.type === 'error') {
-                activeRunReject = null;
-                reject(new Error(msg.message || 'Eyeling worker failed.'));
-              }
-            };
-            worker.onerror = (event) => {
-              activeRunReject = null;
-              reject(new Error(event && event.message ? event.message : 'Eyeling worker failed.'));
-            };
-            worker.postMessage({
-              type: 'run',
-              program,
-              proof: proofCheckbox.checked,
-              rdf: effectiveRdfMode(),
-              enforceHttps: enforceHttpsCheckbox.checked,
-              renderOutputStrings: programMayProduceRenderedText(program),
-              queryMode: programIsQueryMode(program),
-            });
-          });
-        } finally {
-          if (activeWorker === worker) activeWorker = null;
-          worker.terminate();
-          URL.revokeObjectURL(workerUrl);
-          activeRunReject = null;
-        }
-      }
-
-      function reportFromThrow(err) {
-        const message = String(err && err.message ? err.message : err);
-        return { ok: false, error: { code: 'error', message, display: message, editor: 'program', line: null, column: null } };
-      }
-
-      function runEyeron() {
-        const rawReport = eyeronModule.reasonWithDataReport
-          ? eyeronModule.reasonWithDataReport(
-              buildEffectiveProgram(),
-              data.getValue(),
-              proofCheckbox.checked,
-              effectiveRdfMode(),
-              rdfFormatSelect.value,
-            )
-          : JSON.stringify({
-              ok: true,
-              output: eyeronModule.reasonWithData(
-                buildEffectiveProgram(),
-                data.getValue(),
-                proofCheckbox.checked,
-                effectiveRdfMode(),
-                rdfFormatSelect.value,
-              ),
-            });
-        return JSON.parse(rawReport);
-      }
-
-      async function run() {
-        if (selectedEngine() === 'eyeron' && !eyeronModule) return;
-        localStorage.setItem('eyeron.playground.input', input.getValue());
-        localStorage.setItem('eyeron.playground.data', data.getValue());
-        localStorage.setItem('eyeron.playground.engine', selectedEngine());
-        localStorage.setItem('eyeron.playground.proof', proofCheckbox.checked ? '1' : '0');
-        localStorage.setItem('eyeron.playground.rdf', rdfCheckbox.checked ? '1' : '0');
-        localStorage.setItem('eyeron.playground.rdfFormat', rdfFormatSelect.value);
-        localStorage.setItem('eyeron.playground.programUrl', programUrlInput.value.trim());
-        localStorage.setItem('eyeron.playground.dataUrl', dataUrlInput.value.trim());
-        localStorage.setItem('eyeron.playground.messageLogUrl', messageLogUrlInput.value.trim());
-        localStorage.setItem('eyeron.playground.streamMessages', streamMessagesCheckbox.checked ? '1' : '0');
-        localStorage.setItem('eyeron.playground.enforceHttps', enforceHttpsCheckbox.checked ? '1' : '0');
-        localStorage.setItem('eyeron.playground.background', backgroundKnowledgeText);
-        localStorage.setItem('eyeron.playground.backgroundSource', backgroundKnowledgeSource);
-        localStorage.setItem('eyeron.playground.example', currentExample || '');
-
-        runButton.disabled = true;
-        runPaused = false;
-        pausedRunResult = null;
-        setRunningControls(true);
-        setStatus('Running with ' + selectedEngine() + '…');
-        clearRuntimeStats();
-        const startedAt = performance.now();
-        try {
-          await new Promise(requestAnimationFrame);
-          clearErrorHighlight();
-          if (selectedEngine() === 'eyeling') {
-            const result = await runEyeling();
-            if (result !== null) {
-              setOutputText(result.output, 'auto');
-              setRuntimeStats(result.derivedCount, performance.now() - startedAt);
-              setStatus('Done', 'status ok');
-            } else if (pausedRunResult) {
-              pausedRunResult.elapsedMs = performance.now() - startedAt;
-            }
-          } else {
-            const report = runEyeron();
-            if (report.ok) {
-              setOutputText(report.output || '', 'auto');
-              setRuntimeStats(derivedCountFromReport(report), performance.now() - startedAt);
-              setStatus('Done', 'status ok');
-            } else {
-              showReasoningError(report);
-              setStatus('Syntax error', 'status error');
-            }
-          }
-        } catch (err) {
-          const message = String(err && err.message ? err.message : err);
-          if (message === 'Stopped.') {
-            clearRuntimeStats();
-            setStatus('Stopped.');
-          } else {
-            setOutputText(message, 'source');
-            clearErrorHighlight();
-            clearRuntimeStats();
-            setStatus('Error', 'status error');
-          }
-        } finally {
-          if (pausedRunResult) {
-            stopButton.disabled = true;
-            pauseButton.disabled = false;
-            pauseButton.textContent = 'Resume';
-          } else {
-            setRunningControls(false);
-          }
-          runButton.disabled = false;
-        }
-      }
-
-      input.on('change', () => {
-        clearErrorHighlight();
-        if (currentExample && input.getValue() !== currentExampleText) setExampleMarker('', '');
-      });
-      data.on('change', () => {
-        clearErrorHighlight();
-        if (data.getValue().trim()) setExampleMarker('', '');
-      });
-
-      if (outputRenderedTab) outputRenderedTab.addEventListener('click', () => setOutputView('rendered'));
-      if (outputSourceTab) outputSourceTab.addEventListener('click', () => setOutputView('source'));
-      output.on('change', () => {
-        syncRenderedOutput();
-        if (outputMarkdownAutoDetect) {
-          const markdownMode = isLikelyMarkdownOutput(output.getValue());
-          if (markdownMode !== outputMarkdownMode) {
-            setOutputMarkdownMode(markdownMode);
-            setOutputView(markdownMode ? 'rendered' : 'source');
+      async function run(args = argumentsForRun()) {
+        if (busy) return;
+        if (!args.includes('--help') && !args.includes('--version')) {
+          const names = sources.map((source) => source.name.trim() || '-');
+          const duplicate = names.find((name, index) => names.indexOf(name) !== index);
+          if (duplicate) {
+            setStatus(`More than one input is named ${duplicate}. Rename one before running.`, 'error');
+            return;
           }
         }
-      });
-      setOutputText('(no output yet)', 'source');
-
-      runButton.addEventListener('click', run);
-      pauseButton.addEventListener('click', () => {
-        if (pausedRunResult) {
-          const result = pausedRunResult;
-          pausedRunResult = null;
-          runPaused = false;
-          setOutputText(result.output, 'auto');
-          if (Number.isFinite(result.elapsedMs)) setRuntimeStats(result.derivedCount, result.elapsedMs);
-          setStatus('Done', 'status ok');
-          setRunningControls(false);
+        if (!byId('max-backward-depth').checkValidity() && !args.includes('--help') && !args.includes('--version')) {
+          byId('max-backward-depth').reportValidity();
           return;
         }
-        runPaused = !runPaused;
-        setRunningControls(!!activeWorker);
-        setStatus(runPaused ? 'Paused. Output will buffer until resumed.' : 'Running with Eyeling…');
-      });
-      stopButton.addEventListener('click', stopActiveRun);
-      copyShareLinkButton.addEventListener('click', copyShareLink);
-      createGistShareButton.addEventListener('click', createGistShare);
-      loadProgramUrlButton.addEventListener('click', loadProgramUrl);
-      loadDataUrlButton.addEventListener('click', loadDataUrl);
-      loadMessageLogUrlButton.addEventListener('click', loadMessageLogUrl);
-      clearBackgroundButton.addEventListener('click', () => {
-        clearBackgroundKnowledge();
-        setStatus('Background knowledge cleared.');
-      });
-      streamMessagesCheckbox.addEventListener('change', () => {
-        if (streamMessagesCheckbox.checked) {
-          rdfCheckbox.checked = true;
-          if (rdfFormatSelect.value === 'auto') rdfFormatSelect.value = 'trig';
-        }
-      });
-      engineEyelingCheckbox.addEventListener('change', () => {
-        syncEngineSummary();
-        localStorage.setItem('eyeron.playground.engine', selectedEngine());
-        if (selectedEngine() === 'eyeling') setStatus('Eyeling will load when reasoning runs.', 'status');
-        else setStatus(eyeronModule ? 'Ready' : 'Loading wasm module…', eyeronModule ? 'status ok' : 'status');
-      });
-      exampleSelect.addEventListener('change', async () => {
+        setBusy(true);
+        output.setValue('');
+        output.setOption('mode', args.some((arg) => ['--ast', '--prove-and-check', '--check-proof', '--help', '--version'].includes(arg)) ? null : 'turtle');
+        byId('messages').hidden = true;
+        byId('messages').textContent = '';
+        const started = performance.now();
+        setStatus('Running…');
         try {
-          await loadExample(exampleSelect.value);
-        } catch (err) {
-          setStatus(String(err && err.message ? err.message : err), 'status error');
-        }
-      });
-      exampleButton.addEventListener('click', () => {
-        populateExamples();
-        if (rdfCheckbox.checked) {
-          data.setValue(trigExample);
-          input.setValue(queryExample);
-          rdfFormatSelect.value = 'trig';
-          programUrlInput.value = '';
-          dataUrlInput.value = '';
-          setExampleMarker('', '');
-        } else {
-          data.setValue('');
-          input.setValue(defaultProgram);
-          programUrlInput.value = '';
-          dataUrlInput.value = '';
-          setExampleMarker('', '');
-        }
-      });
-      rdfCheckbox.addEventListener('change', () => {
-        if (rdfCheckbox.checked && input.getValue().trim() === defaultProgram.trim()) {
-          data.setValue(trigExample);
-          input.setValue(queryExample);
-          rdfFormatSelect.value = 'trig';
-          setExampleMarker('', '');
-        }
-      });
+          await ensureWorker();
+          const request = { args, sources, proof: { name: byId('proof-name').value.trim() || 'proof.n3', text: proof.getValue() } };
+          const report = await new Promise((resolve, reject) => { finishRun = resolve; failRun = reject; worker.postMessage(request); });
+          byId('messages').textContent = report.stderr;
+          byId('messages').hidden = !report.stderr;
+          const verdict = report.exitCode === 0 ? 'Done' : report.exitCode === 65 ? 'Inference fuse' : 'Failed';
+          setStatus(`${verdict} · exit ${report.exitCode} · ${((performance.now() - started) / 1000).toFixed(2)} s`, report.ok ? 'ok' : 'error');
+        } catch (error) {
+          setStatus(error.message, error.message === 'Stopped.' ? '' : 'error');
+        } finally { setBusy(false); }
+      }
 
-      await restoreInitialState();
-      loadEyeron();
+      async function fetchSource(url, name, signal) {
+        const value = new URL(url, location.href);
+        if (!['http:', 'https:'].includes(value.protocol)) throw new Error('Use an HTTP or HTTPS input URL.');
+        const response = await fetch(value, { signal, referrerPolicy: 'no-referrer' });
+        if (!response.ok) throw new Error(`Could not load ${value.href}: HTTP ${response.status}.`);
+        return { name: name || response.url, text: await response.text(), baseIri: response.url };
+      }
+
+      async function loadInputs(action) {
+        if (busy) return;
+        setBusy(true);
+        setStatus('Loading inputs…');
+        loadController = new AbortController();
+        try { await action(loadController.signal); setStatus('Inputs ready.'); }
+        catch (error) { setStatus(error.name === 'AbortError' ? 'Stopped.' : error.message, error.name === 'AbortError' ? '' : 'error'); }
+        finally { loadController = null; setBusy(false); updateOptions(); }
+      }
+
+      async function loadExample(name, signal) {
+        if (!bundledExamplesN3.includes(name)) throw new Error('Unknown bundled example.');
+        const loaded = [await fetchSource('examples/' + name, 'examples/' + name, signal)];
+        const stem = name.slice(0, -3);
+        const companion = [stem + '.n3', stem + '.trig'].find((candidate) => bundledCompanionInputs.includes(candidate));
+        if (companion) loaded.push(await fetchSource('examples/input/' + companion, 'examples/input/' + companion, signal));
+        sources = loaded;
+        byId('examples').value = name;
+        showSource(0);
+      }
+
+      function addSource(source, replaceDefault = false) {
+        if (sources.length === 1 && sources[0].name === '-' && (!sources[0].text.trim() || (replaceDefault && sources[0].text === defaultProgram))) sources = [];
+        sources.push(source);
+        showSource(sources.length - 1);
+      }
+
+      async function restore() {
+        restoring = true;
+        try {
+          const saved = JSON.parse(localStorage.getItem(stateKey) || 'null');
+          if (saved && Array.isArray(saved.sources) && saved.sources.length && saved.sources.every((source) => typeof source.name === 'string' && typeof source.text === 'string')) {
+            sources = saved.sources.map((source) => ({ name: source.name, text: source.text, baseIri: typeof source.baseIri === 'string' ? source.baseIri : baseForName(source.name) }));
+            selectedSource = Math.max(0, Math.min(sources.length - 1, Number(saved.selectedSource) || 0));
+            byId('mode').value = saved.mode || '';
+            if (byId('mode').selectedIndex < 0) byId('mode').value = '';
+            byId('rdf').checked = !!saved.rdf;
+            byId('stream').checked = !!saved.stream;
+            byId('stream-messages').checked = !!saved.streamMessages;
+            byId('base-iri').value = typeof saved.baseIri === 'string' ? saved.baseIri : '';
+            byId('max-backward-depth').value = saved.maxBackwardDepth ?? '';
+            byId('proof-name').value = saved.proof?.name || 'proof.n3';
+            proof.setValue(saved.proof?.text || '');
+            byId('examples').value = saved.example || '';
+          } else {
+            const previous = localStorage.getItem('eyeron.playground.input');
+            const previousData = localStorage.getItem('eyeron.playground.data');
+            if (previous !== null) sources[0].text = previous;
+            if (previousData?.trim()) sources.push({ name: 'data.trig', text: previousData, baseIri: baseForName('data.trig') });
+          }
+        } catch { /* An unavailable or outdated saved state does not block the editor. */ }
+        showSource(selectedSource);
+        restoring = false;
+        const example = new URL(location.href).searchParams.get('example') || new URL(location.href).searchParams.get('ex');
+        if (example) await loadInputs((signal) => loadExample(example, signal));
+        updateOptions();
+      }
+
+      for (const name of bundledExamplesN3) byId('examples').add(new Option(name, name));
+      input.on('change', () => { if (!restoring) { sources[selectedSource].text = input.getValue(); scheduleSave(); } });
+      proof.on('change', scheduleSave);
+      byId('source-select').addEventListener('change', () => showSource(Number(byId('source-select').value)));
+      byId('source-name').addEventListener('input', () => {
+        const source = sources[selectedSource];
+        source.name = byId('source-name').value.trim() || '-';
+        try { source.baseIri = baseForName(source.name); } catch { source.baseIri = null; }
+        syncSourceList(); updateOptions();
+      });
+      for (const id of ['mode', 'rdf', 'stream', 'stream-messages', 'base-iri', 'max-backward-depth', 'proof-name']) {
+        byId(id).addEventListener('input', updateOptions);
+      }
+      byId('stream-messages').addEventListener('change', () => {
+        if (byId('stream-messages').checked) { byId('rdf').checked = true; byId('stream').checked = false; byId('mode').value = ''; }
+        updateOptions();
+      });
+      byId('mode').addEventListener('change', () => { if (byId('mode').value) byId('stream-messages').checked = false; updateOptions(); });
+      byId('stream').addEventListener('change', () => { if (byId('stream').checked) byId('stream-messages').checked = false; updateOptions(); });
+      byId('rdf').addEventListener('change', () => { if (!byId('rdf').checked) byId('stream-messages').checked = false; updateOptions(); });
+      byId('run').addEventListener('click', () => run());
+      byId('help').addEventListener('click', () => run(['--help']));
+      byId('show-version').addEventListener('click', () => run(['--version']));
+      byId('stop').addEventListener('click', () => {
+        if (loadController) loadController.abort();
+        else { if (failRun) failRun(new Error('Stopped.')); finishRun = failRun = null; terminateWorker(); }
+      });
+      byId('examples').addEventListener('change', () => { if (byId('examples').value) loadInputs((signal) => loadExample(byId('examples').value, signal)); });
+      byId('add-input').addEventListener('click', () => {
+        let index = sources.length + 1;
+        while (sources.some((source) => source.name === `input-${index}.n3`)) index++;
+        const name = `input-${index}.n3`;
+        addSource({ name, text: '', baseIri: baseForName(name) });
+      });
+      byId('remove-input').addEventListener('click', () => {
+        sources.splice(selectedSource, 1);
+        if (!sources.length) sources = [{ name: '-', text: '', baseIri: null }];
+        showSource(Math.min(selectedSource, sources.length - 1));
+      });
+      byId('open-files').addEventListener('click', () => byId('files').click());
+      byId('files').addEventListener('change', () => loadInputs(async () => {
+        const loaded = await Promise.all(Array.from(byId('files').files, async (file) => ({ name: file.name, text: await file.text(), baseIri: baseForName(file.name) })));
+        for (const source of loaded) addSource(source, true);
+        byId('files').value = '';
+      }));
+      byId('load-url').addEventListener('click', () => {
+        if (!byId('input-url').value.trim() || !byId('input-url').reportValidity()) return;
+        loadInputs(async (signal) => { const source = await fetchSource(byId('input-url').value, '', signal); addSource(source, true); byId('input-url').value = ''; });
+      });
+      byId('open-proof').addEventListener('click', () => byId('proof-file').click());
+      byId('proof-file').addEventListener('change', () => loadInputs(async () => {
+        const file = byId('proof-file').files[0];
+        if (file) { proof.setValue(await file.text()); byId('proof-name').value = file.name; }
+        byId('proof-file').value = '';
+      }));
+      byId('load-proof-url').addEventListener('click', () => {
+        if (!byId('proof-url').value.trim() || !byId('proof-url').reportValidity()) return;
+        loadInputs(async (signal) => { const source = await fetchSource(byId('proof-url').value, '', signal); proof.setValue(source.text); byId('proof-name').value = source.name; byId('proof-url').value = ''; });
+      });
+      byId('save-output').addEventListener('click', () => {
+        const url = URL.createObjectURL(new Blob([output.getValue()], { type: 'text/plain;charset=utf-8' }));
+        const link = document.createElement('a'); link.href = url; link.download = byId('mode').value === '--proof' ? 'proof.n3' : 'output.txt';
+        link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      });
+      document.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter' && !busy) { event.preventDefault(); run(); } });
+      await restore();
+      try { await ensureWorker(); setBusy(false); setStatus('Ready.'); }
+      catch (error) { setStatus(error.message, 'error'); }
     </script>
   </body>
 </html>

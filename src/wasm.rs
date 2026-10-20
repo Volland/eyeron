@@ -14,6 +14,26 @@ pub fn version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
 }
 
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(typescript_type = "(text: string) => void")]
+    pub type OutputCallback;
+
+    #[wasm_bindgen(method, catch, js_name = call)]
+    fn send(this: &OutputCallback, context: &JsValue, text: &str) -> std::result::Result<JsValue, JsValue>;
+}
+
+/// Execute CLI arguments with source texts supplied by the browser. Each stdout
+/// chunk is delivered separately so RDF Message results can appear as they run.
+#[wasm_bindgen(js_name = runCliReport)]
+pub fn run_cli_report(request: &str, output: &OutputCallback) -> String {
+    crate::cli::run_browser_request(request, &mut |text| {
+        output.send(&JsValue::UNDEFINED, text)
+            .map(|_| ())
+            .map_err(|_| EyeronError::new("could not deliver playground output"))
+    }).to_string()
+}
+
 #[wasm_bindgen(js_name = reasonWithOptions)]
 pub fn reason_with_options(input: &str, proof: bool, rdf: bool, rdf_format: &str) -> std::result::Result<String, JsValue> {
     run(input, "", proof, rdf, rdf_format).map_err(|err| JsValue::from_str(&err.to_string()))

@@ -23,7 +23,7 @@ export class EyeronSession {
     constructor(program, proof) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passStringToWasm0(program, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            const ptr0 = passStringToWasm0(program, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len0 = WASM_VECTOR_LEN;
             wasm.eyeronsession_new(retptr, ptr0, len0, proof);
             var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -66,9 +66,9 @@ export class EyeronSession {
         let deferred3_1;
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passStringToWasm0(data, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            const ptr0 = passStringToWasm0(data, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len0 = WASM_VECTOR_LEN;
-            const ptr1 = passStringToWasm0(rdf_format, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            const ptr1 = passStringToWasm0(rdf_format, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len1 = WASM_VECTOR_LEN;
             wasm.eyeronsession_reasonReport(retptr, this.__wbg_ptr, ptr0, len0, rdf, ptr1, len1);
             var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -78,7 +78,7 @@ export class EyeronSession {
             return getStringFromWasm0(r0, r1);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
-            wasm.__wbindgen_export3(deferred3_0, deferred3_1, 1);
+            wasm.__wbindgen_export4(deferred3_0, deferred3_1, 1);
         }
     }
     /**
@@ -93,9 +93,9 @@ export class EyeronSession {
         let deferred4_1;
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passStringToWasm0(data, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            const ptr0 = passStringToWasm0(data, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len0 = WASM_VECTOR_LEN;
-            const ptr1 = passStringToWasm0(rdf_format, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            const ptr1 = passStringToWasm0(rdf_format, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len1 = WASM_VECTOR_LEN;
             wasm.eyeronsession_reason(retptr, this.__wbg_ptr, ptr0, len0, rdf, ptr1, len1);
             var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -113,7 +113,7 @@ export class EyeronSession {
             return getStringFromWasm0(ptr3, len3);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
-            wasm.__wbindgen_export3(deferred4_0, deferred4_1, 1);
+            wasm.__wbindgen_export4(deferred4_0, deferred4_1, 1);
         }
     }
 }
@@ -128,7 +128,7 @@ export function reason(input) {
     let deferred3_1;
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        const ptr0 = passStringToWasm0(input, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr0 = passStringToWasm0(input, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len0 = WASM_VECTOR_LEN;
         wasm.reason(retptr, ptr0, len0);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -146,7 +146,7 @@ export function reason(input) {
         return getStringFromWasm0(ptr2, len2);
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_export3(deferred3_0, deferred3_1, 1);
+        wasm.__wbindgen_export4(deferred3_0, deferred3_1, 1);
     }
 }
 
@@ -163,11 +163,11 @@ export function reasonWithData(program, data, proof, rdf, rdf_format) {
     let deferred5_1;
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        const ptr0 = passStringToWasm0(program, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr0 = passStringToWasm0(program, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm0(data, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr1 = passStringToWasm0(data, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len1 = WASM_VECTOR_LEN;
-        const ptr2 = passStringToWasm0(rdf_format, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr2 = passStringToWasm0(rdf_format, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len2 = WASM_VECTOR_LEN;
         wasm.reasonWithData(retptr, ptr0, len0, ptr1, len1, proof, rdf, ptr2, len2);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -185,7 +185,7 @@ export function reasonWithData(program, data, proof, rdf, rdf_format) {
         return getStringFromWasm0(ptr4, len4);
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_export3(deferred5_0, deferred5_1, 1);
+        wasm.__wbindgen_export4(deferred5_0, deferred5_1, 1);
     }
 }
 
@@ -202,11 +202,11 @@ export function reasonWithDataReport(program, data, proof, rdf, rdf_format) {
     let deferred4_1;
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        const ptr0 = passStringToWasm0(program, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr0 = passStringToWasm0(program, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm0(data, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr1 = passStringToWasm0(data, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len1 = WASM_VECTOR_LEN;
-        const ptr2 = passStringToWasm0(rdf_format, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr2 = passStringToWasm0(rdf_format, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len2 = WASM_VECTOR_LEN;
         wasm.reasonWithDataReport(retptr, ptr0, len0, ptr1, len1, proof, rdf, ptr2, len2);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -216,7 +216,7 @@ export function reasonWithDataReport(program, data, proof, rdf, rdf_format) {
         return getStringFromWasm0(r0, r1);
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_export3(deferred4_0, deferred4_1, 1);
+        wasm.__wbindgen_export4(deferred4_0, deferred4_1, 1);
     }
 }
 
@@ -232,9 +232,9 @@ export function reasonWithOptions(input, proof, rdf, rdf_format) {
     let deferred4_1;
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        const ptr0 = passStringToWasm0(input, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr0 = passStringToWasm0(input, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm0(rdf_format, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const ptr1 = passStringToWasm0(rdf_format, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
         const len1 = WASM_VECTOR_LEN;
         wasm.reasonWithOptions(retptr, ptr0, len0, proof, rdf, ptr1, len1);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -252,7 +252,34 @@ export function reasonWithOptions(input, proof, rdf, rdf_format) {
         return getStringFromWasm0(ptr3, len3);
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_export3(deferred4_0, deferred4_1, 1);
+        wasm.__wbindgen_export4(deferred4_0, deferred4_1, 1);
+    }
+}
+
+/**
+ * Execute CLI arguments with source texts supplied by the browser. Each stdout
+ * chunk is delivered separately so RDF Message results can appear as they run.
+ * @param {string} request
+ * @param {(text: string) => void} output
+ * @returns {string}
+ */
+export function runCliReport(request, output) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(request, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.runCliReport(retptr, ptr0, len0, addBorrowedObject(output));
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        heap[stack_pointer++] = undefined;
+        wasm.__wbindgen_export4(deferred2_0, deferred2_1, 1);
     }
 }
 
@@ -272,7 +299,7 @@ export function version() {
         return getStringFromWasm0(r0, r1);
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_export3(deferred1_0, deferred1_1, 1);
+        wasm.__wbindgen_export4(deferred1_0, deferred1_1, 1);
     }
 }
 function __wbg_get_imports() {
@@ -281,7 +308,11 @@ function __wbg_get_imports() {
         __wbg___wbindgen_throw_41e9ee4f547fc59a: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
-        __wbg_now_f4c46c01e7626d38: function() {
+        __wbg_call_dd8f98741b6e37c3: function() { return handleError(function (arg0, arg1, arg2, arg3) {
+            const ret = getObject(arg0).call(getObject(arg1), getStringFromWasm0(arg2, arg3));
+            return addHeapObject(ret);
+        }, arguments); },
+        __wbg_now_baf9745da7fa309f: function() {
             const ret = Date.now();
             return ret;
         },
@@ -289,6 +320,9 @@ function __wbg_get_imports() {
             // Cast intrinsic for `Ref(String) -> Externref`.
             const ret = getStringFromWasm0(arg0, arg1);
             return addHeapObject(ret);
+        },
+        __wbindgen_object_drop_ref: function(arg0) {
+            takeObject(arg0);
         },
     };
     return {
@@ -308,6 +342,12 @@ function addHeapObject(obj) {
 
     heap[idx] = obj;
     return idx;
+}
+
+function addBorrowedObject(obj) {
+    if (stack_pointer == 1) throw new Error('out of js stack');
+    heap[--stack_pointer] = obj;
+    return stack_pointer;
 }
 
 function dropObject(idx) {
@@ -337,6 +377,14 @@ function getUint8ArrayMemory0() {
 }
 
 function getObject(idx) { return heap[idx]; }
+
+function handleError(f, args) {
+    try {
+        return f.apply(this, args);
+    } catch (e) {
+        wasm.__wbindgen_export(addHeapObject(e));
+    }
+}
 
 let heap = new Array(1024).fill(undefined);
 heap.push(undefined, null, true, false);
@@ -379,6 +427,8 @@ function passStringToWasm0(arg, malloc, realloc) {
     WASM_VECTOR_LEN = offset;
     return ptr;
 }
+
+let stack_pointer = 1024;
 
 function takeObject(idx) {
     const ret = getObject(idx);

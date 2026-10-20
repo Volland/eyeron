@@ -31,6 +31,12 @@ export function reasonWithDataReport(program: string, data: string, proof: boole
 
 export function reasonWithOptions(input: string, proof: boolean, rdf: boolean, rdf_format: string): string;
 
+/**
+ * Execute CLI arguments with source texts supplied by the browser. Each stdout
+ * chunk is delivered separately so RDF Message results can appear as they run.
+ */
+export function runCliReport(request: string, output: (text: string) => void): string;
+
 export function version(): string;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -47,11 +53,13 @@ export interface InitOutput {
     readonly reasonWithData: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number) => void;
     readonly reasonWithDataReport: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number) => void;
     readonly reasonWithOptions: (a: number, b: number, c: number, d: number, e: number, f: number, g: number) => void;
+    readonly runCliReport: (a: number, b: number, c: number, d: number) => void;
     readonly version: (a: number) => void;
+    readonly __wbindgen_export: (a: number) => void;
     readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
-    readonly __wbindgen_export: (a: number, b: number) => number;
-    readonly __wbindgen_export2: (a: number, b: number, c: number, d: number) => number;
-    readonly __wbindgen_export3: (a: number, b: number, c: number) => void;
+    readonly __wbindgen_export2: (a: number, b: number) => number;
+    readonly __wbindgen_export3: (a: number, b: number, c: number, d: number) => number;
+    readonly __wbindgen_export4: (a: number, b: number, c: number) => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;

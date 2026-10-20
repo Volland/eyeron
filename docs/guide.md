@@ -104,7 +104,11 @@ The convenience `reason(&str)` parses N3 or an RDF Message Log and returns seria
 
 ## Browser
 
-The [playground](https://eyereasoner.github.io/eyeron/playground) uses the same Rust engine through WebAssembly. Its JS exports include `reason`, `reasonWithOptions`, `reasonWithData`, and `reasonWithDataReport`. `EyeronSession` prepares a program once for independent data batches; `reasonReport` adds statistics to its JSON result. See [wasm.rs](../src/wasm.rs) for signatures and error envelopes.
+The [playground](https://eyereasoner.github.io/eyeron/playground) runs eyeron through WebAssembly. Its visible controls correspond to the CLI options above: choose conclusions, AST, proof output, generated-proof checking, or saved-proof checking, then set RDF compatibility, message streaming, the base IRI, or backward depth. Help and version buttons run `--help` and `--version`. The displayed command shows the selected arguments.
+
+Open one or more files, load URLs, or edit input directly. Each input keeps its own name and scope; extensions select the parser just as on the CLI, and `-` represents stdin. Bundled examples load their companion input when one exists. Relative IRIs use a fetched URL or, for an uploaded file, its name resolved against the playground URL; `--base-iri` overrides that base. Browser URL loading requires the remote server to allow cross-origin requests. `--stream-messages` reasons over each message independently and displays each result as it is emitted; uploaded and fetched input texts are loaded into memory first. Stop cancels a fetch or terminates the reasoning worker.
+
+The `runCliReport(request, onOutput)` JS export accepts JSON containing `args`, `sources` (`name`, `text`, and optional `baseIri`), and an optional `proof` (`name` and `text`). It sends stdout chunks to the callback and returns JSON with `ok`, `exitCode`, and `stderr`. It uses the same option parser, source parsing, execution, and proof-check report as the native CLI. Existing `reason`, `reasonWithOptions`, `reasonWithData`, `reasonWithDataReport`, and `EyeronSession` exports remain available. See [wasm.rs](../src/wasm.rs) for their signatures.
 
 To rebuild and serve it locally, install `wasm-pack` and the Rust `wasm32-unknown-unknown` target, then run:
 
@@ -113,7 +117,7 @@ cargo playground
 python3 -m http.server
 ```
 
-Open <http://localhost:8000/playground.html>. The build updates the committed `pkg/` artifacts. Browser APIs expose reasoning and proof generation; proof checking is currently exposed through the native CLI and Rust library.
+Open <http://localhost:8000/playground.html>. The build updates the committed `pkg/` artifacts.
 
 ## Development and testing
 
@@ -137,6 +141,6 @@ The vendored N3 suite has two expectations adjusted for Eyeron's graph-term scop
 | `src/printing.rs` | N3/TriG serialization, RDF JSON, fuse reports |
 | `src/proof_writer.rs` | N3 proof generation |
 | `src/proof_check.rs`, `src/proof_check_n3.rs` | Generic checker and N3 reader |
-| `src/main.rs`, `src/wasm.rs` | Native CLI and browser entry points |
+| `src/cli.rs`, `src/main.rs`, `src/wasm.rs` | Shared CLI behavior, native I/O, and browser bindings |
 
 For maintainers, `./release patch "message"` (or `minor`/`major`) pulls `main`, bumps the version, rebuilds the playground, commits all working-tree changes, and pushes `main` and an annotated tag. Run the checks beforehand; the script does not run tests. Tag pushes trigger the GitHub release workflow.

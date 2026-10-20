@@ -1,40 +1,12 @@
+use eyeron::cli::{self, CliOptions, Source};
 use eyeron::error::{EyeronError, Result};
-use eyeron::printing::{document_debug, rdf_result_to_string, result_to_string};
-use eyeron::proof_writer::proof_to_n3;
-use eyeron::reasoner::{reason, PreparedReasoner, ReasonerOptions};
-use eyeron::Document;
-use eyeron::{
-    fuse_report, is_rdf_message_log, parse_n3, parse_n3_with_source, parse_rdf12, parse_rdf_message_log,
-    RdfFormat,
-};
-use std::collections::BTreeMap;
+use eyeron::reasoner::PreparedReasoner;
+use eyeron::{Document, is_rdf_message_log, parse_n3_with_source};
 use std::env;
 use std::fs;
-use std::io::{self, BufRead, BufReader, Read, Write};
+use std::io::{self, BufReader, Read, Write};
 use std::path::Path;
 use ureq::ResponseExt;
-
-const VERSION: &str = env!("CARGO_PKG_VERSION");
-
-#[derive(Debug, Default)]
-struct CliOptions {
-    ast: bool,
-    proof: bool,
-    prove_and_check: bool,
-    rdf: bool,
-    stream: bool,
-    stream_messages: bool,
-    base_iri: Option<String>,
-    max_backward_depth: Option<usize>,
-    files: Vec<String>,
-    /// `--check-proof FILE`: check that proof document against the program
-    /// given as the positional arguments (`docs/proof-checking.md`).
-    check_proof: Option<String>,
-}
-
-/// sysexits.h EX_DATAERR: the input and the rules together made a forbidden
-/// situation provable, rather than anything going wrong with the run.
-const INFERENCE_FUSE_EXIT_CODE: i32 = 65;
 
 fn main() {
     if let Err(err) = run() {
@@ -46,112 +18,40 @@ fn main() {
 fn run() -> Result<()> {
     let args: Vec<String> = env::args().skip(1).collect();
     if args.is_empty() {
-        print_help();
+        print!("{}", cli::help());
         return Ok(());
     }
-    let opt = parse_args(args)?;
-    if opt.prove_and_check && (opt.ast || opt.proof || opt.check_proof.is_some() || opt.stream_messages) {
-        return Err(EyeronError::new(
-            "--prove-and-check cannot be combined with --ast, --proof, --check-proof, or --stream-messages",
-        ));
-    }
-
-    if opt.check_proof.is_some() && (opt.ast || opt.proof || opt.stream_messages) {
-        return Err(EyeronError::new("--check-proof cannot be combined with --ast, --proof, or --stream-messages"));
-    }
-    if opt.check_proof.as_deref() == Some("-") && (opt.files.is_empty() || opt.files.iter().any(|file| file == "-")) {
-        return Err(EyeronError::new("stdin cannot supply both the source program and the proof"));
-    }
-    if opt.stream {
-        eprintln!(
-            "warning: --stream is accepted; Eyeron currently emits after the fixpoint is reached"
-        );
-    }
-    if opt.stream_messages {
-        return run_stream_messages(&opt);
-    }
-    let sources = read_sources(&opt.files)?;
-
-    let capture_proof = opt.proof || opt.prove_and_check || opt.check_proof.is_some();
-    let merged = parse_sources(&opt, &sources, capture_proof)?;
-    if let Some(path) = &opt.check_proof {
-        return run_check_proof(path, &sources, &merged);
-    }
-
-    if opt.ast {
-        print!("{}", document_debug(&merged));
+    let opt = cli::parse_args(args, &mut |warning| eprintln!("{warning}"))?;
+    if opt.help {
+        print!("{}", cli::help());
         return Ok(());
     }
-
-    let reasoner_options = cli_reasoner_options(&opt, capture_proof);
-    let result = reason(&merged, &reasoner_options);
-    // A fired fuse is the answer: the rules forbade a situation and the data
-    // made it provable. Report which rule, and leave with sysexits' EX_DATAERR
-    // (65) so a caller can tell it from an ordinary failure.
-    if let Some(fuse) = &result.fuse {
-        print!("{}", fuse_report(&merged.prefixes, fuse));
-        std::process::exit(INFERENCE_FUSE_EXIT_CODE);
+    if opt.version {
+        println!("{}", env!("CARGO_PKG_VERSION"));
+        return Ok(());
     }
-    if let Some(summary) = result.incomplete_summary() {
-        return Err(EyeronError::new(summary));
-    }
-    if opt.prove_and_check {
-        let proof = proof_to_n3(&merged.prefixes, &result);
-        let report = eyeron::proof_check_n3::check_proof_document(&merged, &proof)?;
-        return report_proof_check("<generated>", &sources, &report);
-    }
-    if opt.proof {
-        print!("{}", proof_to_n3(&merged.prefixes, &result));
-    } else if opt.rdf {
-        print!(
-            "{}",
-            rdf_result_to_string(&merged.prefixes, &result.derived)
-        );
-    } else {
-        print!("{}", result_to_string(&merged.prefixes, &result.derived));
-    }
+    cli::validate_options(&opt)?;
+    if opt.stream { eprintln!("{}", cli::STREAM_WARNING); }
+    if opt.stream_messages { return run_stream_messages(&opt); }
+    let sources = read_sources(&opt.files)?.into_iter().map(|(name, text)| {
+        let base_iri = if name == "<stdin>" { None }
+            else if is_http_url(&name) { Some(name.clone()) }
+            else { path_to_file_iri(&name).ok() };
+        Source { name, text, base_iri }
+    }).collect::<Vec<_>>();
+    let exit_code = cli::run_sources(&opt, &sources, read_text_source, &mut emit)?;
+    if exit_code != 0 { std::process::exit(exit_code); }
     Ok(())
 }
 
-/// Parse source inputs identically for reasoning and saved-proof checking.
-fn parse_sources(opt: &CliOptions, sources: &[(String, String)], capture_proof: bool) -> Result<Document> {
-    let mut merged = Document::new();
-    for (label, text) in sources {
-        let path_base = if label == "<stdin>" {
-            None
-        } else if is_http_url(label) {
-            Some(label.clone())
-        } else {
-            path_to_file_iri(label).ok()
-        };
-        let base = opt.base_iri.as_deref().or(path_base.as_deref());
-        let parsed = if is_rdf_message_log(text) {
-            parse_rdf_message_log(text, base)
-        } else if let Some(format) = rdf_format_for_source(label, opt.rdf)? {
-            parse_rdf12(text, base, format)
-        } else if capture_proof {
-            parse_n3_with_source(text, base, Some(label))
-        } else {
-            parse_n3(text, base)
-        };
-        match parsed {
-            Ok(doc) => merged.merge(doc),
-            Err(err) => return Err(EyeronError::new(err.with_source_location(text, label))),
-        }
-    }
-
-    Ok(merged)
+fn emit(output: &str) -> Result<()> {
+    io::stdout().write_all(output.as_bytes())?;
+    io::stdout().flush()?;
+    Ok(())
 }
 
 fn run_stream_messages(opt: &CliOptions) -> Result<()> {
-    if !opt.rdf {
-        return Err(EyeronError::new("--stream-messages requires -r/--rdf"));
-    }
-    if opt.ast || opt.proof || opt.stream {
-        return Err(EyeronError::new(
-            "--stream-messages cannot be combined with --ast, --proof, or --stream",
-        ));
-    }
+    cli::validate_stream_options(opt)?;
 
     let mut program = Document::new();
     let mut message_sources = Vec::new();
@@ -182,7 +82,7 @@ fn run_stream_messages(opt: &CliOptions) -> Result<()> {
         ));
     }
 
-    let reasoner_options = cli_reasoner_options(opt, false);
+    let reasoner_options = cli::cli_reasoner_options(opt, false);
     // Built once for the whole stream: PreparedReasoner keeps the agenda index
     // it builds from `program`'s rules and reuses it for every message,
     // instead of `reason()` recomputing that index from scratch per message.
@@ -217,12 +117,13 @@ fn run_stream_messages(opt: &CliOptions) -> Result<()> {
                 .call()
                 .map_err(|err| EyeronError::new(format!("failed to fetch {source}: {err}")))?;
             let final_url = response.get_uri().to_string();
-            stream_message_reader(
+            cli::stream_message_reader(
                 BufReader::new(response.into_body().into_reader()),
                 &final_url,
                 base.as_deref(),
                 &prepared,
                 &reasoner_options,
+                &mut emit,
             )?;
         } else if source == "-" {
             return Err(EyeronError::new(
@@ -230,114 +131,16 @@ fn run_stream_messages(opt: &CliOptions) -> Result<()> {
             ));
         } else {
             let file = fs::File::open(&source)?;
-            stream_message_reader(
+            cli::stream_message_reader(
                 BufReader::new(file),
                 &source,
                 base.as_deref(),
                 &prepared,
                 &reasoner_options,
+                &mut emit,
             )?;
         }
     }
-    Ok(())
-}
-
-fn stream_message_reader<R: BufRead>(
-    mut reader: R,
-    label: &str,
-    base: Option<&str>,
-    prepared: &PreparedReasoner,
-    reasoner_options: &ReasonerOptions,
-) -> Result<()> {
-    let mut directives = String::new();
-    let mut message = String::new();
-    let mut line = String::new();
-    let mut saw_version = false;
-    let mut saw_delimiter = false;
-    let mut message_index = 1usize;
-
-    loop {
-        line.clear();
-        let bytes = reader.read_line(&mut line).map_err(|err| {
-            EyeronError::new(format!("failed to read response from {label}: {err}"))
-        })?;
-        if bytes == 0 {
-            break;
-        }
-        let trimmed = line.trim();
-        let lower = trimmed.to_ascii_lowercase();
-        if (lower.starts_with("version ") || lower.starts_with("@version "))
-            && lower.contains("-messages")
-        {
-            saw_version = true;
-        } else if trimmed.eq_ignore_ascii_case("MESSAGE")
-            || trimmed.eq_ignore_ascii_case("@message .")
-        {
-            run_one_message(
-                prepared,
-                &directives,
-                &message,
-                label,
-                message_index,
-                base,
-                reasoner_options,
-            )?;
-            message.clear();
-            message_index += 1;
-            saw_delimiter = true;
-        } else if trimmed.starts_with("PREFIX ")
-            || trimmed.starts_with("prefix ")
-            || trimmed.starts_with("BASE ")
-            || trimmed.starts_with("base ")
-        {
-            if !directives.contains(&line) {
-                directives.push_str(&line);
-            }
-        } else {
-            message.push_str(&line);
-        }
-    }
-    if !saw_version {
-        return Err(EyeronError::new(format!(
-            "not an RDF Message Log: missing VERSION \"*-messages\" directive in {label}"
-        )));
-    }
-    if saw_delimiter || !message.trim().is_empty() {
-        run_one_message(
-            prepared,
-            &directives,
-            &message,
-            label,
-            message_index,
-            base,
-            reasoner_options,
-        )?;
-    }
-    Ok(())
-}
-
-fn run_one_message(
-    prepared: &PreparedReasoner,
-    directives: &str,
-    message: &str,
-    label: &str,
-    index: usize,
-    base: Option<&str>,
-    reasoner_options: &ReasonerOptions,
-) -> Result<()> {
-    let replay = format!("{directives}\nVERSION \"1.2-messages\"\n{message}");
-    let message_label = format!("{label}#message-{index}");
-    let parsed = parse_rdf_message_log(&replay, base)
-        .map_err(|err| EyeronError::new(err.with_source_location(&replay, &message_label)))?;
-    let result = prepared.reason(&parsed, reasoner_options);
-    if let Some(summary) = result.incomplete_summary() {
-        return Err(EyeronError::new(summary));
-    }
-    print!(
-        "{}",
-        rdf_result_to_string(&BTreeMap::new(), &result.derived)
-    );
-    io::stdout().flush()?;
     Ok(())
 }
 
@@ -351,179 +154,6 @@ fn read_text_source(source: &str) -> Result<String> {
         response.into_body().read_to_string().map_err(|err| EyeronError::new(format!("failed to read response from {source}: {err}")))
     } else {
         Ok(fs::read_to_string(source)?)
-    }
-}
-
-/// `--check-proof`: read the proof document and check it against the
-/// program, reporting the verdict the specification's §9 requires.
-fn run_check_proof(path: &str, sources: &[(String, String)], document: &Document) -> Result<()> {
-    let proof = read_text_source(path)?;
-    let report = eyeron::proof_check_n3::check_proof_document(document, &proof)
-        .map_err(|err| EyeronError::new(err.with_source_location(&proof, path)))?;
-    report_proof_check(path, sources, &report)
-}
-
-fn report_proof_check(path: &str, sources: &[(String, String)], report: &eyeron::proof_check::Report) -> Result<()> {
-    println!("Proof: {}", path);
-    println!("Source program: {}", sources.iter().map(|(label, _)| label.as_str()).collect::<Vec<_>>().join(", "));
-    println!("{}", report.verdict());
-    if !report.counts.is_empty() {
-        println!("Step kinds:");
-    }
-    for (kind, count) in &report.counts {
-        let description = match *kind {
-            "rule" => "rule applications",
-            "fact" => "source facts",
-            "builtin" => "built-ins",
-            "absent" => "absence checks",
-            "collected" => "collections",
-            "unproven" => "unproven steps",
-            other => other,
-        };
-        println!("  {}: {}", description, count);
-    }
-    println!("Conditions:");
-    for (id, name, checked, failed) in report.conditions() {
-        println!("  {} {}: {} checked, {} failed", id, name, checked, failed);
-    }
-    if !report.obligations.is_empty() {
-        println!("Trust obligations (accepted without verifying their truth):");
-    }
-    for obligation in &report.obligations {
-        println!("  {}:", obligation.kind);
-        for line in obligation.conclusion.lines() {
-            println!("    {}", line);
-        }
-    }
-    if !report.failures.is_empty() {
-        println!("Failures:");
-    }
-    for failure in &report.failures {
-        let name = eyeron::proof_check::CONDITIONS.iter().find(|(id, _)| *id == failure.condition).map_or("", |(_, name)| name);
-        println!("  [{}: {}]", failure.condition, name);
-        for line in failure.conclusion.lines() {
-            println!("    {}", line);
-        }
-        println!("    {}", failure.detail);
-    }
-    if !report.valid() {
-        return Err(EyeronError::new(format!("{} is not a valid proof for the given program", path)));
-    }
-    Ok(())
-}
-
-fn cli_reasoner_options(opt: &CliOptions, proof: bool) -> ReasonerOptions {
-    let mut options = ReasonerOptions {
-        proof,
-        ..ReasonerOptions::default()
-    };
-    if let Some(max_backward_depth) = opt.max_backward_depth {
-        options.max_backward_depth = max_backward_depth;
-    }
-    options
-}
-
-fn parse_args(args: Vec<String>) -> Result<CliOptions> {
-    let mut opt = CliOptions::default();
-    let mut i = 0usize;
-    while i < args.len() {
-        match args[i].as_str() {
-            "-h" | "--help" => {
-                print_help();
-                std::process::exit(0);
-            }
-            "-v" | "--version" => {
-                println!("{}", VERSION);
-                std::process::exit(0);
-            }
-            "-a" | "--ast" => opt.ast = true,
-            "-p" | "--proof" | "--proof-comments" => opt.proof = true,
-            "-c" | "--prove-and-check" => opt.prove_and_check = true,
-            "-r" | "--rdf" => opt.rdf = true,
-            "-s" | "--stream" => opt.stream = true,
-            "--max-backward-depth" => {
-                let flag = args[i].clone();
-                i += 1;
-                if i >= args.len() {
-                    return Err(EyeronError::new(format!("{} requires a value", flag)));
-                }
-                opt.max_backward_depth = Some(args[i].parse::<usize>().map_err(|_| {
-                    EyeronError::new(format!(
-                        "{} requires a non-negative integer, got {}",
-                        flag, args[i]
-                    ))
-                })?);
-            }
-            "--builtin" | "--store" | "--store-path" => {
-                let flag = args[i].clone();
-                i += 1;
-                if i >= args.len() {
-                    return Err(EyeronError::new(format!("{} requires a value", flag)));
-                }
-                eprintln!(
-                    "warning: {} is accepted for CLI compatibility but not implemented in Eyeron",
-                    flag
-                );
-            }
-            "--stream-messages" => opt.stream_messages = true,
-            "--check-proof" => {
-                let flag = args[i].clone();
-                i += 1;
-                if i >= args.len() {
-                    return Err(EyeronError::new(format!("{} requires a value", flag)));
-                }
-                opt.check_proof = Some(args[i].clone());
-            }
-            "--base-iri" | "--base" => {
-                i += 1;
-                if i >= args.len() {
-                    return Err(EyeronError::new(format!(
-                        "{} requires a value",
-                        args[i - 1]
-                    )));
-                }
-                opt.base_iri = Some(args[i].clone());
-            }
-            "--store-clear" | "--enforce-https" => {
-                eprintln!(
-                    "warning: {} is accepted for CLI compatibility but not implemented in Eyeron",
-                    args[i]
-                );
-            }
-            other if other.starts_with('-') && other != "-" => {
-                return Err(EyeronError::new(format!("unknown option {}", other)));
-            }
-            file => opt.files.push(file.to_string()),
-        }
-        i += 1;
-    }
-    Ok(opt)
-}
-
-fn rdf_format_for_source(label: &str, rdf_mode: bool) -> Result<Option<RdfFormat>> {
-    if label == "<stdin>" {
-        return Ok(if rdf_mode {
-            Some(RdfFormat::Turtle)
-        } else {
-            None
-        });
-    }
-
-    let source_path = label.split(['?', '#']).next().unwrap_or(label);
-    let extension = Path::new(source_path)
-        .extension()
-        .and_then(|ext| ext.to_str())
-        .map(str::to_ascii_lowercase);
-    let format = extension.as_deref().and_then(RdfFormat::parse);
-
-    match (format, extension.as_deref(), rdf_mode) {
-        (Some(format), _, _) => Ok(Some(format)),
-        (None, Some("n3"), _) => Ok(None),
-        (None, _, true) => Err(EyeronError::new(format!(
-            "cannot infer RDF format for {}; use .ttl, .nt, .nq, .trig, or .n3",
-            label
-        ))),
-        (None, _, false) => Ok(None),
     }
 }
 
@@ -581,30 +211,4 @@ fn percent_encode_path(path: &str) -> String {
         }
     }
     out
-}
-
-fn print_help() {
-    println!("eyeron {}", VERSION);
-    println!();
-    println!("Usage: eyeron [options] [file-or-url|- ...]");
-    println!();
-    println!("Options:");
-    println!("  -a, --ast                     Print parsed AST/debug form and exit");
-    println!("  -p, --proof                   Enable N3 proof explanations");
-    println!("  -c, --prove-and-check         Generate a proof and check it against the input program");
-    println!("  -r, --rdf                     Enable RDF/TriG input/output compatibility");
-    println!("  -s, --stream                  Output is emitted after fixpoint");
-    println!(
-        "      --stream-messages         RDF Message Log input with VERSION/MESSAGE delimiters"
-    );
-    println!(
-        "      --base-iri IRI            Base IRI used by parser modes that resolve relative IRIs"
-    );
-    println!(
-        "      --max-backward-depth N    Maximum recursive backward-rule depth (default: {})",
-        ReasonerOptions::default().max_backward_depth
-    );
-    println!("      --check-proof FILE        Check that proof document against the program");
-    println!("  -v, --version                 Print version");
-    println!("  -h, --help                    Show this help");
 }

@@ -31,7 +31,7 @@ fn playground_html_is_packaged_for_browser_wasm() {
 
     assert!(html.contains("The Eyeron Playground"), "{}", playground.display());
     assert!(html.contains("./pkg/eyeron.js"), "playground should load the wasm-pack web bundle");
-    assert!(html.contains("reasonWithData"), "playground should expose separate data + N3 program reasoning");
+    assert!(html.contains("runCliReport"), "playground should run the same options as the native CLI");
 
     let examples_dir = root.join("examples");
     assert_eq!(
