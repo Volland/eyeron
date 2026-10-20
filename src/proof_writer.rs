@@ -61,10 +61,18 @@ pub fn proof_to_n3(prefixes: &BTreeMap<String, String>, result: &ReasonerResult)
 /// recorded. These borrow from the run's own proof list rather than copying
 /// it -- a long chain records one derivation per link, and a copy of each is
 /// a copy of the whole run.
+///
+/// A universal statement a rule concluded is recorded with its variables
+/// open, so that an instance of it can be explained; it is no fact the run
+/// derived, and so no conclusion to explain in its own right.
 pub(crate) fn unique_proofs(proofs: &[DerivedFact]) -> Vec<&DerivedFact> {
     let mut seen = BTreeSet::<&Triple>::new();
     let mut out = Vec::new();
     for proof in proofs {
+        let fact = &proof.fact;
+        if [&fact.s, &fact.p, &fact.o].iter().any(|term| matches!(term, Term::Var(_))) {
+            continue;
+        }
         if seen.insert(&proof.fact) {
             out.push(proof);
         }
@@ -169,7 +177,15 @@ impl<'a> ProofCollector<'a, '_> {
                 }
             }
             BackwardStep::Fact { fact } => {
-                let source = self.explicit_sources.get(&fact).cloned();
+                // An instance of a universal statement is given by that
+                // statement, so it is cited from where that one was written.
+                let source = self.explicit_sources.get(&fact).cloned().or_else(|| {
+                    self.explicit_facts
+                        .iter()
+                        .filter(|candidate| !candidate.is_ground())
+                        .find(|candidate| crate::reasoner::match_triple(candidate, &fact, &mut BTreeMap::new()))
+                        .and_then(|candidate| self.explicit_sources.get(candidate).cloned())
+                });
                 self.remember_entry(ProofEntry::Fact { fact, source });
             }
             BackwardStep::Builtin { fact, builtin } => self.remember_entry(ProofEntry::Builtin { fact, builtin }),

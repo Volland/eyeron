@@ -19,7 +19,7 @@ The commands below use `eyeron`; use `./target/release/eyeron` if the executable
 | Notation3 | `.n3`, or the default parser for stdin and unrecognized extensions |
 | Turtle / TriG | `.ttl` / `.trig` |
 | N-Triples / N-Quads | `.nt` / `.nq` |
-| RDF Message Log | Recognized by its `VERSION "*-messages"` or `@version` directive |
+| RDF Message Log | Recognized by a `VERSION` or `@version` directive naming a `*-messages` version, or by a line holding only `MESSAGE` or `@message .` |
 
 Local files and HTTP(S) URLs are accepted. Files are parsed separately and merged, keeping their blank-node and quantifier scopes separate. Relative IRIs use each file's location or URL unless `--base-iri` overrides it. Use `-` for stdin, or supply options without files to read stdin; no arguments prints help. Ordinary stdin uses N3; `--rdf` selects Turtle for stdin and rejects unknown file extensions.
 
@@ -46,7 +46,7 @@ Ordinary output contains derived results. When `log:query` is present, its answe
 | `-s`, `--stream` | Compatibility flag; ordinary output still waits for reasoning to finish |
 | `-h`, `--help`; `-v`, `--version` | Print help or the version |
 
-`--proof-comments` aliases `--proof`. `--builtin`, `--store`, `--store-path`, `--store-clear`, and `--enforce-https` are accepted with warnings and have no implementation. `--prove-and-check` rejects `--ast`, `--check-proof`, and `--stream-messages` in the same invocation. `--check-proof` also rejects `--stream-messages`.
+`--proof-comments` aliases `--proof`. `--builtin`, `--store`, `--store-path`, `--store-clear`, and `--enforce-https` are accepted with warnings and have no implementation. `--prove-and-check` rejects `--ast`, `--proof`, `--check-proof`, and `--stream-messages` in the same invocation. `--check-proof` rejects `--ast`, `--proof`, and `--stream-messages`.
 
 Successful reasoning and valid proofs return status 0, including proofs with listed trust obligations. Parse, reasoning-limit, and invalid-proof errors return 1. A fired inference fuse prints its rule and matched instance and returns **65**. Library callers should inspect both completion status and `result.fuse`.
 

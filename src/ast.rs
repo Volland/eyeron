@@ -491,76 +491,59 @@ impl Document {
     }
 
     pub fn merge(&mut self, mut other: Document) {
-        // Independently parsed documents have disjoint binders.
-        let occupied: BTreeSet<_> = self
-            .universals
-            .iter()
-            .chain(&self.existentials)
-            .cloned()
-            .collect();
-        let mut all = occupied.clone();
-        all.extend(other.universals.iter().chain(&other.existentials).cloned());
-        let mut mapping = BTreeMap::new();
-        for (names, universal) in [(&other.universals, true), (&other.existentials, false)] {
+        // Independently parsed documents have disjoint binders, so the other
+        // document's root binders that collide with ours get fresh names.
+        // A root existential can reach into rules (through a root
+        // `@forSome`), so every colliding one is renamed.  A root universal
+        // only ties statements together through the root facts -- each rule
+        // is standardized apart when it fires -- so `?x` is renamed only when
+        // both documents use it in facts, and rule variables keep the names
+        // proofs show.
+        let shared: BTreeSet<Name> = other.universals.intersection(&self.universals).cloned().collect();
+        let universals = if shared.is_empty() {
+            shared
+        } else {
+            fact_variables(&other.facts, &fact_variables(&self.facts, &shared))
+        };
+        let taken = |n: &Name| {
+            self.universals.contains(n)
+                || self.existentials.contains(n)
+                || other.universals.contains(n)
+                || other.existentials.contains(n)
+        };
+        let mut renaming = Renaming::default();
+        let mut fresh_names = BTreeSet::new();
+        for (names, universal) in [(&universals, true), (&other.existentials, false)] {
             for name in names {
-                if !occupied.contains(name) {
+                if !universal && !self.existentials.contains(name) && !self.universals.contains(name) {
                     continue;
                 }
                 let mut suffix = 1;
                 let fresh = loop {
                     let candidate: Name = format!("{}__merge{}", name, suffix).into();
-                    if all.insert(candidate.clone()) {
+                    if !taken(&candidate) && fresh_names.insert(candidate.clone()) {
                         break candidate;
                     }
                     suffix += 1;
                 };
-                mapping.insert(
-                    if universal {
-                        Term::var(name.clone())
-                    } else {
-                        Term::blank(name.clone())
-                    },
-                    if universal {
-                        Term::var(fresh)
-                    } else {
-                        Term::blank(fresh)
-                    },
-                );
+                if universal { &mut renaming.vars } else { &mut renaming.blanks }.insert(name.clone(), fresh);
             }
         }
-        if !mapping.is_empty() {
-            let remap = |t: &Triple| {
-                Graph::from(vec![t.clone()])
-                    .apply_to_triples(&mapping)
-                    .triples
-                    .remove(0)
-            };
-            other.facts = other.facts.iter().map(remap).collect();
-            other.fact_sources = other
-                .fact_sources
+        if !renaming.is_empty() {
+            other.facts = other.facts.iter().map(|t| renaming.triple(t)).collect();
+            other.fact_sources = std::mem::take(&mut other.fact_sources)
                 .into_iter()
-                .map(|(t, source)| (remap(&t), source))
+                .map(|(t, source)| (renaming.triple(&t), source))
                 .collect();
             for rule in &mut other.rules {
-                rule.premise = rule.premise.substitute(&mapping);
-                rule.conclusion = rule.conclusion.substitute(&mapping);
+                rule.premise = renaming.graph(&rule.premise);
+                rule.conclusion = renaming.graph(&rule.conclusion);
             }
-            other.universals = other
-                .universals
-                .iter()
-                .map(|n| match mapping.get(&Term::var(n.clone())) {
-                    Some(Term::Var(v)) => v.clone(),
-                    _ => n.clone(),
-                })
-                .collect();
-            other.existentials = other
-                .existentials
-                .iter()
-                .map(|n| match mapping.get(&Term::blank(n.clone())) {
-                    Some(Term::Blank(v)) => v.clone(),
-                    _ => n.clone(),
-                })
-                .collect();
+            let rename = |names: &BTreeSet<Name>, map: &BTreeMap<Name, Name>| -> BTreeSet<Name> {
+                names.iter().map(|n| map.get(n).unwrap_or(n).clone()).collect()
+            };
+            other.universals = rename(&other.universals, &renaming.vars);
+            other.existentials = rename(&other.existentials, &renaming.blanks);
         }
         for (k, v) in other.prefixes {
             self.prefixes.insert(k, v);
@@ -578,6 +561,87 @@ impl Document {
 
 impl Default for Document {
     fn default() -> Self { Self::new() }
+}
+
+/// The names in `wanted` that occur as variables anywhere in `facts`.
+fn fact_variables(facts: &[Triple], wanted: &BTreeSet<Name>) -> BTreeSet<Name> {
+    fn walk(t: &Term, wanted: &BTreeSet<Name>, found: &mut BTreeSet<Name>) {
+        match t {
+            Term::Var(n) if wanted.contains(n) => {
+                found.insert(n.clone());
+            }
+            Term::List(items) => items.iter().for_each(|t| walk(t, wanted, found)),
+            Term::Formula(g) => {
+                for t in &g.triples {
+                    [&t.s, &t.p, &t.o].into_iter().for_each(|t| walk(t, wanted, found));
+                }
+            }
+            _ => {}
+        }
+    }
+    let mut found = BTreeSet::new();
+    for t in facts {
+        if found.len() == wanted.len() {
+            break;
+        }
+        [&t.s, &t.p, &t.o].into_iter().for_each(|t| walk(t, wanted, &mut found));
+    }
+    found
+}
+
+/// A renaming of free variables and blank nodes, done in one walk over a
+/// term.  A nested graph that binds one of the renamed names masks it; the
+/// walk keeps those graphs on a stack instead of copying the renaming.
+#[derive(Default)]
+struct Renaming {
+    vars: BTreeMap<Name, Name>,
+    blanks: BTreeMap<Name, Name>,
+}
+
+impl Renaming {
+    fn is_empty(&self) -> bool { self.vars.is_empty() && self.blanks.is_empty() }
+
+    fn triple(&self, t: &Triple) -> Triple { self.triple_in(t, &mut Vec::new()) }
+
+    /// Rename inside `g`, leaving the names `g` itself binds alone.
+    fn graph(&self, g: &Graph) -> Graph { self.graph_in(g, &mut Vec::new()) }
+
+    fn triple_in<'g>(&self, t: &'g Triple, masks: &mut Vec<&'g Graph>) -> Triple {
+        Triple::new(self.term_in(&t.s, masks), self.term_in(&t.p, masks), self.term_in(&t.o, masks))
+    }
+
+    fn term_in<'g>(&self, t: &'g Term, masks: &mut Vec<&'g Graph>) -> Term {
+        match t {
+            Term::Var(n) => match self.vars.get(n) {
+                Some(v) if !masks.iter().any(|g| g.universals.contains(n)) => Term::Var(v.clone()),
+                _ => t.clone(),
+            },
+            Term::Blank(n) => match self.blanks.get(n) {
+                Some(v) if !masks.iter().any(|g| g.existentials.contains(n)) => Term::Blank(v.clone()),
+                _ => t.clone(),
+            },
+            Term::List(items) => Term::List(items.iter().map(|t| self.term_in(t, masks)).collect()),
+            Term::Formula(g) => Term::Formula(self.graph_in(g, masks)),
+            _ => t.clone(),
+        }
+    }
+
+    fn graph_in<'g>(&self, g: &'g Graph, masks: &mut Vec<&'g Graph>) -> Graph {
+        let masking = g.universals.iter().any(|n| self.vars.contains_key(n))
+            || g.existentials.iter().any(|n| self.blanks.contains_key(n));
+        if masking {
+            masks.push(g);
+        }
+        let out = Graph {
+            universals: g.universals.clone(),
+            existentials: g.existentials.clone(),
+            triples: g.triples.iter().map(|t| self.triple_in(t, masks)).collect(),
+        };
+        if masking {
+            masks.pop();
+        }
+        out
+    }
 }
 
 pub fn default_prefixes() -> BTreeMap<String, String> {

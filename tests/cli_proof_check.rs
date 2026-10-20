@@ -117,7 +117,7 @@ fn separately_checked_invalid_proof_still_returns_failure() {
 
 #[test]
 fn prove_and_check_rejects_conflicting_modes() {
-    for other in ["--ast", "--check-proof", "--stream-messages"] {
+    for other in ["--ast", "--proof", "--check-proof", "--stream-messages"] {
         let mut args = vec!["-c", other];
         if other == "--check-proof" {
             args.push("examples/proof/socrates.n3");
@@ -127,7 +127,20 @@ fn prove_and_check_rejects_conflicting_modes() {
         assert!(output.stdout.is_empty());
         assert_eq!(
             String::from_utf8_lossy(&output.stderr),
-            "eyeron: --prove-and-check cannot be combined with --ast, --check-proof, or --stream-messages\n"
+            "eyeron: --prove-and-check cannot be combined with --ast, --proof, --check-proof, or --stream-messages\n"
+        );
+    }
+}
+
+#[test]
+fn check_proof_rejects_modes_it_would_ignore() {
+    for other in ["--ast", "--proof", "--stream-messages"] {
+        let output = run(&["--check-proof", "examples/proof/socrates.n3", other, "examples/socrates.n3"]);
+        assert_eq!(output.status.code(), Some(1));
+        assert!(output.stdout.is_empty());
+        assert_eq!(
+            String::from_utf8_lossy(&output.stderr),
+            "eyeron: --check-proof cannot be combined with --ast, --proof, or --stream-messages\n"
         );
     }
 }

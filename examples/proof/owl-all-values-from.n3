@@ -4,8 +4,34 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-:CatOwner rdfs:subClassOf :AnimalOwner .
 :milo a :Cat .
+:CatOwner rdfs:subClassOf :AnimalOwner .
+
+{ :milo a :Cat . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value :CatOwner ],
+    [ pe:var "P"; pe:value :hasPet ],
+    [ pe:var "U"; pe:value :alice ],
+    [ pe:var "V"; pe:value :milo ],
+    [ pe:var "Y"; pe:value :Cat ];
+  pe:uses
+    { :CatOwner owl:allValuesFrom :Cat . },
+    { :CatOwner owl:onProperty :hasPet . },
+    { :alice a :CatOwner . },
+    { :alice :hasPet :milo . }.
+
+{ :CatOwner owl:allValuesFrom :Cat . }
+  pe:fact "owl-all-values-from.n3".
+
+{ :CatOwner owl:onProperty :hasPet . }
+  pe:fact "owl-all-values-from.n3".
+
+{ :alice a :CatOwner . }
+  pe:fact "owl-all-values-from.n3".
+
+{ :alice :hasPet :milo . }
+  pe:fact "owl-all-values-from.n3".
 
 { :CatOwner rdfs:subClassOf :AnimalOwner . }
   pe:rule 2;
@@ -22,12 +48,6 @@
     { :AnimalOwner owl:onProperty :hasPet . },
     { :Cat rdfs:subClassOf :Animal . }.
 
-{ :CatOwner owl:allValuesFrom :Cat . }
-  pe:fact "owl-all-values-from.n3".
-
-{ :CatOwner owl:onProperty :hasPet . }
-  pe:fact "owl-all-values-from.n3".
-
 { :AnimalOwner owl:allValuesFrom :Animal . }
   pe:fact "owl-all-values-from.n3".
 
@@ -35,24 +55,4 @@
   pe:fact "owl-all-values-from.n3".
 
 { :Cat rdfs:subClassOf :Animal . }
-  pe:fact "owl-all-values-from.n3".
-
-{ :milo a :Cat . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "C"; pe:value :CatOwner ],
-    [ pe:var "P"; pe:value :hasPet ],
-    [ pe:var "U"; pe:value :alice ],
-    [ pe:var "V"; pe:value :milo ],
-    [ pe:var "Y"; pe:value :Cat ];
-  pe:uses
-    { :CatOwner owl:allValuesFrom :Cat . },
-    { :CatOwner owl:onProperty :hasPet . },
-    { :alice a :CatOwner . },
-    { :alice :hasPet :milo . }.
-
-{ :alice a :CatOwner . }
-  pe:fact "owl-all-values-from.n3".
-
-{ :alice :hasPet :milo . }
   pe:fact "owl-all-values-from.n3".

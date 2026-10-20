@@ -6,12 +6,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 {
-    :x :p :z .
-} owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
-{
-    :x :r :z .
-} :probability 0.49840000000000007 .
-{
     :y :q :x .
 } :s :o .
 {
@@ -24,102 +18,17 @@
     :y :q :x .
 } :probability 0.89 .
 {
-    :z :q :x .
+    :x :p :z .
 } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+{
+    :x :r :z .
+} :probability 0.49840000000000007 .
 {
     :x :r :x .
 } :probability 0.7921 .
-
 {
-  {
-      :x :p :z .
-  } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
-}
-  pe:rule 2;
-  pe:binding
-    [ pe:var "p"; pe:value :p ],
-    [ pe:var "x"; pe:value :x ],
-    [ pe:var "y"; pe:value :y ],
-    [ pe:var "z"; pe:value :z ];
-  pe:uses
-    {
-        {
-            :x :p :y .
-        } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
-    },
-    {
-        {
-            :y :p :z .
-        } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
-    },
-    { :p a owl:TransitiveProperty . }.
-
-{
-  {
-      :x :p :y .
-  } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
-}
-  pe:fact "quoted-probability.n3".
-
-{
-  {
-      :y :p :z .
-  } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
-}
-  pe:fact "quoted-probability.n3".
-
-{ :p a owl:TransitiveProperty . }
-  pe:fact "quoted-probability.n3".
-
-{
-  {
-      :x :r :z .
-  } :probability 0.49840000000000007 .
-}
-  pe:rule 3;
-  pe:binding
-    [ pe:var "p"; pe:value :p ],
-    [ pe:var "p1"; pe:value 0.89 ],
-    [ pe:var "p2"; pe:value 0.56 ],
-    [ pe:var "p3"; pe:value 0.49840000000000007 ],
-    [ pe:var "q"; pe:value :q ],
-    [ pe:var "r"; pe:value :r ],
-    [ pe:var "x"; pe:value :x ],
-    [ pe:var "y"; pe:value :y ],
-    [ pe:var "z"; pe:value :z ];
-  pe:uses
-    {
-        {
-            :x :p :y .
-        } :probability 0.89 .
-    },
-    {
-        {
-            :y :q :z .
-        } :probability 0.56 .
-    },
-    { :r owl:propertyChainAxiom (:p :q) . },
-    { (0.89 0.56) math:product 0.49840000000000007 . }.
-
-{
-  {
-      :x :p :y .
-  } :probability 0.89 .
-}
-  pe:fact "quoted-probability.n3".
-
-{
-  {
-      :y :q :z .
-  } :probability 0.56 .
-}
-  pe:fact "quoted-probability.n3".
-
-{ :r owl:propertyChainAxiom (:p :q) . }
-  pe:fact "quoted-probability.n3".
-
-{ (0.89 0.56) math:product 0.49840000000000007 . }
-  pe:builtin math:product.
+    :z :q :x .
+} owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
 
 {
   {
@@ -175,6 +84,13 @@
 
 {
   {
+      :x :p :y .
+  } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+}
+  pe:fact "quoted-probability.n3".
+
+{
+  {
       :z :q :y .
   } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
 }
@@ -193,6 +109,13 @@
         } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
     },
     { :p owl:inverseOf :q . }.
+
+{
+  {
+      :y :p :z .
+  } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+}
+  pe:fact "quoted-probability.n3".
 
 {
   {
@@ -217,24 +140,80 @@
 
 {
   {
-      :z :q :x .
+      :x :p :y .
+  } :probability 0.89 .
+}
+  pe:fact "quoted-probability.n3".
+
+{
+  {
+      :x :p :z .
   } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
 }
-  pe:rule 1;
+  pe:rule 2;
   pe:binding
-    [ pe:var "o"; pe:value owlstar:SubClassOfSomeValuesFrom ],
     [ pe:var "p"; pe:value :p ],
-    [ pe:var "q"; pe:value :q ],
-    [ pe:var "s"; pe:value owlstar:hasInterpretation ],
     [ pe:var "x"; pe:value :x ],
-    [ pe:var "y"; pe:value :z ];
+    [ pe:var "y"; pe:value :y ],
+    [ pe:var "z"; pe:value :z ];
   pe:uses
     {
         {
-            :x :p :z .
+            :x :p :y .
         } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
     },
-    { :p owl:inverseOf :q . }.
+    {
+        {
+            :y :p :z .
+        } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+    },
+    { :p a owl:TransitiveProperty . }.
+
+{ :p a owl:TransitiveProperty . }
+  pe:fact "quoted-probability.n3".
+
+{
+  {
+      :x :r :z .
+  } :probability 0.49840000000000007 .
+}
+  pe:rule 3;
+  pe:binding
+    [ pe:var "p"; pe:value :p ],
+    [ pe:var "p1"; pe:value 0.89 ],
+    [ pe:var "p2"; pe:value 0.56 ],
+    [ pe:var "p3"; pe:value 0.49840000000000007 ],
+    [ pe:var "q"; pe:value :q ],
+    [ pe:var "r"; pe:value :r ],
+    [ pe:var "x"; pe:value :x ],
+    [ pe:var "y"; pe:value :y ],
+    [ pe:var "z"; pe:value :z ];
+  pe:uses
+    {
+        {
+            :x :p :y .
+        } :probability 0.89 .
+    },
+    {
+        {
+            :y :q :z .
+        } :probability 0.56 .
+    },
+    { :r owl:propertyChainAxiom (:p :q) . },
+    { (0.89 0.56) math:product 0.49840000000000007 . }.
+
+{
+  {
+      :y :q :z .
+  } :probability 0.56 .
+}
+  pe:fact "quoted-probability.n3".
+
+{ :r owl:propertyChainAxiom (:p :q) . }
+  pe:fact "quoted-probability.n3".
+
+{ (0.89 0.56) math:product 0.49840000000000007 . }
+  pe:builtin math:product.
 
 {
   {
@@ -268,3 +247,24 @@
 
 { (0.89 0.89) math:product 0.7921 . }
   pe:builtin math:product.
+
+{
+  {
+      :z :q :x .
+  } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+}
+  pe:rule 1;
+  pe:binding
+    [ pe:var "o"; pe:value owlstar:SubClassOfSomeValuesFrom ],
+    [ pe:var "p"; pe:value :p ],
+    [ pe:var "q"; pe:value :q ],
+    [ pe:var "s"; pe:value owlstar:hasInterpretation ],
+    [ pe:var "x"; pe:value :x ],
+    [ pe:var "y"; pe:value :z ];
+  pe:uses
+    {
+        {
+            :x :p :z .
+        } owlstar:hasInterpretation owlstar:SubClassOfSomeValuesFrom .
+    },
+    { :p owl:inverseOf :q . }.

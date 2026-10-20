@@ -8,6 +8,7 @@
 //! and conclusion under the step's bindings, and require them to be what
 //! the step recorded.
 
+use std::cell::RefCell;
 use std::collections::{BTreeMap, BTreeSet};
 
 use crate::ast::{Term, Triple};
@@ -89,10 +90,21 @@ pub struct N3Proof {
     /// Given statements that carry variables. N3 reads those as
     /// universally quantified, so each gives every instance of itself.
     general: Vec<Triple>,
+    /// Query rules, as the implications a step answering one carries. An
+    /// answer is output, so no step may use it as a premise.
+    query_rules: Vec<Triple>,
+    /// Blank nodes the source mentions, which no existential can stand for.
+    source_blanks: BTreeSet<crate::ast::Name>,
     steps: Vec<Step>,
     claims: Vec<Triple>,
     index: BTreeMap<Triple, usize>,
+    /// Each existential witness, with the firing that introduced it.
+    witnesses: RefCell<BTreeMap<crate::ast::Name, Firing>>,
 }
+
+/// A rule application: the rule, and the bindings of the head's variables
+/// it fired under.
+type Firing = (String, Vec<(crate::ast::Name, Term)>);
 
 /// Read `proof` as a proof document for the program in `source`, and check
 /// it.
@@ -115,14 +127,14 @@ impl N3Proof {
         let rules: Vec<crate::ast::Rule> = document.rules.iter().filter(|rule| !rule.is_query).cloned().collect();
         // N3 treats a rule as data, so a rule written in the document is
         // itself a statement the document gives. That includes the query
-        // rules left out of the numbering above: a `log:query` answer is
-        // derived by its query rule, and a step recording one carries that
-        // rule rather than citing a number, so the rule it carries has to be
-        // findable among what the document gives.
+        // rules left out of the numbering above, as `log:query` statements.
+        // A step recording a query answer carries its rule as an
+        // implication instead, which is kept apart in `query_rules`.
         let mut given: BTreeSet<Triple> = document.facts.iter().cloned().collect();
-        let rule_statements: Vec<Triple> = document.rules.iter().map(written_rule_statement)
-            .chain(document.rules.iter().filter(|rule| rule.is_query).map(crate::proof_writer::rule_statement)).collect();
+        let rule_statements: Vec<Triple> = document.rules.iter().map(written_rule_statement).collect();
         given.extend(rule_statements.iter().cloned());
+        let query_rules: Vec<Triple> = document.rules.iter().filter(|rule| rule.is_query).map(crate::proof_writer::rule_statement).collect();
+        let source_blanks = triple_blank_labels(&document.facts);
         let general: Vec<Triple> = document.facts.iter().filter(|fact| !fact.is_ground()).cloned().collect();
 
         let parsed = crate::parser::parse_n3(proof, None)?;
@@ -141,7 +153,7 @@ impl N3Proof {
         for (position, step) in steps.iter().enumerate() {
             index.entry(step.conclusion.clone()).or_insert(position);
         }
-        Ok(Self { rules, given, rule_statements, general, steps, claims, index })
+        Ok(Self { rules, given, rule_statements, general, query_rules, source_blanks, steps, claims, index, witnesses: RefCell::default() })
     }
 
     fn resolve(&self, statement: &Triple) -> Resolution {
@@ -169,33 +181,24 @@ impl N3Proof {
     /// same rule under consistent renaming, so this matches instead of
     /// comparing.
     fn resolve_rule(&self, statement: &Triple) -> Resolution {
-        fn matches_rule(candidate: &Triple, statement: &Triple) -> bool {
-            if candidate.p == statement.p && match_triple(candidate, statement, &mut Bindings::new()) {
-                return true;
-            }
-            // Forward and backward implication assert the same rule with
-            // their subject and object reversed. Quantified assertions are
-            // registered as empty-premise backward rules for goal search.
-            let reversed = match &candidate.p {
-                Term::Iri(iri) if iri.as_str() == crate::ast::LOG_IMPLIES => Some(crate::ast::LOG_IMPLIED_BY),
-                Term::Iri(iri) if iri.as_str() == crate::ast::LOG_IMPLIED_BY => Some(crate::ast::LOG_IMPLIES),
-                _ => None,
-            };
-            if let Some(predicate) = reversed {
-                let equivalent = Triple::new(candidate.o.clone(), Term::iri(predicate), candidate.s.clone());
-                if equivalent.p == statement.p && match_triple(&equivalent, statement, &mut Bindings::new()) {
-                    return true;
-                }
-            }
-            false
-        }
         if self.given.iter().any(|candidate| matches_rule(candidate, statement)) {
             return Resolution::Given;
         }
         if let Some(index) = self.steps.iter().position(|step| matches_rule(&step.conclusion, statement)) {
             return Resolution::Step(index);
         }
+        if self.query_rules.iter().any(|candidate| matches_rule(candidate, statement)) {
+            return Resolution::Given;
+        }
         Resolution::Unresolved(format!("carried rule {}", describe(statement)))
+    }
+
+    /// Does this step answer a query, carrying a query rule and no rule
+    /// that may feed further inference?
+    fn answers_query(&self, step: &Step) -> bool {
+        let Some((_, _, statement)) = &step.carried else { return false };
+        self.query_rules.iter().any(|candidate| matches_rule(candidate, statement))
+            && !self.given.iter().chain(self.steps.iter().map(|step| &step.conclusion)).any(|candidate| matches_rule(candidate, statement))
     }
 
     /// §5.1: re-perform the one rule application this step records.
@@ -249,8 +252,49 @@ impl N3Proof {
                 return Err(format!("premise {} is {}, but {} requires {}", position + 1, describe(used), number, describe(premise)));
             }
         }
-        if !rule.conclusion.iter().any(|candidate| match_triple(candidate, &step.conclusion, &mut bindings.clone())) {
+        let universal: Vec<(crate::ast::Name, Term)> = bindings.iter()
+            .filter(|(name, _)| !name.starts_with("_:")).map(|(name, value)| (name.clone(), value.clone())).collect();
+        // Firings that agree on the head's variables conclude the same
+        // instance of it, so they share its witnesses.
+        let head_variables = conclusion.free_variables();
+        let frontier: Vec<(crate::ast::Name, Term)> = universal.iter()
+            .filter(|(name, _)| head_variables.contains(&Term::Var(name.clone()))).cloned().collect();
+        let Some(bindings) = rule.conclusion.iter().find_map(|candidate| {
+            let mut trial = bindings.clone();
+            match_triple(candidate, &step.conclusion, &mut trial).then_some(trial)
+        }) else {
             return Err(format!("does not follow from {}: it concludes none of what this step claims", number));
+        };
+
+        // A blank node scoped to the head is an existential: the engine
+        // instantiates it with a fresh blank per firing. So its witness
+        // must be a blank the source and this firing's values do not
+        // mention, and no other firing may claim the same one. A blank
+        // quantified outside the rule is one individual for every firing.
+        // Which of a firing's existentials a witness stands for is left
+        // open: head triples that differ only in their blank match alike.
+        let mut used_blanks = BTreeSet::new();
+        for (_, value) in &universal {
+            blank_labels(value, &mut used_blanks);
+        }
+        for label in &conclusion.existentials {
+            let Some(witness) = bindings.get(format!("_:{}", label).as_str()) else { continue };
+            let Term::Blank(witness) = witness else {
+                return Err(format!("instantiates existential _:{} of {} with {}, which is not a fresh blank node", label, number,
+                    crate::printing::term_to_n3_object(witness, &BTreeMap::new())));
+            };
+            if self.source_blanks.contains(witness) || used_blanks.contains(witness) {
+                return Err(format!("instantiates existential _:{} of {} with _:{}, which is not fresh", label, number, witness));
+            }
+            let firing = (number.clone(), frontier.clone());
+            let mut witnesses = self.witnesses.borrow_mut();
+            match witnesses.get(witness) {
+                Some(other) if *other != firing => {
+                    return Err(format!("instantiates existential _:{} of {} with _:{}, which another firing already introduced", label, number, witness));
+                }
+                Some(_) => {}
+                None => { witnesses.insert(witness.clone(), firing); }
+            }
         }
         Ok(Checked::Verified)
     }
@@ -288,12 +332,41 @@ impl N3Proof {
         if IMPURE_BUILTINS.contains(&name.as_str()) {
             return Ok(Checked::Trusted("impure built-in"));
         }
+        // Re-evaluation fills in whatever is left open, which would turn a
+        // computed value into a universal claim.
+        let triple = &step.conclusion;
+        if [&triple.s, &triple.p, &triple.o].into_iter().any(has_open_variable) {
+            return Err(format!("leaves a variable of {} unbound", name));
+        }
         if crate::reasoner::verify_builtin_triple(&step.conclusion) {
             Ok(Checked::Verified)
         } else {
             Err(format!("re-evaluating {} did not hold", name))
         }
     }
+}
+
+/// Is `statement` the rule `candidate` asserts, up to renaming and the
+/// direction its implication is written in?
+fn matches_rule(candidate: &Triple, statement: &Triple) -> bool {
+    if candidate.p == statement.p && match_triple(candidate, statement, &mut Bindings::new()) {
+        return true;
+    }
+    // Forward and backward implication assert the same rule with
+    // their subject and object reversed. Quantified assertions are
+    // registered as empty-premise backward rules for goal search.
+    let reversed = match &candidate.p {
+        Term::Iri(iri) if iri.as_str() == crate::ast::LOG_IMPLIES => Some(crate::ast::LOG_IMPLIED_BY),
+        Term::Iri(iri) if iri.as_str() == crate::ast::LOG_IMPLIED_BY => Some(crate::ast::LOG_IMPLIES),
+        _ => None,
+    };
+    if let Some(predicate) = reversed {
+        let equivalent = Triple::new(candidate.o.clone(), Term::iri(predicate), candidate.s.clone());
+        if equivalent.p == statement.p && match_triple(&equivalent, statement, &mut Bindings::new()) {
+            return true;
+        }
+    }
+    false
 }
 
 /// Preserve query predicates and false conclusions when lifting rule claims.
@@ -357,17 +430,9 @@ pub(crate) fn match_term(pattern: &Term, target: &Term, bindings: &mut Bindings)
             // blank values are identities from the recorded environment,
             // even when the proof's quoted syntax locally binds their labels.
             let mut captured = BTreeSet::new();
-            fn blanks(term: &Term, out: &mut BTreeSet<crate::ast::Name>) {
-                match term {
-                    Term::Blank(n) => { out.insert(n.clone()); }
-                    Term::List(items) => for item in items { blanks(item,out); },
-                    Term::Formula(g) => for free in g.free_variables() { blanks(&free,out); },
-                    _ => {}
-                }
-            }
             for free in left.free_variables() {
                 if let Term::Var(n) = free {
-                    if let Some(value) = bindings.get(&n) { blanks(value,&mut captured); }
+                    if let Some(value) = bindings.get(&n) { blank_labels(value, &mut captured); }
                 }
             }
             fn recorded_term(term: &Term, captured: &BTreeSet<crate::ast::Name>) -> Term {
@@ -383,10 +448,73 @@ pub(crate) fn match_term(pattern: &Term, target: &Term, bindings: &mut Bindings)
                 out
             }
             let recorded = recorded_graph(right,&captured);
-            crate::reasoner::unify_term(&Term::Formula(left.clone()), &Term::Formula(recorded), bindings)
+            // Matching is one-way: the recorded side's free variables are
+            // rigid, or a proof could carry `{ ?a ?b ?c } => { ?d ?e ?f }`
+            // as an instance of any rule. Freeze them as IRIs no source can
+            // spell for the unification, and thaw what it bound.
+            let frozen: BTreeMap<Term, Term> = recorded.free_variables().into_iter()
+                .filter_map(|term| match &term {
+                    Term::Var(name) => Some((term.clone(), Term::iri(format!("{}{}", FROZEN, name)))),
+                    _ => None,
+                })
+                .collect();
+            if frozen.is_empty() {
+                return crate::reasoner::unify_term(&Term::Formula(left), &Term::Formula(recorded), bindings);
+            }
+            let thawed: BTreeMap<Term, Term> = frozen.iter().map(|(var, iri)| (iri.clone(), var.clone())).collect();
+            let mut trial: Bindings = bindings.iter().map(|(name, value)| (name.clone(), replace_terms(value, &frozen))).collect();
+            if !crate::reasoner::unify_term(&Term::Formula(left), &Term::Formula(recorded.substitute(&frozen)), &mut trial) {
+                return false;
+            }
+            *bindings = trial.into_iter().map(|(name, value)| (name, replace_terms(&value, &thawed))).collect();
+            true
         }
         _ => pattern == target,
     }
+}
+
+/// Where `match_term` parks a recorded variable while it is held rigid.
+const FROZEN: &str = "urn:eyeron:proof-check:frozen:";
+
+fn replace_terms(term: &Term, mapping: &BTreeMap<Term, Term>) -> Term {
+    if let Some(value) = mapping.get(term) {
+        return value.clone();
+    }
+    match term {
+        Term::List(items) => Term::List(items.iter().map(|item| replace_terms(item, mapping)).collect()),
+        Term::Formula(graph) => Term::Formula(graph.substitute(mapping)),
+        _ => term.clone(),
+    }
+}
+
+/// A variable outside any graph term: a built-in step has to state the
+/// values it was evaluated on, not leave them open.
+fn has_open_variable(term: &Term) -> bool {
+    match term {
+        Term::Var(_) => true,
+        Term::List(items) => items.iter().any(has_open_variable),
+        _ => false,
+    }
+}
+
+/// Blank labels a term mentions, including those free in its graph terms.
+fn blank_labels(term: &Term, out: &mut BTreeSet<crate::ast::Name>) {
+    match term {
+        Term::Blank(name) => { out.insert(name.clone()); }
+        Term::List(items) => for item in items { blank_labels(item, out); },
+        Term::Formula(graph) => for free in graph.free_variables() { blank_labels(&free, out); },
+        _ => {}
+    }
+}
+
+fn triple_blank_labels(triples: &[Triple]) -> BTreeSet<crate::ast::Name> {
+    let mut out = BTreeSet::new();
+    for triple in triples {
+        for term in [&triple.s, &triple.p, &triple.o] {
+            blank_labels(term, &mut out);
+        }
+    }
+    out
 }
 
 pub(crate) fn match_triple(pattern: &Triple, target: &Triple, bindings: &mut Bindings) -> bool {
@@ -597,7 +725,11 @@ impl ProofDocument for N3Proof {
 
     fn dependencies(&self, index: usize) -> Vec<Resolution> {
         let step = &self.steps[index];
-        let mut dependencies: Vec<_> = step.uses.iter().map(|used| self.resolve(used)).collect();
+        let mut dependencies: Vec<_> = step.uses.iter().map(|used| match self.resolve(used) {
+            Resolution::Step(target) if self.answers_query(&self.steps[target]) =>
+                Resolution::Unresolved(format!("the query answer {}", describe(used))),
+            resolution => resolution,
+        }).collect();
         if let Some((_, _, statement)) = &step.carried {
             dependencies.push(self.resolve_rule(statement));
         }

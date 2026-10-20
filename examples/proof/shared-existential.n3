@@ -10,14 +10,7 @@
   pe:uses { :bob :loves _:__q1 . }.
 
 { :bob :loves _:__q1 . }
-  pe:rule
-    {
-        @forSome <urn:eyeron:quantified:5f5f7131> .
-        {
-            @forAll <urn:eyeron:quantified:5f5f6261636b776172645f305f335f636266623564336633363231386432315f5f5f5f7132> .
-            <urn:eyeron:quantified:5f5f6261636b776172645f305f335f636266623564336633363231386432315f5f5f5f7132> :loves <urn:eyeron:quantified:5f5f7131> .
-        } <= true .
-    }.
+  pe:rule 1.
 
 { :liz :beloved _:__q1 . }
   pe:rule 3;
@@ -25,11 +18,4 @@
   pe:uses { :liz :loves _:__q1 . }.
 
 { :liz :loves _:__q1 . }
-  pe:rule
-    {
-        @forSome <urn:eyeron:quantified:5f5f7131> .
-        {
-            @forAll <urn:eyeron:quantified:5f5f6261636b776172645f305f335f613837396666356139386637383738315f5f5f5f7132> .
-            <urn:eyeron:quantified:5f5f6261636b776172645f305f335f613837396666356139386637383738315f5f5f5f7132> :loves <urn:eyeron:quantified:5f5f7131> .
-        } <= true .
-    }.
+  pe:rule 1.

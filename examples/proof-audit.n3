@@ -3,7 +3,7 @@
 # relation) and queries it for dependency chains, supporting source facts,
 # and the bindings a rule application used. N3's own `-p/--proof` output
 # (examples/proof/socrates.n3, supplied here via
-# examples/input/proof-audit.trig, the same "extra input file" mechanism
+# examples/input/proof-audit.n3, the same "extra input file" mechanism
 # the rdf-message-*.n3 examples use) writes each step as an ordinary
 # top-level triple whose subject is the quoted conclusion: `{claim}
 # pe:rule 1; pe:binding ...; pe:uses ...`. So auditing a proof needs no

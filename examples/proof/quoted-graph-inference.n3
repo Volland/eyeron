@@ -2,30 +2,13 @@
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-:TEST :PASS 3 .
 :bob :marriedTo :alice .
 {
     :bob :marriedTo :alice .
 } :since "1999" .
+:TEST :PASS 3 .
 :TEST :PASS 1 .
 :TEST :PASS 2 .
-
-{ :TEST :PASS 3 . }
-  pe:rule 5;
-  pe:binding [ pe:var "p"; pe:value :marriedTo ];
-  pe:uses
-    {
-        {
-            :alice :marriedTo :bob .
-        } :since "1999" .
-    }.
-
-{
-  {
-      :alice :marriedTo :bob .
-  } :since "1999" .
-}
-  pe:fact "quoted-graph-inference.n3".
 
 { :bob :marriedTo :alice . }
   pe:rule 1;
@@ -57,6 +40,23 @@
     [ pe:var "s"; pe:value :alice ];
   pe:uses
     { :marriedTo a :SymetricRelation . },
+    {
+        {
+            :alice :marriedTo :bob .
+        } :since "1999" .
+    }.
+
+{
+  {
+      :alice :marriedTo :bob .
+  } :since "1999" .
+}
+  pe:fact "quoted-graph-inference.n3".
+
+{ :TEST :PASS 3 . }
+  pe:rule 5;
+  pe:binding [ pe:var "p"; pe:value :marriedTo ];
+  pe:uses
     {
         {
             :alice :marriedTo :bob .

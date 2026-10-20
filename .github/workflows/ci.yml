@@ -22,8 +22,6 @@ jobs:
   native:
     name: Native
     runs-on: ubuntu-latest
-    env:
-      RUSTDOCFLAGS: -D warnings
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -38,6 +36,8 @@ jobs:
         run: cargo test --locked --release
       - name: Rustdoc
         run: cargo doc --locked --no-deps
+        env:
+          RUSTDOCFLAGS: -D warnings
 
   wasm:
     name: WebAssembly

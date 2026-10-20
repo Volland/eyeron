@@ -194,9 +194,45 @@ fn term_has_var(term: &Term) -> bool {
     match term {
         Term::Var(_) => true,
         Term::List(items) => items.iter().any(term_has_var),
-        Term::Formula(graph) => graph.free_variables().iter().any(|t| matches!(t,Term::Var(_))),
+        Term::Formula(graph) => graph_has_free_var(graph),
         _ => false,
     }
+}
+
+/// The quantifier scopes enclosing a term, innermost first.
+struct Scope<'a> {
+    graph: &'a Graph,
+    outer: Option<&'a Scope<'a>>,
+}
+
+impl Scope<'_> {
+    fn binds_var(&self, name: &Name) -> bool {
+        self.graph.universals.contains(name) || self.outer.is_some_and(|o| o.binds_var(name))
+    }
+
+    fn binds_blank(&self, name: &Name) -> bool {
+        self.graph.existentials.contains(name) || self.outer.is_some_and(|o| o.binds_blank(name))
+    }
+}
+
+/// Whether a quoted graph mentions a variable that none of its own (or an
+/// enclosing graph's) universals binds. `free_variables` answers the same
+/// question by collecting a set, which `resolve` cannot afford to build for
+/// every formula it passes.
+fn graph_has_free_var(root: &Graph) -> bool {
+    fn term(t: &Term, scope: &Scope<'_>) -> bool {
+        match t {
+            Term::Var(n) => !scope.binds_var(n),
+            Term::List(items) => items.iter().any(|t| term(t, scope)),
+            Term::Formula(g) => graph(g, Some(scope)),
+            _ => false,
+        }
+    }
+    fn graph(g: &Graph, outer: Option<&Scope<'_>>) -> bool {
+        let scope = Scope { graph: g, outer };
+        g.iter().any(|t| term(&t.s, &scope) || term(&t.p, &scope) || term(&t.o, &scope))
+    }
+    graph(root, None)
 }
 
 /// As `term_has_var`, for the pattern side, where a blank node is a local
@@ -269,7 +305,13 @@ fn resolve_pattern_with_seen(term: &Term, bindings: &Bindings, seen: &mut HashSe
     }
 }
 
-fn bindings_without_bound(graph: &Graph, bindings: &Bindings) -> Bindings {
+/// The bindings seen inside `graph`, whose own quantifiers shadow outer
+/// bindings of the same name. Borrowed when nothing is shadowed, which is
+/// nearly always: bound names are parser-generated identities.
+fn bindings_without_bound<'a>(graph: &Graph, bindings: &'a Bindings) -> Cow<'a, Bindings> {
+    let shadows = graph.universals.iter().any(|n| bindings.contains_key(n))
+        || graph.existentials.iter().any(|n| bindings.contains_key(&blank_binding_name(n)));
+    if !shadows { return Cow::Borrowed(bindings); }
     let mut local = bindings.clone();
     for name in &graph.universals {
         local.remove(name);
@@ -277,7 +319,7 @@ fn bindings_without_bound(graph: &Graph, bindings: &Bindings) -> Bindings {
     for name in &graph.existentials {
         local.remove(&blank_binding_name(name));
     }
-    local
+    Cow::Owned(local)
 }
 
 fn resolve_formula_pattern(
@@ -307,13 +349,48 @@ fn resolve_formula_pattern(
 /// costs one extra comparison and can never give a wrong answer.
 #[derive(Debug, Default)]
 pub(crate) struct ClosureSet {
-    positions: HashMap<u64, Vec<usize>>,
+    positions: FxHashMap<u64, Vec<usize>>,
 }
+
+/// The multiply-rotate hash rustc uses for its own tables. The closure set
+/// and the fact index hash a whole term on every lookup, and SipHash, which
+/// guards a table against keys chosen to collide, cost them a fifth of a
+/// join. Both confirm every hit against the facts, so a collision here costs
+/// time, never an answer.
+#[derive(Default, Clone, Copy)]
+struct FxHasher(u64);
+
+impl FxHasher {
+    fn add(&mut self, word: u64) {
+        self.0 = (self.0.rotate_left(5) ^ word).wrapping_mul(0x51_7c_c1_b7_27_22_0a_95);
+    }
+}
+
+impl std::hash::Hasher for FxHasher {
+    fn write(&mut self, bytes: &[u8]) {
+        let (words, rest) = bytes.as_chunks::<8>();
+        for word in words {
+            self.add(u64::from_le_bytes(*word));
+        }
+        if !rest.is_empty() {
+            let mut word = [0u8; 8];
+            word[..rest.len()].copy_from_slice(rest);
+            self.add(u64::from_le_bytes(word));
+        }
+    }
+    fn write_u8(&mut self, i: u8) { self.add(i as u64); }
+    fn write_u32(&mut self, i: u32) { self.add(i as u64); }
+    fn write_u64(&mut self, i: u64) { self.add(i); }
+    fn write_usize(&mut self, i: usize) { self.add(i as u64); }
+    fn finish(&self) -> u64 { self.0 }
+}
+
+type FxHashMap<K, V> = HashMap<K, V, std::hash::BuildHasherDefault<FxHasher>>;
 
 impl ClosureSet {
     fn hash_of(triple: &Triple) -> u64 {
         use std::hash::{Hash, Hasher};
-        let mut hasher = std::collections::hash_map::DefaultHasher::new();
+        let mut hasher = FxHasher::default();
         triple.hash(&mut hasher);
         hasher.finish()
     }
@@ -362,7 +439,7 @@ impl Shape {
 
 fn hash_key(key: Key<'_>) -> u64 {
     use std::hash::{Hash, Hasher};
-    let mut hasher = std::collections::hash_map::DefaultHasher::new();
+    let mut hasher = FxHasher::default();
     index_form(key.0).hash(&mut hasher);
     key.1.map(index_form).hash(&mut hasher);
     hasher.finish()
@@ -390,12 +467,12 @@ fn keys_equal(a: Key<'_>, b: Key<'_>) -> bool {
 #[derive(Debug)]
 struct ShapeIndex {
     shape: Shape,
-    chains: HashMap<u64, Vec<Vec<usize>>>,
+    chains: FxHashMap<u64, Vec<Vec<usize>>>,
 }
 
 impl ShapeIndex {
     fn new(shape: Shape) -> Self {
-        Self { shape, chains: HashMap::new() }
+        Self { shape, chains: FxHashMap::default() }
     }
 
     fn insert(&mut self, facts: &[Triple], idx: usize) {
@@ -432,6 +509,10 @@ pub(crate) struct FactIndex {
     // actually requested.  The outer key is (predicate, list length, bound
     // positions); the inner key contains the values at those positions.
     deep_list_s: RefCell<DeepListIndex>,
+    // Predicates of facts whose subject or object holds a quoted graph with a
+    // free variable. Such a graph can match a ground one its key differs
+    // from, so lookups under these predicates do not key by quoted graphs.
+    open_formula_predicates: HashSet<Term>,
 }
 
 impl Default for FactIndex {
@@ -441,17 +522,38 @@ impl Default for FactIndex {
             by_sp: ShapeIndex::new(Shape::Sp),
             by_po: ShapeIndex::new(Shape::Po),
             deep_list_s: RefCell::new(DeepListIndex::new()),
+            open_formula_predicates: HashSet::new(),
         }
     }
 }
 
-// Graph identity includes alpha-renaming and triple-set order, so its structural
-// hash is not an exact lookup key. Use a broader bucket and the graph matcher.
+/// Whether a term can select an index bucket. A quoted graph with no free
+/// variable can: `index_form` keys it by a form its alpha variants,
+/// reorderings and equal literal spellings all share.
 fn is_index_ground(term: &Term) -> bool {
     match term {
-        Term::Formula(_) | Term::Var(_) => false,
+        Term::Var(_) => false,
         Term::List(items) => items.iter().all(is_index_ground),
+        Term::Formula(graph) => !graph_has_free_var(graph),
         _ => true,
+    }
+}
+
+/// As `is_index_ground`, for keys compared as written rather than through
+/// `index_form` (the deep-list index), which a quoted graph cannot be.
+fn is_plain_ground(term: &Term) -> bool {
+    match term {
+        Term::Formula(_) | Term::Var(_) => false,
+        Term::List(items) => items.iter().all(is_plain_ground),
+        _ => true,
+    }
+}
+
+fn term_contains_formula(term: &Term) -> bool {
+    match term {
+        Term::Formula(_) => true,
+        Term::List(items) => items.iter().any(term_contains_formula),
+        _ => false,
     }
 }
 
@@ -461,6 +563,22 @@ impl FactIndex {
         self.by_p.insert(facts, idx);
         self.by_sp.insert(facts, idx);
         self.by_po.insert(facts, idx);
+        let fact = &facts[idx];
+        if term_has_var(&fact.s) || term_has_var(&fact.o) {
+            self.open_formula_predicates.insert(index_form(&fact.p).into_owned());
+        }
+    }
+
+    /// Which of a resolved pattern's positions can select a bucket.
+    fn ground_positions(&self, s: &Term, p: &Term, o: &Term) -> (bool, bool, bool) {
+        let (mut sg, pg, mut og) = (is_index_ground(s), is_index_ground(p), is_index_ground(o));
+        if pg && !self.open_formula_predicates.is_empty()
+            && self.open_formula_predicates.contains(index_form(p).as_ref())
+        {
+            sg &= !term_contains_formula(s);
+            og &= !term_contains_formula(o);
+        }
+        (sg, pg, og)
     }
 
     fn p_bucket<'a>(&'a self, facts: &[Triple], p: &Term) -> Option<&'a Vec<usize>> {
@@ -479,9 +597,7 @@ impl FactIndex {
         let s = resolve_pattern(&pattern.s, bindings);
         let p = resolve_pattern(&pattern.p, bindings);
         let o = resolve_pattern(&pattern.o, bindings);
-        let sg = is_index_ground(&s);
-        let pg = is_index_ground(&p);
-        let og = is_index_ground(&o);
+        let (sg, pg, og) = self.ground_positions(&s, &p, &o);
 
         if pg && !sg {
             if let Some(deep_indices) = self.deep_list_subject_candidates(facts, &p, &s) {
@@ -545,7 +661,7 @@ impl FactIndex {
         let s = resolve_pattern(&pattern.s, bindings);
         let p = resolve_pattern(&pattern.p, bindings);
         let o = resolve_pattern(&pattern.o, bindings);
-        let (sg, pg, og) = (is_index_ground(&s), is_index_ground(&p), is_index_ground(&o));
+        let (sg, pg, og) = self.ground_positions(&s, &p, &o);
 
         // The deep-list shape builds its own vector either way, so leave it to
         // `candidates`.
@@ -596,12 +712,15 @@ impl FactIndex {
         let s = resolve_pattern(&pattern.s, bindings);
         let p = resolve_pattern(&pattern.p, bindings);
         let o = resolve_pattern(&pattern.o, bindings);
-        let (sg, pg, og) = (is_index_ground(&s), is_index_ground(&p), is_index_ground(&o));
+        let (sg, pg, og) = self.ground_positions(&s, &p, &o);
         if !pg { return None; }
         if !sg && matches!(s, Term::List(_)) { return None; }
         // A bucket entry always matches when each open position is a plain
-        // variable that occurs nowhere else in the pattern.
-        let plain = |t: &Term| matches!(t, Term::Var(_));
+        // variable that occurs nowhere else in the pattern, and the bucket was
+        // not keyed by a quoted graph: that key can merge graphs the matcher
+        // tells apart, so the bucket it selects only bounds the count.
+        let keyed_exactly = !term_contains_formula(&s) && !term_contains_formula(&o);
+        let plain = |t: &Term| keyed_exactly && matches!(t, Term::Var(_));
         let len = |v: Option<&Vec<usize>>| v.map_or(0, |v| v.len());
         if sg && og {
             let a = len(self.sp_bucket(facts, &s, &p));
@@ -619,7 +738,7 @@ impl FactIndex {
         let mut positions = Vec::<usize>::new();
         let mut values = Vec::<Term>::new();
         for (position, item) in pattern_items.iter().enumerate() {
-            if is_index_ground(item) {
+            if is_plain_ground(item) {
                 positions.push(position);
                 values.push(item.clone());
             }
@@ -657,7 +776,8 @@ struct AgendaEntry {
     premise_index: usize,
     goal: Triple,
     s_ground: Option<Term>,
-    p_ground: Term,
+    /// `None` for a goal with a variable predicate, which watches every fact.
+    p_ground: Option<Term>,
     o_ground: Option<Term>,
 }
 
@@ -667,6 +787,7 @@ struct AgendaIndex {
     by_p: HashMap<Term, Vec<usize>>,
     by_sp: HashMap<(Term, Term), Vec<usize>>,
     by_po: HashMap<(Term, Term), Vec<usize>>,
+    wild: Vec<usize>,
     indexed: HashSet<usize>,
 }
 
@@ -674,7 +795,12 @@ impl AgendaIndex {
     fn insert(&mut self, entry: AgendaEntry) {
         let pos = self.entries.len();
         self.indexed.insert(entry.rule_index);
-        let p = index_form(&entry.p_ground).into_owned();
+        let Some(p) = &entry.p_ground else {
+            self.wild.push(pos);
+            self.entries.push(entry);
+            return;
+        };
+        let p = index_form(p).into_owned();
         if entry.s_ground.is_none() && entry.o_ground.is_none() {
             self.by_p.entry(p.clone()).or_default().push(pos);
         }
@@ -704,6 +830,7 @@ impl AgendaIndex {
                 if !out.contains(pos) { out.push(*pos); }
             }
         }
+        out.extend(self.wild.iter().copied());
 
         out
     }
@@ -915,6 +1042,9 @@ pub struct PreparedReasoner {
     query_rules: Vec<Rule>,
     active_rules: Vec<Rule>,
     agenda_index: AgendaIndex,
+    /// Whether the program asserts a universal statement, which only the
+    /// full `reason` path turns into an axiom.
+    program_has_axioms: bool,
 }
 
 impl PreparedReasoner {
@@ -923,14 +1053,15 @@ impl PreparedReasoner {
         let active_rules: Vec<Rule> =
             program.rules.iter().filter(|rule| !rule.is_query).cloned().collect();
         let agenda_index = build_forward_agenda(&active_rules);
-        Self { program, query_rules, active_rules, agenda_index }
+        let program_has_axioms = !axiom_fact_indices(&program).is_empty();
+        Self { program, query_rules, active_rules, agenda_index, program_has_axioms }
     }
 
     /// Run the prepared program with one independent data document.
     ///
     /// Facts derived by one call are not retained for the next call.
     pub fn reason(&self, data: &Document, options: &ReasonerOptions) -> ReasonerResult {
-        if data.rules.is_empty() && !has_universal_facts(data) && !has_universal_facts(&self.program) {
+        if data.rules.is_empty() && !self.program_has_axioms && axiom_fact_indices(data).is_empty() {
             // `reason_with_plan` reads only `doc.facts`/`doc.fact_sources`/
             // `doc.prefixes`/`doc.base_iri` on this path -- `query_rules`,
             // `active_rules` and `agenda_index` are passed explicitly below,
@@ -979,6 +1110,7 @@ impl PreparedReasoner {
                 &self.query_rules,
                 &self.active_rules,
                 &self.agenda_index,
+                &[],
             )
         } else {
             // Rare: the data document carries its own rules, so a fresh
@@ -999,7 +1131,9 @@ impl PreparedReasoner {
 
 fn fact_requires_axiom(fact: &Triple, doc: &Document) -> bool {
     if doc.universals.is_empty() { return false; }
-    let free = Graph::from(vec![fact.clone()]).free_variables();
+    // Not `Graph::from`, which would make every blank an existential of this
+    // one-triple graph and so hide the root existentials asked about below.
+    let free = Graph { triples: vec![fact.clone()], ..Graph::default() }.free_variables();
     let universal = free.iter().any(|t| matches!(t,Term::Var(n) if doc.universals.contains(n)));
     // Open quoted terms can be matched symbolically. Direct universal values
     // and dependent root existentials need demand-driven instantiation.
@@ -1007,21 +1141,25 @@ fn fact_requires_axiom(fact: &Triple, doc: &Document) -> bool {
         matches!(t,Term::Blank(n) if doc.existentials.contains(n))))
 }
 
-fn has_universal_facts(doc: &Document) -> bool {
-    doc.facts.iter().any(|fact| fact_requires_axiom(fact, doc))
+/// Positions in `doc.facts` of the facts `reason` asserts as one axiom
+/// rather than as data, in ascending order.
+fn axiom_fact_indices(doc: &Document) -> Vec<usize> {
+    if doc.universals.is_empty() { return Vec::new(); }
+    (0..doc.facts.len()).filter(|&i| fact_requires_axiom(&doc.facts[i], doc)).collect()
 }
 
 pub fn reason(doc: &Document, options: &ReasonerOptions) -> ReasonerResult {
     let query_rules: Vec<Rule> = doc.rules.iter().filter(|rule| rule.is_query).cloned().collect();
     let mut active_rules: Vec<Rule> = doc.rules.iter().filter(|rule| !rule.is_query).cloned().collect();
-    if has_universal_facts(doc) {
-        let triples: Vec<_> = doc.facts.iter().filter(|fact| fact_requires_axiom(fact,doc)).cloned().collect();
+    let axioms = axiom_fact_indices(doc);
+    if !axioms.is_empty() {
+        let triples: Vec<_> = axioms.iter().map(|&i| doc.facts[i].clone()).collect();
         let used = Graph::from(triples.clone()).free_variables();
         let universals = doc.universals.iter().filter(|n| used.contains(&Term::var((*n).clone()))).cloned().collect::<BTreeSet<_>>();
         active_rules.push(Rule::new(Vec::new(), Graph { triples, universals, existentials: doc.existentials.clone() }, false));
     }
     let agenda_index = build_forward_agenda(&active_rules);
-    reason_with_plan(doc, options, &query_rules, &active_rules, &agenda_index)
+    reason_with_plan(doc, options, &query_rules, &active_rules, &agenda_index, &axioms)
 }
 
 fn reason_with_plan(
@@ -1030,6 +1168,7 @@ fn reason_with_plan(
     query_rules: &[Rule],
     active_rules: &[Rule],
     agenda_index: &AgendaIndex,
+    axioms: &[usize],
 ) -> ReasonerResult {
     // Borrowed until a rule reifies itself as data mid-run (rare -- see
     // `rule_from_triple`/`pending_rules` below) and has to be appended: only
@@ -1046,8 +1185,8 @@ fn reason_with_plan(
     let mut fact_index = FactIndex::default();
     let mut seen = ClosureSet::default();
 
-    for fact in &doc.facts {
-        if fact_requires_axiom(fact,doc) { continue; }
+    for (i, fact) in doc.facts.iter().enumerate() {
+        if axioms.binary_search(&i).is_ok() { continue; }
         if admissible_fact(fact) && !seen.contains(&closure, fact) {
             let idx = closure.len();
             closure.push(fact.clone());
@@ -1421,22 +1560,30 @@ fn conclusion_blanks(graph: &Graph) -> BTreeMap<Name, Term> {
         .collect()
 }
 
+/// Hold a universal statement a rule concluded as an axiom for goal search.
+/// Its proof is the firing that concluded it, recorded once per triple with
+/// the universals left open: a proof explains an instance the goal search
+/// used by replaying that firing at the instance.
 fn register_quantified_assertion(
     graph: Graph,
     seen: &mut HashSet<Triple>,
     pending: &mut Vec<Rule>,
+    proof: Option<(&Arc<Rule>, &Bindings)>,
+    proofs: &mut Vec<DerivedFact>,
 ) -> bool {
     let marker = Triple::new(
         Term::formula(Vec::new()),
         Term::iri(LOG_IMPLIES),
         Term::Formula(graph.clone()),
     );
-    if seen.insert(marker) {
-        pending.push(Rule::new(Vec::new(), graph, false));
-        true
-    } else {
-        false
+    if !seen.insert(marker) {
+        return false;
     }
+    if let Some((rule, bindings)) = proof {
+        proofs.extend(graph.iter().map(|t| derived_fact_record(t.clone(), rule, bindings)));
+    }
+    pending.push(Rule::new(Vec::new(), graph, false));
+    true
 }
 
 fn emit_conclusions(
@@ -1461,7 +1608,8 @@ fn emit_conclusions(
     let mut blank_map = conclusion_blanks(&rule.conclusion);
     if !rule.conclusion.universals.is_empty() {
         let graph = instantiate_graph_term(&rule.conclusion, bindings, &blank_map);
-        return register_quantified_assertion(graph, generated_rule_facts, pending_rules);
+        let proof = shared_rule.as_ref().map(|rule| (rule, bindings));
+        return register_quantified_assertion(graph, generated_rule_facts, pending_rules, proof, proofs);
     }
 
     for head in &rule.conclusion {
@@ -1470,7 +1618,8 @@ fn emit_conclusions(
         if is_unquote_instruction(&t) {
             if let Term::Formula(triples) = t.o {
                 if !triples.universals.is_empty() {
-                    rules_changed |= register_quantified_assertion(triples, generated_rule_facts, pending_rules);
+                    let proof = shared_rule.as_ref().map(|rule| (rule, bindings));
+                    rules_changed |= register_quantified_assertion(triples, generated_rule_facts, pending_rules, proof, proofs);
                     continue;
                 }
                 for expanded in triples {
@@ -1706,12 +1855,6 @@ fn agenda_entries_for_rule(
     if rule.premise.len() != 1 && !allow_multi_premise_agenda { return Vec::new(); }
     if rule.premise.len() == 1 && rule.conclusion.iter().any(triple_contains_blank) { return Vec::new(); }
 
-    // Agenda entries below only watch concrete predicates. A mixed body such
-    // as `{ ?P a owl:TransitiveProperty. ?S ?P ?X. ?X ?P ?O }` would therefore
-    // fire on the type assertion once but miss later edges with predicate ?P.
-    // Keep these rules on the general matcher until wildcard triggers exist.
-    if rule.premise.iter().any(|goal| matches!(goal.p, Term::Var(_))) { return Vec::new(); }
-
     // A semi-naive agenda is complete for rules whose non-builtin support is
     // ordinary materialized facts: when the last such support fact arrives, it
     // triggers the rule and the remaining body is matched against the closure.
@@ -1734,18 +1877,28 @@ fn agenda_entries_for_rule(
 
     let mut entries = Vec::new();
     for (premise_index, goal) in rule.premise.iter().enumerate() {
-        let Term::Iri(pred_iri) = &goal.p else { continue; };
-        if is_builtin_iri(pred_iri) || pred_iri == LOG_IMPLIES || pred_iri == LOG_IMPLIED_BY { continue; }
+        // A goal with a variable predicate, such as `?S ?P ?X` in
+        // `{ ?P a owl:TransitiveProperty. ?S ?P ?X. ?X ?P ?O }`, watches every
+        // fact: any later edge may be the one that completes the body.
+        let p_ground = match &goal.p {
+            Term::Iri(pred_iri) => {
+                if is_builtin_iri(pred_iri) || pred_iri == LOG_IMPLIES || pred_iri == LOG_IMPLIED_BY { continue; }
+                Some(goal.p.clone())
+            }
+            _ => None,
+        };
 
-        let s_ground = if is_index_ground(&goal.s) { Some(goal.s.clone()) } else { None };
-        let o_ground = if is_index_ground(&goal.o) { Some(goal.o.clone()) } else { None };
+        // A quoted graph is no agenda key: a fact quoting an open graph can
+        // match it under a different key. The predicate bucket still holds it.
+        let s_ground = if is_plain_ground(&goal.s) { Some(goal.s.clone()) } else { None };
+        let o_ground = if is_plain_ground(&goal.o) { Some(goal.o.clone()) } else { None };
 
         entries.push(AgendaEntry {
             rule_index,
             premise_index,
             goal: goal.clone(),
             s_ground,
-            p_ground: goal.p.clone(),
+            p_ground,
             o_ground,
         });
     }
@@ -2704,7 +2857,7 @@ fn solve_backward_goal(
         let prefix = format!("__backward_{}_{}_{}__", depth, idx, scope);
         let renamed = standardize_apart(rule, &prefix);
         for head in &renamed.conclusion {
-            if renamed.premise.is_empty() && !renamed.conclusion.universals.is_empty() {
+            if is_quantified_axiom(&renamed) {
                 if let Some(answer) = match_quantified_axiom(&goal, head, &renamed.conclusion, bindings) { out.push(answer); }
                 continue;
             }
@@ -2788,18 +2941,21 @@ fn match_quantified_axiom(
             assignment.insert(n.clone(), value);
         }
     }
-    for n in &graph.universals {
-        assignment
-            .entry(n.clone())
-            .or_insert_with(|| Term::iri("urn:eyeron:universal-representative"));
-    }
     // Use source binder order, independent of backward standardisation prefixes.
-    let canonical: Bindings = assignment
-        .values()
+    let canonical: Bindings = graph
+        .universals
+        .iter()
         .enumerate()
-        .map(|(i, v)| (i.to_string().into(), v.clone()))
+        .map(|(i, n)| (i.to_string().into(), assignment.get(n).cloned().unwrap_or_else(|| Term::var(""))))
         .collect();
     let salt = stable_binding_suffix(&canonical);
+    // A universal the goal leaves open stays a variable: the answer holds for
+    // every value, so it binds the goal's variables to that variable rather
+    // than to a made-up representative. A later premise can still narrow it,
+    // and a conclusion still holding it is never asserted as a fact.
+    for n in &graph.universals {
+        assignment.entry(n.clone()).or_insert_with(|| Term::var(n.clone()));
+    }
     let mut blanks = conclusion_blanks(graph);
     for n in &graph.existentials {
         blanks.insert(n.clone(), Term::blank(format!("{}_{}", n, salt)));
@@ -2890,6 +3046,12 @@ fn match_backward_premises_ordered(
             backward_stack, budget, out,
         );
     }
+}
+
+/// A universal statement, asserted in the source or concluded by a rule,
+/// held as an empty-premise backward rule for goal search.
+fn is_quantified_axiom(rule: &Rule) -> bool {
+    !rule.is_forward && rule.premise.is_empty() && !rule.conclusion.universals.is_empty()
 }
 
 fn rule_may_prove_goal(rule: &Rule, goal: &Triple) -> bool {
@@ -3099,51 +3261,70 @@ fn explain_backward_inner(
     }
 
     let mut explained = false;
-    for (idx, rule) in rules.iter().enumerate() {
-        if rule.is_forward || rule.conclusion.len() != 1 {
+    'rules: for (idx, rule) in rules.iter().enumerate() {
+        if rule.is_forward {
             continue;
         }
-        let raw_head = &rule.conclusion[0];
-        if let Term::Iri(head_pred) = &raw_head.p {
-            if head_pred != goal_pred {
-                continue;
+        // A universal statement is no rule application: what justifies an
+        // instance of one the source asserts is the source itself, and a
+        // reader finds it there. One a rule concluded is explained from that
+        // rule's own recorded derivation instead, so it is skipped here.
+        if is_quantified_axiom(rule) {
+            if given.iter().any(|fact| !fact.is_ground() && match_triple(fact, goal, &mut BTreeMap::new())) {
+                state.steps.push(BackwardStep::Fact { fact: goal.clone() });
+                if reusable {
+                    state.finish(key.clone());
+                }
+                explained = true;
+                break;
             }
-        }
-
-        let prefix = salted_backward_prefix(depth, idx, goal, &BTreeMap::new());
-        let renamed = standardize_apart(rule, &prefix);
-        let head = &renamed.conclusion[0];
-        let mut initial = BTreeMap::new();
-        if !unify_triple(head, goal, &mut initial) {
             continue;
         }
+        let mut renamed = None;
+        // Every head: inference uses each conclusion of a backward rule, so
+        // an explanation has to be able to as well.
+        for (head_index, raw_head) in rule.conclusion.iter().enumerate() {
+            if let Term::Iri(head_pred) = &raw_head.p {
+                if head_pred != goal_pred {
+                    continue;
+                }
+            }
 
-        let mut body_matches = Vec::new();
-        let mut local_stack = state.visited.clone();
-        match_backward_premises_ordered(&renamed.premise, (0..renamed.premise.len()).collect(), facts, Some(fact_index), rules, initial, depth + 1, &mut local_stack, &mut state.budget, &mut body_matches);
-        for subst in body_matches {
-            let subst = canonicalize_bindings(&subst);
-            let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
-            let checkpoint = state.done_log.len();
-            let step_checkpoint = state.steps.len();
-            let fact = resolve_pattern_triple(head, &subst);
-            let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
-            state.steps.push(BackwardStep::Rule(DerivedFact { fact, rule: Arc::new(renamed.clone()), premises: premises.clone(), bindings }));
-            if !premises.iter().all(|premise| explain_backward_inner(premise, facts, fact_index, given, rules, depth + 1, max_depth, state)) {
-                state.rollback(checkpoint);
-                state.steps.truncate(step_checkpoint);
+            let renamed = renamed.get_or_insert_with(|| {
+                standardize_apart(rule, &salted_backward_prefix(depth, idx, goal, &BTreeMap::new()))
+            });
+            let head = &renamed.conclusion[head_index];
+            let mut initial = BTreeMap::new();
+            if !unify_triple(head, goal, &mut initial) {
                 continue;
             }
-            // Commit only a complete explanation. In particular, the goal
-            // remains on the recursion stack until its premises are proved;
-            // marking it done earlier would accept circular support.
-            if reusable {
-                state.finish(key.clone());
+
+            let mut body_matches = Vec::new();
+            let mut local_stack = state.visited.clone();
+            match_backward_premises_ordered(&renamed.premise, (0..renamed.premise.len()).collect(), facts, Some(fact_index), rules, initial, depth + 1, &mut local_stack, &mut state.budget, &mut body_matches);
+            for subst in body_matches {
+                let subst = canonicalize_bindings(&subst);
+                let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
+                let checkpoint = state.done_log.len();
+                let step_checkpoint = state.steps.len();
+                let fact = resolve_pattern_triple(head, &subst);
+                let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
+                state.steps.push(BackwardStep::Rule(DerivedFact { fact, rule: Arc::new(renamed.clone()), premises: premises.clone(), bindings }));
+                if !premises.iter().all(|premise| explain_backward_inner(premise, facts, fact_index, given, rules, depth + 1, max_depth, state)) {
+                    state.rollback(checkpoint);
+                    state.steps.truncate(step_checkpoint);
+                    continue;
+                }
+                // Commit only a complete explanation. In particular, the goal
+                // remains on the recursion stack until its premises are proved;
+                // marking it done earlier would accept circular support.
+                if reusable {
+                    state.finish(key.clone());
+                }
+                explained = true;
+                break 'rules;
             }
-            explained = true;
-            break;
         }
-        if explained { break; }
     }
     state.visited.remove(&key);
     explained
@@ -3249,47 +3430,58 @@ fn find_backward_proof_inner(
     if !visited.insert(key.clone()) { return None; }
 
     let mut out = None;
-    for (idx, rule) in rules.iter().enumerate() {
-        if rule.is_forward || rule.conclusion.len() != 1 { continue; }
-        let raw_head = &rule.conclusion[0];
-        if let Term::Iri(head_pred) = &raw_head.p {
-            if head_pred != goal_pred { continue; }
+    'rules: for (idx, rule) in rules.iter().enumerate() {
+        if rule.is_forward { continue; }
+        // As in `explain_backward_inner`: an instance of a universal
+        // statement is a fact, not a rule application.
+        if is_quantified_axiom(rule) {
+            if rule.conclusion.iter().any(|head| match_quantified_axiom(goal, head, &rule.conclusion, &BTreeMap::new()).is_some()) {
+                out = Some(ProofNode::Fact { fact: goal.clone(), source: None });
+                break;
+            }
+            continue;
         }
+        let mut renamed = None;
+        for (head_index, raw_head) in rule.conclusion.iter().enumerate() {
+            if let Term::Iri(head_pred) = &raw_head.p {
+                if head_pred != goal_pred { continue; }
+            }
 
-        let prefix = salted_backward_prefix(depth, idx, goal, &BTreeMap::new());
-        let renamed = standardize_apart(rule, &prefix);
-        let head = &renamed.conclusion[0];
-        let mut initial = BTreeMap::new();
-        if !unify_triple(head, goal, &mut initial) { continue; }
+            let renamed = renamed.get_or_insert_with(|| {
+                standardize_apart(rule, &salted_backward_prefix(depth, idx, goal, &BTreeMap::new()))
+            });
+            let head = &renamed.conclusion[head_index];
+            let mut initial = BTreeMap::new();
+            if !unify_triple(head, goal, &mut initial) { continue; }
 
-        let mut body_matches = Vec::new();
-        let mut local_stack = visited.clone();
-        match_backward_premises_ordered(
-            &renamed.premise,
-            (0..renamed.premise.len()).collect(),
-            facts,
-            Some(fact_index),
-            rules,
-            initial,
-            depth + 1,
-            &mut local_stack,
-            budget,
-            &mut body_matches,
-        );
-        for subst in body_matches {
-            let subst = canonicalize_bindings(&subst);
-            let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
-            let children: Option<Vec<_>> = premises.iter().map(|prem| {
-                find_backward_proof_inner(prem, facts, fact_index, rules, depth + 1, max_depth, visited, budget, explained)
-            }).collect();
-            let Some(children) = children else { continue; };
-            let fact = resolve_pattern_triple(head, &subst);
-            let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
-            let df = DerivedFact { fact, rule: Arc::new(renamed.clone()), premises, bindings };
-            out = Some(ProofNode::Rule { df, children });
-            break;
+            let mut body_matches = Vec::new();
+            let mut local_stack = visited.clone();
+            match_backward_premises_ordered(
+                &renamed.premise,
+                (0..renamed.premise.len()).collect(),
+                facts,
+                Some(fact_index),
+                rules,
+                initial,
+                depth + 1,
+                &mut local_stack,
+                budget,
+                &mut body_matches,
+            );
+            for subst in body_matches {
+                let subst = canonicalize_bindings(&subst);
+                let premises = renamed.premise.iter().map(|prem| resolve_pattern_triple(prem, &subst)).collect::<Vec<_>>();
+                let children: Option<Vec<_>> = premises.iter().map(|prem| {
+                    find_backward_proof_inner(prem, facts, fact_index, rules, depth + 1, max_depth, visited, budget, explained)
+                }).collect();
+                let Some(children) = children else { continue; };
+                let fact = resolve_pattern_triple(head, &subst);
+                let bindings = subst.iter().map(|(k, v)| (k.clone(), resolve(v, &subst))).collect();
+                let df = DerivedFact { fact, rule: Arc::new(renamed.clone()), premises, bindings };
+                out = Some(ProofNode::Rule { df, children });
+                break 'rules;
+            }
         }
-        if out.is_some() { break; }
     }
 
     visited.remove(&key);
@@ -3835,10 +4027,24 @@ fn eval_log_conjunction(
         }
     };
     let mut merged = Document::new();
+    // Merging renames each conjunct's blanks apart, so a conjunct that is an
+    // alpha variant of an earlier one would come back as a second copy of
+    // the same triples. It adds nothing; keep the conjunction lean.
+    let mut kept = Vec::<Graph>::new();
     for item in items {
         let Term::Formula(g) = resolve(&item, bindings) else {
             return Vec::new();
         };
+        let repeats = |k: &Graph| {
+            *k == g
+                || (!graph_has_free_var(k)
+                    && !graph_has_free_var(&g)
+                    && unify_formula_unordered(k, &g, &mut BTreeMap::new()))
+        };
+        if kept.iter().any(repeats) {
+            continue;
+        }
+        kept.push(g.clone());
         let mut doc = Document::new();
         doc.facts = g.triples;
         doc.universals = g.universals;
@@ -3876,13 +4082,23 @@ fn eval_log_includes(
         // indexed closure.
         Term::Var(_) | Term::Blank(_) => {
             let mut scope = facts.to_vec();
+            // Only an implication can repeat a rule, so only those are
+            // compared, not the whole closure once per rule.
+            let mut implications: HashSet<Triple> = facts
+                .iter()
+                .filter(|t| matches!(&t.p, Term::Iri(iri) if iri == LOG_IMPLIES || iri == LOG_IMPLIED_BY))
+                .cloned()
+                .collect();
             for (idx, rule) in rules.iter().enumerate() {
                 let t = rule_to_triple(rule, &format!("__includes_rulefact_{}__", idx));
-                if !scope.contains(&t) {
+                if implications.insert(t.clone()) {
                     scope.push(t);
                 }
             }
-            scope.into()
+            // The closure's blank nodes are its own concrete nodes, not
+            // existentials of a quoted graph, so this is no `Graph::from`,
+            // which would quantify over every one of them.
+            Graph { triples: scope, ..Graph::default() }
         }
         _ => return Vec::new(),
     };
@@ -3948,10 +4164,17 @@ fn match_existential_consequence(
             );
         }
     }
-    let source = scope.apply_to_triples(&source_map);
+    // With nothing to rename -- always so for the current graph -- the scope
+    // is matched where it is rather than copied whole.
+    let source = if source_map.is_empty() { Cow::Borrowed(scope) } else { Cow::Owned(scope.apply_to_triples(&source_map)) };
     let target = pattern.apply_to_triples(&target_map);
     let mut matches = Vec::new();
     match_formula_subset(&source, &target, bindings, &mut matches);
+    // Existential substitutions are local to the compared graph, never outer bindings.
+    let reverse: BTreeMap<_, _> = source_map
+        .iter()
+        .map(|(k, v)| (v.clone(), k.clone()))
+        .collect();
     for mut candidate in matches {
         let mut used = BTreeSet::new();
         if !universal_keys.iter().all(|key| match candidate.get(key) {
@@ -3970,11 +4193,6 @@ fn match_existential_consequence(
         for key in universal_keys.iter().chain(&existential_keys) {
             candidate.remove(key);
         }
-        // Existential substitutions are local to the compared graph, never outer bindings.
-        let reverse: BTreeMap<_, _> = source_map
-            .iter()
-            .map(|(k, v)| (v.clone(), k.clone()))
-            .collect();
         for value in candidate.values_mut() {
             if let Some(original) = reverse.get(value) {
                 *value = original.clone();
@@ -5990,8 +6208,64 @@ fn index_form(term: &Term) -> std::borrow::Cow<'_, Term> {
                 None => Cow::Borrowed(term),
             }
         }
+        Term::Formula(graph) if graph_is_index_form(graph) => Cow::Borrowed(term),
+        Term::Formula(graph) => Cow::Owned(Term::Formula(graph_index_form(graph, None))),
         _ => Cow::Borrowed(term),
     }
+}
+
+/// A quoted graph as an index keys it: its triples as a sorted set, every
+/// bound name replaced by one placeholder, and each literal in a canonical
+/// spelling. Alpha variants and reorderings therefore share a key. The key may merge graphs the
+/// matcher tells apart, but every bucket is matched afterwards anyway.
+fn graph_index_form(graph: &Graph, outer: Option<&Scope<'_>>) -> Graph {
+    fn term(t: &Term, scope: &Scope<'_>) -> Term {
+        match t {
+            Term::Var(n) if scope.binds_var(n) => Term::var(""),
+            Term::Blank(n) if scope.binds_blank(n) => Term::blank(""),
+            Term::List(items) if items.is_empty() => Term::iri(RDF_NIL),
+            Term::List(items) => Term::List(items.iter().map(|t| term(t, scope)).collect()),
+            Term::Formula(g) => Term::Formula(graph_index_form(g, Some(scope))),
+            Term::Literal(lit) => {
+                let mut lit = match index_form(t) {
+                    Cow::Owned(Term::Literal(owned)) => owned,
+                    _ => lit.clone(),
+                };
+                if lit.datatype.as_deref() == Some(XSD_STRING_IRI) { lit.datatype = None; }
+                if let Some(lang) = &lit.language { lit.language = Some(lang.to_ascii_lowercase().into()); }
+                Term::Literal(lit)
+            }
+            _ => t.clone(),
+        }
+    }
+    let scope = Scope { graph, outer };
+    let triples: BTreeSet<Triple> = graph
+        .iter()
+        .map(|t| Triple::new(term(&t.s, &scope), term(&t.p, &scope), term(&t.o, &scope)))
+        .collect();
+    Graph { triples: triples.into_iter().collect(), ..Graph::default() }
+}
+
+/// Whether `graph_index_form` would return the graph unchanged, which is
+/// what a quoted graph without blank nodes or alternative spellings, written
+/// in sorted order, is. Checking costs no allocation.
+fn graph_is_index_form(graph: &Graph) -> bool {
+    fn term(t: &Term) -> bool {
+        match t {
+            Term::List(items) => !items.is_empty() && items.iter().all(term),
+            Term::Formula(g) => graph_is_index_form(g),
+            Term::Literal(lit) => {
+                matches!(index_form(t), Cow::Borrowed(_))
+                    && lit.datatype.as_deref() != Some(XSD_STRING_IRI)
+                    && lit.language.as_deref().is_none_or(|l| !l.bytes().any(|b| b.is_ascii_uppercase()))
+            }
+            _ => true,
+        }
+    }
+    graph.universals.is_empty()
+        && graph.existentials.is_empty()
+        && graph.windows(2).all(|w| w[0] < w[1])
+        && graph.iter().all(|t| term(&t.s) && term(&t.p) && term(&t.o))
 }
 
 /// Largest exact power this will materialise, in bits.  Eyeling caps the
@@ -6113,9 +6387,11 @@ fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings)
     }
     fn bound(graph: &Graph) -> BTreeMap<Term, bool> {
         let mut out = BTreeMap::new();
-        // Normalisation: unused quantifiers do not affect identity.
-        let used = Graph::from(graph.triples.clone()).free_variables();
-        // Graph::from binds blanks, so gather occurrences separately for existentials.
+        if graph.universals.is_empty() && graph.existentials.is_empty() {
+            return out;
+        }
+        // Normalisation: unused quantifiers do not affect identity. A name
+        // counts as used where no nested graph rebinds it.
         fn occurs(term: &Term, needle: &Term) -> bool {
             if term == needle {
                 return true;
@@ -6134,21 +6410,31 @@ fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings)
                 _ => false,
             }
         }
+        let used = |term: &Term| {
+            graph
+                .iter()
+                .any(|t| [&t.s, &t.p, &t.o].iter().any(|x| occurs(x, term)))
+        };
         for n in &graph.universals {
-            if used.contains(&Term::var(n.clone())) {
-                out.insert(Term::var(n.clone()), true);
+            let term = Term::var(n.clone());
+            if used(&term) {
+                out.insert(term, true);
             }
         }
         for n in &graph.existentials {
             let term = Term::blank(n.clone());
-            if graph
-                .iter()
-                .any(|t| [&t.s, &t.p, &t.o].iter().any(|x| occurs(x, &term)))
-            {
+            if used(&term) {
                 out.insert(term, false);
             }
         }
         out
+    }
+    // Whether two triples can pair at all, judged without cloning anything:
+    // two different IRIs never unify, and an IRI is never a bound name.
+    fn may_pair(a: &Triple, b: &Triple) -> bool {
+        [(&a.s, &b.s), (&a.p, &b.p), (&a.o, &b.o)]
+            .iter()
+            .all(|(x, y)| !matches!((x, y), (Term::Iri(x), Term::Iri(y)) if x != y))
     }
     // A continuation lets a failed sibling graph retry an alternative
     // renaming in an earlier nested graph, rather than committing greedily.
@@ -6187,15 +6473,18 @@ fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings)
             }
             (Term::Var(n), _) => bind_one_mut(bindings, n, b.clone()) && next(alpha, bindings),
             (_, Term::Var(n)) => bind_one_mut(bindings, n, a.clone()) && next(alpha, bindings),
-            (Term::Literal(a), Term::Literal(b)) => {
-                a.value == b.value
-                    && a.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
-                        == b.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
-                    && a.language.as_deref().map(str::to_ascii_lowercase)
-                        == b.language.as_deref().map(str::to_ascii_lowercase)
+            // Graph terms are opaque, so a literal keeps its lexical form:
+            // `"01"^^xsd:integer` is not `1` here. A language tag is still
+            // compared case-insensitively, and `()` is `rdf:nil`.
+            (Term::Literal(x), Term::Literal(y)) => {
+                x.value == y.value
+                    && x.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
+                        == y.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
+                    && x.language.as_deref().map(str::to_ascii_lowercase)
+                        == y.language.as_deref().map(str::to_ascii_lowercase)
                     && next(alpha, bindings)
             }
-            _ => a == b && next(alpha, bindings),
+            _ => terms_equal_semantic(&a, &b) && next(alpha, bindings),
         }
     }
     fn sequence(
@@ -6217,22 +6506,34 @@ fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings)
         )
     }
     fn graph(
-        a: &Graph,
-        b: &Graph,
+        left: &Graph,
+        right: &Graph,
         outer: &mut Alpha,
         bindings: &mut Bindings,
         next: &mut dyn FnMut(&mut Alpha, &mut Bindings) -> bool,
     ) -> bool {
-        let ab = bound(a);
-        let bb = bound(b);
+        // The same graph, closed and with no outer renaming in play, is its
+        // own alpha variant: nothing to search for and nothing to bind.
+        if left == right && outer.left.is_empty() && !graph_has_free_var(left) {
+            return next(outer, bindings);
+        }
+        // Triples form a set: count them before anything costlier.
+        fn set(g: &Graph) -> Vec<&Triple> {
+            let mut v: Vec<&Triple> = g.iter().collect();
+            v.sort();
+            v.dedup();
+            v
+        }
+        let a = set(left);
+        let b = set(right);
+        if a.len() != b.len() {
+            return false;
+        }
+        let ab = bound(left);
+        let bb = bound(right);
         if ab.values().filter(|v| **v).count() != bb.values().filter(|v| **v).count()
             || ab.values().filter(|v| !**v).count() != bb.values().filter(|v| !**v).count()
         {
-            return false;
-        }
-        let a: Vec<_> = a.iter().collect::<BTreeSet<_>>().into_iter().collect();
-        let b: Vec<_> = b.iter().collect::<BTreeSet<_>>().into_iter().collect();
-        if a.len() != b.len() {
             return false;
         }
         let mut alpha = outer.clone();
@@ -6265,7 +6566,7 @@ fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings)
                 return next(alpha, bindings);
             }
             for j in 0..b.len() {
-                if used[j] {
+                if used[j] || !may_pair(a[i], b[j]) {
                     continue;
                 }
                 used[j] = true;

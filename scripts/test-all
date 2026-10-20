@@ -12,24 +12,41 @@ cd "$repo_root"
 log=$(mktemp)
 trap 'rm -f "$log"' EXIT
 
-started=$(date +%s.%N)
-CARGO_TERM_COLOR=always cargo test --release --color always "$@" -- --color always 2>&1 | tee "$log"
+# Run every suite even after one fails, so the count covers all of them.
+started=$EPOCHREALTIME
+CARGO_TERM_COLOR=always cargo test --release --no-fail-fast --color always "$@" -- --color always 2>&1 | tee "$log"
 status=${PIPESTATUS[0]}
-elapsed=$(awk -v s="$started" -v e="$(date +%s.%N)" 'BEGIN { printf "%.2f", e - s }')
+elapsed=$(awk -v s="$started" -v e="$EPOCHREALTIME" 'BEGIN { printf "%.2f", e - s }')
 
 # Each suite reports its own result. Expand suites that also report individual
 # conformance counts, rather than adding both the cases and their wrappers.
+# Cargo announces each suite; one that ends without a result line crashed or
+# panicked before reporting, so name it rather than leave it out of the count.
 totals=$(sed -E 's/\x1b\[[0-9;]*m//g' "$log" | awk '
+  function close_suite() {
+    if (suite != "") missing = missing (missing ? ", " : "") suite
+    suite = ""
+    cases_run = cases_ok = expanded = 0
+  }
+  /^ *(Running|Doc-tests) / {
+    close_suite()
+    suite = $0
+    sub(/^ *(Running )?/, "", suite)
+    sub(/ \(.*$/, "", suite)
+  }
   /^w3c cases: / {
     cases_run += $3
     cases_ok += $5
     expanded = 1
   }
+  # Unsupported builtins are an accepted outcome, so they count as OK.
   /notation3tests score: / {
     score = $0
     sub(/^.*\(/, "", score)
     split(score, counts, /[\/)]/)
-    cases_ok += counts[1]
+    unsupported = $0
+    sub(/^.*unsupported:/, "", unsupported)
+    cases_ok += counts[1] + unsupported
     cases_run += counts[2]
     expanded = 1
   }
@@ -46,15 +63,22 @@ totals=$(sed -E 's/\x1b\[[0-9;]*m//g' "$log" | awk '
       run += passed + failed
       ok += passed
     }
+    suite = ""
     cases_run = cases_ok = expanded = 0
   }
-  END { printf "%d %.1f", run, run ? 100 * ok / run : 0 }
+  END {
+    close_suite()
+    printf "%d %.1f %s", run, run ? 100 * ok / run : 0, missing
+  }
 ')
-read -r run percent_ok <<< "$totals"
+read -r run percent_ok missing <<< "$totals"
 
 printf '\nTests: %s run; %s%% OK; %ss total' "$run" "$percent_ok" "$elapsed"
 if [[ "$status" -ne 0 ]]; then
   printf ' (FAILED)'
+fi
+if [[ -n "$missing" ]]; then
+  printf '\nNo result (not counted): %s' "$missing"
 fi
 printf '\n'
 

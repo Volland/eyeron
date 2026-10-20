@@ -38,9 +38,9 @@ For `pe:rule N`, the checker MUST take rule N from the supplied program, not an 
 3. Match corresponding premises in order, sharing that environment.
 4. Require at least one rule-head triple to match the claimed conclusion under the same environment. For unquoting conclusions, resolve the graph supplied by the bindings first.
 
-Bindings may be partial; matching extends them consistently. Local graph binders retain their scopes. Blank placeholders in a rule head can match the existential witnesses produced by reasoning.
+Bindings may be partial; matching extends them consistently. Matching is one-way: only the rule's variables bind, and variables in the recorded step stay rigid. Local graph binders retain their scopes. A blank node scoped to the rule head is an existential, and its witness MUST be a blank node that neither the source facts nor the step's bound values mention. Firings that agree on the head's variables share their witnesses; a witness MUST NOT be introduced by two firings that differ. A blank quantified outside the rule is one individual for every firing.
 
-Generated rules and query rules can be carried as `pe:rule { { ... } => { ... } }`, or with `<=`. Their rule statement MUST match an available source statement or a proof-step conclusion, up to the reader's renaming rules, before the application is checked. When a proof step supplies that rule, it adds a dependency subject to C1/C2; a rule cannot justify its own derivation through a cycle. The reader recognizes reversed `log:implies`/`log:impliedBy` representations of the same rule.
+Generated rules and query rules can be carried as `pe:rule { { ... } => { ... } }`, or with `<=`. Their rule statement MUST be an instance of an available source statement or a proof-step conclusion, up to the reader's renaming rules, before the application is checked. A step that carries a query rule records a query answer: it may be claimed, but no step may use it as a premise. When a proof step supplies that rule, it adds a dependency subject to C1/C2; a rule cannot justify its own derivation through a cycle. The reader recognizes reversed `log:implies`/`log:impliedBy` representations of the same rule.
 
 ### 5.2 Facts
 
@@ -48,7 +48,7 @@ For `pe:fact`, the checker MUST find the conclusion among the source assertions,
 
 ### 5.3 Built-ins
 
-For `pe:builtin`, the named relation MUST agree with the conclusion's predicate and hold when re-evaluated on its arguments. The reader rejects a predicate mismatch before either re-evaluation or trust classification. Built-ins classified as context-dependent are instead obligations (section 6).
+For `pe:builtin`, the named relation MUST agree with the conclusion's predicate and hold when re-evaluated on its arguments, which MUST NOT contain variables outside graph terms. The reader rejects a predicate mismatch before either re-evaluation or trust classification. Built-ins classified as context-dependent are instead obligations (section 6).
 
 ## 6. Trust obligations
 
@@ -108,6 +108,6 @@ Trusted conclusions are listed under “Trust obligations (accepted without veri
 
 ## 10. Implementation coverage
 
-[tests/proof_validation.rs](../tests/proof_validation.rs) covers malformed metadata, mislabeled built-ins, unsupported formula/rule claims, and cycles through carried-rule provenance. [CLI tests](../tests/cli_proof_check.rs) cover saved and generated proofs, source bases, separate input scopes, RDF formats, and stdin. Malformed proof metadata returns a reader error before a report is constructed; semantic C1–C4 failures produce an invalid report.
+[tests/proof_validation.rs](../tests/proof_validation.rs) covers malformed metadata, mislabeled built-ins, unsupported formula/rule claims, cycles through carried-rule provenance, over-general carried rules, reused or non-fresh existential witnesses, open built-in arguments, and query answers used as premises. [CLI tests](../tests/cli_proof_check.rs) cover saved and generated proofs, source bases, separate input scopes, RDF formats, and stdin. Malformed proof metadata returns a reader error before a report is constructed; semantic C1–C4 failures produce an invalid report.
 
 [tests/proof_checking.rs](../tests/proof_checking.rs) requires every packaged proof to check successfully. [Generation regressions](../tests/proof_generation.rs) also check fresh proofs, including quoted closures with overlapping variable names, backward premise ordering, and backtracking past incomplete or circular explanations.

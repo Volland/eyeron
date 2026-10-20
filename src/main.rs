@@ -50,14 +50,14 @@ fn run() -> Result<()> {
         return Ok(());
     }
     let opt = parse_args(args)?;
-    if opt.prove_and_check && (opt.ast || opt.check_proof.is_some() || opt.stream_messages) {
+    if opt.prove_and_check && (opt.ast || opt.proof || opt.check_proof.is_some() || opt.stream_messages) {
         return Err(EyeronError::new(
-            "--prove-and-check cannot be combined with --ast, --check-proof, or --stream-messages",
+            "--prove-and-check cannot be combined with --ast, --proof, --check-proof, or --stream-messages",
         ));
     }
 
-    if opt.check_proof.is_some() && opt.stream_messages {
-        return Err(EyeronError::new("--check-proof cannot be combined with --stream-messages"));
+    if opt.check_proof.is_some() && (opt.ast || opt.proof || opt.stream_messages) {
+        return Err(EyeronError::new("--check-proof cannot be combined with --ast, --proof, or --stream-messages"));
     }
     if opt.check_proof.as_deref() == Some("-") && (opt.files.is_empty() || opt.files.iter().any(|file| file == "-")) {
         return Err(EyeronError::new("stdin cannot supply both the source program and the proof"));

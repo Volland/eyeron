@@ -1880,3 +1880,235 @@ fn a_guard_that_fails_still_stops_the_branch() {
     let output = reason(source).unwrap();
     assert!(output.contains(":result :is 5"), "{output}");
 }
+
+#[test]
+fn merging_documents_that_share_blank_labels_renames_them_in_one_walk() {
+    // Every root blank of the second document collides with one of the
+    // first.  Renaming them used to rebuild a graph per fact, which took
+    // minutes for 20k facts.
+    let source: String = std::iter::once("@prefix : <http://e/> .\n".to_string())
+        .chain((0..20_000).map(|i| format!("_:b{i} :says {{ :x :p {i} }} .\n")))
+        .collect();
+    let mut doc = parse_n3(&source, None).unwrap();
+    doc.merge(parse_n3(&source, None).unwrap());
+    let subjects: std::collections::BTreeSet<_> = doc.facts.iter().map(|t| t.s.clone()).collect();
+    assert_eq!(subjects.len(), 40_000);
+    assert_eq!(doc.existentials.len(), 40_000);
+}
+
+#[test]
+fn merging_keeps_blank_names_bound_by_a_nested_formula() {
+    let mut doc = parse_n3("@prefix : <http://e/> . _:b :p :o .", None).unwrap();
+    doc.merge(parse_n3("@prefix : <http://e/> . _:b :says { _:b :q :r } .", None).unwrap());
+    let said = &doc.facts[1];
+    assert_eq!(said.s, eyeron::Term::blank("b__merge1"));
+    let eyeron::Term::Formula(inner) = &said.o else { panic!("{said:?}") };
+    assert_eq!(inner.triples[0].s, eyeron::Term::blank("b"));
+}
+
+#[test]
+fn merging_renames_a_universal_only_when_both_documents_use_it_in_facts() {
+    let mut doc = parse_n3("@prefix : <http://e/> . :a :p :b . { ?x :p ?y } => { ?x :q ?y } .", None).unwrap();
+    doc.merge(parse_n3("@prefix : <http://e/> . { ?x :q ?y } => { ?x :r ?y } .", None).unwrap());
+    let options = ReasonerOptions { proof: true, ..ReasonerOptions::default() };
+    let result = reason_document(&doc, &options);
+    let proof = proof_to_n3(&doc.prefixes, &result);
+    assert!(proof.contains("pe:var \"x\""), "{proof}");
+    assert!(!proof.contains("__merge"), "{proof}");
+
+    let mut doc = parse_n3("@prefix : <http://e/> . ?x :p :a .", None).unwrap();
+    doc.merge(parse_n3("@prefix : <http://e/> . ?x :p :c .", None).unwrap());
+    assert_ne!(doc.facts[0].s, doc.facts[1].s);
+}
+
+#[test]
+fn generated_quantifier_names_avoid_labels_the_input_uses() {
+    let doc = parse_n3("@prefix : <http://e/> . @forAll :x . :x :p ?__q1 .", None).unwrap();
+    assert_ne!(doc.facts[0].s, doc.facts[0].o);
+    // One name check per declaration, not a scan of the whole input.
+    let source: String = std::iter::once("@prefix : <http://e/> .\n".to_string())
+        .chain((0..5_000).map(|i| format!("{{ @forAll :x{i}, :y{i} . :x{i} :p{i} :y{i} }} => {{ :x{i} :q{i} :y{i} }} .\n")))
+        .collect();
+    assert_eq!(parse_n3(&source, None).unwrap().rules.len(), 5_000);
+}
+
+#[test]
+fn turtle_versions_end_with_a_dot_only_in_the_at_form() {
+    let data = "<urn:s> <urn:p> <urn:o> .";
+    for format in [RdfFormat::Turtle, RdfFormat::Trig] {
+        for valid in ["@version \"1.2\" .", "VERSION \"1.2\""] {
+            let input = format!("{valid}\n{data}");
+            assert!(parse_rdf12(&input, None, format).is_ok(), "{format:?} rejected {valid}");
+        }
+        for invalid in ["@version \"1.2\"", "VERSION \"1.2\" ."] {
+            let input = format!("{invalid}\n{data}");
+            assert!(parse_rdf12(&input, None, format).is_err(), "{format:?} accepted {invalid}");
+        }
+    }
+}
+
+#[test]
+fn rdf_prefixed_names_need_a_colon_and_a_declared_prefix() {
+    for invalid in [
+        "<urn:s> <urn:p> \"x\"^^foo .",
+        "<urn:s> <urn:p> \"x\"^^math:foo .",
+        "<urn:s> <urn:p> math:foo .",
+    ] {
+        assert!(parse_rdf12(invalid, None, RdfFormat::Turtle).is_err(), "Turtle accepted {invalid}");
+        assert!(parse_rdf12(invalid, None, RdfFormat::NTriples).is_err(), "N-Triples accepted {invalid}");
+    }
+    let declared = "@prefix math: <http://www.w3.org/2000/10/swap/math#> . <urn:s> <urn:p> \"x\"^^math:foo, math:foo .";
+    assert_eq!(parse_rdf12(declared, None, RdfFormat::Turtle).unwrap().facts.len(), 2);
+    assert!(parse_rdf12("<urn:s> <urn:p> <urn:o> <urn:g> .", None, RdfFormat::NQuads).is_ok());
+    assert!(parse_rdf12("<urn:s> <urn:p> <urn:o> math:g .", None, RdfFormat::NQuads).is_err());
+}
+
+#[test]
+fn a_join_on_a_quoted_graph_looks_the_graph_up_rather_than_scanning() {
+    // `?t :says ?f` with ?f bound to a quoted graph used to scan every
+    // `:says` fact and alpha-match each one: 500 pairs took 7.2s against
+    // eyeling's 3.7s. Measured here with quoted graphs keyed by a form their
+    // alpha variants share: 0.04s. The bound is far above that and far
+    // below the scan.
+    let mut source = String::from("@prefix : <http://example.org/>.\n");
+    for i in 0..500 {
+        source.push_str(&format!(":s{i} :says {{ :a{i} :p :o . :b{i} :q :r }}. :t{i} :says {{ :b{i} :q :r . :a{i} :p :o }}.\n"));
+    }
+    source.push_str("{ ?s :says ?f. ?t :says ?f } => { ?s :same ?t }.\n");
+    let doc = parse_n3(&source, None).unwrap();
+    let started = std::time::Instant::now();
+    let result = reason_document(&doc, &ReasonerOptions::default());
+    let elapsed = started.elapsed();
+    // Each of the 500 pairs relates both ways and each graph to itself.
+    assert_eq!(result.derived.len(), 2000);
+    assert!(elapsed.as_secs() < 3, "the join took {elapsed:?}: quoted graphs are scanned again");
+
+    // The key has to find alpha variants and reorderings, keep a literal's
+    // lexical form, and still let an open quoted graph meet a closed one.
+    let source = r#"
+        @prefix : <http://example.org/>.
+        :s :says { :a :p _:x. _:x :q 1.0 }.
+        :t :says { _:y :q 1.0. :a :p _:y }.
+        :w :says { :a :p _:z. _:z :q 1.00 }.
+        :u :says { ?v :p :o }.
+        { :s :says ?f. ?who :says ?f } => { ?who :agrees :s }.
+        { ?who :says { :a :p :o } } => { ?who :covers :a }.
+    "#;
+    let output = reason(source).unwrap();
+    assert!(output.contains(":t :agrees :s"), "{output}");
+    assert!(!output.contains(":w :agrees :s"), "{output}");
+    assert!(output.contains(":u :covers :a"), "{output}");
+}
+
+#[test]
+fn a_variable_predicate_rule_fires_from_the_agenda_over_a_long_chain() {
+    // Such a rule was kept off the agenda, so it fell to the general matcher,
+    // which rematches the whole body every pass: a 130-edge chain ran into
+    // the match-step limit. A goal with a variable predicate now watches
+    // every new fact instead.
+    let mut source = String::from("@prefix : <http://example.org/>.\n:anc a :Transitive.\n");
+    for i in 0..130 {
+        source.push_str(&format!(":n{i} :anc :n{}.\n", i + 1));
+    }
+    source.push_str("{ ?P a :Transitive. ?S ?P ?X. ?X ?P ?O } => { ?S ?P ?O }.\n");
+    let doc = parse_n3(&source, None).unwrap();
+    let result = reason_document(&doc, &ReasonerOptions::default());
+    assert!(result.is_complete(), "{:?}", result.incomplete_summary());
+    // Every ordered pair along the 131 nodes, less the 130 edges given.
+    assert_eq!(result.derived.len(), 131 * 130 / 2 - 130);
+}
+
+#[test]
+fn quoted_graphs_keep_literal_spelling_but_read_the_empty_list_as_nil() {
+    let source = r#"
+        @prefix : <http://example.org/>.
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+        @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+        :x :f { :a :p 1.0 }.
+        :y :f { :a :p () }.
+        { :x :f { :a :p 1.00 } } => { :r1 :ok true }.
+        { :y :f { :a :p rdf:nil } } => { :r2 :ok true }.
+        { :x :f ?g. ?g log:equalTo { :a :p 1.00 } } => { :r3 :ok true }.
+    "#;
+    // Graph terms are opaque (docs/n3.md): `1.0` and `1.00` are different
+    // graphs, while `()` is the very term `rdf:nil`.
+    let output = reason(source).unwrap();
+    assert!(!output.contains(":r1"), "{output}");
+    assert!(output.contains(":r2 :ok true"), "{output}");
+    assert!(!output.contains(":r3"), "{output}");
+}
+
+#[test]
+fn a_quoted_universal_statement_with_an_existential_gets_a_witness_per_value() {
+    // `:x :q :y` here reads "everything has some :q", which does not say
+    // that everything has the same one.
+    let source = r#"
+        @prefix : <http://example.org/>.
+        @forAll :x. @forSome :y.
+        :s :says { :x :q :y }.
+        { :s :says { :a :q ?w } } => { :r :w ?w }.
+        { :s :says { :b :q ?w } } => { :r :w2 ?w }.
+    "#;
+    let doc = parse_n3(source, None).unwrap();
+    let result = reason_document(&doc, &ReasonerOptions::default());
+    let witness = |predicate: &str| {
+        let predicate = eyeron::Term::iri(format!("http://example.org/{predicate}"));
+        result.derived.iter().find(|t| t.p == predicate).map(|t| t.o.clone()).unwrap()
+    };
+    assert_ne!(witness("w"), witness("w2"), "one witness shared by :a and :b");
+}
+
+#[test]
+fn a_universal_the_goal_leaves_open_binds_no_made_up_value() {
+    // `:x a :Thing` for every :x makes :b a thing, and something a thing,
+    // but names no particular thing for `?y :any true` to be about.
+    let source = r#"
+        @prefix : <http://example.org/>.
+        @forAll :x.
+        :x a :Thing.
+        :b :q :c.
+        { ?y a :Thing. ?y :q ?z } => { ?y :r ?z }.
+        { [] a :Thing } => { :r :some true }.
+        { ?y a :Thing } => { ?y :any true }.
+    "#;
+    let output = reason(source).unwrap();
+    assert!(output.contains(":b :r :c"), "{output}");
+    assert!(output.contains(":r :some true"), "{output}");
+    assert!(!output.contains(":any"), "{output}");
+    assert!(!output.contains("urn:eyeron"), "{output}");
+}
+
+#[test]
+fn proofs_through_universal_statements_and_multi_head_backward_rules_check() {
+    for source in [
+        // An instance of a universal statement the source asserts.
+        "@prefix : <http://example.org/>.\n@forAll :x.\n:x a :Thing.\n:x :q :r.\n{ :a a :Thing } => { :a :ok true }.\n",
+        // An instance of one a rule concluded.
+        "@prefix : <http://example.org/>.\n:a :p :v1, :v2.\n{ :a :p ?o } => { @forAll :y. :y :q ?o }.\n{ :b :q ?z } => { :b :r ?z }.\n",
+        // The second head of a backward rule.
+        "@prefix : <http://example.org/>.\n:a :base :v.\n{ ?x :p ?y. ?x :q ?y } <= { ?x :base ?y }.\n{ :a :q ?z } => { :r :got ?z }.\n",
+    ] {
+        let doc = parse_n3_with_source(source, None, Some("quantified-proof.n3")).unwrap();
+        let result = reason_document(&doc, &ReasonerOptions { proof: true, ..ReasonerOptions::default() });
+        assert!(!result.derived.is_empty(), "{source}");
+        let proof = proof_to_n3(&doc.prefixes, &result);
+        let checked = eyeron::proof_check_n3::check_proof_document(&doc, &proof).unwrap();
+        assert!(checked.valid(), "{source}\n{proof}\n{:?}", checked.failures);
+    }
+}
+
+#[test]
+fn the_conjunction_of_a_graph_with_itself_is_that_graph() {
+    let source = r#"
+        @prefix : <http://example.org/>.
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+        :x :f { :a :p _:b }.
+        { :x :f ?g. (?g ?g) log:conjunction ?c } => { :r :conj ?c }.
+    "#;
+    let doc = parse_n3(source, None).unwrap();
+    let result = reason_document(&doc, &ReasonerOptions::default());
+    let conj = eyeron::Term::iri("http://example.org/conj");
+    let conjunction = result.derived.iter().find(|t| t.p == conj).unwrap();
+    let eyeron::Term::Formula(graph) = &conjunction.o else { panic!("{conjunction:?}") };
+    assert_eq!(graph.triples.len(), 1, "{conjunction:?}");
+}

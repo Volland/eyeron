@@ -327,6 +327,13 @@ struct Parser {
     depth: usize,
     scopes: Vec<QuantifierScope>,
     quantifier_counter: usize,
+    /// The `__q`-prefixed variable and blank labels the input itself uses,
+    /// collected on the first quantifier so generated names avoid them.
+    source_q_labels: Option<std::collections::BTreeSet<String>>,
+    /// Prefixes the input declared.  RDF syntaxes resolve only these; the
+    /// conventional prefixes seeded into `doc.prefixes` are for N3 and for
+    /// printing.
+    declared_prefixes: std::collections::BTreeSet<String>,
 }
 
 impl Parser {
@@ -349,7 +356,7 @@ impl Parser {
         doc.prefixes.insert("math".to_string(), "http://www.w3.org/2000/10/swap/math#".to_string());
         doc.prefixes.insert("string".to_string(), "http://www.w3.org/2000/10/swap/string#".to_string());
         doc.prefixes.insert("time".to_string(), "http://www.w3.org/2000/10/swap/time#".to_string());
-        Self { tokens, pos: 0, doc, blank_counter: 0, profile, source_label: None, line_starts: Vec::new(), depth: 0, scopes: vec![QuantifierScope::default()], quantifier_counter: 0 }
+        Self { tokens, pos: 0, doc, blank_counter: 0, profile, source_label: None, line_starts: Vec::new(), depth: 0, scopes: vec![QuantifierScope::default()], quantifier_counter: 0, source_q_labels: None, declared_prefixes: Default::default() }
     }
 
     fn with_source(mut self, source_label: Option<&str>, line_starts: Vec<usize>) -> Self {
@@ -572,6 +579,7 @@ impl Parser {
             _ => return Err(EyeronError::at("expected prefix IRI", iri_tok.offset)),
         };
         validate_prefix_label(&name, t.offset)?;
+        if self.profile.is_rdf12() { self.declared_prefixes.insert(name.clone()); }
         self.doc.prefixes.insert(name, iri);
         if self.profile.is_rdf12() {
             if at_style { self.expect_dot()?; }
@@ -597,14 +605,18 @@ impl Parser {
     }
 
     fn parse_version(&mut self) -> Result<()> {
-        self.advance();
+        let directive = self.advance().clone();
+        let at_style = matches!(directive.kind, TokenKind::AtVersion);
         let version_tok = self.advance().clone();
         if self.profile.is_rdf12() {
             match version_tok.kind {
                 TokenKind::String(_) | TokenKind::StringSingle(_) => {}
                 _ => return Err(EyeronError::at("RDF VERSION requires a short string", version_tok.offset)),
             }
-            if !self.profile.is_line_syntax() && self.check(&TokenKind::Dot) { self.advance(); }
+            // `@version "1.2" .` ends with a dot, SPARQL-style `VERSION "1.2"`
+            // does not, just like the prefix and base directives.
+            if at_style { self.expect_dot()?; }
+            else if self.check(&TokenKind::Dot) { return Err(EyeronError::at("SPARQL-style VERSION must not end with '.'", self.peek().offset)); }
             return Ok(());
         }
         match version_tok.kind {
@@ -1098,6 +1110,12 @@ impl Parser {
             let token = self.advance().clone();
             let dt = match token.kind {
                 TokenKind::Iri(i) => Term::iri(if self.profile.is_line_syntax() { i } else { self.resolve_iri(&i) }),
+                TokenKind::PName(_) if self.profile.is_line_syntax() => {
+                    return Err(EyeronError::at("N-Triples/N-Quads datatypes must be IRIs in angle brackets", token.offset));
+                }
+                TokenKind::PName(p) if self.profile.is_rdf12() && !p.contains(':') => {
+                    return Err(EyeronError::at(format!("expected datatype IRI or prefixed name, got {}", p), token.offset));
+                }
                 TokenKind::PName(p) if !contains_unescaped_path_operator(&p) => Term::iri(self.expand_pname(&p,token.offset)?),
                 _ => return Err(EyeronError::at("datatype must be an IRI",token.offset)),
             };
@@ -1170,6 +1188,9 @@ impl Parser {
     }
 
     fn parse_pname_or_path(&mut self, pname: &str, offset: usize) -> Result<(Term, Vec<Triple>)> {
+        if self.profile.is_line_syntax() {
+            return Err(EyeronError::at(format!("N-Triples/N-Quads have no prefixed names, got {}", pname), offset));
+        }
         if self.profile.is_rdf12() {
             if contains_unescaped_path_operator(pname) { return Err(EyeronError::at("property paths are not RDF syntax", offset)); }
             if !pname.contains(':') { return Err(EyeronError::at(format!("expected IRI or prefixed name, got {}", pname), offset)); }
@@ -1200,7 +1221,9 @@ impl Parser {
 
     fn expand_pname(&self, pname: &str, offset: usize) -> Result<String> {
         if let Some((prefix, local)) = pname.split_once(':') {
-            let Some(base) = self.doc.prefixes.get(prefix) else {
+            let Some(base) = self.doc.prefixes.get(prefix)
+                .filter(|_| !self.profile.is_rdf12() || self.declared_prefixes.contains(prefix))
+            else {
                 return Err(EyeronError::at(format!("unknown prefix '{}:'", prefix), offset));
             };
             let local = if self.profile.is_rdf12() { decode_and_validate_pname_local(local, offset)? } else { local.to_string() };
@@ -1382,12 +1405,20 @@ impl Parser {
                     name.offset,
                 ));
             }
+            let tokens = &self.tokens;
+            let source_q_labels = self.source_q_labels.get_or_insert_with(|| {
+                tokens
+                    .iter()
+                    .filter_map(|t| match &t.kind {
+                        TokenKind::Var(n) | TokenKind::Blank(n) if n.starts_with("__q") => Some(n.clone()),
+                        _ => None,
+                    })
+                    .collect()
+            });
             let id: Name = loop {
                 self.quantifier_counter += 1;
                 let candidate = format!("__q{}", self.quantifier_counter);
-                if !self.tokens.iter().any(
-                    |t| matches!(&t.kind, TokenKind::Var(n) | TokenKind::Blank(n) if n == &candidate),
-                ) {
+                if !source_q_labels.contains(&candidate) {
                     break candidate.into();
                 }
             };

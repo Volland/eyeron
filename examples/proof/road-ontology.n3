@@ -4,8 +4,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-:oneway a rdf:Property .
-:path a rdf:Property .
 :paris :path :orleans .
 :paris :path :chartres .
 :paris :path :amiens .
@@ -16,6 +14,8 @@
 :lemans :path :angers .
 :lemans :path :tours .
 :angers :path :nantes .
+:oneway a rdf:Property .
+:path a rdf:Property .
 :paris :path :blois .
 :paris :path :bourges .
 :orleans :path :tours .
@@ -28,37 +28,6 @@
 :chartres :path :nantes .
 :paris :path :nantes .
 
-{ :oneway a rdf:Property . }
-  pe:rule 1;
-  pe:binding
-    [ pe:var "C"; pe:value rdf:Property ],
-    [ pe:var "O"; pe:value :path ],
-    [ pe:var "P"; pe:value rdfs:subPropertyOf ],
-    [ pe:var "S"; pe:value :oneway ];
-  pe:uses
-    { rdfs:subPropertyOf rdfs:domain rdf:Property . },
-    { :oneway rdfs:subPropertyOf :path . }.
-
-{ rdfs:subPropertyOf rdfs:domain rdf:Property . }
-  pe:fact "road-ontology.n3".
-
-{ :oneway rdfs:subPropertyOf :path . }
-  pe:fact "road-ontology.n3".
-
-{ :path a rdf:Property . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "C"; pe:value rdf:Property ],
-    [ pe:var "O"; pe:value :path ],
-    [ pe:var "P"; pe:value rdfs:subPropertyOf ],
-    [ pe:var "S"; pe:value :oneway ];
-  pe:uses
-    { rdfs:subPropertyOf rdfs:range rdf:Property . },
-    { :oneway rdfs:subPropertyOf :path . }.
-
-{ rdfs:subPropertyOf rdfs:range rdf:Property . }
-  pe:fact "road-ontology.n3".
-
 { :paris :path :orleans . }
   pe:rule 4;
   pe:binding
@@ -69,6 +38,9 @@
   pe:uses
     { :oneway rdfs:subPropertyOf :path . },
     { :paris :oneway :orleans . }.
+
+{ :oneway rdfs:subPropertyOf :path . }
+  pe:fact "road-ontology.n3".
 
 { :paris :oneway :orleans . }
   pe:fact "road-ontology.n3".
@@ -199,6 +171,34 @@
 { :angers :oneway :nantes . }
   pe:fact "road-ontology.n3".
 
+{ :oneway a rdf:Property . }
+  pe:rule 1;
+  pe:binding
+    [ pe:var "C"; pe:value rdf:Property ],
+    [ pe:var "O"; pe:value :path ],
+    [ pe:var "P"; pe:value rdfs:subPropertyOf ],
+    [ pe:var "S"; pe:value :oneway ];
+  pe:uses
+    { rdfs:subPropertyOf rdfs:domain rdf:Property . },
+    { :oneway rdfs:subPropertyOf :path . }.
+
+{ rdfs:subPropertyOf rdfs:domain rdf:Property . }
+  pe:fact "road-ontology.n3".
+
+{ :path a rdf:Property . }
+  pe:rule 2;
+  pe:binding
+    [ pe:var "C"; pe:value rdf:Property ],
+    [ pe:var "O"; pe:value :path ],
+    [ pe:var "P"; pe:value rdfs:subPropertyOf ],
+    [ pe:var "S"; pe:value :oneway ];
+  pe:uses
+    { rdfs:subPropertyOf rdfs:range rdf:Property . },
+    { :oneway rdfs:subPropertyOf :path . }.
+
+{ rdfs:subPropertyOf rdfs:range rdf:Property . }
+  pe:fact "road-ontology.n3".
+
 { :paris :path :blois . }
   pe:rule 7;
   pe:binding
@@ -292,11 +292,11 @@
     [ pe:var "O"; pe:value :tours ],
     [ pe:var "P"; pe:value :path ],
     [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :blois ];
+    [ pe:var "X"; pe:value :orleans ];
   pe:uses
     { :path a owl:TransitiveProperty . },
-    { :blois :path :tours . },
-    { :paris :path :blois . }.
+    { :orleans :path :tours . },
+    { :paris :path :orleans . }.
 
 { :paris :path :angers . }
   pe:rule 7;
@@ -304,11 +304,11 @@
     [ pe:var "O"; pe:value :angers ],
     [ pe:var "P"; pe:value :path ],
     [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :lemans ];
+    [ pe:var "X"; pe:value :chartres ];
   pe:uses
     { :path a owl:TransitiveProperty . },
-    { :lemans :path :angers . },
-    { :paris :path :lemans . }.
+    { :chartres :path :angers . },
+    { :paris :path :chartres . }.
 
 { :chartres :path :nantes . }
   pe:rule 7;
@@ -316,11 +316,11 @@
     [ pe:var "O"; pe:value :nantes ],
     [ pe:var "P"; pe:value :path ],
     [ pe:var "S"; pe:value :chartres ],
-    [ pe:var "X"; pe:value :angers ];
+    [ pe:var "X"; pe:value :lemans ];
   pe:uses
     { :path a owl:TransitiveProperty . },
-    { :angers :path :nantes . },
-    { :chartres :path :angers . }.
+    { :lemans :path :nantes . },
+    { :chartres :path :lemans . }.
 
 { :paris :path :nantes . }
   pe:rule 7;
@@ -328,8 +328,8 @@
     [ pe:var "O"; pe:value :nantes ],
     [ pe:var "P"; pe:value :path ],
     [ pe:var "S"; pe:value :paris ],
-    [ pe:var "X"; pe:value :lemans ];
+    [ pe:var "X"; pe:value :angers ];
   pe:uses
     { :path a owl:TransitiveProperty . },
-    { :lemans :path :nantes . },
-    { :paris :path :lemans . }.
+    { :angers :path :nantes . },
+    { :paris :path :angers . }.

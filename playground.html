@@ -443,14 +443,27 @@
         '../eyeling/dist/browser/index.mjs',
         'https://cdn.jsdelivr.net/npm/eyeling@2/dist/browser/index.mjs',
       ];
-      const bundledCompanionInputExamples = new Set([
-        'rdf-message-cold-chain-recall',
-        'rdf-message-flow',
-        'rdf-message-ldes-incremental',
-        'rdf-message-microgrid',
-        'rdf-message-window-repair',
-        'rdf-messages',
-      ]);
+      // Companion inputs in examples/input/, loaded with the example of the same stem.
+      const bundledCompanionInputs = [
+        "annotation.trig",
+        "builtin-coverage.trig",
+        "dijkstra-risk-path.trig",
+        "eco-route-insight.trig",
+        "genetic-knapsack-selection.trig",
+        "proof-audit.n3",
+        "rc-discharge-envelope.trig",
+        "rdf-dataset.trig",
+        "rdf-message-cold-chain-recall.trig",
+        "rdf-message-flow.trig",
+        "rdf-message-ldes-incremental.trig",
+        "rdf-message-microgrid.trig",
+        "rdf-message-window-repair.trig",
+        "rdf-messages.trig",
+        "school-placement-audit.trig",
+        "smoke-arithmetic.trig",
+        "triple-terms.trig",
+        "verifiable-decision-audit.n3",
+      ];
       let oversizedStateShareUrlForGist = '';
 
       const bundledExamplesN3 = [
@@ -1258,13 +1271,16 @@
         return match && match[1] ? decodeURIComponent(match[1]) : '';
       }
 
+      // An example's companion is examples/input/<stem>.n3, else <stem>.trig,
+      // the same lookup the example tests use.
       function companionInputUrlForProgramUrl(url) {
         const stem = parseExampleStemFromUrl(url);
-        if (!stem || !bundledCompanionInputExamples.has(stem)) return '';
+        const name = [stem + '.n3', stem + '.trig'].find((candidate) => bundledCompanionInputs.includes(candidate));
+        if (!stem || !name) return '';
         try {
           const u = new URL(url, window.location.href);
           if (!/\/examples\/[^/]+\.n3$/i.test(u.pathname)) return '';
-          u.pathname = u.pathname.replace(/\/examples\/([^/]+)\.n3$/i, '/examples/input/$1.trig');
+          u.pathname = u.pathname.replace(/\/examples\/[^/]+\.n3$/i, '/examples/input/' + encodeURIComponent(name));
           u.search = '';
           u.hash = '';
           return u.toString();
@@ -1404,8 +1420,8 @@
           const loaded = await fetchTextUrl(candidate, 'companion data');
           data.setValue(injectBaseDirective(loaded.text, loaded.url));
           dataUrlInput.value = loaded.url;
-          rdfCheckbox.checked = true;
-          if (rdfFormatSelect.value === 'auto') rdfFormatSelect.value = 'trig';
+          rdfCheckbox.checked = /\.trig$/i.test(new URL(candidate).pathname);
+          if (rdfCheckbox.checked && rdfFormatSelect.value === 'auto') rdfFormatSelect.value = 'trig';
           return true;
         } catch (_) {
           return false;

@@ -312,7 +312,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: unknown prefix ':'" ;
+    earl:info "rejected as expected: N-Triples/N-Quads have no prefixed names, got :def" ;
   ] .
 
 [] a earl:Assertion ;
@@ -1522,7 +1522,7 @@
   earl:result [
     a earl:TestResult ;
     earl:outcome earl:passed ;
-    earl:info "rejected as expected: unknown prefix ':'" ;
+    earl:info "rejected as expected: N-Triples/N-Quads have no prefixed names, got :def" ;
   ] .
 
 [] a earl:Assertion ;

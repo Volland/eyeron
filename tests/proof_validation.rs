@@ -184,3 +184,72 @@ fn carried_rules_with_acyclic_provenance_still_check() {
     assert!(report.valid(), "{:?}", report.failures);
     assert_eq!(report.verified, 3);
 }
+
+fn rejects(source: &str, proof: &str, message: &str) {
+    let report = check(source, proof).expect("proof should parse");
+    assert!(!report.valid(), "forged proof was accepted");
+    assert!(
+        report.failures.iter().any(|failure| failure.detail.contains(message)),
+        "{:?}",
+        report.failures
+    );
+}
+
+#[test]
+fn a_carried_rule_cannot_be_more_general_than_the_rule_it_claims_to_be() {
+    let source = ":Socrates a :Human. { ?S a :Human } => { ?S a :Mortal }.";
+    rejects(
+        source,
+        ":Moon :madeOf :Cheese.\n\
+         { :Moon :madeOf :Cheese } pe:rule { { ?X ?Y ?Z } => { ?A ?B ?C } }; pe:uses { :Socrates a :Human }.\n\
+         { :Socrates a :Human } pe:fact \"test.n3\".",
+        "nothing in the proof derives",
+    );
+    rejects(source, "{ ?X ?Y ?Z } => { ?A ?B ?C }.", "the source does not give it");
+}
+
+#[test]
+fn an_existential_is_witnessed_by_a_fresh_blank_for_one_firing_only() {
+    let source = ":a a :Human. :b a :Human. { ?S a :Human } => { ?S :hasParent _:p }.";
+    let facts = "{ :a a :Human } pe:fact \"test.n3\".\n{ :b a :Human } pe:fact \"test.n3\".\n";
+    let firing = |subject: &str, witness: &str| {
+        format!("{{ {subject} :hasParent {witness} }} pe:rule 1; pe:binding [ pe:var \"S\"; pe:value {subject} ]; pe:uses {{ {subject} a :Human }}.\n")
+    };
+    rejects(source, &format!("{facts}{}", firing(":a", ":Zeus")), "not a fresh blank node");
+    rejects(source, &format!("{facts}{}", firing(":a", ":a")), "not a fresh blank node");
+    rejects(
+        source,
+        &format!("{facts}{}{}", firing(":a", "_:w"), firing(":b", "_:w")),
+        "another firing already introduced",
+    );
+    let report = check(source, &format!("{facts}{}{}", firing(":a", "_:w1"), firing(":b", "_:w2"))).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn a_builtin_step_must_state_its_values() {
+    rejects(
+        ":x :vals (1 2). { ?x :vals (?a ?b). (?a ?b) math:sum ?c } => { ?x :total ?c }.",
+        ":x :total ?z.\n\
+         { :x :total ?z } pe:rule 1;\n\
+           pe:binding [ pe:var \"a\"; pe:value 1 ], [ pe:var \"b\"; pe:value 2 ], [ pe:var \"c\"; pe:value ?z ], [ pe:var \"x\"; pe:value :x ];\n\
+           pe:uses { :x :vals (1 2) }, { (1 2) math:sum ?z }.\n\
+         { :x :vals (1 2) } pe:fact \"test.n3\".\n\
+         { (1 2) math:sum ?z } pe:builtin math:sum.",
+        "unbound",
+    );
+}
+
+#[test]
+fn a_query_answer_is_output_and_never_a_premise() {
+    let source = ":s a :Human. { ?x a :Human } log:query { ?x a :Answer }. { ?x a :Answer } => { ?x :bad true }.";
+    let answer = "{ :s a :Answer } pe:rule { { ?x a :Human } => { ?x a :Answer } }; pe:binding [ pe:var \"x\"; pe:value :s ]; pe:uses { :s a :Human }.\n\
+                  { :s a :Human } pe:fact \"test.n3\".\n";
+    rejects(
+        source,
+        &format!(":s :bad true.\n{{ :s :bad true }} pe:rule 1; pe:binding [ pe:var \"x\"; pe:value :s ]; pe:uses {{ :s a :Answer }}.\n{answer}"),
+        "the query answer",
+    );
+    let report = check(source, &format!(":s a :Answer.\n{answer}")).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}

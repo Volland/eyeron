@@ -223,7 +223,7 @@ Given the proof and the relevant source program, it can check whether the record
 
 It still needs to assess those sources and whether the rules apply to its intended use.
 
-Only two local predicates remain: `:holdsApproval` links a researcher to an accepted ethics approval, and `:says` holds a quoted policy graph. Engine-specific terms still describe proof steps and graph operations.
+The examples define two local predicates: `:holdsApproval` links a researcher to an accepted ethics approval, and `:says` holds a quoted policy graph. Engine-specific terms describe proof steps and graph operations.
 
 The two examples make three questions visible:
 

@@ -39,4 +39,13 @@ fn playground_html_is_packaged_for_browser_wasm() {
         bundled_array(&html, "const bundledExamplesN3 = ["),
         "playground bundledExamplesN3 must list every top-level N3 example"
     );
+
+    let mut companions = examples_with_extension(&examples_dir.join("input"), "n3");
+    companions.extend(examples_with_extension(&examples_dir.join("input"), "trig"));
+    companions.sort();
+    assert_eq!(
+        companions,
+        bundled_array(&html, "const bundledCompanionInputs = ["),
+        "playground bundledCompanionInputs must list every examples/input companion"
+    );
 }
