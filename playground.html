@@ -18,8 +18,8 @@
       input[type="text"], input[type="url"], input[type="number"], select { min-width: 0; border: 1px solid var(--border); padding: 0.45rem 0.6rem; background: var(--panel); color: var(--text); }
       :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
       [hidden] { display: none !important; }
-      .page { max-width: 1500px; margin: 0 auto; padding: calc(1.5rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) calc(1rem + env(safe-area-inset-left)); display: grid; gap: 1rem; }
-      header { display: flex; align-items: center; gap: 1rem; text-align: left; }
+      .page { max-width: 1500px; margin: 0 auto; padding: calc(1.5rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) calc(1rem + env(safe-area-inset-left)); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "heading options" "actions options" "input output"; align-items: start; gap: 1rem; }
+      header { grid-area: heading; display: flex; align-items: center; gap: 1rem; text-align: left; }
       header .logo { display: block; flex: none; border-radius: 50%; }
       header .header-copy { min-width: 0; }
       header h1 { margin: 0; font-size: 1.9rem; font-weight: 650; letter-spacing: -0.02em; }
@@ -41,7 +41,7 @@
       .hint, .status { color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
       .hint { margin: 0.65rem 0 0; }
       .command { margin: 0.5rem 0 0; max-height: 5rem; padding: 0.45rem 0.6rem; background: #f9fafb; border-radius: 0.5rem; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 0.8rem; }
-      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "input options" "input output"; grid-template-rows: auto 1fr; gap: 1rem; align-items: start; }
+      .grid { display: contents; }
       .input-card { grid-area: input; }
       .options-card { grid-area: options; padding: 0.85rem 1rem; }
       .options-card h2 { margin-bottom: 0.5rem; }
@@ -67,12 +67,12 @@
       .additional-input .CodeMirror { height: 18rem; }
       .output-card .CodeMirror { height: 24rem; }
       .messages { margin: 0.85rem 0 0; max-height: 18rem; padding: 0.75rem; border-radius: 0.5rem; background: #fef2f2; color: #991b1b; font-size: 0.82rem; line-height: 1.45; white-space: pre-wrap; overflow: auto; overflow-wrap: anywhere; }
-      .run-toolbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 1.25rem; box-shadow: 0 3px 8px #1118270a; }
-      .run-toolbar .status { flex: 1 1 12rem; margin: 0; }
+      .run-toolbar { grid-area: actions; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 1.25rem; box-shadow: 0 3px 8px #1118270a; }
+      .run-toolbar .status { flex: 1 1 12rem; min-width: 0; margin: 0; overflow-wrap: anywhere; }
       #stop { background: #b91c1c; }
       .error { color: #b91c1c; }
       .ok { color: #047857; }
-      @media (max-width: 980px) { .grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "input" "options" "output"; grid-template-rows: auto; } }
+      @media (max-width: 980px) { .page { grid-template-columns: minmax(0, 1fr); grid-template-areas: "heading" "actions" "input" "options" "output"; } }
       @media (max-width: 640px) {
         header { align-items: flex-start; gap: 0.75rem; }
         header .logo { width: 48px; height: 48px; }
