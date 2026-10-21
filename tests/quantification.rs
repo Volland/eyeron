@@ -15,6 +15,42 @@ fn graph(term: &Term) -> &Graph {
 }
 
 #[test]
+fn quoted_graph_matching_cannot_confuse_input_iris_with_internal_quantifiers() {
+    for name in ["urn:eyeron:includes-rigid:u:__q1", "urn:eyeron:includes-rigid:_u:__q1"] {
+        let source = format!(r#"
+            @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+            {{ {{ @forAll :x. :x :p :b }} log:includes {{ <{name}> :p :b }} }}
+                => {{ :forged :holds true }}.
+        "#);
+        assert!(derives(&source).is_empty(), "internal IRI became a universal instance: {name}");
+    }
+    let source = r#"
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+        { { <urn:eyeron:includes-rigid:u:__q1> :p :b } log:includes
+          { <urn:eyeron:includes-rigid:u:__q1> :p :b } }
+            => { :ordinary :holds true }.
+    "#;
+    assert!(derives(source).contains(":ordinary :holds true"));
+}
+
+#[test]
+fn quoted_negative_tests_keep_local_blank_patterns_and_execute_pure_clauses() {
+    let cases = [
+        ("{ :alice :p :b }", "{ _:who :p :b }", false),
+        ("{}", "{ 1 math:lessThan 2 }", false),
+        ("{}", "{ 3 math:lessThan 2 }", true),
+    ];
+    for (scope, pattern, expected) in cases {
+        let source = format!(r#"
+            @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+            @prefix math: <http://www.w3.org/2000/10/swap/math#>.
+            {{ {scope} log:notIncludes {pattern} }} => {{ :test :holds true }}.
+        "#);
+        assert_eq!(!derives(&source).is_empty(), expected, "{scope} log:notIncludes {pattern}");
+    }
+}
+
+#[test]
 fn explicit_declarations_resolve_iris_and_all_triple_positions() {
     let doc = parse("@forAll :x, <http://example.org/p>. @forSome :y. :x :p :y.");
     assert_eq!(doc.universals.len(), 2);

@@ -1,6 +1,6 @@
 //! Proof checking: `docs/proof-checking.md`'s reference implementation.
 //!
-//! The seven validity conditions are checked *here*, once, over an abstract
+//! The validity conditions are checked *here*, once, over an abstract
 //! view of a proof document (`Document`). A reader presents N3 proof syntax
 //! through that view and re-performs the document's own inferences.
 //!
@@ -37,7 +37,7 @@ impl Kind {
 }
 
 /// The validity conditions of specification §4, in report order.
-pub const CONDITIONS: [(&str, &str); 7] = [
+pub const CONDITIONS: [(&str, &str); 9] = [
     ("C1", "resolution"),
     ("C2", "well-foundedness"),
     ("C3", "justification"),
@@ -45,6 +45,8 @@ pub const CONDITIONS: [(&str, &str); 7] = [
     ("C5", "re-decision"),
     ("C6", "boundary consistency"),
     ("C7", "relevance"),
+    ("C8", "witness integrity"),
+    ("C9", "query isolation"),
 ];
 
 fn condition_index(condition: &str) -> usize {
@@ -52,6 +54,7 @@ fn condition_index(condition: &str) -> usize {
 }
 
 /// Where a premise or carried-rule dependency resolves (§4 C4).
+#[derive(Clone)]
 pub enum Resolution {
     /// To the conclusion of this step, of which it is an instance.
     Step(usize),
@@ -78,7 +81,7 @@ pub struct Obligation {
 
 #[derive(Debug, Clone)]
 pub struct Failure {
-    /// The validity condition that failed: `"C1"`..`"C7"`.
+    /// The validity condition that failed: `"C1"`..`"C9"`.
     pub condition: &'static str,
     pub conclusion: String,
     pub detail: String,
@@ -92,7 +95,7 @@ pub struct Report {
     pub failures: Vec<Failure>,
     pub counts: BTreeMap<&'static str, usize>,
     /// How many items each condition examined, in `CONDITIONS` order.
-    pub checked: [usize; 7],
+    pub checked: [usize; CONDITIONS.len()],
 }
 
 impl Report {
@@ -156,6 +159,12 @@ pub trait Document {
     /// Where claim `index` resolves.
     fn claim_resolution(&self, index: usize) -> Resolution;
 
+    /// Additional evidence selecting a claim for output, such as the
+    /// other conditions of a query that selects an already proved fact.
+    fn claim_dependencies(&self, _index: usize) -> Vec<Resolution> {
+        Vec::new()
+    }
+
     /// Re-perform step `index`'s recorded inference (§5), or classify it as
     /// an obligation (§6), under the condition that governs its kind of
     /// justification: C1 for rules and facts, C5 for built-ins, C3 when the
@@ -173,6 +182,18 @@ pub trait Document {
     fn claim_relevance(&self, _index: usize) -> std::result::Result<(), String> {
         Ok(())
     }
+
+    /// (C8) Existential witnesses keep their identity across recorded
+    /// applications and are fresh for the existential that introduces them.
+    fn witnesses(&self) -> (usize, Vec<(String, String)>) {
+        (0, Vec::new())
+    }
+
+    /// (C9) Query applications justify output without adding premises or
+    /// rules to the inference graph. Query outputs need query support.
+    fn query_isolation(&self) -> (usize, Vec<(String, String)>) {
+        (0, Vec::new())
+    }
 }
 
 /// What checking one step's justification found, and under which
@@ -183,7 +204,7 @@ pub struct StepCheck {
 }
 
 /// Check `document` against the source program it was read with, applying
-/// the seven conditions of specification §4.
+/// the conditions of specification §4.
 pub fn check(document: &dyn Document) -> Report {
     let mut report = Report { steps: document.step_count(), ..Report::default() };
 
@@ -243,6 +264,14 @@ pub fn check(document: &dyn Document) -> Report {
             Resolution::Unresolved(_) => report.fail("C4", claim.clone(),
                 "claimed, but no step concludes it and the source does not give it".to_string()),
         }
+        for dependency in document.claim_dependencies(index) {
+            report.checked[condition_index("C4")] += 1;
+            match dependency {
+                Resolution::Step(target) => roots.push(target),
+                Resolution::Given => {}
+                Resolution::Unresolved(detail) => report.fail("C4", claim.clone(), detail),
+            }
+        }
     }
 
     // (C6) nothing the document records contradicts what it assumes.
@@ -268,6 +297,13 @@ pub fn check(document: &dyn Document) -> Report {
     for (index, serving) in serves.iter().enumerate() {
         if !serving {
             report.fail("C7", document.describe(index), "serves no claim: no claim depends on it".to_string());
+        }
+    }
+
+    for (condition, (examined, failures)) in [("C8", document.witnesses()), ("C9", document.query_isolation())] {
+        report.checked[condition_index(condition)] = examined;
+        for (conclusion, detail) in failures {
+            report.fail(condition, conclusion, detail);
         }
     }
 

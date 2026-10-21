@@ -4175,6 +4175,20 @@ fn eval_log_includes(
     out.into_iter().map(canonicalize_owned).collect()
 }
 
+fn term_has_symbol_prefix(term: &Term, prefix: &str) -> bool {
+    match term {
+        Term::Iri(name) | Term::Var(name) | Term::Blank(name) => name.starts_with(prefix),
+        Term::List(items) => items.iter().any(|item| term_has_symbol_prefix(item, prefix)),
+        Term::Formula(graph) => graph_has_symbol_prefix(graph, prefix),
+        _ => false,
+    }
+}
+
+fn graph_has_symbol_prefix(graph: &Graph, prefix: &str) -> bool {
+    graph.universals.iter().chain(&graph.existentials).any(|name| name.starts_with(prefix))
+        || graph.iter().any(|triple| [&triple.s, &triple.p, &triple.o].into_iter().any(|term| term_has_symbol_prefix(term, prefix)))
+}
+
 /// Existential consequence, without universal instantiation.
 fn match_existential_consequence(
     scope: &Graph,
@@ -4182,13 +4196,33 @@ fn match_existential_consequence(
     bindings: &Bindings,
     out: &mut Vec<Bindings>,
 ) {
+    // The input can spell any IRI or variable name. Internal symbols must
+    // be disjoint from both graphs and the caller's environment, or a
+    // quoted universal could appear to entail an attacker-chosen IRI.
+    let fresh_prefix = |initial: &str| {
+        let mut prefix = initial.to_string();
+        let mut suffix = 0usize;
+        while graph_has_symbol_prefix(scope, &prefix) || graph_has_symbol_prefix(pattern, &prefix)
+            || bindings.iter().any(|(name, value)| name.starts_with(&prefix) || term_has_symbol_prefix(value, &prefix)) {
+            prefix = format!("{}{}:", initial, suffix);
+            suffix += 1;
+        }
+        prefix
+    };
+    let rigid_prefix = if scope.universals.is_empty() && scope.existentials.is_empty() {
+        "urn:eyeron:includes-rigid:".into()
+    } else { fresh_prefix("urn:eyeron:includes-rigid:") };
+    let variable_prefix = if pattern.universals.is_empty() && pattern.existentials.is_empty() {
+        "__includes_".into()
+    } else { fresh_prefix("__includes_") };
     let mut source_map = BTreeMap::new();
     let mut universal_values = BTreeSet::new();
     let mut existential_values = BTreeSet::new();
     for (names, universal) in [(&scope.universals, true), (&scope.existentials, false)] {
         for name in names {
             let value = Term::iri(format!(
-                "urn:eyeron:includes-rigid:{}:{}",
+                "{}{}:{}",
+                rigid_prefix,
                 if universal { "u" } else { "e" },
                 name
             ));
@@ -4213,7 +4247,7 @@ fn match_existential_consequence(
     for (names, universal) in [(&pattern.universals, true), (&pattern.existentials, false)] {
         for name in names {
             let key: Name =
-                format!("__includes_{}_{}", if universal { "u" } else { "e" }, name).into();
+                format!("{}{}_{}", variable_prefix, if universal { "u" } else { "e" }, name).into();
             if universal {
                 universal_keys.push(key.clone());
             } else {
@@ -4361,14 +4395,16 @@ fn eval_log_not_includes(
         }
         Term::Formula(scope) => {
             let mut solutions = Vec::new();
-            let empty_rules: Vec<Rule> = Vec::new();
+            // Local clause binders cannot inherit concrete blank bindings
+            // from the enclosing goal or the checker's recorded arguments.
+            let local = bindings_without_bound(&pattern, bindings).into_owned();
             match_premise_at(
                 &pattern,
                 &scope,
                 None,
-                &empty_rules,
+                &[],
                 0,
-                bindings.clone(),
+                local,
                 0,
                 &mut HashSet::new(),
                 budget,

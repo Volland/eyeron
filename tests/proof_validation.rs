@@ -151,7 +151,7 @@ fn formula_subjects_and_rule_statements_are_claims_too() {
         let given = check(claim, claim).unwrap();
         match rejected_by {
             Some(condition) => assert!(
-                !given.valid() && given.failures.iter().all(|f| f.condition == condition),
+                !given.valid() && given.failures.iter().any(|f| f.condition == condition),
                 "{claim}: {:?}",
                 given.failures
             ),
@@ -330,12 +330,12 @@ fn every_step_serves_a_claim_and_every_claim_answers_a_query() {
     rejects_under(source, ":a :p :b.\n{ :a :p :b } pe:fact \"test.n3\".\n{ :c :p :d } pe:fact \"test.n3\".", "C7", "serves no claim");
     let query = ":a :p :b. :c :q :d. { ?x :p ?y } log:query { ?x :p ?y }.";
     rejects_under(query, ":c :q :d.\n{ :c :q :d } pe:fact \"test.n3\".", "C7", "answers none");
-    let report = check(query, ":a :p :b.\n{ :a :p :b } pe:fact \"test.n3\".").unwrap();
+    let report = check(query, ":a :p :b.\n{ :a :p :b } pe:rule { { ?x :p ?y } => { ?x :p ?y } }; pe:uses { :a :p :b }.").unwrap();
     assert!(report.valid(), "{:?}", report.failures);
 }
 
 #[test]
-fn a_report_names_all_seven_conditions() {
+fn a_report_names_all_validity_conditions() {
     let report = check(":a :p :b.", ":a :p :b.\n{ :a :p :b } pe:fact \"test.n3\".").unwrap();
     let names: Vec<_> = report.conditions().into_iter().map(|(id, name, _, failed)| {
         assert_eq!(failed, 0);
@@ -344,5 +344,366 @@ fn a_report_names_all_seven_conditions() {
     assert_eq!(names, [
         "C1 resolution", "C2 well-foundedness", "C3 justification", "C4 coverage",
         "C5 re-decision", "C6 boundary consistency", "C7 relevance",
+        "C8 witness integrity", "C9 query isolation",
     ]);
+}
+
+#[test]
+fn outer_existentials_are_individuals_rather_than_rule_variables() {
+    let source = "@forSome :parent. {} => { :child :hasParent :parent }.";
+    rejects_under(source, ":child :hasParent :Zeus. { :child :hasParent :Zeus } pe:rule 1.", "C1", "does not follow");
+    let report = check(source, ":child :hasParent _:__q1. { :child :hasParent _:__q1 } pe:rule 1.").unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn dependent_source_existentials_cannot_be_instantiated_as_named_individuals() {
+    rejects_under(
+        "@forAll :person. @forSome :parent. :person :hasParent :parent.",
+        ":alice :hasParent :Zeus. { :alice :hasParent :Zeus } pe:fact \"test.n3\".",
+        "C8", "blank node",
+    );
+}
+
+#[test]
+fn different_existentials_cannot_be_collapsed_into_one_witness() {
+    rejects_under(
+        "{} => { _:a :p :x. _:b :q :x }.",
+        "_:w :p :x; :q :x. { _:w :p :x } pe:rule 1. { _:w :q :x } pe:rule 1.",
+        "C8", "another existential",
+    );
+}
+
+#[test]
+fn one_existential_has_one_witness_across_all_heads_of_a_firing() {
+    rejects_under(
+        "{} => { _:a :p :x; :q :x }.",
+        "_:w1 :p :x. _:w2 :q :x. { _:w1 :p :x } pe:rule 1. { _:w2 :q :x } pe:rule 1.",
+        "C8", "different witness",
+    );
+    let valid = check(
+        "{} => { _:a :p :x; :q :x }.",
+        "_:w :p :x; :q :x. { _:w :p :x } pe:rule 1. { _:w :q :x } pe:rule 1.",
+    ).unwrap();
+    assert!(valid.valid(), "{:?}", valid.failures);
+}
+
+#[test]
+fn bindings_must_name_variables_of_the_cited_rule() {
+    rejects_under(
+        "{} => { :a :p :b }.",
+        ":a :p :b. { :a :p :b } pe:rule 1; pe:binding [ pe:var \"invented\"; pe:value :x ].",
+        "C3", "not a variable",
+    );
+}
+
+#[test]
+fn builtin_steps_cannot_carry_arbitrary_premises() {
+    rejects_under(
+        ":a :p :b.",
+        "(1 2) math:sum 3. { (1 2) math:sum 3 } pe:builtin math:sum; pe:uses { :a :p :b }.",
+        "C3", "must not have premises",
+    );
+}
+
+#[test]
+fn quoted_values_cannot_hide_unbound_builtin_arguments() {
+    rejects_under(
+        "",
+        "{ ?x :p :b } log:equalTo { :a :p :b }.\n\
+         { { ?x :p :b } log:equalTo { :a :p :b } } pe:builtin log:equalTo.",
+        "C5", "unbound",
+    );
+}
+
+#[test]
+fn a_proof_cannot_spell_the_checkers_rigid_variable_placeholder() {
+    rejects_under(
+        "?who :says { <urn:eyeron:proof-check:frozen:x> :p :b }.",
+        ":speaker :says { ?x :p :b }. { :speaker :says { ?x :p :b } } pe:fact \"test.n3\".",
+        "C1", "source does not give",
+    );
+}
+
+#[test]
+fn a_query_answer_cannot_be_used_as_carried_rule_provenance() {
+    rejects_under(
+        "{} log:query { {} => { :a :p :b } }. { :a :p :b } log:query { :answer :p :b }.",
+        ":answer :p :b.\n\
+         { :answer :p :b } pe:rule { { :a :p :b } => { :answer :p :b } }; pe:uses { :a :p :b }.\n\
+         { :a :p :b } pe:rule { {} => { :a :p :b } }.\n\
+         { {} => { :a :p :b } } pe:rule { {} => { {} => { :a :p :b } } }.",
+        "C9", "query answer",
+    );
+}
+
+#[test]
+fn a_claim_matching_a_query_head_still_needs_a_query_application() {
+    rejects_under(
+        ":a :p :b. { :missing :p :b } log:query { :a :p :b }.",
+        ":a :p :b. { :a :p :b } pe:fact \"test.n3\".",
+        "C9", "query application",
+    );
+}
+
+#[test]
+fn query_answers_do_not_trip_source_inference_fuses() {
+    let report = check(
+        "{} log:query { :answer :p :b }. { :answer :p :b } => false.",
+        ":answer :p :b. { :answer :p :b } pe:rule { {} => { :answer :p :b } }.",
+    ).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn witness_checks_also_cover_source_instances_without_explicit_fact_steps() {
+    let source = "@forAll :person. @forSome :parent. :person :hasParent :parent.";
+    rejects_under(source, ":alice :hasParent :Zeus.", "C8", "blank node");
+    rejects_under(
+        "@forAll :person. @forSome :parent. :person :hasParent :parent; :knows :parent.",
+        ":alice :hasParent _:w1; :knows _:w2.",
+        "C8", "different witness",
+    );
+}
+
+#[test]
+fn dependent_witnesses_cannot_be_generalized_as_one_constant_for_everyone() {
+    rejects_under(
+        "?who a :Human. { ?who a :Human } => { ?who :hasParent _:parent }.",
+        "?person :hasParent _:w. { ?person :hasParent _:w } pe:rule 1; pe:uses { ?person a :Human }.",
+        "C8", "unbound universal assignment",
+    );
+    rejects_under(
+        "@forAll :person. @forSome :parent. :person :hasParent :parent.",
+        ":alice :hasParent _:__q2.\n{ ?__q1 :hasParent _:__q2 } pe:fact \"test.n3\".",
+        "C8", "unbound universal assignment",
+    );
+}
+
+#[test]
+fn source_rule_assertions_keep_outer_blank_identities() {
+    rejects_under(
+        "@forSome :parent. {} => { :child :hasParent :parent }.",
+        "{} => { :child :hasParent :Zeus }.\n{ {} => { :child :hasParent :Zeus } } pe:fact \"test.n3\".",
+        "C1", "source does not give",
+    );
+}
+
+#[test]
+fn equal_blank_labels_in_a_rules_two_sides_have_separate_scopes() {
+    let report = check(
+        ":alice :p :x. { _:b :p :x } => { _:b :q :x }.",
+        "_:fresh :q :x. { _:fresh :q :x } pe:rule 1; pe:uses { :alice :p :x }.",
+    ).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn indistinguishable_heads_are_matched_consistently_regardless_of_step_order() {
+    let source = "{} => { _:a a :Person; :name :Alice. _:b a :Person; :name :Bob }.";
+    for steps in [
+        "{ _:bob a :Person } pe:rule 1. { _:alice a :Person } pe:rule 1. { _:alice :name :Alice } pe:rule 1. { _:bob :name :Bob } pe:rule 1.",
+        "{ _:bob :name :Bob } pe:rule 1. { _:alice :name :Alice } pe:rule 1. { _:alice a :Person } pe:rule 1. { _:bob a :Person } pe:rule 1.",
+    ] {
+        let report = check(source, &format!("_:alice a :Person; :name :Alice. _:bob a :Person; :name :Bob. {steps}")).unwrap();
+        assert!(report.valid(), "{:?}", report.failures);
+    }
+}
+
+#[test]
+fn unquoting_can_obtain_its_graph_from_a_premise_without_redundant_bindings() {
+    let report = check(
+        ":alice :says { :alice a :Human }. { :alice :says ?graph } => ?graph.",
+        ":alice a :Human. { :alice a :Human } pe:rule 1; pe:uses { :alice :says { :alice a :Human } }.",
+    ).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn query_selection_checks_filters_and_accounts_for_their_dependencies() {
+    let source = ":alice a :Human. :bob a :Human. :seed :p :x.\n\
+        { :seed :p :x } => { :alice :allowed true }.\n\
+        { ?who a :Human; :allowed true } log:query { ?who a :Human }.";
+    let proof = ":alice a :Human. { :alice a :Human } pe:fact \"test.n3\".\n\
+        { :alice :allowed true } pe:rule 1; pe:uses { :seed :p :x }.\n\
+        { :seed :p :x } pe:fact \"test.n3\".";
+    let report = check(source, proof).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    rejects_under(source, ":bob a :Human. { :bob a :Human } pe:fact \"test.n3\".", "C9", "query application");
+}
+
+#[test]
+fn query_selection_replays_pure_tests_but_never_assumes_external_reads() {
+    let source = ":alice :number 3. :bob :number 1.\n\
+        { ?who :number ?number. ?number math:greaterThan 2 } log:query { ?who :number ?number }.";
+    let report = check(source, ":alice :number 3. { :alice :number 3 } pe:fact \"test.n3\".").unwrap();
+    assert!(report.valid() && report.obligations.is_empty(), "{:?}", report);
+    rejects_under(source, ":bob :number 1. { :bob :number 1 } pe:fact \"test.n3\".", "C9", "query application");
+    rejects_under(
+        ":alice :p :b. { :alice :p :b. :document log:content ?text } log:query { :alice :p :b }.",
+        ":alice :p :b. { :alice :p :b } pe:fact \"test.n3\".",
+        "C9", "query application",
+    );
+}
+
+#[test]
+fn an_external_read_nested_in_a_quoted_collection_is_still_an_obligation() {
+    let report = check(
+        "",
+        "(?text { :document log:content ?text } ()) log:collectAllIn {}.\n\
+         { (?text { :document log:content ?text } ()) log:collectAllIn {} } pe:builtin log:collectAllIn.",
+    ).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    assert_eq!(report.obligations.iter().map(|obligation| obligation.kind).collect::<Vec<_>>(), ["impure built-in"]);
+    assert!(report.verdict().starts_with("checked with obligations:"));
+}
+
+#[test]
+fn malformed_scoped_tests_cannot_become_trust_obligations() {
+    for triple in ["1 log:includes :anything", "1 log:notIncludes :anything", "(:anything) log:collectAllIn 1", "(:anything :else) log:forAllIn 1"] {
+        let report = check("", &format!("{triple}. {{ {triple} }} pe:builtin {}.", triple.split_whitespace().find(|part| part.starts_with("log:")).unwrap())).unwrap();
+        assert!(!report.valid() && report.obligations.is_empty(), "{:?}", report);
+        assert!(report.failures.iter().any(|failure| failure.condition == "C5"));
+    }
+}
+
+#[test]
+fn rechecking_the_same_document_does_not_retain_witness_state() {
+    let source = eyeron::parse_n3_with_source(&format!("{PREFIX}{{}} => {{ _:a :p :x; :q :x }}."), None, Some("test.n3")).unwrap();
+    let proof = format!("{PREFIX}_:w :p :x; :q :x. {{ _:w :p :x }} pe:rule 1. {{ _:w :q :x }} pe:rule 1.");
+    let document = eyeron::proof_check_n3::N3Proof::read_document(&source, &proof).unwrap();
+    for _ in 0..3 {
+        let report = eyeron::proof_check::check(&document);
+        assert!(report.valid(), "{:?}", report.failures);
+    }
+}
+
+#[test]
+fn unsupported_builtins_are_not_accepted_as_trusted_relations() {
+    for predicate in ["math:random", "<http://www.w3.org/2000/10/swap/time#currentTime>", "<http://www.w3.org/2000/10/swap/time#gmTime>"] {
+        let report = check("", &format!("() {predicate} :anything. {{ () {predicate} :anything }} pe:builtin {predicate}.")).unwrap();
+        assert!(!report.valid() && report.obligations.is_empty(), "{:?}", report);
+        assert!(report.failures.iter().any(|failure| failure.condition == "C5"));
+    }
+}
+
+#[test]
+fn quoted_graph_quantifiers_cannot_be_counterfeited_with_internal_iris() {
+    rejects_under(
+        "",
+        "{ @forAll :x. :x :p :b } log:includes { <urn:eyeron:includes-rigid:u:__q2> :p :b }.\n\
+         { { @forAll :x. :x :p :b } log:includes { <urn:eyeron:includes-rigid:u:__q2> :p :b } } pe:builtin log:includes.",
+        "C5", "did not hold",
+    );
+}
+
+#[test]
+fn missing_proof_evidence_does_not_establish_a_negative_fuse_premise() {
+    let source = "{} => { :blocked :p :b }. {} => { :answer :p :b }.\n\
+        { 1 log:notIncludes { :blocked :p :b } } => false.";
+    let report = check(source, ":answer :p :b. { :answer :p :b } pe:rule 2.").unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    // A recorded absence obligation does supply that forbidden condition.
+    rejects_under(
+        source,
+        "1 log:notIncludes { :blocked :p :b }.\n\
+         { 1 log:notIncludes { :blocked :p :b } } pe:builtin log:notIncludes.",
+        "C6", "inference fuse",
+    );
+}
+
+#[test]
+fn query_selection_cannot_invent_a_named_existential_for_an_unrecorded_filter() {
+    rejects_under(
+        "@forAll :person. @forSome :parent. :person :hasParent :parent.\n\
+         :alice :p :b. { :alice :p :b; :hasParent :Zeus } log:query { :alice :p :b }.",
+        ":alice :p :b. { :alice :p :b } pe:fact \"test.n3\".",
+        "C9", "query application",
+    );
+}
+
+#[test]
+fn external_obligations_still_require_well_formed_recorded_values() {
+    for (triple, predicate) in [
+        ("5 log:content :anything", "log:content"),
+        (":document log:semantics 7", "log:semantics"),
+        (":document log:semanticsOrError :anything", "log:semanticsOrError"),
+        ("5 log:conclusion :anything", "log:conclusion"),
+        ("() <http://www.w3.org/2000/10/swap/time#localTime> \"not a date\"", "<http://www.w3.org/2000/10/swap/time#localTime>"),
+        ("((1 2) 5) <http://www.w3.org/2000/10/swap/list#map> (3)", "<http://www.w3.org/2000/10/swap/list#map>"),
+    ] {
+        let report = check("", &format!("{triple}. {{ {triple} }} pe:builtin {predicate}.")).unwrap();
+        assert!(!report.valid() && report.obligations.is_empty(), "{:?}", report);
+        assert!(report.failures.iter().any(|failure| failure.condition == "C5" && failure.detail.contains("incompatible argument")));
+    }
+}
+
+#[test]
+fn carried_rule_binding_aliases_are_applied_and_cannot_be_duplicated() {
+    let source = ":bob :parent :alice. { ?x :child ?y } <= { ?y :parent ?x }.";
+    let step = |bindings: &str| format!(
+        ":alice :child :bob. {{ :alice :child :bob }} pe:rule {{\n\
+         {{ ?__backward_0_1_ab__x :child ?__backward_0_1_ab__y }} <=\n\
+         {{ ?__backward_0_1_ab__y :parent ?__backward_0_1_ab__x }} }};\n\
+         pe:uses {{ :bob :parent :alice }}; pe:binding {bindings}."
+    );
+    let bindings = "[ pe:var \"x\"; pe:value :alice ], [ pe:var \"y\"; pe:value :bob ]";
+    let report = check(source, &step(bindings)).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    rejects_under(source, &step(&bindings.replace("pe:value :alice", "pe:value :eve")), "C1", "premise 1");
+    rejects_under(source, &step(&format!("{bindings}, [ pe:var \"__backward_0_1_ab__x\"; pe:value :alice ]")), "C3", "more than one binding");
+}
+
+#[test]
+fn exhausting_witness_correspondence_never_reports_checked() {
+    let heads = (0..10).map(|index| format!("_:e{index} a :Person.")).collect::<Vec<_>>().join(" ");
+    let claims = (0..11).map(|index| format!("_:w{index} a :Person.")).collect::<Vec<_>>().join(" ");
+    let steps = (0..11).map(|index| format!("{{ _:w{index} a :Person }} pe:rule 1.")).collect::<Vec<_>>().join(" ");
+    rejects_under(&format!("{{}} => {{ {heads} }}."), &format!("{claims} {steps}"), "C8", "match budget");
+}
+
+#[test]
+fn exhausting_query_selection_never_reports_checked() {
+    let mut source = ":answer :p :b.\n".to_string();
+    for index in 0..100 {
+        source.push_str(&format!(":choice{index} :first :x; :second :y.\n"));
+    }
+    source.push_str("{ :answer :p :b. ?a :first :x. ?b :second :y. :missing :p :b } log:query { :answer :p :b }.");
+    rejects_under(&source, ":answer :p :b. { :answer :p :b } pe:fact \"test.n3\".", "C9", "match budget");
+}
+
+#[test]
+fn quoted_negative_tests_respect_local_existentials_and_replay_pure_clauses() {
+    rejects_under(
+        "",
+        "{ :alice :p :b } log:notIncludes { _:who :p :b }.\n\
+         { { :alice :p :b } log:notIncludes { _:who :p :b } } pe:builtin log:notIncludes.",
+        "C5", "did not hold",
+    );
+    let report = check(
+        "",
+        "{} log:notIncludes { 3 math:lessThan 2 }.\n\
+         { {} log:notIncludes { 3 math:lessThan 2 } } pe:builtin log:notIncludes.",
+    ).unwrap();
+    assert!(report.valid() && report.obligations.is_empty(), "{:?}", report);
+    rejects_under("", "{} log:notIncludes { 1 math:lessThan 2 }.\n\
+        { {} log:notIncludes { 1 math:lessThan 2 } } pe:builtin log:notIncludes.", "C5", "did not hold");
+    let report = check("", "{} log:notIncludes { :document log:content ?text }.\n\
+        { {} log:notIncludes { :document log:content ?text } } pe:builtin log:notIncludes.").unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    assert_eq!(report.obligations[0].kind, "impure built-in");
+}
+
+#[test]
+fn rdf_nil_keeps_empty_list_identity_in_builtin_validation_and_boundaries() {
+    let nil = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#nil>";
+    let source = ":alice :p :b.";
+    let proof = format!("(?x {{ ?x :p :b }} {nil}) log:collectAllIn 1.\n\
+        {{ (?x {{ ?x :p :b }} {nil}) log:collectAllIn 1 }} pe:builtin log:collectAllIn.");
+    rejects_under(source, &proof, "C6", "omits");
+    let report = check("", &proof).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    let report = check("", &format!("({nil} :map) <http://www.w3.org/2000/10/swap/list#map> {nil}.\n\
+        {{ ({nil} :map) <http://www.w3.org/2000/10/swap/list#map> {nil} }} pe:builtin <http://www.w3.org/2000/10/swap/list#map>.")).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
 }

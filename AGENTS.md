@@ -17,7 +17,7 @@ user-facing text direct.
   - `reasoner.rs`: forward agenda, backward rules, built-ins, indexes, and
     proof capture.
   - `proof_writer.rs`, `proof_check.rs`, `proof_check_n3.rs`: N3 proof
-    output, the generic validity conditions C1–C7, and the N3 proof reader
+    output, the generic validity conditions C1–C9, and the N3 proof reader
     and step checker.
   - `printing.rs`, `rdf_compat.rs`, `error.rs`, `sudoku.rs`, `w3c_rdf.rs`.
   - `main.rs`: CLI. `lib.rs`: library API. `wasm.rs`: browser bindings.
@@ -110,7 +110,8 @@ that say why. Prefer small, direct changes over new machinery, and fix the
 code that produces a wrong result rather than patching its output.
 
 Proof checking must stay sound: a forged proof must never report `checked`.
-The seven conditions C1–C7 of `docs/proof-checking.md` match eyeon's. Matching
+The conditions C1–C9 are defined in `docs/proof-checking.md`; proof checking
+does not require compatibility with sibling engines. Matching
 against a recorded step is one-way, so only the rule's variables bind. An
 existential witness must be a fresh blank node tied to one firing. Built-ins
 are re-decided with closed arguments, including tests on quoted graphs; only
