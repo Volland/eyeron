@@ -1,14 +1,17 @@
 use eyeron::cli::run_browser_request;
 use serde_json::{Value, json};
 use std::fs;
-use std::io::Write;
+use std::io::{ErrorKind, Write};
 use std::process::{Command, Stdio};
 
 fn compare(args: &[&str], stdin: &str, proof: Option<(&str, &str)>) -> String {
     let mut native = Command::new(env!("CARGO_BIN_EXE_eyeron"))
         .args(args).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped())
         .spawn().unwrap();
-    native.stdin.take().unwrap().write_all(stdin.as_bytes()).unwrap();
+    // Invalid options, help, and version can exit before reading any input.
+    if let Err(error) = native.stdin.take().unwrap().write_all(stdin.as_bytes()) {
+        assert_eq!(error.kind(), ErrorKind::BrokenPipe, "writing CLI stdin: {error}");
+    }
     let native = native.wait_with_output().unwrap();
     let sources = args.iter().filter_map(|name| {
         if *name == "-" {
@@ -68,6 +71,15 @@ fn browser_rejects_the_same_invalid_options_and_inputs() {
         vec!["-r", "-"],
     ] {
         compare(&args, ":unknown :prefix :fails .", None);
+    }
+}
+
+#[test]
+fn browser_modes_that_exit_early_do_not_need_to_read_stdin() {
+    // More than a pipe buffer forces a write to encounter an early CLI exit.
+    let input = "x".repeat(1024 * 1024);
+    for args in [vec!["--unknown-option", "-"], vec!["--help"], vec!["--version"]] {
+        compare(&args, &input, None);
     }
 }
 

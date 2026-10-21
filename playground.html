@@ -549,6 +549,7 @@
       const stateKey = 'eyeron.playground.cli.v1';
       const gistTokenKey = 'eyeron.playground.github.gistToken.v1';
       let sources = [{ name: '-', text: defaultProgram, baseIri: null }];
+      let originalExample = null;
       let additionalEditors = [];
       let proofName = 'proof.n3';
       let restoring = false;
@@ -694,6 +695,7 @@
       }
 
       function applyState(saved) {
+        originalExample = null;
         sources = saved.sources;
         byId('mode').value = saved.mode;
         byId('rdf').checked = saved.rdf;
@@ -747,6 +749,25 @@
 
       async function makeShareUrl(snapshot) {
         const url = shareBaseUrl();
+        const defaultOptions = !snapshot.mode && !snapshot.rdf && !snapshot.stream && !snapshot.streamMessages &&
+          !snapshot.baseIri && snapshot.maxBackwardDepth === '' && !snapshot.proof.text;
+        if (bundledExamplesN3.includes(snapshot.example) && defaultOptions) {
+          try {
+            if (originalExample?.name !== snapshot.example) {
+              const controller = new AbortController();
+              const timeout = setTimeout(() => controller.abort(), 10000);
+              try { originalExample = { name: snapshot.example, sources: await readExampleSources(snapshot.example, controller.signal) }; }
+              finally { clearTimeout(timeout); }
+            }
+            const originals = originalExample.sources;
+            if (snapshot.sources.length === originals.length && snapshot.sources.every((source, index) =>
+              source.name === originals[index].name && source.text === originals[index].text && source.baseIri === originals[index].baseIri)) {
+              url.search = '';
+              url.hash = 'example=' + encodeURIComponent(snapshot.example.slice(0, -3));
+              return url.href;
+            }
+          } catch { /* A failed reference check can still share the full snapshot. */ }
+        }
         url.hash = 'state=' + await packState(snapshot);
         return url.href;
       }
@@ -789,7 +810,8 @@
 
       async function sharePlayground(useGist) {
         if (busy || sharing) return;
-        const snapshot = state();
+        const current = state();
+        const snapshot = { ...current, sources: current.sources.map((source) => ({ ...source })) };
         let token = '';
         if (useGist) {
           try { token = sessionStorage.getItem(gistTokenKey) || ''; } catch {}
@@ -928,12 +950,18 @@
         finally { loadController = null; setBusy(false); updateOptions(); }
       }
 
-      async function loadExample(name, signal) {
+      async function readExampleSources(name, signal) {
         if (!bundledExamplesN3.includes(name)) throw new Error('Unknown bundled example.');
         const loaded = [await fetchSource('examples/' + name, 'examples/' + name, signal)];
         const stem = name.slice(0, -3);
         const companion = [stem + '.n3', stem + '.trig'].find((candidate) => bundledCompanionInputs.includes(candidate));
         if (companion) loaded.push(await fetchSource('examples/input/' + companion, 'examples/input/' + companion, signal));
+        return loaded;
+      }
+
+      async function loadExample(name, signal) {
+        const loaded = await readExampleSources(name, signal);
+        originalExample = { name, sources: loaded.map((source) => ({ ...source })) };
         sources = loaded;
         byId('examples').value = name;
         showSources();
@@ -943,17 +971,23 @@
         restoring = true;
         const url = new URL(location.href);
         const hash = url.hash.slice(1);
+        const hashParams = new URLSearchParams(hash);
         const token = url.searchParams.get('state') ?? url.searchParams.get('s') ??
-          new URLSearchParams(hash).get('state') ?? (/^[gj]\./.test(hash) ? hash : null);
+          hashParams.get('state') ?? (/^[gj]\./.test(hash) ? hash : null);
         const stateUrl = url.searchParams.get('stateurl');
-        const shared = token !== null || stateUrl !== null;
+        const example = hashParams.get('example') ?? url.searchParams.get('example') ?? url.searchParams.get('ex');
+        const shared = token !== null || stateUrl !== null || example !== null;
         let sharedLoaded = false;
         let sharedError = '';
         if (shared) {
           await loadInputs(async (signal) => {
             try {
-              const saved = token !== null ? await unpackState(token) : normalizeState(JSON.parse((await fetchSource(stateUrl, '', signal)).text));
-              applyState(saved);
+              if (token !== null) applyState(await unpackState(token));
+              else if (stateUrl !== null) applyState(normalizeState(JSON.parse((await fetchSource(stateUrl, '', signal)).text)));
+              else {
+                applyState(normalizeState({ sources: [{ name: '-', text: defaultProgram, baseIri: null }] }));
+                await loadExample(example.endsWith('.n3') ? example : example + '.n3', signal);
+              }
               sharedLoaded = true;
               setShareStatus('Opened shared playground. Changes save locally.');
             } catch (error) {
@@ -974,8 +1008,6 @@
           } catch { /* An unavailable or outdated saved state does not block the editor. */ }
         }
         showSources();
-        const example = url.searchParams.get('example') || url.searchParams.get('ex');
-        if (!shared && example) await loadInputs((signal) => loadExample(example, signal));
         updateOptions();
         restoring = false;
         if (!shared || sharedLoaded) scheduleSave();
@@ -1010,6 +1042,7 @@
         loadInputs(async (signal) => {
           const source = await fetchSource(byId('input-url').value, '', signal);
           sources = [source];
+          originalExample = null;
           byId('examples').value = '';
           showSources();
           byId('input-url').value = '';
