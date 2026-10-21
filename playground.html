@@ -32,17 +32,22 @@
       .grow { flex: 1 1 12rem; }
       .field { display: grid; gap: 0.3rem; }
       .field > span, .field > label { font-size: 0.85rem; font-weight: 600; }
-      .options-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.85rem; }
-      .output-mode { grid-column: 1 / -1; }
+      .options-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.5rem 0.75rem; }
+      .output-mode { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.75rem; }
+      .output-mode select { flex: 1; }
       .flags { gap: 0.8rem 1.5rem; }
       .toggle { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
       .toggle input { width: 1rem; height: 1rem; accent-color: var(--accent); }
       .hint, .status { color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
       .hint { margin: 0.65rem 0 0; }
-      .command { margin: 0.8rem 0 0; padding: 0.65rem 0.8rem; background: #f9fafb; border-radius: 0.5rem; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 0.85rem; }
-      .grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "input options" "input output"; grid-template-rows: auto 1fr; gap: 1rem; align-items: start; }
+      .command { margin: 0.5rem 0 0; max-height: 5rem; padding: 0.45rem 0.6rem; background: #f9fafb; border-radius: 0.5rem; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 0.8rem; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "input options" "input output"; grid-template-rows: auto 1fr; gap: 1rem; align-items: start; }
       .input-card { grid-area: input; }
-      .options-card { grid-area: options; }
+      .options-card { grid-area: options; padding: 0.85rem 1rem; }
+      .options-card h2 { margin-bottom: 0.5rem; }
+      .options-card .flags { margin-top: 0.5rem; gap: 0.25rem 1rem; }
+      .options-card .toggle { min-height: 32px; }
+      .options-card input[type="text"], .options-card input[type="number"], .options-card select { min-height: 34px; padding: 0.35rem 0.5rem; font-size: 0.9rem; }
       .output-card { grid-area: output; }
       .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 0.65rem; margin-bottom: 0.75rem; }
       .panel-heading h2 { margin: 0; }
@@ -53,6 +58,9 @@
       .url-row { margin-bottom: 0.75rem; }
       .url-row input { flex: 1 1 14rem; }
       .proof-input { margin-top: 1rem; }
+      .share-actions { margin-top: 1rem; }
+      .share-result { margin-top: 0.65rem; }
+      .share-result input { width: 100%; }
       .CodeMirror { height: 32rem; border: 1px solid var(--border); border-radius: 0.5rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.87rem; line-height: 1.45; }
       .CodeMirror-gutters { background: #f9fafb; border-right: 1px solid #e5e7eb; }
       #proof-panel .CodeMirror { height: 15rem; }
@@ -81,6 +89,8 @@
         .example-select { flex: 1 1 100%; }
         .url-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
         button, select, input[type="text"], input[type="url"], input[type="number"] { min-height: 44px; font-size: 16px; }
+        .options-card input[type="text"], .options-card input[type="number"], .options-card select { min-height: 44px; font-size: 16px; }
+        .options-card .toggle { min-height: 44px; }
         .toggle { min-height: 44px; }
         .flags { gap: 0 1rem; }
         .CodeMirror { height: 22rem; height: clamp(16rem, 50svh, 28rem); font-size: 16px; }
@@ -128,6 +138,12 @@
             <form id="proof-url-form" class="row url-row"><input id="proof-url" type="url" placeholder="https://example.org/proof.n3" aria-label="Proof URL" autocapitalize="off" spellcheck="false" required /><button id="load-proof-url" class="secondary" type="submit">Load URL</button></form>
             <textarea id="proof-input" spellcheck="false" aria-label="Saved N3 proof"></textarea>
           </section>
+          <div class="row share-actions" aria-label="Share playground">
+            <button id="share-link" class="secondary" type="button" title="Copy a link containing the current inputs, proof, and options.">Share link</button>
+            <button id="create-gist-share" class="secondary" type="button" title="Upload the current inputs, proof, and options to an unlisted GitHub Gist and copy a short link.">Create Gist share</button>
+          </div>
+          <p id="share-status" class="status" role="status" hidden></p>
+          <label id="share-result" class="field share-result" hidden><span>Share link</span><input id="share-url" type="text" readonly spellcheck="false" /></label>
         </div>
         <section class="card options-card" aria-labelledby="options-heading">
           <h2 id="options-heading">Options</h2>
@@ -144,10 +160,10 @@
             <label class="field" for="base-iri"><span>--base-iri IRI</span><input id="base-iri" type="text" placeholder="Use each input's base" spellcheck="false" /></label>
             <label class="field" for="max-backward-depth"><span>--max-backward-depth N</span><input id="max-backward-depth" type="number" min="0" step="1" placeholder="32 (default)" /></label>
           </div>
-          <div class="row flags" style="margin-top:0.85rem">
-            <label class="toggle"><input id="rdf" type="checkbox" /><span><code>-r, --rdf</code> · RDF/TriG compatibility</span></label>
-            <label class="toggle"><input id="stream" type="checkbox" /><span><code>-s, --stream</code> · Output after fixpoint</span></label>
-            <label class="toggle"><input id="stream-messages" type="checkbox" /><span><code>--stream-messages</code> · Independent RDF Messages</span></label>
+          <div class="row flags">
+            <label class="toggle" title="RDF/TriG compatibility"><input id="rdf" type="checkbox" /><span><code>-r, --rdf</code></span></label>
+            <label class="toggle" title="Stream output after fixpoint"><input id="stream" type="checkbox" /><span><code>-s, --stream</code></span></label>
+            <label class="toggle" title="Reason over RDF Messages independently"><input id="stream-messages" type="checkbox" /><span><code>--stream-messages</code></span></label>
           </div>
           <pre class="command" aria-label="Equivalent command"><code id="command">eyeron -</code></pre>
         </section>
@@ -531,11 +547,13 @@
       output.getInputField().setAttribute('aria-label', 'Command output');
       const defaultProgram = '@prefix : <http://example.org/socrates#> .\n\n:Socrates a :Human .\n\n{\n    ?person a :Human .\n} => {\n    ?person a :Mortal .\n} .\n';
       const stateKey = 'eyeron.playground.cli.v1';
+      const gistTokenKey = 'eyeron.playground.github.gistToken.v1';
       let sources = [{ name: '-', text: defaultProgram, baseIri: null }];
       let additionalEditors = [];
       let proofName = 'proof.n3';
       let restoring = false;
       let busy = false;
+      let sharing = false;
       let worker = null;
       let workerReady = null;
       let workerUrl = null;
@@ -619,7 +637,7 @@
       }
 
       function state() {
-        return { sources, mode: byId('mode').value, rdf: byId('rdf').checked,
+        return { v: 1, sources, mode: byId('mode').value, rdf: byId('rdf').checked,
           stream: byId('stream').checked, streamMessages: byId('stream-messages').checked,
           baseIri: byId('base-iri').value, maxBackwardDepth: byId('max-backward-depth').value,
           proof: { name: proofName, text: proof.getValue() }, example: byId('examples').value };
@@ -641,6 +659,156 @@
         input.setOption('readOnly', value);
         for (const editor of additionalEditors) editor.setOption('readOnly', value);
         proof.setOption('readOnly', value);
+        updateShareButtons();
+      }
+
+      function updateShareButtons() {
+        byId('share-link').disabled = byId('create-gist-share').disabled = busy || sharing;
+      }
+
+      function setShareStatus(text, kind = '') {
+        byId('share-status').hidden = false;
+        byId('share-status').textContent = text;
+        byId('share-status').className = 'status ' + kind;
+      }
+
+      function normalizeState(raw) {
+        if (!raw || typeof raw !== 'object' || (raw.v !== undefined && raw.v !== 1)) throw new Error('Unsupported playground state.');
+        if (!Array.isArray(raw.sources) || !raw.sources.length || !raw.sources.every((source) =>
+          source && typeof source.name === 'string' && typeof source.text === 'string' &&
+          (source.baseIri == null || typeof source.baseIri === 'string'))) throw new Error('Playground state must contain named text inputs.');
+        const mode = raw.mode ?? '';
+        if (!['', '--ast', '--proof', '--prove-and-check', '--check-proof'].includes(mode)) throw new Error('Unknown shared output mode.');
+        for (const key of ['rdf', 'stream', 'streamMessages']) {
+          if (raw[key] !== undefined && typeof raw[key] !== 'boolean') throw new Error(`Invalid shared option: ${key}.`);
+        }
+        if (raw.baseIri !== undefined && typeof raw.baseIri !== 'string') throw new Error('Invalid shared base IRI.');
+        const depth = raw.maxBackwardDepth ?? '';
+        if (typeof depth !== 'string' && !(typeof depth === 'number' && Number.isFinite(depth))) throw new Error('Invalid shared backward depth.');
+        if (raw.proof !== undefined && (!raw.proof || typeof raw.proof.name !== 'string' || typeof raw.proof.text !== 'string')) throw new Error('Invalid shared proof.');
+        return { v: 1, sources: raw.sources.map((source) => ({ name: source.name, text: source.text,
+            baseIri: source.baseIri === undefined ? baseForName(source.name) : source.baseIri })),
+          mode, rdf: raw.rdf ?? false, stream: raw.stream ?? false, streamMessages: raw.streamMessages ?? false,
+          baseIri: raw.baseIri ?? '', maxBackwardDepth: String(depth), proof: raw.proof ?? { name: 'proof.n3', text: '' },
+          example: bundledExamplesN3.includes(raw.example) ? raw.example : '' };
+      }
+
+      function applyState(saved) {
+        sources = saved.sources;
+        byId('mode').value = saved.mode;
+        byId('rdf').checked = saved.rdf;
+        byId('stream').checked = saved.stream;
+        byId('stream-messages').checked = saved.streamMessages;
+        byId('base-iri').value = saved.baseIri;
+        byId('max-backward-depth').value = saved.maxBackwardDepth;
+        proofName = saved.proof.name;
+        proof.setValue(saved.proof.text);
+        byId('examples').value = saved.example;
+      }
+
+      function bytesToBase64Url(bytes) {
+        let binary = '';
+        for (let offset = 0; offset < bytes.length; offset += 0x8000) binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
+        return btoa(binary).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
+      }
+
+      function base64UrlToBytes(value) {
+        return Uint8Array.from(atob(value.replaceAll('-', '+').replaceAll('_', '/')), (character) => character.charCodeAt(0));
+      }
+
+      async function packState(snapshot) {
+        const json = JSON.stringify(snapshot);
+        const plain = 'j.' + bytesToBase64Url(new TextEncoder().encode(json));
+        try {
+          const stream = new Blob([json]).stream().pipeThrough(new CompressionStream('gzip'));
+          const compressed = 'g.' + bytesToBase64Url(new Uint8Array(await new Response(stream).arrayBuffer()));
+          if (compressed.length < plain.length) return compressed;
+        } catch { /* Browsers without gzip support can still share JSON links. */ }
+        return plain;
+      }
+
+      async function unpackState(token) {
+        if (!/^[gj]\.[A-Za-z0-9_-]+$/.test(token)) throw new Error('Invalid playground share link.');
+        const bytes = base64UrlToBytes(token.slice(2));
+        let json;
+        if (token.startsWith('g.')) {
+          if (typeof DecompressionStream === 'undefined') throw new Error('This browser cannot open compressed links. Ask for a Gist share.');
+          json = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+        } else json = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+        return normalizeState(JSON.parse(json));
+      }
+
+      function shareBaseUrl() {
+        const url = new URL(location.href);
+        for (const key of ['example', 'ex', 'state', 's', 'stateurl']) url.searchParams.delete(key);
+        url.hash = '';
+        return url;
+      }
+
+      async function makeShareUrl(snapshot) {
+        const url = shareBaseUrl();
+        url.hash = 'state=' + await packState(snapshot);
+        return url.href;
+      }
+
+      async function createGistShareUrl(snapshot, token) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 20000);
+        try {
+          const response = await fetch('https://api.github.com/gists', {
+            method: 'POST', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', signal: controller.signal,
+            headers: { Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+            body: JSON.stringify({ description: 'Eyeron playground shared state', public: false,
+              files: { 'eyeron-playground-state.json': { content: JSON.stringify(snapshot, null, 2) + '\n' } } }),
+          });
+          const payload = await response.json().catch(() => null);
+          if (!response.ok) {
+            if (response.status === 401 || response.status === 403) { try { sessionStorage.removeItem(gistTokenKey); } catch {} }
+            throw new Error(`GitHub Gist HTTP ${response.status}: ${payload?.message || 'Could not create the Gist.'}`);
+          }
+          const raw = payload?.files?.['eyeron-playground-state.json']?.raw_url;
+          if (typeof raw !== 'string' || !raw.startsWith('https://gist.githubusercontent.com/')) throw new Error('GitHub did not return the Gist state URL.');
+          const url = shareBaseUrl();
+          url.searchParams.set('stateurl', raw);
+          return url.href;
+        } catch (error) {
+          if (error.name === 'AbortError') throw new Error('GitHub Gist request timed out.');
+          throw error;
+        } finally { clearTimeout(timeout); }
+      }
+
+      async function copyShareUrl(url) {
+        byId('share-url').value = url;
+        try { await navigator.clipboard.writeText(url); return true; } catch {}
+        byId('share-result').hidden = false;
+        byId('share-url').focus();
+        byId('share-url').select();
+        try { if (document.execCommand('copy')) return true; } catch {}
+        return false;
+      }
+
+      async function sharePlayground(useGist) {
+        if (busy || sharing) return;
+        const snapshot = state();
+        let token = '';
+        if (useGist) {
+          try { token = sessionStorage.getItem(gistTokenKey) || ''; } catch {}
+          if (!token) token = prompt('Enter a GitHub token with gist permission to upload these inputs, proof, and options to an unlisted Gist. Anyone with its link can read it. The token stays in this tab for this session only.', '') || '';
+          token = token.trim().replace(/^(?:Bearer|token)\s+/i, '').replace(/^['"]|['"]$/g, '').trim();
+          if (!token) { setShareStatus('Gist sharing cancelled.'); return; }
+          try { sessionStorage.setItem(gistTokenKey, token); } catch {}
+        }
+        sharing = true;
+        updateShareButtons();
+        byId('share-result').hidden = true;
+        setShareStatus(useGist ? 'Creating an unlisted GitHub Gist…' : 'Creating share link…');
+        try {
+          const url = useGist ? await createGistShareUrl(snapshot, token) : await makeShareUrl(snapshot);
+          const copied = await copyShareUrl(url);
+          const long = !useGist && url.length > 2000 ? ' Use Create Gist share for a shorter link.' : '';
+          setShareStatus((copied ? (useGist ? 'Gist share link copied.' : 'Share link copied.') : 'Select and copy the link below.') + long, 'ok');
+        } catch (error) { setShareStatus('Could not share: ' + error.message, 'error'); }
+        finally { sharing = false; updateShareButtons(); }
       }
 
       function ensureWorker() {
@@ -773,32 +941,45 @@
 
       async function restore() {
         restoring = true;
-        try {
-          const saved = JSON.parse(localStorage.getItem(stateKey) || 'null');
-          if (saved && Array.isArray(saved.sources) && saved.sources.length && saved.sources.every((source) => typeof source.name === 'string' && typeof source.text === 'string')) {
-            sources = saved.sources.map((source) => ({ name: source.name, text: source.text, baseIri: typeof source.baseIri === 'string' ? source.baseIri : baseForName(source.name) }));
-            byId('mode').value = saved.mode || '';
-            if (byId('mode').selectedIndex < 0) byId('mode').value = '';
-            byId('rdf').checked = !!saved.rdf;
-            byId('stream').checked = !!saved.stream;
-            byId('stream-messages').checked = !!saved.streamMessages;
-            byId('base-iri').value = typeof saved.baseIri === 'string' ? saved.baseIri : '';
-            byId('max-backward-depth').value = saved.maxBackwardDepth ?? '';
-            proofName = saved.proof?.name || 'proof.n3';
-            proof.setValue(saved.proof?.text || '');
-            byId('examples').value = saved.example || '';
-          } else {
-            const previous = localStorage.getItem('eyeron.playground.input');
-            const previousData = localStorage.getItem('eyeron.playground.data');
-            if (previous !== null) sources[0].text = previous;
-            if (previousData?.trim()) sources.push({ name: 'data.trig', text: previousData, baseIri: baseForName('data.trig') });
-          }
-        } catch { /* An unavailable or outdated saved state does not block the editor. */ }
+        const url = new URL(location.href);
+        const hash = url.hash.slice(1);
+        const token = url.searchParams.get('state') ?? url.searchParams.get('s') ??
+          new URLSearchParams(hash).get('state') ?? (/^[gj]\./.test(hash) ? hash : null);
+        const stateUrl = url.searchParams.get('stateurl');
+        const shared = token !== null || stateUrl !== null;
+        let sharedLoaded = false;
+        let sharedError = '';
+        if (shared) {
+          await loadInputs(async (signal) => {
+            try {
+              const saved = token !== null ? await unpackState(token) : normalizeState(JSON.parse((await fetchSource(stateUrl, '', signal)).text));
+              applyState(saved);
+              sharedLoaded = true;
+              setShareStatus('Opened shared playground. Changes save locally.');
+            } catch (error) {
+              sharedError = 'Could not open shared playground: ' + error.message;
+              setShareStatus(sharedError, 'error');
+            }
+          });
+        } else {
+          try {
+            const saved = JSON.parse(localStorage.getItem(stateKey) || 'null');
+            if (saved) applyState(normalizeState(saved));
+            else {
+              const previous = localStorage.getItem('eyeron.playground.input');
+              const previousData = localStorage.getItem('eyeron.playground.data');
+              if (previous !== null) sources[0].text = previous;
+              if (previousData?.trim()) sources.push({ name: 'data.trig', text: previousData, baseIri: baseForName('data.trig') });
+            }
+          } catch { /* An unavailable or outdated saved state does not block the editor. */ }
+        }
         showSources();
-        restoring = false;
-        const example = new URL(location.href).searchParams.get('example') || new URL(location.href).searchParams.get('ex');
-        if (example) await loadInputs((signal) => loadExample(example, signal));
+        const example = url.searchParams.get('example') || url.searchParams.get('ex');
+        if (!shared && example) await loadInputs((signal) => loadExample(example, signal));
         updateOptions();
+        restoring = false;
+        if (!shared || sharedLoaded) scheduleSave();
+        return sharedError;
       }
 
       for (const name of bundledExamplesN3) byId('examples').add(new Option(name, name));
@@ -840,14 +1021,19 @@
         event.preventDefault();
         loadInputs(async (signal) => { const source = await fetchSource(byId('proof-url').value, '', signal); proof.setValue(source.text); proofName = source.name; byId('proof-url').value = ''; });
       });
+      byId('share-link').addEventListener('click', () => sharePlayground(false));
+      byId('create-gist-share').addEventListener('click', () => sharePlayground(true));
+      byId('share-url').addEventListener('click', () => byId('share-url').select());
       byId('save-output').addEventListener('click', () => {
         const url = URL.createObjectURL(new Blob([output.getValue()], { type: 'text/plain;charset=utf-8' }));
         const link = document.createElement('a'); link.href = url; link.download = byId('mode').value === '--proof' ? 'proof.n3' : 'output.txt';
         link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
       });
       document.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter' && !busy) { event.preventDefault(); run(); } });
-      await restore();
-      try { await ensureWorker(); setBusy(false); setStatus('Ready.'); }
+      // Fragment navigation in the same tab must restore the linked snapshot too.
+      window.addEventListener('hashchange', () => location.reload());
+      const restoreError = await restore();
+      try { await ensureWorker(); setBusy(false); setStatus(restoreError || 'Ready.', restoreError ? 'error' : ''); }
       catch (error) { setStatus(error.message, 'error'); }
     </script>
   </body>
