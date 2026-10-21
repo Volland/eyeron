@@ -611,7 +611,13 @@
 
       function ensureWorker() {
         if (worker) return workerReady;
-        const moduleUrl = new URL('./pkg/eyeron.js', location.href).href;
+        // Refresh the glue and binary together: Pages caches both URLs across
+        // releases, and wasm-bindgen's default URL drops the module's query.
+        const moduleUrl = new URL('./pkg/eyeron.js', location.href);
+        const wasmUrl = new URL('./pkg/eyeron_bg.wasm', location.href);
+        const cacheKey = Date.now().toString(36);
+        moduleUrl.searchParams.set('v', cacheKey);
+        wasmUrl.searchParams.set('v', cacheKey);
         const code = `
           let engine;
           self.onmessage = (event) => {
@@ -620,8 +626,8 @@
               self.postMessage({ type: 'done', report: JSON.parse(report) });
             } catch (error) { self.postMessage({ type: 'error', message: String(error.message || error) }); }
           };
-          import(${JSON.stringify(moduleUrl)}).then(async (module) => {
-            await module.default(); engine = module;
+          import(${JSON.stringify(moduleUrl.href)}).then(async (module) => {
+            await module.default({ module_or_path: ${JSON.stringify(wasmUrl.href)} }); engine = module;
             self.postMessage({ type: 'ready', version: module.version() });
           }).catch((error) => self.postMessage({ type: 'error', message: String(error.message || error) }));
         `;

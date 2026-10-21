@@ -126,6 +126,7 @@ cargo test --release
 ./scripts/test-all
 cargo test --release --test examples
 cargo test --release --test proof_checking
+node --experimental-vm-modules --test tests/playground_loading.mjs
 cargo doc --no-deps
 ```
 

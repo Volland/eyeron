@@ -30,6 +30,8 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Clippy (all targets)
         run: cargo clippy --locked --all-targets -- -D warnings
+      - name: Playground asset loading
+        run: node --experimental-vm-modules --test tests/playground_loading.mjs
       # Unit + doc tests, both conformance suites, example output/proof
       # snapshots, and the proof-checking corpus.
       - name: Release tests
