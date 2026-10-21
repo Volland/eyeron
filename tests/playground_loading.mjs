@@ -112,3 +112,58 @@ test('a failed engine load can be retried', async () => {
   await page.start();
   assert.equal((await page.run()).exitCode, 0);
 });
+
+// Exercise the real form handler: replacing a program must not leave companion
+// facts from the previous example in the next reasoning request.
+function inputUrlForm(fetchSource) {
+  const start = html.indexOf("      byId('input-url-form').addEventListener");
+  const end = html.indexOf("      byId('proof-url-form').addEventListener", start);
+  assert.ok(start >= 0 && end > start, 'input URL form handler');
+  const fields = {
+    'input-url': { value: 'https://example.org/next.n3' },
+    examples: { value: 'rdf-dataset.n3' },
+  };
+  let submit, pending, rendered = 0;
+  const signal = new AbortController().signal;
+  fields['input-url-form'] = { addEventListener: (event, handler) => { assert.equal(event, 'submit'); submit = handler; } };
+  const context = vm.createContext({
+    byId: (id) => fields[id], fetchSource,
+    loadInputs: (action) => { pending = action(signal); },
+    showSources: () => { rendered++; },
+  });
+  vm.runInContext('let sources = [{ name: "old.n3", text: "old rules" }, { name: "data.trig", text: "old facts" }];', context);
+  vm.runInContext(html.slice(start, end), context);
+  return {
+    fields,
+    rendered: () => rendered,
+    sources: () => JSON.parse(vm.runInContext('JSON.stringify(sources)', context)),
+    submit: async () => { let prevented = false; submit({ preventDefault: () => { prevented = true; } }); assert.ok(prevented); await pending; },
+  };
+}
+
+test('loading a URL replaces the program and its companion inputs', async () => {
+  const source = { name: 'https://example.org/next.n3', text: 'new program', baseIri: 'https://example.org/next.n3' };
+  const form = inputUrlForm(async (url, name, signal) => {
+    assert.equal(url, source.name);
+    assert.equal(name, '');
+    assert.ok(signal instanceof AbortSignal);
+    return source;
+  });
+  await form.submit();
+  assert.deepEqual(form.sources(), [source]);
+  assert.equal(form.fields.examples.value, '');
+  assert.equal(form.fields['input-url'].value, '');
+  assert.equal(form.rendered(), 1);
+});
+
+test('a failed or cancelled URL load preserves the current program', async () => {
+  for (const error of [new Error('HTTP 404'), new DOMException('Stopped', 'AbortError')]) {
+    const form = inputUrlForm(async () => { throw error; });
+    const previous = form.sources();
+    await assert.rejects(form.submit(), error);
+    assert.deepEqual(form.sources(), previous);
+    assert.equal(form.fields.examples.value, 'rdf-dataset.n3');
+    assert.equal(form.fields['input-url'].value, 'https://example.org/next.n3');
+    assert.equal(form.rendered(), 0);
+  }
+});

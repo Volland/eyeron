@@ -32,42 +32,59 @@
       .grow { flex: 1 1 12rem; }
       .field { display: grid; gap: 0.3rem; }
       .field > span, .field > label { font-size: 0.85rem; font-weight: 600; }
-      .options-fields { display: grid; grid-template-columns: minmax(15rem, 1.3fr) minmax(12rem, 1fr) minmax(10rem, 0.6fr); gap: 0.85rem; }
+      .options-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.85rem; }
+      .output-mode { grid-column: 1 / -1; }
       .flags { gap: 0.8rem 1.5rem; }
       .toggle { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
       .toggle input { width: 1rem; height: 1rem; accent-color: var(--accent); }
       .hint, .status { color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
       .hint { margin: 0.65rem 0 0; }
       .command { margin: 0.8rem 0 0; padding: 0.65rem 0.8rem; background: #f9fafb; border-radius: 0.5rem; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 0.85rem; }
-      .grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 1rem; align-items: start; }
+      .grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "input options" "input output"; grid-template-rows: auto 1fr; gap: 1rem; align-items: start; }
+      .input-card { grid-area: input; }
+      .options-card { grid-area: options; }
+      .output-card { grid-area: output; }
       .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 0.65rem; margin-bottom: 0.75rem; }
       .panel-heading h2 { margin: 0; }
       .example-select { flex: 0 1 20rem; }
-      .source-toolbar { margin-bottom: 0.75rem; }
-      #source-select { flex: 1 1 10rem; }
-      .source-name { flex: 2 1 14rem; }
+      .input-source { margin: 0 0 0.5rem; color: var(--muted); font-size: 0.82rem; overflow-wrap: anywhere; }
+      .additional-input { margin-top: 1rem; }
+      .additional-input h3 { margin: 0 0 0.5rem; font-size: 0.9rem; }
       .url-row { margin-bottom: 0.75rem; }
       .url-row input { flex: 1 1 14rem; }
       .proof-input { margin-top: 1rem; }
-      .CodeMirror { height: 25rem; border: 1px solid var(--border); border-radius: 0.5rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.87rem; line-height: 1.45; }
+      .CodeMirror { height: 32rem; border: 1px solid var(--border); border-radius: 0.5rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.87rem; line-height: 1.45; }
       .CodeMirror-gutters { background: #f9fafb; border-right: 1px solid #e5e7eb; }
       #proof-panel .CodeMirror { height: 15rem; }
-      .output-card .CodeMirror { height: 35rem; }
+      .additional-input .CodeMirror { height: 18rem; }
+      .output-card .CodeMirror { height: 24rem; }
       .messages { margin: 0.85rem 0 0; max-height: 18rem; padding: 0.75rem; border-radius: 0.5rem; background: #fef2f2; color: #991b1b; font-size: 0.82rem; line-height: 1.45; white-space: pre-wrap; overflow: auto; overflow-wrap: anywhere; }
-      .actions { margin-top: 0.85rem; }
+      .run-toolbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 1.25rem; box-shadow: 0 3px 8px #1118270a; }
+      .run-toolbar .status { flex: 1 1 12rem; margin: 0; }
       #stop { background: #b91c1c; }
       .error { color: #b91c1c; }
       .ok { color: #047857; }
-      @media (max-width: 980px) { .grid { grid-template-columns: minmax(0, 1fr); } .output-card .CodeMirror { height: 24rem; } }
+      @media (max-width: 980px) { .grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "input" "options" "output"; grid-template-rows: auto; } }
       @media (max-width: 640px) {
         header { align-items: flex-start; gap: 0.75rem; }
         header .logo { width: 48px; height: 48px; }
         .card { padding: 1rem; }
-        .options-fields { grid-template-columns: minmax(0, 1fr); }
+        .page { padding-top: calc(1rem + env(safe-area-inset-top)); }
+        header h1 { font-size: 1.5rem; }
+        .run-toolbar { padding-top: calc(0.75rem + env(safe-area-inset-top)); padding-bottom: 0.75rem; }
+        .actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+        .actions button { padding-inline: 0.5rem; font-size: 0.94rem; white-space: nowrap; }
+        .run-toolbar .status { flex-basis: 100%; }
+        .options-fields { gap: 0.75rem; }
+        .options-fields .field > span { overflow-wrap: anywhere; }
         .panel-heading { flex-wrap: wrap; }
         .example-select { flex: 1 1 100%; }
+        .url-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
         button, select, input[type="text"], input[type="url"], input[type="number"] { min-height: 44px; font-size: 16px; }
-        .flags { align-items: flex-start; flex-direction: column; }
+        .toggle { min-height: 44px; }
+        .flags { gap: 0 1rem; }
+        .CodeMirror { height: 22rem; height: clamp(16rem, 50svh, 28rem); font-size: 16px; }
+        .additional-input .CodeMirror, #proof-panel .CodeMirror { height: 16rem; }
       }
     </style>
   </head>
@@ -77,76 +94,69 @@
         <img class="logo" src="https://josd.github.io/images/eye.png" alt="" width="64" height="64">
         <div class="header-copy">
           <h1>The Eyeron Playground</h1>
-          <p>Run <a href="https://github.com/eyereasoner/eyeron">eyeron</a> in your browser. Load inputs, choose the command-line options, and run.</p>
+          <p>Write N3 or try an example with <a href="https://github.com/eyereasoner/eyeron">eyeron</a>.</p>
           <p class="hint">Version <strong id="version">…</strong></p>
         </div>
       </header>
 
-      <section class="card" aria-labelledby="options-heading">
-        <h2 id="options-heading">Options</h2>
-        <div class="options-fields">
-          <label class="field" for="mode"><span>Output</span>
-            <select id="mode">
-              <option value="">Conclusions (default)</option>
-              <option value="--ast">-a, --ast · Parsed AST</option>
-              <option value="--proof">-p, --proof · N3 proof</option>
-              <option value="--prove-and-check">-c, --prove-and-check · Generate and check a proof</option>
-              <option value="--check-proof">--check-proof FILE · Check a saved proof</option>
-            </select>
-          </label>
-          <label class="field" for="base-iri"><span>--base-iri IRI</span><input id="base-iri" type="text" placeholder="Use each input's base" spellcheck="false" /></label>
-          <label class="field" for="max-backward-depth"><span>--max-backward-depth N</span><input id="max-backward-depth" type="number" min="0" step="1" placeholder="32 (default)" /></label>
+      <section class="card run-toolbar" aria-label="Run controls">
+        <div class="row actions">
+          <button id="run" type="button" disabled>Run</button>
+          <button id="stop" type="button" disabled>Stop</button>
+          <button id="help" class="secondary" type="button" disabled>Help (-h)</button>
+          <button id="show-version" class="secondary" type="button" disabled>Version (-v)</button>
         </div>
-        <div class="row flags" style="margin-top:0.85rem">
-          <label class="toggle"><input id="rdf" type="checkbox" /><span><code>-r, --rdf</code> · RDF/TriG compatibility</span></label>
-          <label class="toggle"><input id="stream" type="checkbox" /><span><code>-s, --stream</code> · Output after fixpoint</span></label>
-          <label class="toggle"><input id="stream-messages" type="checkbox" /><span><code>--stream-messages</code> · Independent RDF Messages</span></label>
-        </div>
-        <pre class="command" aria-label="Equivalent command"><code id="command">eyeron -</code></pre>
+        <p id="status" class="status" role="status">Loading eyeron…</p>
       </section>
 
-      <section class="grid">
+      <div class="grid">
         <div class="card input-card">
           <div class="panel-heading">
-            <h2>Inputs</h2>
+            <h2>Input</h2>
             <select id="examples" class="example-select" aria-label="Load a bundled example"><option value="">Load an example…</option></select>
           </div>
-          <div class="row source-toolbar">
-            <button id="open-files" class="secondary" type="button">Open files</button>
-            <input id="files" type="file" multiple hidden />
-            <button id="add-input" class="secondary" type="button">Add input</button>
-            <button id="remove-input" class="secondary" type="button">Remove input</button>
-          </div>
-          <div class="row url-row">
-            <input id="input-url" type="url" placeholder="https://example.org/input.n3" aria-label="Input URL" />
-            <button id="load-url" class="secondary" type="button">Load URL</button>
-          </div>
-          <div class="row source-toolbar">
-            <select id="source-select" aria-label="Select an input"></select>
-            <label class="field source-name" for="source-name"><span>File name or URL</span><input id="source-name" type="text" value="-" spellcheck="false" /></label>
-          </div>
+          <form id="input-url-form" class="row url-row">
+            <input id="input-url" type="url" placeholder="https://example.org/input.n3" aria-label="Input URL" autocomplete="url" autocapitalize="off" spellcheck="false" required />
+            <button id="load-url" class="secondary" type="submit">Load URL</button>
+          </form>
+          <p id="input-source" class="input-source" hidden></p>
           <textarea id="input" spellcheck="false" aria-label="Input text"></textarea>
-          <p class="hint">Inputs are parsed separately, then merged in order. File extensions select the syntax; <code>-</code> is standard input.</p>
+          <p class="hint">Edit the N3 above, choose an example, or load a URL. Loading replaces the input.</p>
+          <div id="additional-inputs"></div>
           <section id="proof-panel" class="proof-input" aria-labelledby="proof-heading" hidden>
-            <div class="panel-heading"><h2 id="proof-heading">Proof to check</h2><button id="open-proof" class="secondary" type="button">Open proof</button><input id="proof-file" type="file" hidden /></div>
-            <div class="row url-row"><input id="proof-url" type="url" placeholder="https://example.org/proof.n3" aria-label="Proof URL" /><button id="load-proof-url" class="secondary" type="button">Load URL</button></div>
-            <label class="field" for="proof-name"><span>--check-proof FILE</span><input id="proof-name" type="text" value="proof.n3" spellcheck="false" /></label>
+            <h2 id="proof-heading">Proof to check</h2>
+            <form id="proof-url-form" class="row url-row"><input id="proof-url" type="url" placeholder="https://example.org/proof.n3" aria-label="Proof URL" autocapitalize="off" spellcheck="false" required /><button id="load-proof-url" class="secondary" type="submit">Load URL</button></form>
             <textarea id="proof-input" spellcheck="false" aria-label="Saved N3 proof"></textarea>
           </section>
-          <div class="row actions">
-            <button id="run" type="button" disabled>Run</button>
-            <button id="stop" type="button" disabled>Stop</button>
-            <button id="help" class="secondary" type="button" disabled>Help (-h)</button>
-            <button id="show-version" class="secondary" type="button" disabled>Version (-v)</button>
-          </div>
-          <p id="status" class="status" role="status">Loading eyeron…</p>
         </div>
+        <section class="card options-card" aria-labelledby="options-heading">
+          <h2 id="options-heading">Options</h2>
+          <div class="options-fields">
+            <label class="field output-mode" for="mode"><span>Output</span>
+              <select id="mode">
+                <option value="">Conclusions (default)</option>
+                <option value="--ast">-a, --ast · Parsed AST</option>
+                <option value="--proof">-p, --proof · N3 proof</option>
+                <option value="--prove-and-check">-c, --prove-and-check · Generate and check a proof</option>
+                <option value="--check-proof">--check-proof FILE · Check a saved proof</option>
+              </select>
+            </label>
+            <label class="field" for="base-iri"><span>--base-iri IRI</span><input id="base-iri" type="text" placeholder="Use each input's base" spellcheck="false" /></label>
+            <label class="field" for="max-backward-depth"><span>--max-backward-depth N</span><input id="max-backward-depth" type="number" min="0" step="1" placeholder="32 (default)" /></label>
+          </div>
+          <div class="row flags" style="margin-top:0.85rem">
+            <label class="toggle"><input id="rdf" type="checkbox" /><span><code>-r, --rdf</code> · RDF/TriG compatibility</span></label>
+            <label class="toggle"><input id="stream" type="checkbox" /><span><code>-s, --stream</code> · Output after fixpoint</span></label>
+            <label class="toggle"><input id="stream-messages" type="checkbox" /><span><code>--stream-messages</code> · Independent RDF Messages</span></label>
+          </div>
+          <pre class="command" aria-label="Equivalent command"><code id="command">eyeron -</code></pre>
+        </section>
         <div class="card output-card">
           <div class="panel-heading"><h2>Output</h2><button id="save-output" class="secondary" type="button" disabled>Save output</button></div>
           <textarea id="output" spellcheck="false" aria-label="Command output"></textarea>
           <pre id="messages" class="messages" aria-label="Command messages" hidden></pre>
         </div>
-      </section>
+      </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/turtle/turtle.min.js"></script>
@@ -516,10 +526,14 @@
       const input = CodeMirror.fromTextArea(byId('input'), editorOptions);
       const proof = CodeMirror.fromTextArea(byId('proof-input'), editorOptions);
       const output = CodeMirror.fromTextArea(byId('output'), { ...editorOptions, readOnly: true });
+      input.getInputField().setAttribute('aria-label', 'N3 input');
+      proof.getInputField().setAttribute('aria-label', 'Saved N3 proof');
+      output.getInputField().setAttribute('aria-label', 'Command output');
       const defaultProgram = '@prefix : <http://example.org/socrates#> .\n\n:Socrates a :Human .\n\n{\n    ?person a :Human .\n} => {\n    ?person a :Mortal .\n} .\n';
       const stateKey = 'eyeron.playground.cli.v1';
       let sources = [{ name: '-', text: defaultProgram, baseIri: null }];
-      let selectedSource = 0;
+      let additionalEditors = [];
+      let proofName = 'proof.n3';
       let restoring = false;
       let busy = false;
       let worker = null;
@@ -536,25 +550,44 @@
         byId('status').className = 'status ' + kind;
       }
 
+      function revealPanel(element) {
+        if (!matchMedia('(max-width: 980px)').matches) return;
+        const toolbarHeight = document.querySelector('.run-toolbar').getBoundingClientRect().height;
+        const top = scrollY + element.getBoundingClientRect().top - toolbarHeight - 12;
+        window.scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }
+
       function baseForName(name) {
         return name === '-' ? null : new URL(name, location.href).href;
       }
 
-      function syncSourceList() {
-        byId('source-select').replaceChildren(...sources.map((source, index) => {
-          const option = new Option(source.name || '(unnamed input)', String(index));
-          option.selected = index === selectedSource;
-          return option;
-        }));
-      }
-
-      function showSource(index) {
-        selectedSource = index;
+      function showSources() {
+        const wasRestoring = restoring;
         restoring = true;
-        byId('source-name').value = sources[index].name;
-        input.setValue(sources[index].text);
-        restoring = false;
-        syncSourceList();
+        input.setValue(sources[0].text);
+        byId('input-source').textContent = sources[0].name;
+        byId('input-source').hidden = sources[0].name === '-';
+        for (const editor of additionalEditors) editor.toTextArea();
+        additionalEditors = [];
+        byId('additional-inputs').replaceChildren();
+        for (const source of sources.slice(1)) {
+          const section = document.createElement('section');
+          section.className = 'additional-input';
+          const heading = document.createElement('h3');
+          heading.textContent = 'Additional input';
+          const origin = document.createElement('p');
+          origin.className = 'input-source';
+          origin.textContent = source.name;
+          const textarea = document.createElement('textarea');
+          section.append(heading, origin, textarea);
+          byId('additional-inputs').append(section);
+          const editor = CodeMirror.fromTextArea(textarea, { ...editorOptions, readOnly: busy });
+          editor.getInputField().setAttribute('aria-label', 'Additional input: ' + source.name);
+          editor.setValue(source.text);
+          editor.on('change', () => { if (!restoring) { source.text = editor.getValue(); scheduleSave(); } });
+          additionalEditors.push(editor);
+        }
+        restoring = wasRestoring;
         updateOptions();
       }
 
@@ -562,7 +595,7 @@
         const args = [];
         const mode = byId('mode').value;
         if (mode) args.push(mode);
-        if (mode === '--check-proof') args.push(byId('proof-name').value.trim() || 'proof.n3');
+        if (mode === '--check-proof') args.push(proofName);
         if (byId('rdf').checked) args.push('--rdf');
         if (byId('stream').checked) args.push('--stream');
         if (byId('stream-messages').checked) args.push('--stream-messages');
@@ -586,10 +619,10 @@
       }
 
       function state() {
-        return { sources, selectedSource, mode: byId('mode').value, rdf: byId('rdf').checked,
+        return { sources, mode: byId('mode').value, rdf: byId('rdf').checked,
           stream: byId('stream').checked, streamMessages: byId('stream-messages').checked,
           baseIri: byId('base-iri').value, maxBackwardDepth: byId('max-backward-depth').value,
-          proof: { name: byId('proof-name').value, text: proof.getValue() }, example: byId('examples').value };
+          proof: { name: proofName, text: proof.getValue() }, example: byId('examples').value };
       }
 
       function scheduleSave() {
@@ -606,6 +639,7 @@
         byId('stop').disabled = !value;
         byId('save-output').disabled = !output.getValue();
         input.setOption('readOnly', value);
+        for (const editor of additionalEditors) editor.setOption('readOnly', value);
         proof.setOption('readOnly', value);
       }
 
@@ -679,7 +713,7 @@
           const names = sources.map((source) => source.name.trim() || '-');
           const duplicate = names.find((name, index) => names.indexOf(name) !== index);
           if (duplicate) {
-            setStatus(`More than one input is named ${duplicate}. Rename one before running.`, 'error');
+            setStatus(`More than one saved input is named ${duplicate}. Load an example or URL to replace the saved inputs.`, 'error');
             return;
           }
         }
@@ -696,12 +730,13 @@
         setStatus('Running…');
         try {
           await ensureWorker();
-          const request = { args, sources, proof: { name: byId('proof-name').value.trim() || 'proof.n3', text: proof.getValue() } };
+          const request = { args, sources, proof: { name: proofName, text: proof.getValue() } };
           const report = await new Promise((resolve, reject) => { finishRun = resolve; failRun = reject; worker.postMessage(request); });
           byId('messages').textContent = report.stderr;
           byId('messages').hidden = !report.stderr;
           const verdict = report.exitCode === 0 ? 'Done' : report.exitCode === 65 ? 'Inference fuse' : 'Failed';
           setStatus(`${verdict} · exit ${report.exitCode} · ${((performance.now() - started) / 1000).toFixed(2)} s`, report.ok ? 'ok' : 'error');
+          revealPanel(document.querySelector('.output-card'));
         } catch (error) {
           setStatus(error.message, error.message === 'Stopped.' ? '' : 'error');
         } finally { setBusy(false); }
@@ -733,13 +768,7 @@
         if (companion) loaded.push(await fetchSource('examples/input/' + companion, 'examples/input/' + companion, signal));
         sources = loaded;
         byId('examples').value = name;
-        showSource(0);
-      }
-
-      function addSource(source, replaceDefault = false) {
-        if (sources.length === 1 && sources[0].name === '-' && (!sources[0].text.trim() || (replaceDefault && sources[0].text === defaultProgram))) sources = [];
-        sources.push(source);
-        showSource(sources.length - 1);
+        showSources();
       }
 
       async function restore() {
@@ -748,7 +777,6 @@
           const saved = JSON.parse(localStorage.getItem(stateKey) || 'null');
           if (saved && Array.isArray(saved.sources) && saved.sources.length && saved.sources.every((source) => typeof source.name === 'string' && typeof source.text === 'string')) {
             sources = saved.sources.map((source) => ({ name: source.name, text: source.text, baseIri: typeof source.baseIri === 'string' ? source.baseIri : baseForName(source.name) }));
-            selectedSource = Math.max(0, Math.min(sources.length - 1, Number(saved.selectedSource) || 0));
             byId('mode').value = saved.mode || '';
             if (byId('mode').selectedIndex < 0) byId('mode').value = '';
             byId('rdf').checked = !!saved.rdf;
@@ -756,7 +784,7 @@
             byId('stream-messages').checked = !!saved.streamMessages;
             byId('base-iri').value = typeof saved.baseIri === 'string' ? saved.baseIri : '';
             byId('max-backward-depth').value = saved.maxBackwardDepth ?? '';
-            byId('proof-name').value = saved.proof?.name || 'proof.n3';
+            proofName = saved.proof?.name || 'proof.n3';
             proof.setValue(saved.proof?.text || '');
             byId('examples').value = saved.example || '';
           } else {
@@ -766,7 +794,7 @@
             if (previousData?.trim()) sources.push({ name: 'data.trig', text: previousData, baseIri: baseForName('data.trig') });
           }
         } catch { /* An unavailable or outdated saved state does not block the editor. */ }
-        showSource(selectedSource);
+        showSources();
         restoring = false;
         const example = new URL(location.href).searchParams.get('example') || new URL(location.href).searchParams.get('ex');
         if (example) await loadInputs((signal) => loadExample(example, signal));
@@ -774,23 +802,20 @@
       }
 
       for (const name of bundledExamplesN3) byId('examples').add(new Option(name, name));
-      input.on('change', () => { if (!restoring) { sources[selectedSource].text = input.getValue(); scheduleSave(); } });
+      input.on('change', () => { if (!restoring) { sources[0].text = input.getValue(); scheduleSave(); } });
       proof.on('change', scheduleSave);
-      byId('source-select').addEventListener('change', () => showSource(Number(byId('source-select').value)));
-      byId('source-name').addEventListener('input', () => {
-        const source = sources[selectedSource];
-        source.name = byId('source-name').value.trim() || '-';
-        try { source.baseIri = baseForName(source.name); } catch { source.baseIri = null; }
-        syncSourceList(); updateOptions();
-      });
-      for (const id of ['mode', 'rdf', 'stream', 'stream-messages', 'base-iri', 'max-backward-depth', 'proof-name']) {
+      for (const id of ['mode', 'rdf', 'stream', 'stream-messages', 'base-iri', 'max-backward-depth']) {
         byId(id).addEventListener('input', updateOptions);
       }
       byId('stream-messages').addEventListener('change', () => {
         if (byId('stream-messages').checked) { byId('rdf').checked = true; byId('stream').checked = false; byId('mode').value = ''; }
         updateOptions();
       });
-      byId('mode').addEventListener('change', () => { if (byId('mode').value) byId('stream-messages').checked = false; updateOptions(); });
+      byId('mode').addEventListener('change', () => {
+        if (byId('mode').value) byId('stream-messages').checked = false;
+        updateOptions();
+        if (byId('mode').value === '--check-proof') revealPanel(byId('proof-panel'));
+      });
       byId('stream').addEventListener('change', () => { if (byId('stream').checked) byId('stream-messages').checked = false; updateOptions(); });
       byId('rdf').addEventListener('change', () => { if (!byId('rdf').checked) byId('stream-messages').checked = false; updateOptions(); });
       byId('run').addEventListener('click', () => run());
@@ -801,36 +826,19 @@
         else { if (failRun) failRun(new Error('Stopped.')); finishRun = failRun = null; terminateWorker(); }
       });
       byId('examples').addEventListener('change', () => { if (byId('examples').value) loadInputs((signal) => loadExample(byId('examples').value, signal)); });
-      byId('add-input').addEventListener('click', () => {
-        let index = sources.length + 1;
-        while (sources.some((source) => source.name === `input-${index}.n3`)) index++;
-        const name = `input-${index}.n3`;
-        addSource({ name, text: '', baseIri: baseForName(name) });
+      byId('input-url-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        loadInputs(async (signal) => {
+          const source = await fetchSource(byId('input-url').value, '', signal);
+          sources = [source];
+          byId('examples').value = '';
+          showSources();
+          byId('input-url').value = '';
+        });
       });
-      byId('remove-input').addEventListener('click', () => {
-        sources.splice(selectedSource, 1);
-        if (!sources.length) sources = [{ name: '-', text: '', baseIri: null }];
-        showSource(Math.min(selectedSource, sources.length - 1));
-      });
-      byId('open-files').addEventListener('click', () => byId('files').click());
-      byId('files').addEventListener('change', () => loadInputs(async () => {
-        const loaded = await Promise.all(Array.from(byId('files').files, async (file) => ({ name: file.name, text: await file.text(), baseIri: baseForName(file.name) })));
-        for (const source of loaded) addSource(source, true);
-        byId('files').value = '';
-      }));
-      byId('load-url').addEventListener('click', () => {
-        if (!byId('input-url').value.trim() || !byId('input-url').reportValidity()) return;
-        loadInputs(async (signal) => { const source = await fetchSource(byId('input-url').value, '', signal); addSource(source, true); byId('input-url').value = ''; });
-      });
-      byId('open-proof').addEventListener('click', () => byId('proof-file').click());
-      byId('proof-file').addEventListener('change', () => loadInputs(async () => {
-        const file = byId('proof-file').files[0];
-        if (file) { proof.setValue(await file.text()); byId('proof-name').value = file.name; }
-        byId('proof-file').value = '';
-      }));
-      byId('load-proof-url').addEventListener('click', () => {
-        if (!byId('proof-url').value.trim() || !byId('proof-url').reportValidity()) return;
-        loadInputs(async (signal) => { const source = await fetchSource(byId('proof-url').value, '', signal); proof.setValue(source.text); byId('proof-name').value = source.name; byId('proof-url').value = ''; });
+      byId('proof-url-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        loadInputs(async (signal) => { const source = await fetchSource(byId('proof-url').value, '', signal); proof.setValue(source.text); proofName = source.name; byId('proof-url').value = ''; });
       });
       byId('save-output').addEventListener('click', () => {
         const url = URL.createObjectURL(new Blob([output.getValue()], { type: 'text/plain;charset=utf-8' }));
