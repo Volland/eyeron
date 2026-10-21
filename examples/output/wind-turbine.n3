@@ -1,0 +1,4 @@
+@prefix : <https://example.org/wind-turbine#> .
+
+:turbine1 :requires :gearboxMaintenance .
+:turbine1 :requires :urgentInspection .

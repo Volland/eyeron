@@ -8,8 +8,6 @@
 @prefix arc: <https://example.org/arc#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-:000_md_title log:outputString "# act-alarm-bit-interoperability\n\n## Source files\n\n- [N3 rules](../act-alarm-bit-interoperability.n3)\n\n" .
-
 :case a arc:Case ;
     arc:question "Can the harbor alarm bit be copied between an optical beacon and a relay register, and what exactly can't be done for a quantum-like token?" .
 
@@ -92,113 +90,26 @@
     ?M :cannot :UnrestrictedStateFanOut .
 } .
 
-# Checks
-# Positive checks for the classical alarm bit.
+# Query answer
 {
-    :opticalBeacon a :InformationMedium .
-} => {
-    :case :checkC1 :Passed .
+    ?Subject :can ?Value .
+} log:query {
+    ?Subject :can ?Value .
 } .
 
 {
-    :relayRegister a :InformationMedium .
-} => {
-    :case :checkC2 :Passed .
+    ?Subject :cannot ?Value .
+} log:query {
+    ?Subject :cannot ?Value .
 } .
 
+# Copy answers list the source and destination media, in that order.
 {
-    :opticalBeacon :encodes :AlarmBit .
-    :relayRegister :encodes :AlarmBit .
-} => {
-    :case :checkC3 :Passed .
-} .
-
-{
-    ?T a :PossibleTask ;
+    ?Task a :PossibleTask ;
         :taskType :Copy ;
-        :from :opticalBeacon ;
-        :to :relayRegister ;
-        :variable :AlarmBit .
-} => {
-    :case :checkC4 :Passed .
-} .
-
-{
-    ?T a :PossibleTask ;
-        :taskType :Copy ;
-        :from :relayRegister ;
-        :to :opticalBeacon ;
-        :variable :AlarmBit .
-} => {
-    :case :checkC5 :Passed .
-} .
-
-{
-    :opticalBeacon :can :LocalPermutation .
-} => {
-    :case :checkC6 :Passed .
-} .
-
-{
-    :relayRegister :can :LocalPermutation .
-} => {
-    :case :checkC7 :Passed .
-} .
-
-# Negative checks for the superinformation token.
-{
-    ?T a :ImpossibleTask ;
-        :taskType :CloneAllStates ;
-        :on :quantumToken ;
-        :variable :PolarizationVariable .
-} => {
-    :case :checkC8 :Passed .
-} .
-
-{
-    :quantumToken :cannot :UniversalClone .
-} => {
-    :case :checkC9 :Passed .
-} .
-
-{
-    :quantumToken :cannot :UnrestrictedStateFanOut .
-} => {
-    :case :checkC10 :Passed .
-} .
-
-# ARC-style output
-{
-    :case :checkC1 :Passed .
-    :case :checkC2 :Passed .
-    :case :checkC3 :Passed .
-    :case :checkC4 :Passed .
-    :case :checkC5 :Passed .
-    :case :checkC6 :Passed .
-    :case :checkC7 :Passed .
-    :case :checkC8 :Passed .
-    :case :checkC9 :Passed .
-    :case :checkC10 :Passed .
-} => {
-    :out log:outputString """ACT harbor alarm bit interoperability
-
-## Answer
-YES for the classical alarm bit.
-NO for universal cloning and unrestricted fan-out of the quantum-like token.
-
-## Reason Why
-The alarm state is modeled as an abstract bit carried by two unlike classical substrates. Because both the optical beacon and the relay register are information media for the same variable, local permutation and copying in both directions are possible. By contrast, the quantum-like token is treated as a superinformation medium, so universal cloning of all of its states is impossible, and unrestricted classical-style fan-out is blocked as well.
-
-## Check
-C1  OK - the optical beacon is an information medium
-C2  OK - the relay register is an information medium
-C3  OK - both substrates encode the same abstract variable: AlarmBit
-C4  OK - AlarmBit can be copied from optical beacon to relay register
-C5  OK - AlarmBit can be copied from relay register to optical beacon
-C6  OK - local permutation of AlarmBit is possible on the optical beacon
-C7  OK - local permutation of AlarmBit is possible on the relay register
-C8  OK - cloning all states of the quantum token is an impossible task
-C9  OK - the quantum token cannot be universally cloned
-C10 OK - the quantum token cannot support unrestricted classical-style fan-out
-""" .
+        :from ?From ;
+        :to ?To ;
+        :variable ?Variable .
+} log:query {
+    (?From ?To) :canCopy ?Variable .
 } .

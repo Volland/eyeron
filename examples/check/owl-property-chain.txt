@@ -1,0 +1,17 @@
+Proof: examples/proof/owl-property-chain.n3
+Source program: examples/owl-property-chain.n3
+checked: 12 steps, 12 verified, 0 trusted
+Step kinds:
+  built-ins: 2
+  source facts: 4
+  rule applications: 6
+Conditions:
+  C1 resolution: 10 checked, 0 failed
+  C2 well-foundedness: 12 checked, 0 failed
+  C3 justification: 12 checked, 0 failed
+  C4 coverage: 16 checked, 0 failed
+  C5 re-decision: 2 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 14 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

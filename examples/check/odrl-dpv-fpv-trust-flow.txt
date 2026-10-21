@@ -1,0 +1,17 @@
+Proof: examples/proof/odrl-dpv-fpv-trust-flow.n3
+Source program: examples/odrl-dpv-fpv-trust-flow.n3
+checked: 50 steps, 50 verified, 0 trusted
+Step kinds:
+  built-ins: 2
+  source facts: 39
+  rule applications: 9
+Conditions:
+  C1 resolution: 48 checked, 0 failed
+  C2 well-foundedness: 50 checked, 0 failed
+  C3 justification: 50 checked, 0 failed
+  C4 coverage: 168 checked, 0 failed
+  C5 re-decision: 2 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 59 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

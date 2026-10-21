@@ -25,7 +25,8 @@ user-facing text direct.
 - `playground.html`: hand-written browser playground; `pkg/` holds the
   committed wasm build it loads.
 - `examples/*.n3`: runnable examples. `examples/output/` holds output goldens
-  (`.n3` or `.md`), `examples/proof/` proof goldens, `examples/input/`
+  (`.n3` or `.md`), `examples/proof/` proof goldens, `examples/check/` the
+  corresponding CLI proof-check reports (`.txt`), and `examples/input/`
   companion inputs loaded with the example of the same stem (`.n3`, else
   `.trig`), and `examples/deck/` Markdown walkthroughs.
 - `tests/`: integration tests. `examples.rs`, `proof_checking.rs`, and
@@ -102,6 +103,12 @@ parts rather than flooding the terminal.
   harness produces them (with no base IRI). Review the diff: no output golden
   should change unless intended, and `cargo test --release --test
   proof_checking` must still pass.
+
+- Query examples return their answers directly. Keep proof explanations in
+  `examples/proof/` and C1–C9 verification reports in `examples/check/`, rather
+  than printing a hand-written Answer/Reason/Check report. Refresh check
+  reports with `EYERON_UPDATE_GOLDENS=1 cargo test --release --test proof_checking`;
+  ordinary runs compare them without writing.
 
 ## Implementation and verification
 

@@ -1,8 +1,8 @@
 # Calculating sides of right triangles
 #
-# Sample right triangles supply side lengths. N3 arithmetic rules apply the
-# Pythagorean relation to derive requested lengths and checks for the
-# answers.
+# Sample right triangles supply two side lengths. N3 arithmetic rules apply
+# the Pythagorean relation to derive the missing hypotenuse or leg. Queries
+# return the calculated lengths and identify the solved sides.
 
 @base <https://eyereasoner.github.io/eye/reasoning/pythagorean-theorem/pythagorean-theorem.n3> .
 @prefix : <http://example.org/pyth#> .
@@ -12,13 +12,11 @@
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# P3: Prompt → Program → Proof (Answer, Reason, Check)
 # Right triangle: a^2 + b^2 = c^2  (c is hypotenuse)
 # Vocabulary
 :RightTriangle a rdfs:Class .
 :Hypotenuse a rdfs:Class .
 :Leg a rdfs:Class .
-:Check a rdfs:Class .
 
 # Triangle data
 :a a rdf:Property .
@@ -26,10 +24,9 @@
 :c a rdf:Property .
 :answer a rdf:Property .
 :why a rdf:Property .
-:check a rdf:Property .
 :status a rdf:Property .
 
-# Reason data
+# Intermediate calculations
 :a2 a rdf:Property .
 :b2 a rdf:Property .
 :c2 a rdf:Property .
@@ -38,17 +35,6 @@
 :value a rdf:Property .
 :which a rdf:Property .
 
-# "a" or "b"
-# Check data
-:kind a rdf:Property .
-:ok a rdf:Property .
-:residual a rdf:Property .
-
-# Tolerance
-:val a rdf:Property .
-:eps :val 0.000000001 .
-
-# 1e-9
 # Solve hypotenuse:  c = sqrt(a^2 + b^2)
 {
     ?t a :RightTriangle ;
@@ -94,86 +80,8 @@
         :status "solve-b" .
 } .
 
-# Checks – plug back a^2 + b^2 ≈ c^2 (within eps)
-# Check for hypotenuse answers
-{
-    ?t a :RightTriangle ;
-        :a ?a ;
-        :b ?b ;
-        :answer ?ans .
-    ?ans a :Hypotenuse ;
-        :value ?c .
-    (?a 2) math:exponentiation ?a2 .
-    (?b 2) math:exponentiation ?b2 .
-    (?c 2) math:exponentiation ?c2 .
-    (?a2 ?b2) math:sum ?lhs .
-    (?lhs ?c2) math:difference ?d .
-    ?d math:absoluteValue ?abs .
-    :eps :val ?eps .
-    ?abs math:notGreaterThan ?eps .
-} => {
-    ?t :check [
-        a :Check ;
-        :kind "plug-in/hypotenuse" ;
-        :residual ?abs ;
-        :ok true
-    ] .
-} .
-
-# Check for leg-a answers (uses b and c from the triangle plus computed a)
-{
-    ?t a :RightTriangle ;
-        :b ?b ;
-        :c ?c ;
-        :answer ?ans .
-    ?ans a :Leg ;
-        :which "a" ;
-        :value ?a .
-    (?a 2) math:exponentiation ?a2 .
-    (?b 2) math:exponentiation ?b2 .
-    (?c 2) math:exponentiation ?c2 .
-    (?a2 ?b2) math:sum ?lhs .
-    (?lhs ?c2) math:difference ?d .
-    ?d math:absoluteValue ?abs .
-    :eps :val ?eps .
-    ?abs math:notGreaterThan ?eps .
-} => {
-    ?t :check [
-        a :Check ;
-        :kind "plug-in/leg-a" ;
-        :residual ?abs ;
-        :ok true
-    ] .
-} .
-
-# Check for leg-b answers (uses a and c from the triangle plus computed b)
-{
-    ?t a :RightTriangle ;
-        :a ?a ;
-        :c ?c ;
-        :answer ?ans .
-    ?ans a :Leg ;
-        :which "b" ;
-        :value ?b .
-    (?a 2) math:exponentiation ?a2 .
-    (?b 2) math:exponentiation ?b2 .
-    (?c 2) math:exponentiation ?c2 .
-    (?a2 ?b2) math:sum ?lhs .
-    (?lhs ?c2) math:difference ?d .
-    ?d math:absoluteValue ?abs .
-    :eps :val ?eps .
-    ?abs math:notGreaterThan ?eps .
-} => {
-    ?t :check [
-        a :Check ;
-        :kind "plug-in/leg-b" ;
-        :residual ?abs ;
-        :ok true
-    ] .
-} .
-
 # HARNESS
-# ≥6 cases (generates ≥6 independent Checks)
+# Sample triangles
 # H1: Solve c — classic 3-4-5
 :T1 a :RightTriangle ;
     :a 3 ;
@@ -203,3 +111,18 @@
 :T6 a :RightTriangle ;
     :a 2.5 ;
     :b 6 .
+
+# Query answer
+{
+    ?Case :answer ?Answer .
+    ?Answer ?Property ?Value .
+} log:query {
+    ?Case :answer ?Answer .
+    ?Answer ?Property ?Value .
+} .
+
+{
+    ?Case :status ?Status .
+} log:query {
+    ?Case :status ?Status .
+} .

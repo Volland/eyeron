@@ -14,6 +14,11 @@ _:g a food:ConsumableThing .
 _:cnd a food:ConsumableThing .
 _:pwlcs a food:EdibleThing .
 _:pwlcs a food:ConsumableThing .
+_:g a food:Grape .
+_:cnd a food:CheeseNutsDessert .
+_:pwlcs a food:PastaWithLightCreamSauce .
+_:ct a food:ConsumableThing .
+_:m a food:Meal .
 
 { _:g a food:SweetFruit . }
   pe:rule 1;
@@ -213,3 +218,6 @@ _:pwlcs a food:ConsumableThing .
   pe:uses
     { food:Pasta rdfs:subClassOf food:EdibleThing . },
     { food:EdibleThing rdfs:subClassOf food:ConsumableThing . }.
+
+{ _:ct a food:ConsumableThing . }
+  pe:fact "preduction-food.n3".

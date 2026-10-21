@@ -1,0 +1,16 @@
+Proof: examples/proof/zebra.n3
+Source program: examples/zebra.n3
+checked: 61 steps, 61 verified, 0 trusted
+Step kinds:
+  built-ins: 54
+  rule applications: 7
+Conditions:
+  C1 resolution: 7 checked, 0 failed
+  C2 well-foundedness: 61 checked, 0 failed
+  C3 justification: 61 checked, 0 failed
+  C4 coverage: 187 checked, 0 failed
+  C5 re-decision: 54 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 67 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 181 checked, 0 failed

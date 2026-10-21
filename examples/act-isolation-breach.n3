@@ -8,8 +8,6 @@
 @prefix arc: <https://example.org/arc#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-:000_md_title log:outputString "# act-isolation-breach\n\n## Source files\n\n- [N3 rules](../act-isolation-breach.n3)\n\n" .
-
 :case a arc:Case ;
     arc:question "Can an isolation-breach token be prepared, permuted, copied, measured, and audited across unlike classical media, and what exactly can't be done with the quantum provenance seal?" .
 
@@ -232,217 +230,40 @@
     ?M :cannot :UnrestrictedParallelFanOut .
 } .
 
-# Checks
-# Positive checks for the classical breach token.
+# Query answer
 {
-    :doorBeacon a :InformationMedium .
-} => {
-    :case :checkC1 :Passed .
+    ?Subject :can ?Value .
+} log:query {
+    ?Subject :can ?Value .
 } .
 
 {
-    :containmentPLC a :InformationMedium .
-} => {
-    :case :checkC2 :Passed .
+    ?Subject :cannot ?Value .
+} log:query {
+    ?Subject :cannot ?Value .
 } .
 
+# Copy answers list the source and destination media, in that order.
 {
-    :nursePager a :InformationMedium .
-} => {
-    :case :checkC3 :Passed .
-} .
-
-{
-    :incidentBoard a :InformationMedium .
-} => {
-    :case :checkC4 :Passed .
-} .
-
-{
-    :doorBeacon :distinguishes :BreachBit .
-} => {
-    :case :checkC5 :Passed .
-} .
-
-{
-    [
-        a :PossibleTask ;
-        :kind :Prepare ;
-        :on :nursePager ;
-        :variable :BreachBit ;
-        :targetState :CodeBreach
-    ] .
-} => {
-    :case :checkC6 :Passed .
-} .
-
-{
-    [
-        a :PossibleTask ;
-        :kind :Permute ;
-        :on :doorBeacon ;
-        :variable :BreachBit ;
-        :fromState :SafeGreen ;
-        :toState :BreachRed
-    ] .
-} => {
-    :case :checkC7 :Passed .
-} .
-
-{
-    [
-        a :PossibleTask ;
-        :kind :ReversePermute ;
-        :on :doorBeacon ;
-        :variable :BreachBit
-    ] .
-} => {
-    :case :checkC8 :Passed .
-} .
-
-{
-    [
-        a :PossibleTask ;
-        :kind :CloneLocal ;
-        :on :containmentPLC ;
-        :variable :BreachBit
-    ] .
-} => {
-    :case :checkC9 :Passed .
-} .
-
-{
-    [
-        a :PossibleTask ;
+    ?Task a :PossibleTask ;
         :kind :Copy ;
-        :from :doorBeacon ;
-        :to :containmentPLC ;
-        :variable :BreachBit
-    ] .
-} => {
-    :case :checkC10 :Passed .
+        :from ?From ;
+        :to ?To ;
+        :variable ?Variable .
+} log:query {
+    (?From ?To) :canCopy ?Variable .
 } .
 
 {
-    [
-        a :PossibleTask ;
-        :kind :Copy ;
-        :from :containmentPLC ;
-        :to :nursePager ;
-        :variable :BreachBit
-    ] .
-} => {
-    :case :checkC11 :Passed .
+    ?Task a :PossibleTask ;
+        :kind :SerialNetwork .
+} log:query {
+    :SerialNetwork a :PossibleTask .
 } .
 
 {
-    [
-        a :PossibleTask ;
-        :kind :Measure ;
-        :from :nursePager ;
-        :to :incidentBoard ;
-        :variable :BreachBit
-    ] .
-} => {
-    :case :checkC12 :Passed .
-} .
-
-{
-    [
-        a :PossibleTask ;
-        :kind :SerialNetwork ;
-        :from :doorBeacon ;
-        :via :containmentPLC ;
-        :to :incidentBoard ;
-        :variable :BreachBit
-    ] .
-} => {
-    :case :checkC13 :Passed .
-} .
-
-{
-    [
-        a :PossibleTask ;
-        :kind :ParallelNetwork ;
-        :source :containmentPLC ;
-        :left :nursePager ;
-        :right :incidentBoard ;
-        :variable :BreachBit
-    ] .
-} => {
-    :case :checkC14 :Passed .
-} .
-
-# Negative checks for the provenance seal.
-{
-    [
-        a :ImpossibleTask ;
-        :kind :CloneAllStates ;
-        :on :specimenSeal ;
-        :variable :SealVariable
-    ] .
-} => {
-    :case :checkC15 :Passed .
-} .
-
-{
-    :specimenSeal :cannot :UniversalClone .
-} => {
-    :case :checkC16 :Passed .
-} .
-
-{
-    :specimenSeal :cannot :UnrestrictedParallelFanOut .
-} => {
-    :case :checkC17 :Passed .
-} .
-
-# ARC-style report
-{
-    :case :checkC1 :Passed .
-    :case :checkC2 :Passed .
-    :case :checkC3 :Passed .
-    :case :checkC4 :Passed .
-    :case :checkC5 :Passed .
-    :case :checkC6 :Passed .
-    :case :checkC7 :Passed .
-    :case :checkC8 :Passed .
-    :case :checkC9 :Passed .
-    :case :checkC10 :Passed .
-    :case :checkC11 :Passed .
-    :case :checkC12 :Passed .
-    :case :checkC13 :Passed .
-    :case :checkC14 :Passed .
-    :case :checkC15 :Passed .
-    :case :checkC16 :Passed .
-    :case :checkC17 :Passed .
-} => {
-    :out log:outputString """ACT isolation-breach token — broad constructor-theory coverage case
-
-## Answer
-YES for the classical isolation-breach token.
-NO for universal cloning and unrestricted fan-out of the quantum provenance seal.
-
-## Reason Why
-The isolation-breach token is treated as an abstract information variable carried by unlike classical media: a door beacon, a containment PLC, a nurse pager, and an incident board. Because those substrates are information media for the same variable, the token can be prepared, permuted, reversed, cloned locally, copied across media, measured into an output record, and composed into serial and parallel task networks. By contrast, the specimen seal is treated as a superinformation medium, so cloning all of its states is impossible and unrestricted parallel fan-out is blocked.
-
-## Check
-C1  OK - the door beacon is an information medium
-C2  OK - the containment PLC is an information medium
-C3  OK - the nurse pager is an information medium
-C4  OK - the incident board is an information medium
-C5  OK - the door beacon distinguishes the breach bit
-C6  OK - the breach state can be prepared on the nurse pager
-C7  OK - permutation from safe to breach is possible on the door beacon
-C8  OK - the door beacon supports reversible permutation
-C9  OK - local cloning of the breach bit is possible on the containment PLC
-C10 OK - the breach bit can be copied from door beacon to containment PLC
-C11 OK - the breach bit can be copied from containment PLC to nurse pager
-C12 OK - the breach bit can be measured from nurse pager into the incident board
-C13 OK - a serial network from door beacon via containment PLC to incident board is possible
-C14 OK - a parallel network from containment PLC to nurse pager and incident board is possible
-C15 OK - cloning all states of the specimen seal is an impossible task
-C16 OK - the specimen seal cannot be universally cloned
-C17 OK - the specimen seal cannot support unrestricted parallel fan-out
-""" .
+    ?Task a :PossibleTask ;
+        :kind :ParallelNetwork .
+} log:query {
+    :ParallelNetwork a :PossibleTask .
 } .

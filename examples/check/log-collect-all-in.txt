@@ -1,0 +1,30 @@
+Proof: examples/proof/log-collect-all-in.n3
+Source program: examples/log-collect-all-in.n3
+checked with obligations: 6 steps, 3 verified, 3 trusted
+Step kinds:
+  built-ins: 3
+  rule applications: 3
+Conditions:
+  C1 resolution: 3 checked, 0 failed
+  C2 well-foundedness: 6 checked, 0 failed
+  C3 justification: 6 checked, 0 failed
+  C4 coverage: 12 checked, 0 failed
+  C5 re-decision: 3 checked, 0 failed
+  C6 boundary consistency: 3 checked, 0 failed
+  C7 relevance: 9 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  collected:
+    (?param {
+        <http://example.org/#Let> <http://example.org/#param> ?param .
+    } ("Huey" "Dewey" "Louie")) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:x .
+  collected:
+    ((?param) {
+        <http://example.org/#Let> <http://example.org/#param> ?param .
+    } (("Huey") ("Dewey") ("Louie"))) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:x .
+  collected:
+    (?param {
+        <http://example.org/#Let> <http://example.org/#param> ?param .
+        ?param <http://www.w3.org/2000/10/swap/string#lessThan> "Louie" .
+    } ("Huey" "Dewey")) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:x .

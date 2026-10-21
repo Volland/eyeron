@@ -1,0 +1,16 @@
+Proof: examples/proof/jsonterm.n3
+Source program: examples/jsonterm.n3
+checked: 6 steps, 6 verified, 0 trusted
+Step kinds:
+  source facts: 5
+  rule applications: 1
+Conditions:
+  C1 resolution: 6 checked, 0 failed
+  C2 well-foundedness: 6 checked, 0 failed
+  C3 justification: 6 checked, 0 failed
+  C4 coverage: 6 checked, 0 failed
+  C5 re-decision: 0 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 7 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

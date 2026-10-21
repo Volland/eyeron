@@ -4,6 +4,13 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 :northStar :notNecessarilyA :gold .
+:Fabian :believes {
+    {
+        ?x a :glitter .
+    } => {
+        ?x :notNecessarilyA :gold .
+    } .
+} .
 
 { :northStar :notNecessarilyA :gold . }
   pe:rule
@@ -57,3 +64,33 @@
   } .
 }
   pe:fact "qiana.n3".
+
+{
+  :Fabian :believes {
+      {
+          ?x a :glitter .
+      } => {
+          ?x :notNecessarilyA :gold .
+      } .
+  } .
+}
+  pe:rule 1;
+  pe:binding
+    [ pe:var "phi"; pe:value {
+        {
+            ?x a :glitter .
+        } => {
+            ?x :notNecessarilyA :gold .
+        } .
+    } ],
+    [ pe:var "x"; pe:value :Fabian ];
+  pe:uses
+    {
+        :Einstein :says {
+            {
+                ?x a :glitter .
+            } => {
+                ?x :notNecessarilyA :gold .
+            } .
+        } .
+    }.

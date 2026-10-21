@@ -2,11 +2,13 @@
 //! produced from, using `docs/proof-checking.md`'s reference
 //! implementation.
 //!
-//! This is the suite that says what a proof is worth. It is not a golden
-//! comparison: a proof that matched its golden byte for byte could still
-//! be nonsense, so each document is re-checked here — every recorded
+//! This is the suite that says what a proof is worth. Comparing a proof
+//! with its golden byte for byte could still accept nonsense, so each
+//! document is re-checked here — every recorded
 //! inference re-performed against the source rule, every premise resolved,
 //! the derivation graph tested for cycles, and every claim accounted for.
+//! Its CLI report is compared with `examples/check/<name>.txt`; set
+//! `EYERON_UPDATE_GOLDENS=1` to refresh reports after a deliberate change.
 //!
 //! Uses a custom harness (`harness = false`), like the other example
 //! suites, so each document prints its own line.
@@ -40,6 +42,9 @@ fn check(name: &str) -> Result<Report, String> {
     let examples = manifest_dir().join("examples");
     let source = fs::read_to_string(examples.join(format!("{name}.n3"))).map_err(|e| e.to_string())?;
     let proof = fs::read_to_string(examples.join(format!("proof/{name}.n3"))).map_err(|e| e.to_string())?;
+    if proof.trim().is_empty() {
+        return Err(format!("examples/proof/{name}.n3 is empty"));
+    }
 
     let mut document =
         eyeron::parse_n3_with_source(&source, None, Some(&format!("{name}.n3"))).map_err(|e| e.message)?;
@@ -58,7 +63,30 @@ fn check(name: &str) -> Result<Report, String> {
         .map_err(|e| e.message)?;
         document.merge(parsed);
     }
-    eyeron::proof_check_n3::check_proof_document(&document, &proof).map_err(|e| e.message)
+    let report = eyeron::proof_check_n3::check_proof_document(&document, &proof).map_err(|e| e.message)?;
+    let mut sources = vec![eyeron::cli::Source {
+        name: format!("examples/{name}.n3"), text: source, base_iri: None,
+    }];
+    if companion.exists() {
+        sources.push(eyeron::cli::Source {
+            name: format!("examples/input/{}", companion.file_name().unwrap().to_string_lossy()),
+            text: String::new(), base_iri: None,
+        });
+    }
+    let actual = eyeron::cli::proof_check_report(&format!("examples/proof/{name}.n3"), &sources, &report);
+    let path = examples.join(format!("check/{name}.txt"));
+    if std::env::var_os("EYERON_UPDATE_GOLDENS").is_some_and(|value| value == "1") {
+        fs::create_dir_all(path.parent().unwrap()).map_err(|e| e.to_string())?;
+        if fs::read_to_string(&path).ok().as_deref() != Some(&actual) {
+            fs::write(&path, &actual).map_err(|e| e.to_string())?;
+        }
+    } else {
+        let expected = fs::read_to_string(&path).map_err(|e| format!("{}: {e}", path.display()))?;
+        if expected != actual {
+            return Err(format!("check report does not match examples/check/{name}.txt\nactual:\n{actual}"));
+        }
+    }
+    Ok(report)
 }
 
 /// Packaged proofs that must be rejected, and the condition that rejects
@@ -74,6 +102,20 @@ fn main() {
     let mut steps = 0usize;
     let mut verified = 0usize;
     let mut trusted = 0usize;
+
+    // A report belongs to exactly one packaged proof; stale reports must
+    // not survive an example being renamed or removed.
+    let check_dir = manifest_dir().join("examples/check");
+    if check_dir.exists() {
+        for entry in fs::read_dir(check_dir).expect("read examples/check") {
+            let path = entry.expect("read check report").path();
+            if path.extension().and_then(|s| s.to_str()) == Some("txt") {
+                let name = path.file_stem().unwrap().to_string_lossy();
+                assert!(manifest_dir().join(format!("examples/proof/{name}.n3")).exists(),
+                    "{} has no corresponding proof", path.display());
+            }
+        }
+    }
 
     {
         for path in sorted_proofs() {
@@ -114,7 +156,7 @@ fn main() {
     let elapsed = started.elapsed().as_secs_f64();
     progress_line(&format!(
         "\nproof_checking result: {}. {passed} passed; {failed} failed; finished in {elapsed:.2}s \
-         ({steps} steps, {verified} verified, {trusted} trusted)",
+         ({steps} steps, {verified} verified, {trusted} trusted; {passed} check reports)",
         if failed == 0 { green("ok") } else { red("FAILED") },
     ));
     assert_eq!(failed, 0, "{failed} proof document(s) did not check");

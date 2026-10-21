@@ -1,0 +1,17 @@
+Proof: examples/proof/screening-trust-worlds.n3
+Source program: examples/screening-trust-worlds.n3
+checked: 73 steps, 73 verified, 0 trusted
+Step kinds:
+  built-ins: 37
+  source facts: 16
+  rule applications: 20
+Conditions:
+  C1 resolution: 36 checked, 0 failed
+  C2 well-foundedness: 73 checked, 0 failed
+  C3 justification: 73 checked, 0 failed
+  C4 coverage: 112 checked, 0 failed
+  C5 re-decision: 37 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 89 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 96 checked, 0 failed

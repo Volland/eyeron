@@ -7,18 +7,24 @@ use std::path::Path;
 const PE_NS: &str = "https://eyereasoner.github.io/pe#";
 
 pub fn proof_to_n3(prefixes: &BTreeMap<String, String>, result: &ReasonerResult) -> String {
-    if result.proofs.is_empty() { return String::new(); }
+    if result.derived.is_empty() { return String::new(); }
 
     // A proof claims what the run outputs — with queries, their answers
     // alone — and records only the steps those claims depend on.
     let output = result.derived.iter().collect::<BTreeSet<_>>();
     let mut roots = unique_proofs(&result.proofs);
     roots.retain(|root| output.contains(&root.fact));
+    let mut claimed = roots.iter().map(|root| &root.fact).collect::<BTreeSet<_>>();
+    // Identity queries do not record a circular query application. Their
+    // answers can still come from source facts or backward-only rules.
+    let other_claims = result.derived.iter().filter(|fact| claimed.insert(fact)).collect::<Vec<_>>();
+    let claims = roots.iter().map(|root| &root.fact).chain(other_claims.iter().copied()).collect::<Vec<_>>();
     let derived_by_fact = index_by_conclusion(&result.proofs);
     let explicit_facts = result.explicit.iter().cloned().collect::<BTreeSet<_>>();
 
     let entries = collect_all_proof_entries(
         &roots,
+        &other_claims,
         &derived_by_fact,
         &explicit_facts,
         &result.explicit_sources,
@@ -28,7 +34,7 @@ pub fn proof_to_n3(prefixes: &BTreeMap<String, String>, result: &ReasonerResult)
 
     let mut proof_prefixes = prefixes.clone();
     proof_prefixes.entry("pe".to_string()).or_insert_with(|| PE_NS.to_string());
-    let used = used_prefixes_for_proof(&proof_prefixes, &roots, &entries);
+    let used = used_prefixes_for_proof(&proof_prefixes, &claims, &entries);
 
     let mut parts = Vec::<String>::new();
     for prefix in &used {
@@ -45,11 +51,8 @@ pub fn proof_to_n3(prefixes: &BTreeMap<String, String>, result: &ReasonerResult)
     // What was derived, then one step per conclusion. A step names what it
     // used by that premise's own triple, so the steps need no nesting and
     // no wrapper.
-    let mut output_seen = BTreeSet::<Triple>::new();
-    for root in &roots {
-        if output_seen.insert(root.fact.clone()) {
-            parts.push(triple_to_n3(&proof_prefixes, &root.fact));
-        }
+    for claim in claims {
+        parts.push(triple_to_n3(&proof_prefixes, claim));
     }
 
     let numbering = RuleNumbering::new(&result.rules);
@@ -113,6 +116,7 @@ pub(crate) enum ProofEntry<'a> {
 /// triples, so a reader finds them wherever they are.
 pub(crate) fn collect_all_proof_entries<'a>(
     roots: &[&'a DerivedFact],
+    other_claims: &[&'a Triple],
     derived_by_fact: &BTreeMap<&'a Triple, Vec<&'a DerivedFact>>,
     explicit_facts: &'a BTreeSet<Triple>,
     explicit_sources: &'a BTreeMap<Triple, SourceRef>,
@@ -130,9 +134,7 @@ pub(crate) fn collect_all_proof_entries<'a>(
         seen: HashSet::new(),
         entries: Vec::new(),
     };
-    for root in roots {
-        collector.visit_derived_fact(root);
-    }
+    collector.visit_roots(roots, other_claims);
     collector.entries
 }
 
@@ -152,10 +154,41 @@ struct ProofCollector<'a, 'b> {
     entries: Vec<ProofEntry<'a>>,
 }
 
+enum PendingProof<'a> {
+    Derived(&'a DerivedFact),
+    Premise(&'a Triple, Option<&'a Triple>),
+    InstancePremise(Box<Triple>),
+}
+
 impl<'a> ProofCollector<'a, '_> {
-    fn visit_derived_fact(&mut self, proof: &'a DerivedFact) {
+    fn visit_roots(&mut self, roots: &[&'a DerivedFact], other_claims: &[&'a Triple]) {
+        // A query can select only the last fact of a very long chain.
+        // Keep the traversal on the heap rather than the native/Wasm stack.
+        let mut pending = Vec::new();
+        let starts = roots.iter().copied().map(PendingProof::Derived)
+            .chain(other_claims.iter().map(|&claim| PendingProof::Premise(claim, None)));
+        for root in starts {
+            pending.push(root);
+            while let Some(next) = pending.pop() {
+                match next {
+                    PendingProof::Derived(proof) => self.visit_derived_fact(proof, &mut pending),
+                    PendingProof::Premise(premise, parent) => self.visit_premise(premise, parent, &mut pending),
+                    PendingProof::InstancePremise(premise) => self.visit_premise(&premise, None, &mut pending),
+                }
+            }
+        }
+    }
+
+    fn visit_derived_fact(&mut self, proof: &'a DerivedFact, pending: &mut Vec<PendingProof<'a>>) {
         let key = format!("rule:{}:{}", triple_key(&proof.fact), source_key(proof.rule.source.as_ref()));
         if !self.seen.insert(key) { return; }
+        // Pushed first so carried-rule provenance follows the premises,
+        // preserving the order in which the proof has always been written.
+        if proof.rule.source.is_none() {
+            if let Some(derivation) = self.rule_derivation(&proof.rule) {
+                pending.push(PendingProof::Derived(derivation));
+            }
+        }
         // A rule that concludes one of its own premises -- polygon.n3's
         // `{ (..) polygon:area ?A } => { (..) polygon:area ?A }`, which exists
         // to force a backward goal to be evaluated -- is what puts the fact in
@@ -165,20 +198,11 @@ impl<'a> ProofCollector<'a, '_> {
         // that is what the step below records -- and that premise alone, as
         // nothing in the proof uses the others.
         if proof.premises.contains(&proof.fact) {
-            self.visit_premise(&proof.fact, Some(proof));
+            pending.push(PendingProof::Premise(&proof.fact, Some(&proof.fact)));
         } else {
             self.entries.push(ProofEntry::Rule(std::borrow::Cow::Borrowed(proof)));
-            for premise in &proof.premises {
-                self.visit_premise(premise, Some(proof));
-            }
-        }
-
-        // A rule the run generated is carried by the step, which a checker
-        // accepts only when the proof also derives it; with only the output
-        // claimed, nothing else would put that derivation in.
-        if proof.rule.source.is_none() {
-            if let Some(derivation) = self.rule_derivation(&proof.rule) {
-                self.visit_derived_fact(derivation);
+            for premise in proof.premises.iter().rev() {
+                pending.push(PendingProof::Premise(premise, Some(&proof.fact)));
             }
         }
     }
@@ -221,10 +245,10 @@ impl<'a> ProofCollector<'a, '_> {
         }
     }
 
-    fn visit_premise(&mut self, premise: &Triple, parent: Option<&DerivedFact>) {
+    fn visit_premise(&mut self, premise: &Triple, parent: Option<&Triple>, pending: &mut Vec<PendingProof<'a>>) {
         if let Some(candidates) = self.derived_by_fact.get(premise) {
-            if let Some(child) = candidates.iter().find(|candidate| match parent { Some(p) => candidate.fact != p.fact, None => true }) {
-                self.visit_derived_fact(child);
+            if let Some(child) = candidates.iter().find(|candidate| parent.is_none_or(|p| candidate.fact != *p)) {
+                pending.push(PendingProof::Derived(child));
                 return;
             }
         }
@@ -250,14 +274,16 @@ impl<'a> ProofCollector<'a, '_> {
         // exact conclusion: replay that derivation at the same instance,
         // including its premises and bindings, so the reader can check it
         // without weakening resolution or trusting an unsupported fact.
-        if parent.is_none_or(|parent| parent.fact != *premise) {
+        if parent.is_none_or(|parent| *parent != *premise) {
             for candidate in &self.general_derived {
                 if let Some(instance) = instantiate_derivation(candidate, premise) {
                     let key = format!("rule:{}:{}", triple_key(&instance.fact), source_key(instance.rule.source.as_ref()));
                     if !self.seen.insert(key) { return; }
                     let premises = instance.premises.clone();
                     self.entries.push(ProofEntry::Rule(std::borrow::Cow::Owned(instance)));
-                    for used in &premises { self.visit_premise(used, None); }
+                    for used in premises.into_iter().rev() {
+                        pending.push(PendingProof::InstancePremise(Box::new(used)));
+                    }
                     return;
                 }
             }
@@ -564,11 +590,11 @@ fn is_builtin_premise(triple: &Triple) -> bool {
         || iri.starts_with("http://www.w3.org/2000/10/swap/crypto#")
 }
 
-fn used_prefixes_for_proof(prefixes: &BTreeMap<String, String>, roots: &[&DerivedFact], entries: &[ProofEntry]) -> BTreeSet<String> {
+fn used_prefixes_for_proof(prefixes: &BTreeMap<String, String>, claims: &[&Triple], entries: &[ProofEntry]) -> BTreeSet<String> {
     let mut used = BTreeSet::new();
     used.insert("pe".to_string());
-    for root in roots {
-        collect_prefixes_triple(&root.fact, prefixes, &mut used);
+    for claim in claims {
+        collect_prefixes_triple(claim, prefixes, &mut used);
     }
     for entry in entries {
         match entry {

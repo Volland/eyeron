@@ -1,0 +1,24 @@
+Proof: examples/proof/owl-intersection-of.n3
+Source program: examples/owl-intersection-of.n3
+checked with obligations: 12 steps, 11 verified, 1 trusted
+Step kinds:
+  built-ins: 4
+  source facts: 3
+  rule applications: 5
+Conditions:
+  C1 resolution: 8 checked, 0 failed
+  C2 well-foundedness: 12 checked, 0 failed
+  C3 justification: 12 checked, 0 failed
+  C4 coverage: 19 checked, 0 failed
+  C5 re-decision: 4 checked, 0 failed
+  C6 boundary consistency: 1 checked, 0 failed
+  C7 relevance: 17 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  collected:
+    ({
+        ?D <http://www.w3.org/2000/10/swap/list#in> (<http://example.org/Student> <http://example.org/Worker>) .
+    } {
+        <http://example.org/bob> a ?D .
+    }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .

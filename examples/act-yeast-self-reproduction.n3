@@ -8,8 +8,6 @@
 @prefix arc: <https://example.org/arc#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-:000_md_title log:outputString "# act-yeast-self-reproduction\n\n## Source files\n\n- [N3 rules](../act-yeast-self-reproduction.n3)\n\n" .
-
 :case a arc:Case ;
     arc:question "Can a yeast starter culture self-reproduce accurately under no-design laws, and what exactly can't happen for a non-digital contrast lineage?" .
 
@@ -153,125 +151,15 @@
     ?Cell :cannot :NaturalSelectionLineage .
 } .
 
-# Checks
-# Positive checks for the viable starter culture.
+# Query answer
 {
-    :world :obeys :NoDesignLaws .
-} => {
-    :case :checkC1 :Passed .
+    ?Subject :can ?Value .
+} log:query {
+    ?Subject :can ?Value .
 } .
 
 {
-    :dnaRegister a :DigitalInformationMedium .
-} => {
-    :case :checkC2 :Passed .
-} .
-
-{
-    :starterGenome a :Replicator .
-} => {
-    :case :checkC3 :Passed .
-} .
-
-{
-    :starterVehicle a :Vehicle .
-} => {
-    :case :checkC4 :Passed .
-} .
-
-{
-    :starterGenome :can :AccurateGenomeCopyUnderNoDesignLaws .
-} => {
-    :case :checkC5 :Passed .
-} .
-
-{
-    :starterCell :can :AccurateReplicationArchitecture .
-} => {
-    :case :checkC6 :Passed .
-} .
-
-{
-    :starterCell a :SelfReproducer .
-} => {
-    :case :checkC7 :Passed .
-} .
-
-{
-    :starterGenome :can :HeritableVariation .
-} => {
-    :case :checkC8 :Passed .
-} .
-
-{
-    :starterCell :can :NaturalSelectionLineage .
-} => {
-    :case :checkC9 :Passed .
-} .
-
-{
-    :starterGenome :selectedIn :fermenter .
-} => {
-    :case :checkC10 :Passed .
-} .
-
-# Negative checks for the contrast lineage.
-{
-    :contrastGenome :cannot :AccurateGenomeCopyUnderNoDesignLaws .
-} => {
-    :case :checkC11 :Passed .
-} .
-
-{
-    :contrastCell :cannot :AccurateSelfReproduction .
-} => {
-    :case :checkC12 :Passed .
-} .
-
-{
-    :contrastCell :cannot :NaturalSelectionLineage .
-} => {
-    :case :checkC13 :Passed .
-} .
-
-# ARC-style output
-{
-    :case :checkC1 :Passed .
-    :case :checkC2 :Passed .
-    :case :checkC3 :Passed .
-    :case :checkC4 :Passed .
-    :case :checkC5 :Passed .
-    :case :checkC6 :Passed .
-    :case :checkC7 :Passed .
-    :case :checkC8 :Passed .
-    :case :checkC9 :Passed .
-    :case :checkC10 :Passed .
-    :case :checkC11 :Passed .
-    :case :checkC12 :Passed .
-    :case :checkC13 :Passed .
-} => {
-    :out log:outputString """ACT yeast self-reproduction
-
-## Answer
-YES for the viable starter culture.
-NO for accurate self-reproduction in the non-digital contrast lineage.
-
-## Reason Why
-The starter genome is treated as a replicator storing digital hereditary information, while the cell machinery is treated as the vehicle that enables metabolism and copying support. Under no-design laws, digital information makes accurate genome copying possible. Because the replicator is accurate and paired with a vehicle, the whole starter cell qualifies as a self-reproducer. With a variation source and a selection environment, natural selection also becomes possible. By contrast, the non-digital lineage cannot support accurate genome copying under the same no-design-laws assumption, so it cannot sustain the same accurate self-reproduction or natural-selection story.
-
-## Check
-C1  OK - no-design laws are assumed
-C2  OK - digital information is physically instantiated for the viable lineage
-C3  OK - a viable replicator is present
-C4  OK - a viable vehicle is present
-C5  OK - accurate genome copying is possible for the viable lineage
-C6  OK - the viable lineage has a replicator-plus-vehicle architecture
-C7  OK - the starter cell qualifies as a self-reproducer
-C8  OK - heritable variation is possible for the viable lineage
-C9  OK - the viable starter culture can support a natural-selection lineage
-C10 OK - the fitter viable variant is selected in the fermenter
-C11 OK - the non-digital contrast genome cannot be copied accurately under no-design laws
-C12 OK - the non-digital contrast cell cannot achieve accurate self-reproduction
-C13 OK - the non-digital contrast cell cannot support the same natural-selection lineage
-""" .
+    ?Subject :cannot ?Value .
+} log:query {
+    ?Subject :cannot ?Value .
 } .

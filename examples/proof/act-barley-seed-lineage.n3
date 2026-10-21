@@ -1,5 +1,4 @@
 @prefix : <http://example.org/act/barley/cancant/> .
-@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
@@ -8,7 +7,6 @@
 :coatlessGenome :can :GenomeCopyUnderNoDesignLaws .
 :staticGenome :can :GenomeCopyUnderNoDesignLaws .
 :analogGenome :cannot :AccurateGenomeCopyUnderNoDesignLaws .
-:case :checkC1 :Passed .
 :mainLine :can :AccurateSelfReproduction .
 :coatlessLine :can :AccurateSelfReproduction .
 :staticLine :can :AccurateSelfReproduction .
@@ -40,29 +38,14 @@
 :staticSeed :can :ProtectedDormancy .
 :staticLine :can :LineageClosure .
 :staticLine :cannot :AdaptiveEvolution .
-:case :checkC2 :Passed .
-:case :checkC6 :Passed .
-:case :checkC4 :Passed .
-:case :checkC5 :Passed .
-:case :checkC3 :Passed .
-:case :checkC7 :Passed .
 :mainLine a :EvolvableLineage .
-:case :checkC8 :Passed .
-:case :checkC9 :Passed .
-:case :checkC11 :Passed .
 :analogLine :cannot :EvolvableLineage .
 :fragileLine :cannot :AccurateSelfReproduction .
 :coatlessLine :cannot :LineageClosure .
-:case :checkC14 :Passed .
 :staticLine :cannot :AdaptivePersistence .
-:case :checkC10 :Passed .
-:case :checkC12 :Passed .
 :fragileLine :cannot :EvolvableLineage .
-:case :checkC13 :Passed .
 :coatlessLine :cannot :EvolvableLineage .
 :staticLine :cannot :EvolvableLineage .
-:case :checkC15 :Passed .
-:out log:outputString "ACT barley seed lineage — can and can't\n\n## Answer\nYES for the viable barley lineage.\nNO for the contrast lineages when digital heredity, repair, protected dormancy, or heritable variation are missing.\n\n## Reason Why\nThe main lineage can achieve genome copying under no-design laws because its hereditary information is digitally instantiated. It can also pass through protected dormancy, germinate, produce propagules, reproduce accurately, close its life cycle, and adaptively persist under saline selection. But the contrast lineages show the \"can't\" side: non-digital heredity blocks accurate genome copying under no-design laws, lack of repair blocks accurate self-reproduction, lack of dormancy protection blocks lineage closure through a protected seed phase, and lack of heritable variation blocks adaptive evolution and thus blocks evolvability.\n\n## Check\nC1  OK - no-design laws are assumed\nC2  OK - the viable genome can be copied under no-design laws\nC3  OK - the viable seed can achieve protected dormancy\nC4  OK - the viable seed can germinate\nC5  OK - the viable adult can produce propagules\nC6  OK - the viable lineage can achieve accurate self-reproduction\nC7  OK - the viable lineage can achieve lineage closure\nC8  OK - the viable lineage can exhibit heritable variation\nC9  OK - the viable lineage can adaptively persist\nC10 OK - the viable lineage is evolvable\nC11 OK - the non-digital lineage cannot achieve accurate self-reproduction\nC12 OK - the repair-deficient lineage cannot achieve accurate self-reproduction\nC13 OK - the coatless lineage cannot achieve lineage closure through protected dormancy\nC14 OK - the static lineage cannot achieve adaptive evolution\nC15 OK - the static lineage cannot be an evolvable lineage\n" .
 
 { :mainGenome :can :GenomeCopyUnderNoDesignLaws . }
   pe:rule 1;
@@ -157,10 +140,6 @@
 
 { :analogRegister a :NonDigitalInformationMedium . }
   pe:fact "act-barley-seed-lineage.n3".
-
-{ :case :checkC1 :Passed . }
-  pe:rule 21;
-  pe:uses { :world :obeys :NoDesignLaws . }.
 
 { :mainLine :can :AccurateSelfReproduction . }
   pe:rule 5;
@@ -776,48 +755,12 @@
 { :staticLine :variationStatus :None . }
   pe:fact "act-barley-seed-lineage.n3".
 
-{ :case :checkC2 :Passed . }
-  pe:rule 22;
-  pe:uses { :mainGenome :can :GenomeCopyUnderNoDesignLaws . }.
-
-{ :case :checkC6 :Passed . }
-  pe:rule 26;
-  pe:uses { :mainLine :can :AccurateSelfReproduction . }.
-
-{ :case :checkC4 :Passed . }
-  pe:rule 24;
-  pe:uses { :mainSeed :can :Germinate . }.
-
-{ :case :checkC5 :Passed . }
-  pe:rule 25;
-  pe:uses { :mainAdult :can :PropaguleProduction . }.
-
-{ :case :checkC3 :Passed . }
-  pe:rule 23;
-  pe:uses { :mainSeed :can :ProtectedDormancy . }.
-
-{ :case :checkC7 :Passed . }
-  pe:rule 27;
-  pe:uses { :mainLine :can :LineageClosure . }.
-
 { :mainLine a :EvolvableLineage . }
   pe:rule 9;
   pe:binding [ pe:var "Line"; pe:value :mainLine ];
   pe:uses
     { :mainLine :can :LineageClosure . },
     { :mainLine :can :AdaptivePersistence . }.
-
-{ :case :checkC8 :Passed . }
-  pe:rule 28;
-  pe:uses { :mainLine :can :HeritableVariation . }.
-
-{ :case :checkC9 :Passed . }
-  pe:rule 29;
-  pe:uses { :mainLine :can :AdaptivePersistence . }.
-
-{ :case :checkC11 :Passed . }
-  pe:rule 31;
-  pe:uses { :analogLine :cannot :AccurateSelfReproduction . }.
 
 { :analogLine :cannot :EvolvableLineage . }
   pe:rule 18;
@@ -834,31 +777,15 @@
   pe:binding [ pe:var "Line"; pe:value :coatlessLine ];
   pe:uses { :coatlessLine :cannot :ProtectedDormancy . }.
 
-{ :case :checkC14 :Passed . }
-  pe:rule 34;
-  pe:uses { :staticLine :cannot :AdaptiveEvolution . }.
-
 { :staticLine :cannot :AdaptivePersistence . }
   pe:rule 17;
   pe:binding [ pe:var "Line"; pe:value :staticLine ];
   pe:uses { :staticLine :cannot :AdaptiveEvolution . }.
 
-{ :case :checkC10 :Passed . }
-  pe:rule 30;
-  pe:uses { :mainLine a :EvolvableLineage . }.
-
-{ :case :checkC12 :Passed . }
-  pe:rule 32;
-  pe:uses { :fragileLine :cannot :AccurateSelfReproduction . }.
-
 { :fragileLine :cannot :EvolvableLineage . }
   pe:rule 18;
   pe:binding [ pe:var "Line"; pe:value :fragileLine ];
   pe:uses { :fragileLine :cannot :AccurateSelfReproduction . }.
-
-{ :case :checkC13 :Passed . }
-  pe:rule 33;
-  pe:uses { :coatlessLine :cannot :LineageClosure . }.
 
 { :coatlessLine :cannot :EvolvableLineage . }
   pe:rule 20;
@@ -869,26 +796,3 @@
   pe:rule 19;
   pe:binding [ pe:var "Line"; pe:value :staticLine ];
   pe:uses { :staticLine :cannot :AdaptivePersistence . }.
-
-{ :case :checkC15 :Passed . }
-  pe:rule 35;
-  pe:uses { :staticLine :cannot :EvolvableLineage . }.
-
-{ :out log:outputString "ACT barley seed lineage — can and can't\n\n## Answer\nYES for the viable barley lineage.\nNO for the contrast lineages when digital heredity, repair, protected dormancy, or heritable variation are missing.\n\n## Reason Why\nThe main lineage can achieve genome copying under no-design laws because its hereditary information is digitally instantiated. It can also pass through protected dormancy, germinate, produce propagules, reproduce accurately, close its life cycle, and adaptively persist under saline selection. But the contrast lineages show the \"can't\" side: non-digital heredity blocks accurate genome copying under no-design laws, lack of repair blocks accurate self-reproduction, lack of dormancy protection blocks lineage closure through a protected seed phase, and lack of heritable variation blocks adaptive evolution and thus blocks evolvability.\n\n## Check\nC1  OK - no-design laws are assumed\nC2  OK - the viable genome can be copied under no-design laws\nC3  OK - the viable seed can achieve protected dormancy\nC4  OK - the viable seed can germinate\nC5  OK - the viable adult can produce propagules\nC6  OK - the viable lineage can achieve accurate self-reproduction\nC7  OK - the viable lineage can achieve lineage closure\nC8  OK - the viable lineage can exhibit heritable variation\nC9  OK - the viable lineage can adaptively persist\nC10 OK - the viable lineage is evolvable\nC11 OK - the non-digital lineage cannot achieve accurate self-reproduction\nC12 OK - the repair-deficient lineage cannot achieve accurate self-reproduction\nC13 OK - the coatless lineage cannot achieve lineage closure through protected dormancy\nC14 OK - the static lineage cannot achieve adaptive evolution\nC15 OK - the static lineage cannot be an evolvable lineage\n" . }
-  pe:rule 36;
-  pe:uses
-    { :case :checkC1 :Passed . },
-    { :case :checkC2 :Passed . },
-    { :case :checkC3 :Passed . },
-    { :case :checkC4 :Passed . },
-    { :case :checkC5 :Passed . },
-    { :case :checkC6 :Passed . },
-    { :case :checkC7 :Passed . },
-    { :case :checkC8 :Passed . },
-    { :case :checkC9 :Passed . },
-    { :case :checkC10 :Passed . },
-    { :case :checkC11 :Passed . },
-    { :case :checkC12 :Passed . },
-    { :case :checkC13 :Passed . },
-    { :case :checkC14 :Passed . },
-    { :case :checkC15 :Passed . }.

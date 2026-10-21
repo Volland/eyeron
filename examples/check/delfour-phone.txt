@@ -1,0 +1,16 @@
+Proof: examples/proof/delfour-phone.n3
+Source program: examples/delfour-phone.n3
+checked: 44 steps, 44 verified, 0 trusted
+Step kinds:
+  source facts: 6
+  rule applications: 38
+Conditions:
+  C1 resolution: 44 checked, 0 failed
+  C2 well-foundedness: 44 checked, 0 failed
+  C3 justification: 44 checked, 0 failed
+  C4 coverage: 233 checked, 0 failed
+  C5 re-decision: 0 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 82 checked, 0 failed
+  C8 witness integrity: 43 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

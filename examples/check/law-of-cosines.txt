@@ -1,0 +1,17 @@
+Proof: examples/proof/law-of-cosines.n3
+Source program: examples/law-of-cosines.n3
+checked: 106 steps, 106 verified, 0 trusted
+Step kinds:
+  built-ins: 52
+  source facts: 24
+  rule applications: 30
+Conditions:
+  C1 resolution: 54 checked, 0 failed
+  C2 well-foundedness: 106 checked, 0 failed
+  C3 justification: 106 checked, 0 failed
+  C4 coverage: 504 checked, 0 failed
+  C5 re-decision: 52 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 136 checked, 0 failed
+  C8 witness integrity: 24 checked, 0 failed
+  C9 query isolation: 450 checked, 0 failed

@@ -1,0 +1,12 @@
+@prefix : <http://example.org/act/photosynthesis/> .
+
+:tunedAntenna :can :CoherentPathwaySampling .
+:tunedAntenna :can :VibronicallyAssistedTransfer .
+:tunedAntenna :can :ShortLivedQuantumAssistance .
+:tunedAntenna :can :EfficientExcitonTransfer .
+:tunedAntenna :can :DeliverExcitationToReactionCenter .
+:detunedAntenna :cannot :CoherentPathwaySampling .
+:detunedAntenna :cannot :VibronicallyAssistedTransfer .
+:detunedAntenna :cannot :DirectedReactionCenterTransfer .
+:detunedAntenna :cannot :EfficientExcitonTransfer .
+:detunedAntenna :cannot :DeliverExcitationToReactionCenter .

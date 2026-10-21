@@ -1,0 +1,17 @@
+Proof: examples/proof/bayes-diagnosis.n3
+Source program: examples/bayes-diagnosis.n3
+checked: 58 steps, 58 verified, 0 trusted
+Step kinds:
+  built-ins: 25
+  source facts: 24
+  rule applications: 9
+Conditions:
+  C1 resolution: 33 checked, 0 failed
+  C2 well-foundedness: 58 checked, 0 failed
+  C3 justification: 58 checked, 0 failed
+  C4 coverage: 63 checked, 0 failed
+  C5 re-decision: 25 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 67 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

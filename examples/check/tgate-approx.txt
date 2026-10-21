@@ -1,0 +1,17 @@
+Proof: examples/proof/tgate-approx.n3
+Source program: examples/tgate-approx.n3
+checked: 1172 steps, 1172 verified, 0 trusted
+Step kinds:
+  built-ins: 520
+  source facts: 2
+  rule applications: 650
+Conditions:
+  C1 resolution: 652 checked, 0 failed
+  C2 well-foundedness: 1172 checked, 0 failed
+  C3 justification: 1172 checked, 0 failed
+  C4 coverage: 4441 checked, 0 failed
+  C5 re-decision: 520 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 1508 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 4441 checked, 0 failed

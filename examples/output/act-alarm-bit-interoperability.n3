@@ -1,0 +1,12 @@
+@prefix : <http://example.org/alarm-bit/> .
+
+:opticalBeacon :can :LocalPermutation .
+:opticalBeacon :can :InteroperateForVariable .
+:relayRegister :can :InteroperateForVariable .
+:relayRegister :can :LocalPermutation .
+:quantumToken :cannot :UniversalClone .
+:quantumToken :cannot :UnrestrictedStateFanOut .
+(:opticalBeacon :opticalBeacon) :canCopy :AlarmBit .
+(:opticalBeacon :relayRegister) :canCopy :AlarmBit .
+(:relayRegister :opticalBeacon) :canCopy :AlarmBit .
+(:relayRegister :relayRegister) :canCopy :AlarmBit .

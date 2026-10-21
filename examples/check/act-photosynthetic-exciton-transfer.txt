@@ -1,0 +1,16 @@
+Proof: examples/proof/act-photosynthetic-exciton-transfer.n3
+Source program: examples/act-photosynthetic-exciton-transfer.n3
+checked: 25 steps, 25 verified, 0 trusted
+Step kinds:
+  source facts: 15
+  rule applications: 10
+Conditions:
+  C1 resolution: 25 checked, 0 failed
+  C2 well-foundedness: 25 checked, 0 failed
+  C3 justification: 25 checked, 0 failed
+  C4 coverage: 47 checked, 0 failed
+  C5 re-decision: 0 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 35 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 37 checked, 0 failed

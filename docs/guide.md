@@ -62,6 +62,14 @@ A proof claims what the run outputs and records the steps those claims depend on
 
 `checked` means every step justification was verified. `checked with obligations` lists accepted assumptions whose truth was not verified, such as negation or collection over the current graph, or clock-dependent built-ins. An invalid proof lists the affected conclusion and the failed condition. See [the contract](proof-checking.md) for exact rules and test coverage.
 
+Packaged examples separate the answer, its derivation, and its verification:
+
+- [`examples/output/`](../examples/output/) contains the query answers or other example output.
+- [`examples/proof/`](../examples/proof/) contains the N3 proofs supporting that output.
+- [`examples/check/`](../examples/check/) contains the CLI proof-check reports, with C1–C9 results and any trust obligations or failures.
+
+For example, [Socrates's answer](../examples/output/socrates.n3), [proof](../examples/proof/socrates.n3), and [check report](../examples/check/socrates.txt) describe the same example. Query examples return their answers directly; explanations and verification do not need a hand-written Answer/Reason/Check report in the answer itself.
+
 `-c` and `--check-proof` use the same source loader: each input is parsed with its format and base IRI, then merged with separate file scopes. A saved proof can come from stdin when the sources are files; sources can come from stdin when the proof is a file. Supplying both through stdin is rejected. The Rust `check_proof_document` API accepts an already prepared `Document`. Proof collection retains additional derivation data and costs memory.
 
 ### Example: audit a decision
@@ -134,7 +142,7 @@ node --experimental-vm-modules --test tests/playground_loading.mjs tests/playgro
 cargo doc --no-deps
 ```
 
-`scripts/test-all` runs the release test suite and ends with one line showing individual tests run, the percentage OK, and total elapsed time. It counts conformance cases in place of their suite checks, without double-counting the W3C manifest and aggregate reports. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness requires every saved proof to check successfully, apart from one intentional negative cycle it expects C6 to reject. After an intentional output change, `EYERON_UPDATE_GOLDENS=1 cargo test --release --test examples` rewrites the goldens that no longer match.
+`scripts/test-all` runs the release test suite and ends with one line showing individual tests run, the percentage OK, and total elapsed time. It counts conformance cases in place of their suite checks, without double-counting the W3C manifest and aggregate reports. The example harness compares N3 output as a graph and Markdown output by stable report lines. Proof snapshots are compared as text, with clock values normalized for `age.n3`. The separate proof-checking harness requires every saved proof to check successfully, apart from one intentional negative cycle it expects C6 to reject, and compares each check report with `examples/check/<name>.txt`. After an intentional output change, `EYERON_UPDATE_GOLDENS=1 cargo test --release --test examples` rewrites the output and proof goldens that no longer match. Then `EYERON_UPDATE_GOLDENS=1 cargo test --release --test proof_checking` refreshes the check reports. Ordinary runs only read these files.
 
 The vendored N3 suite has two expectations adjusted for Eyeron's graph-term scoping; see [scope differences](n3.md#conformance-scope-differences). The [W3C runner notes](../tests/w3c_rdf/README.md) cover the local manifest mirror and EARL report. CI has three jobs: native release tests, Clippy, and rustdoc; Wasm Clippy and a release build; and cargo-deny for dependency checks.
 

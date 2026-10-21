@@ -1,0 +1,12 @@
+@prefix : <http://example.org/act/memory-reset/> .
+
+:batteryPack :can :DriveControlledReset .
+:alarmLatch :can :ReliableResetFromWork .
+:alarmLatch :can :PrepareStandardState .
+:batteryPack :can :DegradeToHeatDuringReset .
+:alarmSensor :can :ReadyForReuse .
+:ambientBath :cannot :DriveControlledReset .
+:alarmLatch :cannot :ReliableResetFromHeatAlone .
+:ambientBath :cannot :ReconstructChargedWorkMediumByItself .
+:alarmLatch :cannot :PrepareStandardStateFromHeatAlone .
+:alarmSensor :cannot :ReadyForReuseFromHeatAlone .

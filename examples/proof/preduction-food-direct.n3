@@ -13,6 +13,11 @@ _:g a food:ConsumableThing .
 _:cnd a food:ConsumableThing .
 _:pwlcs a food:EdibleThing .
 _:pwlcs a food:ConsumableThing .
+_:g a food:Grape .
+_:cnd a food:CheeseNutsDessert .
+_:pwlcs a food:PastaWithLightCreamSauce .
+_:ct a food:ConsumableThing .
+_:m a food:Meal .
 
 { _:g a food:SweetFruit . }
   pe:rule 4;
@@ -80,3 +85,6 @@ _:pwlcs a food:ConsumableThing .
   pe:rule 1;
   pe:binding [ pe:var "U_0"; pe:value _:pwlcs ];
   pe:uses { _:pwlcs a food:EdibleThing . }.
+
+{ _:ct a food:ConsumableThing . }
+  pe:fact "preduction-food-direct.n3".

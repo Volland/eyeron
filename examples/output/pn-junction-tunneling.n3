@@ -1,0 +1,6 @@
+@prefix : <http://example.org/pn-junction-tunneling#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:case :peakBias 2 .
+:case :peakCurrent 4 .
+:case :negativeDifferentialRegion true .

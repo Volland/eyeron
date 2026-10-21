@@ -1,0 +1,9 @@
+@prefix : <http://example.org/transistor-switch#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:low :stateLabel "cutoff / OFF" .
+:low :collectorCurrentUa 0 .
+:low :collectorEmitterVoltageMv 5000 .
+:high :stateLabel "saturation / ON" .
+:high :collectorCurrentUa 4800 .
+:high :collectorEmitterVoltageMv 200 .

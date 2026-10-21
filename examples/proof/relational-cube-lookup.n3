@@ -2,6 +2,7 @@
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 
 :case :reason "2000 two-key lookups over 3375 facts" .
+:case :lookupResult :passed .
 
 { :case :reason "2000 two-key lookups over 3375 facts" . }
   pe:rule

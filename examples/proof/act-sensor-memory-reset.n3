@@ -1,5 +1,4 @@
 @prefix : <http://example.org/act/memory-reset/> .
-@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
@@ -8,23 +7,11 @@
 :ambientBath :cannot :DriveControlledReset .
 :alarmLatch :cannot :ReliableResetFromHeatAlone .
 :alarmLatch :can :PrepareStandardState .
-:alarmLatch :standardState :Clear .
 :batteryPack :can :DegradeToHeatDuringReset .
 :ambientBath :cannot :ReconstructChargedWorkMediumByItself .
-:case :checkC1 :Passed .
-:case :checkC2 :Passed .
-:case :checkC6 :Passed .
-:case :checkC7 :Passed .
 :alarmLatch :cannot :PrepareStandardStateFromHeatAlone .
-:case :checkC3 :Passed .
 :alarmSensor :can :ReadyForReuse .
-:case :checkC5 :Passed .
-:case :checkC10 :Passed .
-:case :checkC8 :Passed .
 :alarmSensor :cannot :ReadyForReuseFromHeatAlone .
-:case :checkC4 :Passed .
-:case :checkC9 :Passed .
-:out log:outputString "ACT sensor memory reset\n\n## Answer\nYES with the battery pack.\nNO with the ambient heat bath alone.\n\n## Reason Why\nThe alarm latch is a one-bit memory that must be reset to its standard clear state before the radiation sensor can be reused. In this case, the charged battery pack is treated as a work medium, so it can drive a controlled reset and prepare the latch in its reusable standard state. The ambient bath is treated as a heat medium, so by itself it cannot perform the same reliable directed reset. The example also shows an irreversibility pattern: useful work can be degraded into dissipated heat during reset, but the ambient heat bath alone cannot reconstruct the charged work resource.\n\n## Check\nC1  OK - the battery pack can drive a controlled reset\nC2  OK - the alarm latch can be reliably reset from work\nC3  OK - the latch can be prepared in its standard reusable state\nC4  OK - the sensor can be made ready for reuse\nC5  OK - the work resource can degrade to heat during reset\nC6  OK - the ambient heat bath cannot drive a controlled reset\nC7  OK - the latch cannot be reliably reset from heat alone\nC8  OK - the latch cannot be prepared in its standard state from heat alone\nC9  OK - the sensor cannot be made ready for reuse from heat alone\nC10 OK - the ambient heat bath cannot reconstruct the charged work resource by itself\n" .
 
 { :batteryPack :can :DriveControlledReset . }
   pe:rule 1;
@@ -98,15 +85,6 @@
 { :alarmLatch :zeroState :Clear . }
   pe:fact "act-sensor-memory-reset.n3".
 
-{ :alarmLatch :standardState :Clear . }
-  pe:rule 2;
-  pe:binding
-    [ pe:var "M"; pe:value :alarmLatch ],
-    [ pe:var "Z"; pe:value :Clear ];
-  pe:uses
-    { :alarmLatch :can :ReliableResetFromWork . },
-    { :alarmLatch :zeroState :Clear . }.
-
 { :batteryPack :can :DegradeToHeatDuringReset . }
   pe:rule 4;
   pe:binding
@@ -126,30 +104,10 @@
     { :batteryPack :can :DegradeToHeatDuringReset . },
     { :ambientBath a :HeatMedium . }.
 
-{ :case :checkC1 :Passed . }
-  pe:rule 9;
-  pe:uses { :batteryPack :can :DriveControlledReset . }.
-
-{ :case :checkC2 :Passed . }
-  pe:rule 10;
-  pe:uses { :alarmLatch :can :ReliableResetFromWork . }.
-
-{ :case :checkC6 :Passed . }
-  pe:rule 14;
-  pe:uses { :ambientBath :cannot :DriveControlledReset . }.
-
-{ :case :checkC7 :Passed . }
-  pe:rule 15;
-  pe:uses { :alarmLatch :cannot :ReliableResetFromHeatAlone . }.
-
 { :alarmLatch :cannot :PrepareStandardStateFromHeatAlone . }
   pe:rule 6;
   pe:binding [ pe:var "M"; pe:value :alarmLatch ];
   pe:uses { :alarmLatch :cannot :ReliableResetFromHeatAlone . }.
-
-{ :case :checkC3 :Passed . }
-  pe:rule 11;
-  pe:uses { :alarmLatch :can :PrepareStandardState . }.
 
 { :alarmSensor :can :ReadyForReuse . }
   pe:rule 3;
@@ -161,43 +119,9 @@
 { :alarmSensor :hasMemory :alarmLatch . }
   pe:fact "act-sensor-memory-reset.n3".
 
-{ :case :checkC5 :Passed . }
-  pe:rule 13;
-  pe:uses { :batteryPack :can :DegradeToHeatDuringReset . }.
-
-{ :case :checkC10 :Passed . }
-  pe:rule 18;
-  pe:uses { :ambientBath :cannot :ReconstructChargedWorkMediumByItself . }.
-
-{ :case :checkC8 :Passed . }
-  pe:rule 16;
-  pe:uses { :alarmLatch :cannot :PrepareStandardStateFromHeatAlone . }.
-
 { :alarmSensor :cannot :ReadyForReuseFromHeatAlone . }
   pe:rule 7;
   pe:binding [ pe:var "M"; pe:value :alarmLatch ];
   pe:uses
     { :alarmSensor :hasMemory :alarmLatch . },
     { :alarmLatch :cannot :PrepareStandardStateFromHeatAlone . }.
-
-{ :case :checkC4 :Passed . }
-  pe:rule 12;
-  pe:uses { :alarmSensor :can :ReadyForReuse . }.
-
-{ :case :checkC9 :Passed . }
-  pe:rule 17;
-  pe:uses { :alarmSensor :cannot :ReadyForReuseFromHeatAlone . }.
-
-{ :out log:outputString "ACT sensor memory reset\n\n## Answer\nYES with the battery pack.\nNO with the ambient heat bath alone.\n\n## Reason Why\nThe alarm latch is a one-bit memory that must be reset to its standard clear state before the radiation sensor can be reused. In this case, the charged battery pack is treated as a work medium, so it can drive a controlled reset and prepare the latch in its reusable standard state. The ambient bath is treated as a heat medium, so by itself it cannot perform the same reliable directed reset. The example also shows an irreversibility pattern: useful work can be degraded into dissipated heat during reset, but the ambient heat bath alone cannot reconstruct the charged work resource.\n\n## Check\nC1  OK - the battery pack can drive a controlled reset\nC2  OK - the alarm latch can be reliably reset from work\nC3  OK - the latch can be prepared in its standard reusable state\nC4  OK - the sensor can be made ready for reuse\nC5  OK - the work resource can degrade to heat during reset\nC6  OK - the ambient heat bath cannot drive a controlled reset\nC7  OK - the latch cannot be reliably reset from heat alone\nC8  OK - the latch cannot be prepared in its standard state from heat alone\nC9  OK - the sensor cannot be made ready for reuse from heat alone\nC10 OK - the ambient heat bath cannot reconstruct the charged work resource by itself\n" . }
-  pe:rule 19;
-  pe:uses
-    { :case :checkC1 :Passed . },
-    { :case :checkC2 :Passed . },
-    { :case :checkC3 :Passed . },
-    { :case :checkC4 :Passed . },
-    { :case :checkC5 :Passed . },
-    { :case :checkC6 :Passed . },
-    { :case :checkC7 :Passed . },
-    { :case :checkC8 :Passed . },
-    { :case :checkC9 :Passed . },
-    { :case :checkC10 :Passed . }.

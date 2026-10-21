@@ -9994,6 +9994,7 @@
 9863 :kaprekar (6174) .
 9937 :kaprekar (6174) .
 9973 :kaprekar (6174) .
+6174 :kaprekar (6174) .
 
 { 1 :kaprekar (999 8991 8082 8532 6174) . }
   pe:rule 6;
@@ -848942,3 +848943,6 @@
 
 { 9973 log:notEqualTo 0 . }
   pe:builtin log:notEqualTo.
+
+{ 6174 :kaprekar (6174) . }
+  pe:fact "kaprekar-6174.n3".

@@ -35,10 +35,6 @@
 # ev:safeInWorld  (trip, W)
 # ev:riskyInWorld (trip, W)
 #
-# ARC layer at the end:
-# :answer  – summary of how the worlds classify four example trips.
-# :reason  – explanation of the differences between worlds.
-# :check1..5 – small, derived harness checks.
 #
 # This is a didactic model with simplified physics. It is NOT
 # intended for real EV planning or safety-critical use.
@@ -338,117 +334,15 @@ ev:riskyInWorld a rdf:Property .
     :batteryKWh 40.0 ;
     :baseConsumption 0.16 .
 
-# ARC-style Answer / Reason / Checks
-#
-# These are derived summaries, not hard-coded conclusions. They are
-# only produced when the classification pattern over the four trips
-# matches what the core rules compute.
-:text a rdf:Property .
-:usesWorld a rdf:Property .
-:usesTrip a rdf:Property .
-:says a rdf:Property .
-:ok a rdf:Property .
-:msg a rdf:Property .
-
-# A: Answer
+# Query answer
 {
-    :CityShort ev:safeInWorld :W0, :W1, :W2, :W3 .
-
-    :HighwayLongCold ev:riskyInWorld :W0, :W2, :W3 ;
-        ev:safeInWorld :W1 .
-
-    :MountainCool ev:safeInWorld :W0, :W1, :W2 ;
-        ev:riskyInWorld :W3 .
-
-    :ColdHighwayMidBattery ev:riskyInWorld :W0, :W3 ;
-        ev:safeInWorld :W1, :W2 .
-} => {
-    :answer :text "On these four EV trips, the physics-flavoured world W0 often disagrees with simplified range rules. CityShort is trivially safe in all worlds. For the long cold HighwayLongCold trip, W0, W2 and W3 correctly flag that 50 kWh is not enough once speed, cold and payload penalties are taken into account, whereas the naive world W1 treats it as safe. For MountainCool, W0–W2 say the 30 kWh battery is just sufficient, but the cautious world W3 demands extra margin and calls it risky. For ColdHighwayMidBattery, W0 and W3 see a risk due to very low temperature and heavy load, while W1 and W2 are more optimistic and still mark it as safe." ;
-        :usesWorld :W0, :W1, :W2, :W3 ;
-        :usesTrip :CityShort, :HighwayLongCold, :MountainCool, :ColdHighwayMidBattery .
+    ?Subject ev:safeInWorld ?Value .
+} log:query {
+    ?Subject ev:safeInWorld ?Value .
 } .
 
-# R: Reason
 {
-    :CityShort ev:safeInWorld :W0, :W1, :W2, :W3 .
-
-    :HighwayLongCold ev:riskyInWorld :W0, :W2, :W3 ;
-        ev:safeInWorld :W1 .
-
-    :MountainCool ev:safeInWorld :W0, :W1, :W2 ;
-        ev:riskyInWorld :W3 .
-
-    :ColdHighwayMidBattery ev:riskyInWorld :W0, :W3 ;
-        ev:safeInWorld :W1, :W2 .
-} => {
-    :reason :says "World W0 anchors the case in a simple energy balance: it scales a base kWh-per-kilometre figure by speed, temperature and payload, and compares the result with the battery capacity. World W1, by contrast, behaves like a rule-of-thumb range estimate that only multiplies distance by an average consumption; it can therefore miss the extra energy needed in cold, fast or heavily loaded trips. World W2 improves on this by accounting for speed but still ignores the penalties of cold and heavy payloads. World W3 goes in the opposite direction: it takes the physics-based estimate and adds a 30 percent safety buffer, which can turn borderline cases like MountainCool from safe into risky. The four worlds together illustrate how different approximations for EV range can overestimate or underestimate what the battery can really deliver." .
-} .
-
-# C: Checks – harness rules
-#
-# All checks are derived from ev:safeInWorld / ev:riskyInWorld facts.
-# They do not depend on :answer or :reason.
-# Check 1: W3 is never less cautious than W0 on these trips:
-# every trip W3 calls safe is also safe in W0,
-# and W3 rejects at least all trips that W0 rejects.
-{
-    :CityShort ev:safeInWorld :W0, :W3 .
-    :HighwayLongCold ev:riskyInWorld :W0, :W3 .
-    :MountainCool ev:safeInWorld :W0 ;
-        ev:riskyInWorld :W3 .
-    :ColdHighwayMidBattery ev:riskyInWorld :W0, :W3 .
-} => {
-    :check1 :ok true ;
-        :msg "Check 1: on these trips, the cautious world W3 is at least as conservative as the reference world W0: every trip that W3 treats as safe is also safe in W0, and W3 rejects all trips that W0 rejects, plus one more." .
-} .
-
-# Check 2: W1 is the most optimistic on harsh highway trips:
-# it alone calls HighwayLongCold safe, and together with W2
-# it calls ColdHighwayMidBattery safe while W0 and W3 disagree.
-{
-    :HighwayLongCold ev:safeInWorld :W1 ;
-        ev:riskyInWorld :W0, :W2, :W3 .
-
-    :ColdHighwayMidBattery ev:safeInWorld :W1, :W2 ;
-        ev:riskyInWorld :W0, :W3 .
-} => {
-    :check2 :ok true ;
-        :msg "Check 2: on the harsher highway trips, the naive world W1 is the most optimistic: it alone treats HighwayLongCold as safe, and together with W2 it also marks ColdHighwayMidBattery as safe despite the penalties of cold and heavy load seen by W0 and W3." .
-} .
-
-# Check 3: All worlds agree on the easy case CityShort:
-# it is universally classified as safe, so the models are
-# consistent on low-stress, short trips.
-{
-    :CityShort ev:safeInWorld :W0, :W1, :W2, :W3 .
-} => {
-    :check3 :ok true ;
-        :msg "Check 3: all four worlds agree that the short, warm CityShort trip is safe, so the different models converge on an uncontroversial scenario." .
-} .
-
-# Check 4: W2 sits between W1 and W3 on the two borderline trips:
-# - For HighwayLongCold it sides with the cautious worlds
-# W0 and W3 and flags risk.
-# - For MountainCool it sides with the optimistic worlds
-# W0 and W1 and treats the trip as safe.
-{
-    :HighwayLongCold ev:riskyInWorld :W0, :W2, :W3 ;
-        ev:safeInWorld :W1 .
-
-    :MountainCool ev:safeInWorld :W0, :W1, :W2 ;
-        ev:riskyInWorld :W3 .
-} => {
-    :check4 :ok true ;
-        :msg "Check 4: the semi-optimistic world W2 behaves like a middle ground: it agrees with the cautious worlds W0 and W3 that HighwayLongCold is risky, but it joins the optimistic worlds W0 and W1 in judging MountainCool as safe." .
-} .
-
-# Check 5: Every trip that W0 considers risky is also seen as risky by
-# at least one other world, so there is no W0-only risk in
-# this example set.
-{
-    :HighwayLongCold ev:riskyInWorld :W0, :W2, :W3 .
-    :ColdHighwayMidBattery ev:riskyInWorld :W0, :W3 .
-} => {
-    :check5 :ok true ;
-        :msg "Check 5: for all trips that the reference world W0 marks as risky, at least one other world also flags risk; there are no examples where W0 is the only model to predict trouble." .
+    ?Subject ev:riskyInWorld ?Value .
+} log:query {
+    ?Subject ev:riskyInWorld ?Value .
 } .

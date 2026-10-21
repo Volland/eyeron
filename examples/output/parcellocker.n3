@@ -1,0 +1,3 @@
+@prefix : <https://example.org/parcellocker#> .
+
+:case :decision :Permit .

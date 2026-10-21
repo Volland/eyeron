@@ -1,0 +1,30 @@
+@prefix : <http://example.org/docking-abort/> .
+
+:abortLamp :can :LocalPermutation .
+:abortLamp :can :LocalClone .
+:flightPLC :can :LocalPermutation .
+:flightPLC :can :LocalClone .
+:radioFrame :can :LocalPermutation .
+:radioFrame :can :LocalClone .
+:auditDisplay :can :LocalPermutation .
+:auditDisplay :can :LocalClone .
+:quantumSeal :cannot :UniversalClone .
+:quantumSeal :cannot :UnrestrictedAuditFanOut .
+(:abortLamp :abortLamp) :canCopy :AbortBit .
+(:abortLamp :flightPLC) :canCopy :AbortBit .
+(:abortLamp :radioFrame) :canCopy :AbortBit .
+(:abortLamp :auditDisplay) :canCopy :AbortBit .
+(:flightPLC :abortLamp) :canCopy :AbortBit .
+(:radioFrame :abortLamp) :canCopy :AbortBit .
+(:auditDisplay :abortLamp) :canCopy :AbortBit .
+(:flightPLC :flightPLC) :canCopy :AbortBit .
+(:flightPLC :radioFrame) :canCopy :AbortBit .
+(:flightPLC :auditDisplay) :canCopy :AbortBit .
+(:radioFrame :flightPLC) :canCopy :AbortBit .
+(:auditDisplay :flightPLC) :canCopy :AbortBit .
+(:radioFrame :radioFrame) :canCopy :AbortBit .
+(:radioFrame :auditDisplay) :canCopy :AbortBit .
+(:auditDisplay :radioFrame) :canCopy :AbortBit .
+(:auditDisplay :auditDisplay) :canCopy :AbortBit .
+:SerialNetwork a :PossibleTask .
+:ParallelNetwork a :PossibleTask .

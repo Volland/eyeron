@@ -1,0 +1,13 @@
+@prefix : <http://example.org/act/yeast/> .
+
+:dnaRegister :can :SupportReplicationUnderNoDesignLaws .
+:starterGenome :can :HeritableVariation .
+:contrastGenome :can :HeritableVariation .
+:starterGenome :can :AccurateGenomeCopyUnderNoDesignLaws .
+:starterCell :can :AccurateReplicationArchitecture .
+:starterCell :can :SelfReproduce .
+:starterCell :can :NaturalSelectionLineage .
+:contrastCell :can :AccurateReplicationArchitecture .
+:contrastGenome :cannot :AccurateGenomeCopyUnderNoDesignLaws .
+:contrastCell :cannot :AccurateSelfReproduction .
+:contrastCell :cannot :NaturalSelectionLineage .

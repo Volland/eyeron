@@ -1,0 +1,34 @@
+@prefix : <http://example.org/isolation-breach/> .
+
+:doorBeacon :can :PrepareInformationStates .
+:doorBeacon :can :LocalPermutation .
+:doorBeacon :can :LocalClone .
+:containmentPLC :can :PrepareInformationStates .
+:containmentPLC :can :LocalPermutation .
+:containmentPLC :can :LocalClone .
+:nursePager :can :PrepareInformationStates .
+:nursePager :can :LocalPermutation .
+:nursePager :can :LocalClone .
+:incidentBoard :can :PrepareInformationStates .
+:incidentBoard :can :LocalPermutation .
+:incidentBoard :can :LocalClone .
+:specimenSeal :cannot :UniversalClone .
+:specimenSeal :cannot :UnrestrictedParallelFanOut .
+(:doorBeacon :doorBeacon) :canCopy :BreachBit .
+(:doorBeacon :containmentPLC) :canCopy :BreachBit .
+(:doorBeacon :nursePager) :canCopy :BreachBit .
+(:doorBeacon :incidentBoard) :canCopy :BreachBit .
+(:containmentPLC :doorBeacon) :canCopy :BreachBit .
+(:nursePager :doorBeacon) :canCopy :BreachBit .
+(:incidentBoard :doorBeacon) :canCopy :BreachBit .
+(:containmentPLC :containmentPLC) :canCopy :BreachBit .
+(:containmentPLC :nursePager) :canCopy :BreachBit .
+(:containmentPLC :incidentBoard) :canCopy :BreachBit .
+(:nursePager :containmentPLC) :canCopy :BreachBit .
+(:incidentBoard :containmentPLC) :canCopy :BreachBit .
+(:nursePager :nursePager) :canCopy :BreachBit .
+(:nursePager :incidentBoard) :canCopy :BreachBit .
+(:incidentBoard :nursePager) :canCopy :BreachBit .
+(:incidentBoard :incidentBoard) :canCopy :BreachBit .
+:SerialNetwork a :PossibleTask .
+:ParallelNetwork a :PossibleTask .

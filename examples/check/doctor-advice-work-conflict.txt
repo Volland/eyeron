@@ -1,0 +1,1170 @@
+Proof: examples/proof/doctor-advice-work-conflict.n3
+Source program: examples/doctor-advice-work-conflict.n3
+checked with obligations: 25 steps, 21 verified, 4 trusted
+Step kinds:
+  built-ins: 13
+  source facts: 1
+  rule applications: 11
+Conditions:
+  C1 resolution: 12 checked, 0 failed
+  C2 well-foundedness: 25 checked, 0 failed
+  C3 justification: 25 checked, 0 failed
+  C4 coverage: 54 checked, 0 failed
+  C5 re-decision: 13 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 36 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  impure built-in:
+    {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+    } <http://www.w3.org/2000/10/swap/log#conclusion> {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Disease> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        <http://example.org/#Jos> <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        <http://example.org/#Jos> <http://example.org/#remoteWorkRecommended> true .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+  impure built-in:
+    {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+    } <http://www.w3.org/2000/10/swap/log#conclusion> {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Disease> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        <http://example.org/#Jos> <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        <http://example.org/#Jos> <http://example.org/#remoteWorkRecommended> true .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+  impure built-in:
+    {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> ?job .
+            ?job <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+        ?x <http://example.org/#canDo> ?job .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+            ?x <http://example.org/#canDo> ?job .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+    } <http://www.w3.org/2000/10/swap/log#conclusion> {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> ?job .
+            ?job <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+        ?x <http://example.org/#canDo> ?job .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+            ?x <http://example.org/#canDo> ?job .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> ?job .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Disease> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        <http://example.org/#Jos> <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        <http://example.org/#Jos> <http://example.org/#remoteWorkRecommended> true .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+  impure built-in:
+    {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> ?job .
+            ?job <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+        ?x <http://example.org/#canDo> ?job .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+            ?x <http://example.org/#canDo> ?job .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+    } <http://www.w3.org/2000/10/swap/log#conclusion> {
+        <http://example.org/#Jos> a <http://example.org/#Person> .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Flu> .
+        <http://example.org/#Flu> <http://example.org/#typeOf> <http://example.org/#Disease> .
+        <http://example.org/#Home> a <http://example.org/#Location> .
+        <http://example.org/#Office> a <http://example.org/#Location> .
+        <http://example.org/#ProgrammingWork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Home> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#location> <http://example.org/#Home> .
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> <http://example.org/#Jos> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        <http://example.org/#Doctor> <http://example.org/#says> {
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+    } .
+        {
+            ?doc <http://example.org/#says> ?G .
+            ?G <http://www.w3.org/2000/10/swap/log#includes> {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        } => {
+            ?x <http://example.org/#canDo> ?job .
+        } .
+        {
+            ?x <http://example.org/#has> ?a .
+            ?a <http://example.org/#typeOf> ?b .
+        } => {
+            ?x <http://example.org/#has> ?b .
+        } .
+        {
+            ?x <http://example.org/#has> <http://example.org/#Disease> .
+        } => {
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } .
+        {
+            ?a <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?b .
+        } => {
+            ?a <http://example.org/#isKindOf> ?b .
+        } .
+        {
+            ?a <http://example.org/#isKindOf> ?b .
+            ?b <http://example.org/#isKindOf> ?c .
+        } => {
+            ?a <http://example.org/#isKindOf> ?c .
+        } .
+        {
+            ?x <http://example.org/#canDo> ?job .
+            ?job <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?super .
+        } => {
+            ?x <http://example.org/#canDo> ?super .
+        } .
+        <http://example.org/#R_DoctorPermit> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+        ?x <http://example.org/#canDo> ?job .
+    } .
+        <http://example.org/#R_DoctorPermit> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+            ?x <http://example.org/#canDo> ?job .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        } .
+        <http://example.org/#R_SickNoWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+    } .
+        <http://example.org/#R_SickNoWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Work> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        } .
+        <http://example.org/#R_SickWork> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+    } .
+        <http://example.org/#R_SickWork> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        ?x <http://example.org/#avoidInfectingColleagues> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> ?job .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Office> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+            ?job <http://example.org/#isKindOf> <http://example.org/#Office> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+            ?x <http://example.org/#avoidInfectingColleagues> true .
+        } .
+        <http://example.org/#R_SickProgHome> a <http://dig.csail.mit.edu/TAMI/2007/amord/air#Rule> .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#if> {
+        <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+        ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+    } .
+        <http://example.org/#R_SickProgHome> <http://dig.csail.mit.edu/TAMI/2007/amord/air#then> {
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+        ?x <http://example.org/#remoteWorkRecommended> true .
+    } .
+        {
+            <http://example.org/#Request_Jos_Prog_Office> a <http://example.org/#Request> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#agent> ?x .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#job> <http://example.org/#ProgrammingWork> .
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#location> <http://example.org/#Home> .
+            ?x <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        } => {
+            <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+            ?x <http://example.org/#remoteWorkRecommended> true .
+        } .
+        <http://example.org/#Jos> <http://example.org/#has> <http://example.org/#Disease> .
+        <http://example.org/#ProgrammingWork> <http://example.org/#isKindOf> <http://example.org/#Work> .
+        <http://example.org/#Jos> <http://example.org/#healthStatus> <http://example.org/#Sick> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Deny> .
+        <http://example.org/#Request_Jos_Prog_Home> <http://example.org/#decision> <http://example.org/#Permit> .
+        <http://example.org/#Jos> <http://example.org/#remoteWorkRecommended> true .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#ProgrammingWork> .
+        <http://example.org/#Jos> <http://example.org/#canDo> <http://example.org/#Work> .
+        <http://example.org/#Request_Jos_Prog_Office> <http://example.org/#decision> <http://example.org/#Permit> .
+    } .

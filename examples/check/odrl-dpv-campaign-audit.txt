@@ -1,0 +1,113 @@
+Proof: examples/proof/odrl-dpv-campaign-audit.n3
+Source program: examples/odrl-dpv-campaign-audit.n3
+checked with obligations: 8 steps, 7 verified, 1 trusted
+Step kinds:
+  built-ins: 3
+  source facts: 1
+  rule applications: 4
+Conditions:
+  C1 resolution: 5 checked, 0 failed
+  C2 well-foundedness: 8 checked, 0 failed
+  C3 justification: 8 checked, 0 failed
+  C4 coverage: 13 checked, 0 failed
+  C5 re-decision: 3 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 10 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 11 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  impure built-in:
+    {
+        <http://example.org/#ticket-99> <http://example.org/#request> <http://example.org/#PublishCampaignAccessSummary> .
+        <http://example.org/#adVendor> a <http://example.org/#ExternalRecipient> .
+        <http://example.org/#marketingTeam> a <http://example.org/#InternalRecipient> .
+        <http://example.org/#AudienceList> <http://www.w3.org/ns/dpv#hasPersonalData> <http://www.w3.org/ns/dpv#PersonalData> .
+        <http://example.org/#ProductCatalog> a <http://example.org/#NonPersonalDataset> .
+        <http://example.org/#policy-internal> a <http://www.w3.org/ns/odrl/2/Set> .
+        <http://example.org/#policy-internal> <http://www.w3.org/ns/dpv#hasPurpose> <http://www.w3.org/ns/dpv#ServiceProvision> .
+        <http://example.org/#policy-internal> <http://www.w3.org/ns/odrl/2/permission> _:b1 .
+        _:b1 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#marketingTeam> .
+        _:b1 <http://www.w3.org/ns/odrl/2/target> <http://example.org/#ProductCatalog> .
+        _:b1 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        <http://example.org/#policy-external> a <http://www.w3.org/ns/odrl/2/Set> .
+        <http://example.org/#policy-external> <http://www.w3.org/ns/dpv#hasPurpose> <http://www.w3.org/ns/dpv#Marketing> .
+        <http://example.org/#policy-external> <http://www.w3.org/ns/odrl/2/permission> _:b2 .
+        _:b2 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+        _:b2 <http://www.w3.org/ns/odrl/2/target> <http://example.org/#AudienceList> .
+        _:b2 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        {
+            ?Policy <http://www.w3.org/ns/odrl/2/permission> _:b3 .
+            _:b3 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+            _:b3 <http://www.w3.org/ns/odrl/2/target> ?Dataset .
+            _:b3 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        } => {
+            <http://example.org/#adVendor> <http://example.org/#canRead> ?Dataset .
+        } .
+        {
+            ?Policy <http://www.w3.org/ns/dpv#hasPurpose> ?Purpose .
+            ?Policy <http://www.w3.org/ns/odrl/2/permission> _:b4 .
+            _:b4 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+            _:b4 <http://www.w3.org/ns/odrl/2/target> ?Dataset .
+            _:b4 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        } => {
+            <http://example.org/#adVendor> <http://example.org/#authorisedPurpose> ?Purpose .
+        } .
+        {
+            ?Policy <http://www.w3.org/ns/odrl/2/permission> _:b5 .
+            _:b5 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+            _:b5 <http://www.w3.org/ns/odrl/2/target> ?Dataset .
+            _:b5 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+            ?Dataset <http://www.w3.org/ns/dpv#hasPersonalData> ?Category .
+        } => {
+            <http://example.org/#adVendor> <http://example.org/#authorisedReadCategory> ?Category .
+        } .
+    } <http://www.w3.org/2000/10/swap/log#conclusion> {
+        <http://example.org/#ticket-99> <http://example.org/#request> <http://example.org/#PublishCampaignAccessSummary> .
+        <http://example.org/#adVendor> a <http://example.org/#ExternalRecipient> .
+        <http://example.org/#marketingTeam> a <http://example.org/#InternalRecipient> .
+        <http://example.org/#AudienceList> <http://www.w3.org/ns/dpv#hasPersonalData> <http://www.w3.org/ns/dpv#PersonalData> .
+        <http://example.org/#ProductCatalog> a <http://example.org/#NonPersonalDataset> .
+        <http://example.org/#policy-internal> a <http://www.w3.org/ns/odrl/2/Set> .
+        <http://example.org/#policy-internal> <http://www.w3.org/ns/dpv#hasPurpose> <http://www.w3.org/ns/dpv#ServiceProvision> .
+        <http://example.org/#policy-internal> <http://www.w3.org/ns/odrl/2/permission> _:b1 .
+        _:b1 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#marketingTeam> .
+        _:b1 <http://www.w3.org/ns/odrl/2/target> <http://example.org/#ProductCatalog> .
+        _:b1 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        <http://example.org/#policy-external> a <http://www.w3.org/ns/odrl/2/Set> .
+        <http://example.org/#policy-external> <http://www.w3.org/ns/dpv#hasPurpose> <http://www.w3.org/ns/dpv#Marketing> .
+        <http://example.org/#policy-external> <http://www.w3.org/ns/odrl/2/permission> _:b2 .
+        _:b2 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+        _:b2 <http://www.w3.org/ns/odrl/2/target> <http://example.org/#AudienceList> .
+        _:b2 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        {
+            ?Policy <http://www.w3.org/ns/odrl/2/permission> _:b3 .
+            _:b3 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+            _:b3 <http://www.w3.org/ns/odrl/2/target> ?Dataset .
+            _:b3 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        } => {
+            <http://example.org/#adVendor> <http://example.org/#canRead> ?Dataset .
+        } .
+        {
+            ?Policy <http://www.w3.org/ns/dpv#hasPurpose> ?Purpose .
+            ?Policy <http://www.w3.org/ns/odrl/2/permission> _:b4 .
+            _:b4 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+            _:b4 <http://www.w3.org/ns/odrl/2/target> ?Dataset .
+            _:b4 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+        } => {
+            <http://example.org/#adVendor> <http://example.org/#authorisedPurpose> ?Purpose .
+        } .
+        {
+            ?Policy <http://www.w3.org/ns/odrl/2/permission> _:b5 .
+            _:b5 <http://www.w3.org/ns/odrl/2/assignee> <http://example.org/#adVendor> .
+            _:b5 <http://www.w3.org/ns/odrl/2/target> ?Dataset .
+            _:b5 <http://www.w3.org/ns/odrl/2/action> <http://www.w3.org/ns/odrl/2/read> .
+            ?Dataset <http://www.w3.org/ns/dpv#hasPersonalData> ?Category .
+        } => {
+            <http://example.org/#adVendor> <http://example.org/#authorisedReadCategory> ?Category .
+        } .
+        <http://example.org/#adVendor> <http://example.org/#authorisedReadCategory> <http://www.w3.org/ns/dpv#PersonalData> .
+        <http://example.org/#marketingTeam> <http://example.org/#authorisedPurpose> <http://www.w3.org/ns/dpv#ServiceProvision> .
+        <http://example.org/#marketingTeam> <http://example.org/#canRead> <http://example.org/#ProductCatalog> .
+        <http://example.org/#adVendor> <http://example.org/#authorisedPurpose> <http://www.w3.org/ns/dpv#Marketing> .
+        <http://example.org/#adVendor> <http://example.org/#canRead> <http://example.org/#AudienceList> .
+    } .

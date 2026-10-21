@@ -1,0 +1,10 @@
+@prefix : <http://example.org/#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:H :trace 3 .
+:H :det 2 .
+:C :a11 0 .
+:C :a12 -1 .
+:C :a21 1 .
+:C :a22 0 .
+:C :nonzero "yes" .

@@ -1,0 +1,17 @@
+Proof: examples/proof/rdf-message-window-repair.n3
+Source program: examples/rdf-message-window-repair.n3, examples/input/rdf-message-window-repair.trig
+checked: 104 steps, 104 verified, 0 trusted
+Step kinds:
+  built-ins: 9
+  source facts: 32
+  rule applications: 63
+Conditions:
+  C1 resolution: 95 checked, 0 failed
+  C2 well-foundedness: 104 checked, 0 failed
+  C3 justification: 104 checked, 0 failed
+  C4 coverage: 475 checked, 0 failed
+  C5 re-decision: 9 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 167 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

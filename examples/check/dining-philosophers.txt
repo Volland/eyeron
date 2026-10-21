@@ -1,0 +1,17 @@
+Proof: examples/proof/dining-philosophers.n3
+Source program: examples/dining-philosophers.n3
+checked: 1033 steps, 1033 verified, 0 trusted
+Step kinds:
+  built-ins: 10
+  source facts: 217
+  rule applications: 806
+Conditions:
+  C1 resolution: 1023 checked, 0 failed
+  C2 well-foundedness: 1033 checked, 0 failed
+  C3 justification: 1033 checked, 0 failed
+  C4 coverage: 7451 checked, 0 failed
+  C5 re-decision: 10 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 1839 checked, 0 failed
+  C8 witness integrity: 710 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

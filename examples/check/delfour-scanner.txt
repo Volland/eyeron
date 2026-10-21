@@ -1,0 +1,17 @@
+Proof: examples/proof/delfour-scanner.n3
+Source program: examples/delfour-scanner.n3
+checked: 41 steps, 41 verified, 0 trusted
+Step kinds:
+  built-ins: 3
+  source facts: 23
+  rule applications: 15
+Conditions:
+  C1 resolution: 38 checked, 0 failed
+  C2 well-foundedness: 41 checked, 0 failed
+  C3 justification: 41 checked, 0 failed
+  C4 coverage: 119 checked, 0 failed
+  C5 re-decision: 3 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 56 checked, 0 failed
+  C8 witness integrity: 8 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

@@ -297,7 +297,7 @@ fn run_case(case: &Case) {
                 if let (Some(expected), Some(path)) = (&proof_golden, &proof_golden_path) {
                     let proof = proof_to_n3(&doc.prefixes, &result);
                     outcome = compare_proof_golden(&thread_name, &proof, expected);
-                    if outcome.is_err() && updating_goldens() {
+                    if outcome.is_err() && updating_goldens() && !proof.trim().is_empty() {
                         outcome = update_golden(path, &proof);
                     }
                 }

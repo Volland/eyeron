@@ -1,0 +1,8 @@
+@prefix : <http://example.org/resto#> .
+@prefix resto: <http://example.org/restaurant#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Goal resto:restaurant :Maximiliaan .
+:Goal resto:reservation :Reservation42 .
+:Goal resto:onDate "2026-04-08" .
+:Goal resto:isOutside true .

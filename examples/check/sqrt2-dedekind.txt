@@ -1,0 +1,34 @@
+Proof: examples/proof/sqrt2-dedekind.n3
+Source program: examples/sqrt2-dedekind.n3
+checked with obligations: 264 steps, 262 verified, 2 trusted
+Step kinds:
+  built-ins: 159
+  source facts: 1
+  rule applications: 104
+Conditions:
+  C1 resolution: 105 checked, 0 failed
+  C2 well-foundedness: 264 checked, 0 failed
+  C3 justification: 264 checked, 0 failed
+  C4 coverage: 550 checked, 0 failed
+  C5 re-decision: 159 checked, 0 failed
+  C6 boundary consistency: 2 checked, 0 failed
+  C7 relevance: 368 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  collected:
+    ({
+        ?a <http://www.w3.org/2000/10/swap/list#in> (-2 -1 -0.5 -0.1 0 0.5 1 1.3 1.4 1.41 1.414 1.4142 1.4143 1.42 1.5 2) .
+        ?b <http://www.w3.org/2000/10/swap/list#in> (-2 -1 -0.5 -0.1 0 0.5 1 1.3 1.4 1.41 1.414 1.4142 1.4143 1.42 1.5 2) .
+        ?a <http://www.w3.org/2000/10/swap/math#lessThan> ?b .
+        <http://example.org/dedekind#sqrt2Cut> <http://example.org/dedekind#seedLeft> ?b .
+    } {
+        <http://example.org/dedekind#sqrt2Cut> <http://example.org/dedekind#seedLeft> ?a .
+    }) <http://www.w3.org/2000/10/swap/log#forAllIn> 1 .
+  collected:
+    ({
+        ?q <http://www.w3.org/2000/10/swap/list#in> (-2 -1 -0.5 -0.1 0 0.5 1 1.3 1.4 1.41 1.414 1.4142 1.4143 1.42 1.5 2) .
+        <http://example.org/dedekind#sqrt2Cut> <http://example.org/dedekind#seedLeft> ?q .
+    } {
+        <http://example.org/dedekind#sqrt2Cut> <http://example.org/dedekind#hasSuccessor> ?q .
+    }) <http://www.w3.org/2000/10/swap/log#forAllIn> 1 .

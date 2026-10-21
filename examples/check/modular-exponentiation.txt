@@ -1,0 +1,16 @@
+Proof: examples/proof/modular-exponentiation.n3
+Source program: examples/modular-exponentiation.n3
+checked: 235 steps, 235 verified, 0 trusted
+Step kinds:
+  built-ins: 199
+  rule applications: 36
+Conditions:
+  C1 resolution: 36 checked, 0 failed
+  C2 well-foundedness: 235 checked, 0 failed
+  C3 justification: 235 checked, 0 failed
+  C4 coverage: 274 checked, 0 failed
+  C5 re-decision: 199 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 237 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

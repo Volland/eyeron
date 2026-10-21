@@ -1,0 +1,12 @@
+@prefix : <http://example.org/tunnel-junction-wake-switch-becoming/> .
+
+:tunnelJunction :canBecome :QuantumTransferState .
+:tunnelJunction :canBecome :SubThresholdCurrentState .
+:tunnelJunction :canBecome :NegativeDifferentialResponseState .
+:tunnelJunction :canBecome :UltraLowBiasSwitchingState .
+:tunnelJunction :canBecome :LeakAlarmWakeServingState .
+:ordinaryJunction :cannotBecome :QuantumTransferState .
+:ordinaryJunction :cannotBecome :SubThresholdCurrentState .
+:ordinaryJunction :cannotBecome :UltraLowBiasSwitchingState .
+:ordinaryJunction :cannotBecome :NegativeDifferentialResponseState .
+:ordinaryJunction :cannotBecome :LeakAlarmWakeServingState .

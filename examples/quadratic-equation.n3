@@ -1,8 +1,8 @@
-# Calculating quadratic roots
+# Solving quadratic equations
 #
-# Quadratic coefficients supply cases with different discriminants. N3
-# arithmetic rules derive real or complex roots and attach explanatory and
-# numerical checks to the answers.
+# Sample equations supply their quadratic, linear, and constant coefficients.
+# N3 arithmetic rules calculate real or complex roots. Queries return the
+# roots, including the multiplicity of a repeated root, and each case's status.
 
 @base <https://eyereasoner.github.io/eye/reasoning/quadratic-equation/quadratic-equation.n3> .
 @prefix : <http://example.org/quad#> .
@@ -12,13 +12,11 @@
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# P3: Prompt → Program → Proof (Answer, Reason, Check)
 # Solve ax^2 + bx + c = 0, a ≠ 0
 # Vocabulary
 :Quadratic a rdfs:Class .
 :RealRoot a rdfs:Class .
 :ComplexRoot a rdfs:Class .
-:Check a rdfs:Class .
 
 # Properties on a quadratic instance:
 :a a rdf:Property .
@@ -27,8 +25,6 @@
 :answer a rdf:Property .
 # links a Q to root nodes (real or complex)
 :why a rdf:Property .
-# links a Q to a "reason" record
-:check a rdf:Property .
 # links a Q to check results
 :status a rdf:Property .
 
@@ -42,13 +38,6 @@
 :imag a rdf:Property .
 :multiplicity a rdf:Property .
 :val a rdf:Property .
-
-# Properties used in checks:
-:kind a rdf:Property .
-:ok a rdf:Property .
-:residual a rdf:Property .
-:residualRe a rdf:Property .
-:residualIm a rdf:Property .
 
 # Global numeric tolerance for plug-back checks
 :eps :val 0.000000001 .
@@ -155,77 +144,6 @@
         :status "complex-roots" .
 } .
 
-# Checks – plug back f(x)=ax^2+bx+c≈0
-# Real roots: |a*x^2 + b*x + c| ≤ eps
-{
-    ?q a :Quadratic ;
-        :a ?a ;
-        :b ?b ;
-        :c ?c .
-    ?q :answer ?r .
-    ?r a :RealRoot ;
-        :value ?x .
-    (?x 2) math:exponentiation ?x2 .
-    (?a ?x2) math:product ?ax2 .
-    (?b ?x) math:product ?bx .
-    (?ax2 ?bx ?c) math:sum ?f .
-    ?f math:absoluteValue ?abs .
-    :eps :val ?eps .
-    ?abs math:notGreaterThan ?eps .
-} => {
-    ?q :check [
-        a :Check ;
-        :kind "plug-in/real" ;
-        :root ?x ;
-        :residual ?abs ;
-        :ok true
-    ] .
-} .
-
-# Complex roots z = u + i*v:
-# z^2 = (u^2 - v^2) + i*(2uv)
-# Re(f) = a*(u^2 - v^2) + b*u + c
-# Im(f) = a*(2uv) + b*v
-# Both |Re(f)| and |Im(f)| ≤ eps
-{
-    ?q a :Quadratic ;
-        :a ?a ;
-        :b ?b ;
-        :c ?c .
-    ?q :answer ?z .
-    ?z a :ComplexRoot ;
-        :real ?u ;
-        :imag ?v .
-
-    (?u 2) math:exponentiation ?u2 .
-    (?v 2) math:exponentiation ?v2 .
-    (?u2 ?v2) math:difference ?u2_minus_v2 .
-    (2 ?u ?v) math:product ?two_uv .
-
-    (?a ?u2_minus_v2) math:product ?a_u2mV2 .
-    (?a ?two_uv) math:product ?a_2uv .
-    (?b ?u) math:product ?b_u .
-    (?b ?v) math:product ?b_v .
-
-    (?a_u2mV2 ?b_u ?c) math:sum ?re_f .
-    (?a_2uv ?b_v) math:sum ?im_f .
-
-    ?re_f math:absoluteValue ?re_abs .
-    ?im_f math:absoluteValue ?im_abs .
-    :eps :val ?eps .
-    ?re_abs math:notGreaterThan ?eps .
-    ?im_abs math:notGreaterThan ?eps .
-} => {
-    ?q :check [
-        a :Check ;
-        :kind "plug-in/complex" ;
-        :root [ :real ?u ; :imag ?v ] ;
-        :residualRe ?re_abs ;
-        :residualIm ?im_abs ;
-        :ok true
-    ] .
-} .
-
 # HARNESS
 # ≥5 independent quadratics to exercise all branches
 # H1: Two distinct real roots: x^2 - 3x + 2 = 0 → {1, 2}
@@ -263,3 +181,18 @@
     :a 3 ;
     :b -12 ;
     :c 9 .
+
+# Query answer
+{
+    ?Case :answer ?Answer .
+    ?Answer ?Property ?Value .
+} log:query {
+    ?Case :answer ?Answer .
+    ?Answer ?Property ?Value .
+} .
+
+{
+    ?Case :status ?Status .
+} log:query {
+    ?Case :status ?Status .
+} .

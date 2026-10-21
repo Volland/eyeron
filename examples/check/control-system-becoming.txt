@@ -1,0 +1,16 @@
+Proof: examples/proof/control-system-becoming.n3
+Source program: examples/control-system-becoming.n3
+checked: 52 steps, 52 verified, 0 trusted
+Step kinds:
+  source facts: 19
+  rule applications: 33
+Conditions:
+  C1 resolution: 52 checked, 0 failed
+  C2 well-foundedness: 52 checked, 0 failed
+  C3 justification: 52 checked, 0 failed
+  C4 coverage: 93 checked, 0 failed
+  C5 re-decision: 0 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 85 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

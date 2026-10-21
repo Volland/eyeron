@@ -15,9 +15,73 @@ fn checked_proof(source: &str) -> String {
         "the program must derive a claim"
     );
     let proof = proof_to_n3(&document.prefixes, &result);
-    let report = eyeron::proof_check_n3::check_proof_document(&document, &proof).unwrap();
+    assert!(!proof.trim().is_empty(), "every selected answer needs a proof");
+    let parsed = eyeron::proof_check_n3::N3Proof::read_document(&document, &proof).unwrap();
+    assert_eq!(
+        eyeron::proof_check::Document::claims(&parsed).len(),
+        result.derived.iter().collect::<std::collections::BTreeSet<_>>().len(),
+        "a proof must claim every selected answer",
+    );
+    let report = eyeron::proof_check::check(&parsed);
     assert!(report.valid(), "{:?}\n{proof}", report.failures);
     proof
+}
+
+#[test]
+fn identity_queries_explain_source_facts_and_backward_only_answers() {
+    let prefix = "@prefix : <urn:query:>.\n\
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.\n";
+    let proof = checked_proof(&format!("{prefix}\n\
+        :alice a :Human.\n\
+        {{ ?Who a :Human }} log:query {{ ?Who a :Human }}."));
+    assert!(proof.contains(":alice a :Human ."));
+    assert!(proof.contains("pe:fact"));
+    let proof = checked_proof(&format!("{prefix}\n\
+        :alice a :Human.\n\
+        {{ ?Who a :Mortal }} <= {{ ?Who a :Human }}.\n\
+        {{ ?Who a :Mortal }} log:query {{ ?Who a :Mortal }}."));
+    assert!(proof.contains(":alice a :Mortal ."));
+    assert!(proof.contains("pe:rule"));
+}
+
+#[test]
+fn mixed_queries_keep_source_answers_alongside_recorded_derivations() {
+    let proof = checked_proof(r#"
+        @prefix : <urn:query:>.
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+        :alice a :Human. :bob a :Human.
+        { :alice a :Human } => { :alice a :Mortal }.
+        { ?Who a :Human } log:query { ?Who a :Human }.
+        { ?Who a :Mortal } log:query { ?Who a :Mortal }.
+    "#);
+    assert!(proof.contains(":alice a :Human ."));
+    assert!(proof.contains(":bob a :Human ."));
+    assert!(proof.contains(":alice a :Mortal ."));
+}
+
+#[test]
+fn a_query_at_the_end_of_a_long_chain_has_a_complete_proof_on_a_small_stack() {
+    std::thread::Builder::new()
+        .stack_size(512 * 1024)
+        .spawn(|| {
+            let mut source = String::from(
+                "@prefix : <urn:chain:>.\n\
+                 @prefix log: <http://www.w3.org/2000/10/swap/log#>.\n\
+                 :node a :N0.\n",
+            );
+            for level in 0..10_000 {
+                source.push_str(&format!(
+                    "{{ ?Node a :N{level} }} => {{ ?Node a :N{} }}.\n", level + 1,
+                ));
+            }
+            source.push_str("{ :node a :N10000 } log:query { :node :answer 10000 }.\n");
+            let proof = checked_proof(&source);
+            assert!(proof.contains(":node a :N0"));
+            assert!(proof.contains(":node :answer 10000 ."));
+        })
+        .unwrap()
+        .join()
+        .unwrap();
 }
 
 #[test]

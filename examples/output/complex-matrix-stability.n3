@@ -1,0 +1,9 @@
+@prefix : <https://example.org/complex-matrix-stability#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:A_unstable :spectralRadius 2 .
+:A_stable :spectralRadius 1 .
+:A_damped :spectralRadius 0 .
+:A_unstable :classification :unstable .
+:A_stable :classification :stable .
+:A_damped :classification :damped .

@@ -1,8 +1,8 @@
 # Calculating triangle area with Heron's formula
 #
 # Triangle side lengths supply the input to Heron's formula. N3 arithmetic
-# rules derive the semiperimeter and area and produce checks for the sample
-# cases.
+# rules derive the semiperimeter and area. Queries return each triangle's
+# area and whether its sides form a proper, degenerate, or invalid triangle.
 
 @base <https://eyereasoner.github.io/eye/reasoning/heron-theorem/heron-theorem.n3> .
 @prefix : <http://example.org/heron#> .
@@ -12,12 +12,10 @@
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# P3: Prompt → Program → Proof (Answer, Reason, Check)
 # Heron's theorem:  A = sqrt(s(s-a)(s-b)(s-c)) with s=(a+b+c)/2
 # Vocabulary
 :Triangle a rdfs:Class .
 :Area a rdfs:Class .
-:Check a rdfs:Class .
 
 # Triangle data
 :a a rdf:Property .
@@ -25,10 +23,9 @@
 :c a rdf:Property .
 :answer a rdf:Property .
 :why a rdf:Property .
-:check a rdf:Property .
 :status a rdf:Property .
 
-# Reason data
+# Intermediate calculations
 :s a rdf:Property .
 :sMinusA a rdf:Property .
 :sMinusB a rdf:Property .
@@ -36,16 +33,6 @@
 :radicand a rdf:Property .
 :value a rdf:Property .
 
-# Check data
-:kind a rdf:Property .
-:ok a rdf:Property .
-:residual a rdf:Property .
-
-# Tolerance
-:val a rdf:Property .
-:eps :val 0.000000001 .
-
-# 1e-9
 # Common prelude: compute s, (s-a),(s-b),(s-c), radicand
 {
     ?t a :Triangle ;
@@ -98,54 +85,6 @@
     ?t :status "invalid-sides" .
 } .
 
-# Check — independent identity:
-# 16 A^2 ?=? 2a^2b^2 + 2b^2c^2 + 2c^2a^2 - a^4 - b^4 - c^4
-{
-    ?t a :Triangle ;
-        :a ?a ;
-        :b ?b ;
-        :c ?c ;
-        :answer ?ans .
-    ?ans a :Area ;
-        :value ?A .
-
-    # LHS = 16*A^2
-    (?A 2) math:exponentiation ?A2 .
-    (16 ?A2) math:product ?lhs .
-
-    # Squares and fourth powers
-    (?a 2) math:exponentiation ?a2 .
-    (?b 2) math:exponentiation ?b2 .
-    (?c 2) math:exponentiation ?c2 .
-    (?a 4) math:exponentiation ?a4 .
-    (?b 4) math:exponentiation ?b4 .
-    (?c 4) math:exponentiation ?c4 .
-
-    # 2a^2b^2 + 2b^2c^2 + 2c^2a^2
-    (2 ?a2 ?b2) math:product ?t1 .
-    (2 ?b2 ?c2) math:product ?t2 .
-    (2 ?c2 ?a2) math:product ?t3 .
-    (?t1 ?t2 ?t3) math:sum ?sum2ab2 .
-
-    # RHS = sum2ab2 - a^4 - b^4 - c^4
-    (?sum2ab2 ?a4) math:difference ?r1 .
-    (?r1 ?b4) math:difference ?r2 .
-    (?r2 ?c4) math:difference ?rhs .
-
-    # Compare within eps
-    (?lhs ?rhs) math:difference ?d .
-    ?d math:absoluteValue ?abs .
-    :eps :val ?eps .
-    ?abs math:notGreaterThan ?eps .
-} => {
-    ?t :check [
-        a :Check ;
-        :kind "heron-identity" ;
-        :residual ?abs ;
-        :ok true
-    ] .
-} .
-
 # HARNESS
 # ≥6 triangles, covering proper, degenerate, integer & decimal
 # H1: 3-4-5 right triangle → A = 6
@@ -183,3 +122,18 @@
     :a 2.5 ;
     :b 4.7 ;
     :c 5.1 .
+
+# Query answer
+{
+    ?Case :answer ?Answer .
+    ?Answer ?Property ?Value .
+} log:query {
+    ?Case :answer ?Answer .
+    ?Answer ?Property ?Value .
+} .
+
+{
+    ?Case :status ?Status .
+} log:query {
+    ?Case :status ?Status .
+} .

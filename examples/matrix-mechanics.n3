@@ -7,7 +7,6 @@
 @prefix : <http://example.org/#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix math: <http://www.w3.org/2000/10/swap/math#> .
-@prefix string: <http://www.w3.org/2000/10/swap/string#> .
 
 # Facts
 :H :a11 1 ;
@@ -204,98 +203,6 @@
     :C :nonzero "yes" .
 } .
 
-{
-    :H :spectrumOk "yes" .
-    :X :involution "yes" .
-    :C :nonzero "yes" .
-} => {
-    :model :ok "yes" ;
-        :answer "In this toy matrix-mechanics model, the Hamiltonian has two discrete energy levels and does not commute with a second observable." .
-} .
-
-# Presentation (ARC: Answer • Reason Why • Check)
-{
-    :model :answer ?txt .
-} => {
-    :s01 log:outputString "# matrix-mechanics\n\n## Source files\n\n- [N3 rules](../matrix-mechanics.n3)\n\n## Answer\n" .
-    :s02 log:outputString ?txt .
-    :s03 log:outputString "\n\n## Reason Why\n" .
-} .
-
-{
-    :H :a11 ?a11 ;
-        :a12 ?a12 ;
-        :a21 ?a21 ;
-        :a22 ?a22 .
-    ("H = [[" ?a11 "," ?a12 "],[" ?a21 "," ?a22 "]]\n") string:concatenation ?line .
-} => {
-    :s04 log:outputString ?line .
-} .
-
-{
-    :X :a11 ?a11 ;
-        :a12 ?a12 ;
-        :a21 ?a21 ;
-        :a22 ?a22 .
-    ("X = [[" ?a11 "," ?a12 "],[" ?a21 "," ?a22 "]]\n") string:concatenation ?line .
-} => {
-    :s05 log:outputString ?line .
-} .
-
-{
-    :HX :a11 ?a11 ;
-        :a12 ?a12 ;
-        :a21 ?a21 ;
-        :a22 ?a22 .
-    ("HX = [[" ?a11 "," ?a12 "],[" ?a21 "," ?a22 "]]\n") string:concatenation ?line .
-} => {
-    :s06 log:outputString ?line .
-} .
-
-{
-    :XH :a11 ?a11 ;
-        :a12 ?a12 ;
-        :a21 ?a21 ;
-        :a22 ?a22 .
-    ("XH = [[" ?a11 "," ?a12 "],[" ?a21 "," ?a22 "]]\n") string:concatenation ?line .
-} => {
-    :s07 log:outputString ?line .
-} .
-
-{
-    :C :a11 ?a11 ;
-        :a12 ?a12 ;
-        :a21 ?a21 ;
-        :a22 ?a22 .
-    ("[H,X] = [[" ?a11 "," ?a12 "],[" ?a21 "," ?a22 "]]\n") string:concatenation ?line .
-} => {
-    :s08 log:outputString ?line .
-} .
-
-{
-    :model :ok "yes" .
-} => {
-    :s09 log:outputString "\n## Check\n" .
-} .
-
-{
-    :H :spectrumOk "yes" .
-} => {
-    :s10 log:outputString "trace/determinant match energy levels: yes\n" .
-} .
-
-{
-    :X :involution "yes" .
-} => {
-    :s11 log:outputString "X^2 = I : yes\n" .
-} .
-
-{
-    :C :nonzero "yes" .
-} => {
-    :s12 log:outputString "[H,X] != 0 : yes\n" .
-} .
-
 # Checks (fail hard if the algebra is wrong)
 {
     :H :trace ?tr .
@@ -333,3 +240,14 @@
         :a21 0 ;
         :a22 0 .
 } => false .
+
+# Query answer
+{
+    :H :trace ?Trace ;
+        :det ?Determinant .
+    :C ?Entry ?Value .
+} log:query {
+    :H :trace ?Trace ;
+        :det ?Determinant .
+    :C ?Entry ?Value .
+} .

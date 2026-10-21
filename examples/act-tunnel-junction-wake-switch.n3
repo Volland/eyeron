@@ -8,8 +8,6 @@
 @prefix arc: <https://example.org/arc#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
-:000_md_title log:outputString "# act-tunnel-junction-wake-switch\n\n## Source files\n\n- [N3 rules](../act-tunnel-junction-wake-switch.n3)\n\n" .
-
 :case a arc:Case ;
     arc:question "Can a tunnel-junction wake switch trigger a low-bias leak alarm in a regime where a conventional PN junction cannot?" .
 
@@ -141,109 +139,15 @@
     ?J :cannot :ServeLeakAlarmWakeCircuit .
 } .
 
-# Checks
-# Positive checks for the tunnel junction.
+# Query answer
 {
-    :tunnelJunction :can :QuantumBarrierTransfer .
-} => {
-    :case :checkC1 :Passed .
+    ?Subject :can ?Value .
+} log:query {
+    ?Subject :can ?Value .
 } .
 
 {
-    :tunnelJunction :transportMode :TunnelingDominant .
-} => {
-    :case :checkC2 :Passed .
-} .
-
-{
-    :tunnelJunction :can :SubThresholdCurrent .
-} => {
-    :case :checkC3 :Passed .
-} .
-
-{
-    :tunnelJunction :can :NegativeDifferentialResponse .
-} => {
-    :case :checkC4 :Passed .
-} .
-
-{
-    :tunnelJunction :can :UltraLowBiasSwitching .
-} => {
-    :case :checkC5 :Passed .
-} .
-
-{
-    :tunnelJunction :can :ServeLeakAlarmWakeCircuit .
-} => {
-    :case :checkC6 :Passed .
-} .
-
-# Negative checks for the conventional junction.
-{
-    :ordinaryJunction :cannot :QuantumBarrierTransfer .
-} => {
-    :case :checkC7 :Passed .
-} .
-
-{
-    :ordinaryJunction :cannot :SubThresholdCurrent .
-} => {
-    :case :checkC8 :Passed .
-} .
-
-{
-    :ordinaryJunction :cannot :NegativeDifferentialResponse .
-} => {
-    :case :checkC9 :Passed .
-} .
-
-{
-    :ordinaryJunction :cannot :UltraLowBiasSwitching .
-} => {
-    :case :checkC10 :Passed .
-} .
-
-{
-    :ordinaryJunction :cannot :ServeLeakAlarmWakeCircuit .
-} => {
-    :case :checkC11 :Passed .
-} .
-
-# ARC-style output
-{
-    :case :checkC1 :Passed .
-    :case :checkC2 :Passed .
-    :case :checkC3 :Passed .
-    :case :checkC4 :Passed .
-    :case :checkC5 :Passed .
-    :case :checkC6 :Passed .
-    :case :checkC7 :Passed .
-    :case :checkC8 :Passed .
-    :case :checkC9 :Passed .
-    :case :checkC10 :Passed .
-    :case :checkC11 :Passed .
-} => {
-    :out log:outputString """ACT tunnel-junction wake switch
-
-## Answer
-YES for the tunnel junction.
-NO for the conventional low-bias PN junction in the same wake-switch regime.
-
-## Reason Why
-The tunnel junction is modeled as a heavily doped narrow PN junction with overlapping states, so quantum barrier transfer is possible. That makes sub-threshold current possible in the low-forward-bias regime, which in turn makes ultra-low-bias switching possible for the wake circuit. Because the device is also scanned through a peak-to-valley window, a negative differential response is possible as well. By contrast, the conventional junction lacks the structural conditions for the same transfer mode, so it cannot deliver the same low-bias switching task in this case.
-
-## Check
-C1  OK - the tunnel junction can support quantum barrier transfer
-C2  OK - the tunnel junction is classified as tunneling-dominant
-C3  OK - the tunnel junction can deliver sub-threshold current
-C4  OK - the tunnel junction can show negative differential response
-C5  OK - the tunnel junction can perform ultra-low-bias switching
-C6  OK - the tunnel junction can serve the leak-alarm wake circuit
-C7  OK - the conventional junction cannot support the same quantum barrier transfer
-C8  OK - the conventional junction cannot deliver sub-threshold current in this regime
-C9  OK - the conventional junction cannot show the tunnel-style negative differential response
-C10 OK - the conventional junction cannot perform ultra-low-bias switching here
-C11 OK - the conventional junction cannot serve the leak-alarm wake circuit in this case
-""" .
+    ?Subject :cannot ?Value .
+} log:query {
+    ?Subject :cannot ?Value .
 } .

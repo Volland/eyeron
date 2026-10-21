@@ -1,0 +1,12 @@
+@prefix : <http://example.org/act/tunnel-junction/> .
+
+:tunnelJunction :can :QuantumBarrierTransfer .
+:tunnelJunction :can :SubThresholdCurrent .
+:tunnelJunction :can :NegativeDifferentialResponse .
+:tunnelJunction :can :UltraLowBiasSwitching .
+:tunnelJunction :can :ServeLeakAlarmWakeCircuit .
+:ordinaryJunction :cannot :QuantumBarrierTransfer .
+:ordinaryJunction :cannot :SubThresholdCurrent .
+:ordinaryJunction :cannot :UltraLowBiasSwitching .
+:ordinaryJunction :cannot :NegativeDifferentialResponse .
+:ordinaryJunction :cannot :ServeLeakAlarmWakeCircuit .

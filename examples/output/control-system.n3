@@ -1,0 +1,5 @@
+@prefix : <https://example.org/control-system#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:actuator2 :control1 26.08 .
+:actuator1 :control1 39.27346198678276 .

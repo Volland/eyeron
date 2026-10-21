@@ -1,0 +1,17 @@
+Proof: examples/proof/rdf-message-microgrid.n3
+Source program: examples/rdf-message-microgrid.n3, examples/input/rdf-message-microgrid.trig
+checked: 67 steps, 67 verified, 0 trusted
+Step kinds:
+  built-ins: 9
+  source facts: 29
+  rule applications: 29
+Conditions:
+  C1 resolution: 58 checked, 0 failed
+  C2 well-foundedness: 67 checked, 0 failed
+  C3 justification: 67 checked, 0 failed
+  C4 coverage: 243 checked, 0 failed
+  C5 re-decision: 9 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 96 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

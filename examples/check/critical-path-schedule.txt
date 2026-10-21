@@ -1,0 +1,72 @@
+Proof: examples/proof/critical-path-schedule.n3
+Source program: examples/critical-path-schedule.n3
+checked with obligations: 119 steps, 106 verified, 13 trusted
+Step kinds:
+  built-ins: 65
+  source facts: 17
+  rule applications: 37
+Conditions:
+  C1 resolution: 54 checked, 0 failed
+  C2 well-foundedness: 119 checked, 0 failed
+  C3 justification: 119 checked, 0 failed
+  C4 coverage: 163 checked, 0 failed
+  C5 re-decision: 65 checked, 0 failed
+  C6 boundary consistency: 13 checked, 0 failed
+  C7 relevance: 149 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  collected:
+    (?candidate {
+        <http://example/requirements> <http://example/durationPath> (?p ?candidate) .
+    } (2)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/architecture> <http://example/durationPath> (?p ?candidate) .
+    } (5)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/api_design> <http://example/durationPath> (?p ?candidate) .
+    } (4)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/database> <http://example/durationPath> (?p ?candidate) .
+    } (9)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/backend> <http://example/durationPath> (?p ?candidate) .
+    } (10 15)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/frontend> <http://example/durationPath> (?p ?candidate) .
+    } (9)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/auth> <http://example/durationPath> (?p ?candidate) .
+    } (8)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/integration> <http://example/durationPath> (?p ?candidate) .
+    } (14 19 13 12)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/security_review> <http://example/durationPath> (?p ?candidate) .
+    } (17 22 16 15)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/load_test> <http://example/durationPath> (?p ?candidate) .
+    } (16 21 15 14)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        <http://example/launch> <http://example/durationPath> (?p ?candidate) .
+    } (18 23 17 16 17 22 16 15)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?candidate {
+        ?any <http://example/finish> ?candidate .
+    } (2 5 4 9 15 9 8 19 22 21 23)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  absent:
+    {
+        <http://example.org/a> <http://example.org/b> <http://example.org/c> .
+    } <http://www.w3.org/2000/10/swap/log#notIncludes> {
+        <http://example/requirements> <http://example/dependsOn> ?__backward_6_0_50e63a02681fd882__any .
+    } .

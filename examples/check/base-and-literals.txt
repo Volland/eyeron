@@ -1,0 +1,17 @@
+Proof: examples/proof/base-and-literals.n3
+Source program: examples/base-and-literals.n3
+checked: 8 steps, 8 verified, 0 trusted
+Step kinds:
+  built-ins: 5
+  source facts: 2
+  rule applications: 1
+Conditions:
+  C1 resolution: 3 checked, 0 failed
+  C2 well-foundedness: 8 checked, 0 failed
+  C3 justification: 8 checked, 0 failed
+  C4 coverage: 8 checked, 0 failed
+  C5 re-decision: 5 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 9 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

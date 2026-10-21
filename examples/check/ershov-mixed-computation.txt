@@ -1,0 +1,39 @@
+Proof: examples/proof/ershov-mixed-computation.n3
+Source program: examples/ershov-mixed-computation.n3
+checked with obligations: 8 steps, 7 verified, 1 trusted
+Step kinds:
+  built-ins: 3
+  source facts: 3
+  rule applications: 2
+Conditions:
+  C1 resolution: 5 checked, 0 failed
+  C2 well-foundedness: 8 checked, 0 failed
+  C3 justification: 8 checked, 0 failed
+  C4 coverage: 9 checked, 0 failed
+  C5 re-decision: 3 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 10 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  impure built-in:
+    {
+        {
+            ?order <http://example.org/mix#subtotal> ?subtotal .
+            (?subtotal 0.90) <http://www.w3.org/2000/10/swap/math#product> ?discounted .
+            (?discounted 5.00) <http://www.w3.org/2000/10/swap/math#sum> ?final .
+        } => {
+            ?order <http://example.org/mix#finalPrice> ?final .
+        } .
+        <http://example.org/mix#futureOrder> <http://example.org/mix#subtotal> 100.00 .
+    } <http://www.w3.org/2000/10/swap/log#conclusion> {
+        {
+            ?order <http://example.org/mix#subtotal> ?subtotal .
+            (?subtotal 0.90) <http://www.w3.org/2000/10/swap/math#product> ?discounted .
+            (?discounted 5.00) <http://www.w3.org/2000/10/swap/math#sum> ?final .
+        } => {
+            ?order <http://example.org/mix#finalPrice> ?final .
+        } .
+        <http://example.org/mix#futureOrder> <http://example.org/mix#subtotal> 100.00 .
+        <http://example.org/mix#futureOrder> <http://example.org/mix#finalPrice> "95"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+    } .

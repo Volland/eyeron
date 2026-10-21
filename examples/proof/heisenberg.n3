@@ -1,6 +1,7 @@
 @prefix : <http://example.org/#> .
 @prefix math: <http://www.w3.org/2000/10/swap/math#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 :psi :prodXP 0.5000000000000001 .
 :psi :prodXSz 0.3535533905932738 .
@@ -8,6 +9,14 @@
 :psi :xpStatus "saturates" .
 :psi :sxszStatus "saturates" .
 :psi :xszStatus "satisfied" .
+:psi a :QuantumState .
+:psi :deltaX "0.7071067811865476"^^xsd:double .
+:psi :deltaP "0.7071067811865476"^^xsd:double .
+:psi :deltaSx "0.5"^^xsd:double .
+:psi :deltaSz "0.5"^^xsd:double .
+:psi :boundXP "0.5"^^xsd:double .
+:psi :boundSxSz "0.25"^^xsd:double .
+:psi :boundXSz "0.0"^^xsd:double .
 
 { :psi :prodXP 0.5000000000000001 . }
   pe:rule 1;
@@ -156,3 +165,6 @@
 
 { 0.3535533905932738 math:greaterThan 1e-12 . }
   pe:builtin math:greaterThan.
+
+{ :psi a :QuantumState . }
+  pe:fact "heisenberg.n3".

@@ -1,0 +1,17 @@
+Proof: examples/proof/complex-matrix-stability-worlds.n3
+Source program: examples/complex-matrix-stability-worlds.n3
+checked: 195 steps, 195 verified, 0 trusted
+Step kinds:
+  built-ins: 109
+  source facts: 15
+  rule applications: 71
+Conditions:
+  C1 resolution: 86 checked, 0 failed
+  C2 well-foundedness: 195 checked, 0 failed
+  C3 justification: 195 checked, 0 failed
+  C4 coverage: 377 checked, 0 failed
+  C5 re-decision: 109 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 208 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 364 checked, 0 failed

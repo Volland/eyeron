@@ -1,0 +1,17 @@
+Proof: examples/proof/e-computable-real.n3
+Source program: examples/e-computable-real.n3
+checked: 462 steps, 462 verified, 0 trusted
+Step kinds:
+  built-ins: 254
+  source facts: 6
+  rule applications: 202
+Conditions:
+  C1 resolution: 208 checked, 0 failed
+  C2 well-foundedness: 462 checked, 0 failed
+  C3 justification: 462 checked, 0 failed
+  C4 coverage: 1348 checked, 0 failed
+  C5 re-decision: 254 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 552 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 1348 checked, 0 failed

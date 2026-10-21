@@ -1,0 +1,57 @@
+Proof: examples/proof/shortest-path.n3
+Source program: examples/shortest-path.n3
+checked with obligations: 40 steps, 35 verified, 5 trusted
+Step kinds:
+  built-ins: 32
+  rule applications: 8
+Conditions:
+  C1 resolution: 8 checked, 0 failed
+  C2 well-foundedness: 40 checked, 0 failed
+  C3 justification: 40 checked, 0 failed
+  C4 coverage: 47 checked, 0 failed
+  C5 re-decision: 32 checked, 0 failed
+  C6 boundary consistency: 5 checked, 0 failed
+  C7 relevance: 42 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  collected:
+    (?cost {
+        (<http://example/a> <http://example/d>) <http://example/shortest> (?path ?cost) .
+    } (5 7 9)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?SCOPE .
+  collected:
+    (?__backward_1_2_680e1ac220b6c25a__L4 {
+        ?__backward_1_2_680e1ac220b6c25a__L4 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_1_2_680e1ac220b6c25a__NewCost ?__backward_1_2_680e1ac220b6c25a__L5) .
+        ?__backward_1_2_680e1ac220b6c25a__L5 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_1_2_680e1ac220b6c25a__Neighbor ?__backward_1_2_680e1ac220b6c25a__L6) .
+        ?__backward_1_2_680e1ac220b6c25a__L6 <http://www.w3.org/2000/10/swap/list#firstRest> (<http://example/a> ()) .
+        (<http://example/a> ?__backward_1_2_680e1ac220b6c25a__Neighbor) <http://example/edge> ?__backward_1_2_680e1ac220b6c25a__Weight .
+        () <http://www.w3.org/2000/10/swap/list#notMember> ?__backward_1_2_680e1ac220b6c25a__Neighbor .
+        (0 ?__backward_1_2_680e1ac220b6c25a__Weight) <http://www.w3.org/2000/10/swap/math#sum> ?__backward_1_2_680e1ac220b6c25a__NewCost .
+    } ((2 <http://example/b> <http://example/a>) (5 <http://example/c> <http://example/a>))) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?__backward_1_2_680e1ac220b6c25a__SCOPE .
+  collected:
+    (?__backward_2_2_8a9ea185f1fbece4__L4 {
+        ?__backward_2_2_8a9ea185f1fbece4__L4 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_2_2_8a9ea185f1fbece4__NewCost ?__backward_2_2_8a9ea185f1fbece4__L5) .
+        ?__backward_2_2_8a9ea185f1fbece4__L5 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_2_2_8a9ea185f1fbece4__Neighbor ?__backward_2_2_8a9ea185f1fbece4__L6) .
+        ?__backward_2_2_8a9ea185f1fbece4__L6 <http://www.w3.org/2000/10/swap/list#firstRest> (<http://example/b> (<http://example/a>)) .
+        (<http://example/b> ?__backward_2_2_8a9ea185f1fbece4__Neighbor) <http://example/edge> ?__backward_2_2_8a9ea185f1fbece4__Weight .
+        (<http://example/a>) <http://www.w3.org/2000/10/swap/list#notMember> ?__backward_2_2_8a9ea185f1fbece4__Neighbor .
+        (2 ?__backward_2_2_8a9ea185f1fbece4__Weight) <http://www.w3.org/2000/10/swap/math#sum> ?__backward_2_2_8a9ea185f1fbece4__NewCost .
+    } ((3 <http://example/c> <http://example/b> <http://example/a>) (9 <http://example/d> <http://example/b> <http://example/a>))) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?__backward_2_2_8a9ea185f1fbece4__SCOPE .
+  collected:
+    (?__backward_3_2_4f430369f91cabc2__L4 {
+        ?__backward_3_2_4f430369f91cabc2__L4 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_3_2_4f430369f91cabc2__NewCost ?__backward_3_2_4f430369f91cabc2__L5) .
+        ?__backward_3_2_4f430369f91cabc2__L5 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_3_2_4f430369f91cabc2__Neighbor ?__backward_3_2_4f430369f91cabc2__L6) .
+        ?__backward_3_2_4f430369f91cabc2__L6 <http://www.w3.org/2000/10/swap/list#firstRest> (<http://example/c> (<http://example/b> <http://example/a>)) .
+        (<http://example/c> ?__backward_3_2_4f430369f91cabc2__Neighbor) <http://example/edge> ?__backward_3_2_4f430369f91cabc2__Weight .
+        (<http://example/b> <http://example/a>) <http://www.w3.org/2000/10/swap/list#notMember> ?__backward_3_2_4f430369f91cabc2__Neighbor .
+        (3 ?__backward_3_2_4f430369f91cabc2__Weight) <http://www.w3.org/2000/10/swap/math#sum> ?__backward_3_2_4f430369f91cabc2__NewCost .
+    } ((5 <http://example/d> <http://example/c> <http://example/b> <http://example/a>))) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?__backward_3_2_4f430369f91cabc2__SCOPE .
+  collected:
+    (?__backward_4_2_5eabfb7ac14cf28a__L4 {
+        ?__backward_4_2_5eabfb7ac14cf28a__L4 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_4_2_5eabfb7ac14cf28a__NewCost ?__backward_4_2_5eabfb7ac14cf28a__L5) .
+        ?__backward_4_2_5eabfb7ac14cf28a__L5 <http://www.w3.org/2000/10/swap/list#firstRest> (?__backward_4_2_5eabfb7ac14cf28a__Neighbor ?__backward_4_2_5eabfb7ac14cf28a__L6) .
+        ?__backward_4_2_5eabfb7ac14cf28a__L6 <http://www.w3.org/2000/10/swap/list#firstRest> (<http://example/c> (<http://example/a>)) .
+        (<http://example/c> ?__backward_4_2_5eabfb7ac14cf28a__Neighbor) <http://example/edge> ?__backward_4_2_5eabfb7ac14cf28a__Weight .
+        (<http://example/c> <http://example/b> <http://example/a>) <http://www.w3.org/2000/10/swap/list#notMember> ?__backward_4_2_5eabfb7ac14cf28a__Neighbor .
+        (5 ?__backward_4_2_5eabfb7ac14cf28a__Weight) <http://www.w3.org/2000/10/swap/math#sum> ?__backward_4_2_5eabfb7ac14cf28a__NewCost .
+    } ((7 <http://example/d> <http://example/c> <http://example/a>))) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?__backward_4_2_5eabfb7ac14cf28a__SCOPE .

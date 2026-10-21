@@ -1,8 +1,8 @@
 # Reading statement annotations
 #
 # A statement is associated with its author and recording date. The example
-# combines N3 facts with the companion RDF input to show how annotation
-# evidence can be represented and reported.
+# combines N3 facts with companion RDF input. A query returns the statement
+# and its annotation metadata as N3.
 
 @prefix : <https://eyereasoner.github.io/eyeling/examples/annotation#> .
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
@@ -16,10 +16,13 @@
 :t :statedBy :bob .
 :t :recorded "2021-07-07"^^xsd:date .
 
-# Markdown rendering via log:outputString.
-:__md_output :text "# annotation\n\n## Source files\n\n- [N3 rules](../annotation.n3)\n- [Input TriG](../input/annotation.trig)\n\nRDF 1.2 annotation evidence is loaded from the TriG sidecar and represented as ordinary facts.\n\n## Answer\nYES — the annotated statement says `:a :name \"Alice\"` and gives that statement the identifier `:t`.\n\n## Reason Why\nThe input evidence contains the statement that Alice has the name \"Alice\" and records metadata for the named statement `:t`. In RDF compatibility mode, the named graph form is represented with `log:nameOf`, so `:t` names the statement while `:statedBy` and `:recorded` keep its provenance metadata.\n\n## Check\nC1 OK - the statement `:a :name \"Alice\"` is present\nC2 OK - `:t` names the annotated statement\nC3 OK - the statement is attributed to `:bob`\nC4 OK - the statement is recorded as `2021-07-07`\nC5 OK - the RDF/TriG input sidecar is linked as source evidence\n" .
+# Query answer
 {
-    :__md_output :text ?text
+    :t log:nameOf ?Statement ;
+        :statedBy ?Author ;
+        :recorded ?Date .
 } log:query {
-    :__md_output log:outputString ?text
+    :t log:nameOf ?Statement ;
+        :statedBy ?Author ;
+        :recorded ?Date .
 } .

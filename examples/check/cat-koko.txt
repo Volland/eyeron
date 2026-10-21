@@ -1,0 +1,17 @@
+Proof: examples/proof/cat-koko.n3
+Source program: examples/cat-koko.n3
+checked: 7 steps, 7 verified, 0 trusted
+Step kinds:
+  built-ins: 1
+  source facts: 1
+  rule applications: 5
+Conditions:
+  C1 resolution: 6 checked, 0 failed
+  C2 well-foundedness: 7 checked, 0 failed
+  C3 justification: 7 checked, 0 failed
+  C4 coverage: 14 checked, 0 failed
+  C5 re-decision: 1 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 12 checked, 0 failed
+  C8 witness integrity: 2 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

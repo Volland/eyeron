@@ -1,0 +1,16 @@
+Proof: examples/proof/transcendental-names-and-families.n3
+Source program: examples/transcendental-names-and-families.n3
+checked: 205 steps, 205 verified, 0 trusted
+Step kinds:
+  source facts: 59
+  rule applications: 146
+Conditions:
+  C1 resolution: 205 checked, 0 failed
+  C2 well-foundedness: 205 checked, 0 failed
+  C3 justification: 205 checked, 0 failed
+  C4 coverage: 498 checked, 0 failed
+  C5 re-decision: 0 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 321 checked, 0 failed
+  C8 witness integrity: 81 checked, 0 failed
+  C9 query isolation: 498 checked, 0 failed

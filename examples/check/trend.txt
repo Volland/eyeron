@@ -1,0 +1,17 @@
+Proof: examples/proof/trend.n3
+Source program: examples/trend.n3
+checked: 38 steps, 38 verified, 0 trusted
+Step kinds:
+  built-ins: 13
+  source facts: 14
+  rule applications: 11
+Conditions:
+  C1 resolution: 25 checked, 0 failed
+  C2 well-foundedness: 38 checked, 0 failed
+  C3 justification: 38 checked, 0 failed
+  C4 coverage: 120 checked, 0 failed
+  C5 re-decision: 13 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 42 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 116 checked, 0 failed

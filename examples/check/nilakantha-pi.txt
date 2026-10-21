@@ -1,0 +1,16 @@
+Proof: examples/proof/nilakantha-pi.n3
+Source program: examples/nilakantha-pi.n3
+checked: 134 steps, 134 verified, 0 trusted
+Step kinds:
+  built-ins: 104
+  rule applications: 30
+Conditions:
+  C1 resolution: 30 checked, 0 failed
+  C2 well-foundedness: 134 checked, 0 failed
+  C3 justification: 134 checked, 0 failed
+  C4 coverage: 228 checked, 0 failed
+  C5 re-decision: 104 checked, 0 failed
+  C6 boundary consistency: 0 checked, 0 failed
+  C7 relevance: 137 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 0 checked, 0 failed

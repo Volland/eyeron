@@ -1,0 +1,9 @@
+@prefix : <http://example.org/act-gravity/> .
+
+:run :can :SupportMediatorOnlyEntanglementWitness .
+:contrastRun :cannot :SupportMediatorOnlyEntanglementWitness .
+:classicalGravityMediator :cannot :MediateEntanglementUnderWitnessConditions .
+:contrastRun :cannot :SupportMediatorNonClassicalConclusion .
+:run :supportsConclusion :MediatorNonClassical .
+:run :supportsConclusion :GravityMediatorNonClassical .
+:run :rulesOut :PurelyClassicalMediatorModel .

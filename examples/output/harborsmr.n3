@@ -1,0 +1,4 @@
+@prefix : <https://example.org/insight/harborsmr/> .
+
+:decision :target <https://example.org/insight/harborsmr> .
+:decision :outcome "Allowed" .

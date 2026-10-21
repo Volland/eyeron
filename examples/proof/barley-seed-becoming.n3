@@ -1,5 +1,4 @@
 @prefix : <http://example.org/barley-seed-becoming/> .
-@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix pe: <https://eyereasoner.github.io/pe#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
@@ -8,7 +7,6 @@
 :coatlessGenome :canBecome :AccuratelyCopiedGenome .
 :staticGenome :canBecome :AccuratelyCopiedGenome .
 :analogGenome :cannotBecome :AccuratelyCopiedGenome .
-:case :checkB1 :Passed .
 :mainLine :canBecome :AccuratelyReproducedNextGeneration .
 :coatlessLine :canBecome :AccuratelyReproducedNextGeneration .
 :staticLine :canBecome :AccuratelyReproducedNextGeneration .
@@ -40,29 +38,14 @@
 :staticSeed :canBecome :ProtectedDormantPhase .
 :staticLine :canBecome :LifeCycleClosure .
 :staticLine :cannotBecome :AdaptiveLineage .
-:case :checkB2 :Passed .
-:case :checkB6 :Passed .
-:case :checkB4 :Passed .
-:case :checkB5 :Passed .
-:case :checkB3 :Passed .
-:case :checkB7 :Passed .
 :mainLine a :EvolvableBecoming .
-:case :checkB8 :Passed .
-:case :checkB9 :Passed .
-:case :checkB11 :Passed .
 :analogLine :cannotBecome :EvolvableBecoming .
 :fragileLine :cannotBecome :AccuratelyReproducedNextGeneration .
 :coatlessLine :cannotBecome :LifeCycleClosure .
-:case :checkB14 :Passed .
 :staticLine :cannotBecome :AdaptivelyPersistentLineage .
-:case :checkB10 :Passed .
-:case :checkB12 :Passed .
 :fragileLine :cannotBecome :EvolvableBecoming .
-:case :checkB13 :Passed .
 :coatlessLine :cannotBecome :EvolvableBecoming .
 :staticLine :cannotBecome :EvolvableBecoming .
-:case :checkB15 :Passed .
-:out log:outputString "Barley seed lineage — becoming\n\n## Answer\nYES for the viable barley lineage.\nNO for the contrast lineages when digital heredity, repair, protected dormancy, or heritable variation are missing.\n\n## Reason Why\nThe main lineage can be read as a becoming: a protected dormant seed can germinate, an adult plant can become a next seed stage, and the lineage can therefore become a self-renewing cycle. Because its hereditary information is digitally instantiated and repair is available, it can also become an accurately reproduced next generation under no-design laws. And because heritable variation is present under a matching selection environment, it can become an adaptively persistent lineage. The contrast lineages mark blocked becomings: non-digital heredity blocks accurate copying, lack of repair blocks reliable renewal, lack of dormancy protection blocks closure through the seed phase, and lack of heritable variation blocks adaptive becoming.\n\n## Check\nB1  OK - no-design laws are assumed\nB2  OK - the viable genome can become accurately copied\nB3  OK - the viable seed can become a protected dormant phase\nB4  OK - the viable seed can become a germinating stage\nB5  OK - the viable adult can become a next dormant seed stage\nB6  OK - the viable lineage can become an accurately reproduced next generation\nB7  OK - the viable lineage can become a closed life cycle\nB8  OK - the viable lineage can become a novel variant lineage\nB9  OK - the viable lineage can become adaptively persistent\nB10 OK - the viable lineage is an evolvable becoming\nB11 OK - the non-digital lineage cannot become an accurately reproduced next generation\nB12 OK - the repair-deficient lineage cannot become an accurately reproduced next generation\nB13 OK - the coatless lineage cannot become a closed life cycle\nB14 OK - the static lineage cannot become an adaptive lineage\nB15 OK - the static lineage cannot become an evolvable becoming\n" .
 
 { :mainGenome :canBecome :AccuratelyCopiedGenome . }
   pe:rule 1;
@@ -157,10 +140,6 @@
 
 { :analogRegister a :NonDigitalInformationMedium . }
   pe:fact "barley-seed-becoming.n3".
-
-{ :case :checkB1 :Passed . }
-  pe:rule 21;
-  pe:uses { :world :obeys :NoDesignLaws . }.
 
 { :mainLine :canBecome :AccuratelyReproducedNextGeneration . }
   pe:rule 5;
@@ -776,48 +755,12 @@
 { :staticLine :variationStatus :None . }
   pe:fact "barley-seed-becoming.n3".
 
-{ :case :checkB2 :Passed . }
-  pe:rule 22;
-  pe:uses { :mainGenome :canBecome :AccuratelyCopiedGenome . }.
-
-{ :case :checkB6 :Passed . }
-  pe:rule 26;
-  pe:uses { :mainLine :canBecome :AccuratelyReproducedNextGeneration . }.
-
-{ :case :checkB4 :Passed . }
-  pe:rule 24;
-  pe:uses { :mainSeed :canBecome :GerminatingStage . }.
-
-{ :case :checkB5 :Passed . }
-  pe:rule 25;
-  pe:uses { :mainAdult :canBecome :NextDormantSeedStage . }.
-
-{ :case :checkB3 :Passed . }
-  pe:rule 23;
-  pe:uses { :mainSeed :canBecome :ProtectedDormantPhase . }.
-
-{ :case :checkB7 :Passed . }
-  pe:rule 27;
-  pe:uses { :mainLine :canBecome :LifeCycleClosure . }.
-
 { :mainLine a :EvolvableBecoming . }
   pe:rule 9;
   pe:binding [ pe:var "Line"; pe:value :mainLine ];
   pe:uses
     { :mainLine :canBecome :LifeCycleClosure . },
     { :mainLine :canBecome :AdaptivelyPersistentLineage . }.
-
-{ :case :checkB8 :Passed . }
-  pe:rule 28;
-  pe:uses { :mainLine :canBecome :NovelVariantLineage . }.
-
-{ :case :checkB9 :Passed . }
-  pe:rule 29;
-  pe:uses { :mainLine :canBecome :AdaptivelyPersistentLineage . }.
-
-{ :case :checkB11 :Passed . }
-  pe:rule 31;
-  pe:uses { :analogLine :cannotBecome :AccuratelyReproducedNextGeneration . }.
 
 { :analogLine :cannotBecome :EvolvableBecoming . }
   pe:rule 18;
@@ -834,31 +777,15 @@
   pe:binding [ pe:var "Line"; pe:value :coatlessLine ];
   pe:uses { :coatlessLine :cannotBecome :ProtectedDormantPhase . }.
 
-{ :case :checkB14 :Passed . }
-  pe:rule 34;
-  pe:uses { :staticLine :cannotBecome :AdaptiveLineage . }.
-
 { :staticLine :cannotBecome :AdaptivelyPersistentLineage . }
   pe:rule 17;
   pe:binding [ pe:var "Line"; pe:value :staticLine ];
   pe:uses { :staticLine :cannotBecome :AdaptiveLineage . }.
 
-{ :case :checkB10 :Passed . }
-  pe:rule 30;
-  pe:uses { :mainLine a :EvolvableBecoming . }.
-
-{ :case :checkB12 :Passed . }
-  pe:rule 32;
-  pe:uses { :fragileLine :cannotBecome :AccuratelyReproducedNextGeneration . }.
-
 { :fragileLine :cannotBecome :EvolvableBecoming . }
   pe:rule 18;
   pe:binding [ pe:var "Line"; pe:value :fragileLine ];
   pe:uses { :fragileLine :cannotBecome :AccuratelyReproducedNextGeneration . }.
-
-{ :case :checkB13 :Passed . }
-  pe:rule 33;
-  pe:uses { :coatlessLine :cannotBecome :LifeCycleClosure . }.
 
 { :coatlessLine :cannotBecome :EvolvableBecoming . }
   pe:rule 20;
@@ -869,26 +796,3 @@
   pe:rule 19;
   pe:binding [ pe:var "Line"; pe:value :staticLine ];
   pe:uses { :staticLine :cannotBecome :AdaptivelyPersistentLineage . }.
-
-{ :case :checkB15 :Passed . }
-  pe:rule 35;
-  pe:uses { :staticLine :cannotBecome :EvolvableBecoming . }.
-
-{ :out log:outputString "Barley seed lineage — becoming\n\n## Answer\nYES for the viable barley lineage.\nNO for the contrast lineages when digital heredity, repair, protected dormancy, or heritable variation are missing.\n\n## Reason Why\nThe main lineage can be read as a becoming: a protected dormant seed can germinate, an adult plant can become a next seed stage, and the lineage can therefore become a self-renewing cycle. Because its hereditary information is digitally instantiated and repair is available, it can also become an accurately reproduced next generation under no-design laws. And because heritable variation is present under a matching selection environment, it can become an adaptively persistent lineage. The contrast lineages mark blocked becomings: non-digital heredity blocks accurate copying, lack of repair blocks reliable renewal, lack of dormancy protection blocks closure through the seed phase, and lack of heritable variation blocks adaptive becoming.\n\n## Check\nB1  OK - no-design laws are assumed\nB2  OK - the viable genome can become accurately copied\nB3  OK - the viable seed can become a protected dormant phase\nB4  OK - the viable seed can become a germinating stage\nB5  OK - the viable adult can become a next dormant seed stage\nB6  OK - the viable lineage can become an accurately reproduced next generation\nB7  OK - the viable lineage can become a closed life cycle\nB8  OK - the viable lineage can become a novel variant lineage\nB9  OK - the viable lineage can become adaptively persistent\nB10 OK - the viable lineage is an evolvable becoming\nB11 OK - the non-digital lineage cannot become an accurately reproduced next generation\nB12 OK - the repair-deficient lineage cannot become an accurately reproduced next generation\nB13 OK - the coatless lineage cannot become a closed life cycle\nB14 OK - the static lineage cannot become an adaptive lineage\nB15 OK - the static lineage cannot become an evolvable becoming\n" . }
-  pe:rule 36;
-  pe:uses
-    { :case :checkB1 :Passed . },
-    { :case :checkB2 :Passed . },
-    { :case :checkB3 :Passed . },
-    { :case :checkB4 :Passed . },
-    { :case :checkB5 :Passed . },
-    { :case :checkB6 :Passed . },
-    { :case :checkB7 :Passed . },
-    { :case :checkB8 :Passed . },
-    { :case :checkB9 :Passed . },
-    { :case :checkB10 :Passed . },
-    { :case :checkB11 :Passed . },
-    { :case :checkB12 :Passed . },
-    { :case :checkB13 :Passed . },
-    { :case :checkB14 :Passed . },
-    { :case :checkB15 :Passed . }.

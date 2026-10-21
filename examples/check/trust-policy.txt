@@ -1,0 +1,48 @@
+Proof: examples/proof/trust-policy.n3
+Source program: examples/trust-policy.n3
+checked with obligations: 28 steps, 23 verified, 5 trusted
+Step kinds:
+  built-ins: 5
+  source facts: 12
+  rule applications: 11
+Conditions:
+  C1 resolution: 23 checked, 0 failed
+  C2 well-foundedness: 28 checked, 0 failed
+  C3 justification: 28 checked, 0 failed
+  C4 coverage: 37 checked, 0 failed
+  C5 re-decision: 5 checked, 0 failed
+  C6 boundary consistency: 5 checked, 0 failed
+  C7 relevance: 33 checked, 0 failed
+  C8 witness integrity: 0 checked, 0 failed
+  C9 query isolation: 37 checked, 0 failed
+Trust obligations (accepted without verifying their truth):
+  absent:
+    {
+        <http://example.org/a> <http://example.org/b> <http://example.org/c> .
+    } <http://www.w3.org/2000/10/swap/log#notIncludes> {
+        <http://example.org/policy#dept_head> <http://example.org/policy#revoked> true .
+    } .
+  absent:
+    {
+        <http://example.org/a> <http://example.org/b> <http://example.org/c> .
+    } <http://www.w3.org/2000/10/swap/log#notIncludes> {
+        <http://example.org/policy#mgr_alice> <http://example.org/policy#revoked> true .
+    } .
+  absent:
+    {
+        <http://example.org/a> <http://example.org/b> <http://example.org/c> .
+    } <http://www.w3.org/2000/10/swap/log#notIncludes> {
+        <http://example.org/policy#alice> <http://example.org/policy#revoked> true .
+    } .
+  absent:
+    {
+        <http://example.org/a> <http://example.org/b> <http://example.org/c> .
+    } <http://www.w3.org/2000/10/swap/log#notIncludes> {
+        <http://example.org/policy#bob> <http://example.org/policy#allow> <http://example.org/policy#read_secret_data> .
+    } .
+  absent:
+    {
+        <http://example.org/a> <http://example.org/b> <http://example.org/c> .
+    } <http://www.w3.org/2000/10/swap/log#notIncludes> {
+        <http://example.org/policy#eve> <http://example.org/policy#allow> <http://example.org/policy#read_secret_data> .
+    } .
