@@ -34,11 +34,12 @@ fn quoted_graph_matching_cannot_confuse_input_iris_with_internal_quantifiers() {
 }
 
 #[test]
-fn quoted_negative_tests_keep_local_blank_patterns_and_execute_pure_clauses() {
+fn quoted_negative_tests_keep_local_blank_patterns_and_match_quoted_statements() {
     let cases = [
         ("{ :alice :p :b }", "{ _:who :p :b }", false),
-        ("{}", "{ 1 math:lessThan 2 }", false),
+        ("{}", "{ 1 math:lessThan 2 }", true),
         ("{}", "{ 3 math:lessThan 2 }", true),
+        ("{ 1 math:lessThan 2 }", "{ 1 math:lessThan 2 }", false),
     ];
     for (scope, pattern, expected) in cases {
         let source = format!(r#"
@@ -48,6 +49,37 @@ fn quoted_negative_tests_keep_local_blank_patterns_and_execute_pure_clauses() {
         "#);
         assert_eq!(!derives(&source).is_empty(), expected, "{scope} log:notIncludes {pattern}");
     }
+}
+
+#[test]
+fn quoted_inclusion_keeps_literal_lexical_identity() {
+    let cases = [
+        ("{ :a :p \"01\"^^xsd:integer }", "{ :a :p 1 }", false),
+        ("{ :a :p 1 }", "{ :a :p \"01\"^^xsd:integer }", false),
+        ("{ :a :p (1 2) }", "{ :a :p (\"01\"^^xsd:integer 2) }", false),
+        ("{ :a :p { :b :q \"01\"^^xsd:integer } }", "{ :a :p { :b :q 1 } }", false),
+        ("{ :a :p \"01\"^^xsd:integer }", "{ :a :p \"01\"^^xsd:integer }", true),
+        ("{ :a :p \"x\"@EN }", "{ :a :p \"x\"@en }", true),
+    ];
+    for (scope, pattern, included) in cases {
+        let source = format!(r#"
+            @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+            @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+            {{ {scope} log:includes {pattern} }} => {{ :test :includes true }}.
+            {{ {scope} log:notIncludes {pattern} }} => {{ :test :notIncludes true }}.
+        "#);
+        let out = derives(&source);
+        assert_eq!(out.contains(":includes"), included, "{scope} log:includes {pattern}: {out}");
+        assert_eq!(out.contains(":notIncludes"), !included, "{scope} log:notIncludes {pattern}: {out}");
+    }
+    // The current graph is no graph term: its facts match by value.
+    let out = derives(r#"
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+        @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+        :a :p "01"^^xsd:integer.
+        { ?scope log:includes { :a :p 1 } } => { :test :currentGraph true }.
+    "#);
+    assert!(out.contains(":test :currentGraph true"), "{out}");
 }
 
 #[test]

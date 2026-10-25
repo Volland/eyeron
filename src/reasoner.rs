@@ -4139,6 +4139,9 @@ fn eval_log_includes(
     rules: &[Rule],
 ) -> Vec<Bindings> {
     let subject_resolved = resolve(subject, bindings);
+    // A quoted scope is opaque, so its literals keep their lexical form; the
+    // current graph's facts match by value, as ordinary premises do.
+    let quoted = matches!(subject_resolved, Term::Formula(_));
     let scope = match subject_resolved {
         Term::Formula(scope) => scope,
         // In the notation3tests, an unbound scope denotes the current graph.
@@ -4171,7 +4174,7 @@ fn eval_log_includes(
         return Vec::new();
     };
     let mut out = Vec::new();
-    match_existential_consequence(&scope, &pattern, bindings, &mut out);
+    match_existential_consequence(&scope, &pattern, quoted, bindings, &mut out);
     out.into_iter().map(canonicalize_owned).collect()
 }
 
@@ -4193,6 +4196,7 @@ fn graph_has_symbol_prefix(graph: &Graph, prefix: &str) -> bool {
 fn match_existential_consequence(
     scope: &Graph,
     pattern: &Graph,
+    quoted: bool,
     bindings: &Bindings,
     out: &mut Vec<Bindings>,
 ) {
@@ -4268,7 +4272,7 @@ fn match_existential_consequence(
     let source = if source_map.is_empty() { Cow::Borrowed(scope) } else { Cow::Owned(scope.apply_to_triples(&source_map)) };
     let target = pattern.apply_to_triples(&target_map);
     let mut matches = Vec::new();
-    match_formula_subset(&source, &target, bindings, &mut matches);
+    match_formula_subset(&source, &target, quoted, bindings, &mut matches);
     // Existential substitutions are local to the compared graph, never outer bindings.
     let reverse: BTreeMap<_, _> = source_map
         .iter()
@@ -4301,8 +4305,8 @@ fn match_existential_consequence(
     }
 }
 
-fn match_formula_subset(scope: &[Triple], pattern: &[Triple], bindings: &Bindings, out: &mut Vec<Bindings>) {
-    fn go(scope: &[Triple], pattern: &[Triple], idx: usize, bindings: Bindings, out: &mut Vec<Bindings>) {
+fn match_formula_subset(scope: &[Triple], pattern: &[Triple], quoted: bool, bindings: &Bindings, out: &mut Vec<Bindings>) {
+    fn go(scope: &[Triple], pattern: &[Triple], quoted: bool, idx: usize, bindings: Bindings, out: &mut Vec<Bindings>) {
         if idx == pattern.len() {
             out.push(canonicalize_bindings(&bindings));
             return;
@@ -4312,12 +4316,12 @@ fn match_formula_subset(scope: &[Triple], pattern: &[Triple], bindings: &Binding
             // Use formula unification rather than ordinary fact matching so
             // variables and blank nodes on either side of log:includes can be
             // alpha-matched and exported as bindings.
-            if unify_triple_formula(&pattern[idx], fact, &mut local) {
-                go(scope, pattern, idx + 1, local, out);
+            if unify_triple_formula(&pattern[idx], fact, quoted, &mut local) {
+                go(scope, pattern, quoted, idx + 1, local, out);
             }
         }
     }
-    go(scope, pattern, 0, bindings.clone(), out);
+    go(scope, pattern, quoted, 0, bindings.clone(), out);
 }
 
 fn eval_log_not_includes(
@@ -4377,7 +4381,10 @@ fn eval_log_not_includes(
                 Vec::new()
             }
         }
-        Term::Blank(_) => {
+        // A variable an earlier test bound to the witness still stands for the
+        // current graph; the same graph written out in the premise is quoted.
+        ref scope if matches!(scope, Term::Blank(_))
+            || (matches!(premise.s, Term::Var(_)) && is_not_includes_witness(scope)) => {
             if current_graph_matches_pattern(
                 &pattern,
                 bindings,
@@ -4393,23 +4400,11 @@ fn eval_log_not_includes(
                 vec![bindings.clone()]
             }
         }
+        // Over a quoted graph this is the complement of `log:includes`: the
+        // clause is matched as quoted statements, not executed.
         Term::Formula(scope) => {
             let mut solutions = Vec::new();
-            // Local clause binders cannot inherit concrete blank bindings
-            // from the enclosing goal or the checker's recorded arguments.
-            let local = bindings_without_bound(&pattern, bindings).into_owned();
-            match_premise_at(
-                &pattern,
-                &scope,
-                None,
-                &[],
-                0,
-                local,
-                0,
-                &mut HashSet::new(),
-                budget,
-                &mut solutions,
-            );
+            match_existential_consequence(&scope, &pattern, true, bindings, &mut solutions);
             if solutions.is_empty() { vec![bindings.clone()] } else { Vec::new() }
         }
         _ => Vec::new(),
@@ -6569,17 +6564,8 @@ fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings)
             }
             (Term::Var(n), _) => bind_one_mut(bindings, n, b.clone()) && next(alpha, bindings),
             (_, Term::Var(n)) => bind_one_mut(bindings, n, a.clone()) && next(alpha, bindings),
-            // Graph terms are opaque, so a literal keeps its lexical form:
-            // `"01"^^xsd:integer` is not `1` here. A language tag is still
-            // compared case-insensitively, and `()` is `rdf:nil`.
-            (Term::Literal(x), Term::Literal(y)) => {
-                x.value == y.value
-                    && x.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
-                        == y.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
-                    && x.language.as_deref().map(str::to_ascii_lowercase)
-                        == y.language.as_deref().map(str::to_ascii_lowercase)
-                    && next(alpha, bindings)
-            }
+            // `()` is `rdf:nil` here too, through `terms_equal_semantic`.
+            (Term::Literal(x), Term::Literal(y)) => literals_equal_quoted(x, y) && next(alpha, bindings),
             _ => terms_equal_semantic(&a, &b) && next(alpha, bindings),
         }
     }
@@ -6722,13 +6708,24 @@ fn unify_formula_unordered(left: &Graph, right: &Graph, bindings: &mut Bindings)
     }
 }
 
-fn unify_triple_formula(left: &Triple, right: &Triple, bindings: &mut Bindings) -> bool {
-    unify_term_formula(&left.s, &right.s, bindings)
-        && unify_term_formula(&left.p, &right.p, bindings)
-        && unify_term_formula(&left.o, &right.o, bindings)
+/// Graph terms are opaque, so a literal keeps its lexical form:
+/// `"01"^^xsd:integer` is not `1` in one. A language tag is still compared
+/// case-insensitively.
+fn literals_equal_quoted(x: &Literal, y: &Literal) -> bool {
+    x.value == y.value
+        && x.datatype.as_deref().unwrap_or(XSD_STRING_IRI) == y.datatype.as_deref().unwrap_or(XSD_STRING_IRI)
+        && x.language.as_deref().map(str::to_ascii_lowercase) == y.language.as_deref().map(str::to_ascii_lowercase)
 }
 
-fn unify_term_formula(left: &Term, right: &Term, bindings: &mut Bindings) -> bool {
+/// `quoted` says the right-hand triples come from a graph term, whose
+/// literals keep their lexical form, rather than from the current graph.
+fn unify_triple_formula(left: &Triple, right: &Triple, quoted: bool, bindings: &mut Bindings) -> bool {
+    unify_term_formula(&left.s, &right.s, quoted, bindings)
+        && unify_term_formula(&left.p, &right.p, quoted, bindings)
+        && unify_term_formula(&left.o, &right.o, quoted, bindings)
+}
+
+fn unify_term_formula(left: &Term, right: &Term, quoted: bool, bindings: &mut Bindings) -> bool {
     // A blank node that is literally present in the pattern formula is an
     // alpha variable.  But if a variable inside the formula has already been
     // bound to a graph blank node, that blank is a concrete value and must not
@@ -6744,9 +6741,10 @@ fn unify_term_formula(left: &Term, right: &Term, bindings: &mut Bindings) -> boo
     match (&l, &r) {
         (Term::Var(a), _) => bind_one_mut(bindings, a, r.clone()),
         (_, Term::Var(b)) => bind_one_mut(bindings, b, l.clone()),
-        (Term::List(xs), Term::List(ys)) if xs.len() == ys.len() => xs.iter().zip(ys.iter()).all(|(x, y)| unify_term_formula(x, y, bindings)),
+        (Term::List(xs), Term::List(ys)) if xs.len() == ys.len() => xs.iter().zip(ys.iter()).all(|(x, y)| unify_term_formula(x, y, quoted, bindings)),
         (Term::Formula(xs), Term::Formula(ys)) => unify_formula_unordered(xs, ys, bindings),
         (Term::Blank(a), Term::Blank(b)) => a == b,
+        (Term::Literal(x), Term::Literal(y)) if quoted => literals_equal_quoted(x, y),
         _ => terms_equal_semantic(&l, &r),
     }
 }

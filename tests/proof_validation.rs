@@ -673,25 +673,31 @@ fn exhausting_query_selection_never_reports_checked() {
 }
 
 #[test]
-fn quoted_negative_tests_respect_local_existentials_and_replay_pure_clauses() {
+fn quoted_negative_tests_respect_local_existentials_and_match_quoted_statements() {
     rejects_under(
         "",
         "{ :alice :p :b } log:notIncludes { _:who :p :b }.\n\
          { { :alice :p :b } log:notIncludes { _:who :p :b } } pe:builtin log:notIncludes.",
         "C5", "did not hold",
     );
-    let report = check(
-        "",
-        "{} log:notIncludes { 3 math:lessThan 2 }.\n\
-         { {} log:notIncludes { 3 math:lessThan 2 } } pe:builtin log:notIncludes.",
-    ).unwrap();
-    assert!(report.valid() && report.obligations.is_empty(), "{:?}", report);
-    rejects_under("", "{} log:notIncludes { 1 math:lessThan 2 }.\n\
-        { {} log:notIncludes { 1 math:lessThan 2 } } pe:builtin log:notIncludes.", "C5", "did not hold");
-    let report = check("", "{} log:notIncludes { :document log:content ?text }.\n\
-        { {} log:notIncludes { :document log:content ?text } } pe:builtin log:notIncludes.").unwrap();
-    assert!(report.valid(), "{:?}", report.failures);
-    assert_eq!(report.obligations[0].kind, "impure built-in");
+    // A quoted clause is matched as quoted statements, never executed.
+    for clause in ["{ 3 math:lessThan 2 }", "{ 1 math:lessThan 2 }", "{ :document log:content ?text }"] {
+        let report = check("", &format!("{{}} log:notIncludes {clause}.\n\
+            {{ {{}} log:notIncludes {clause} }} pe:builtin log:notIncludes.")).unwrap();
+        assert!(report.valid() && report.obligations.is_empty(), "{clause}: {:?}", report);
+    }
+    rejects_under("", "{ 1 math:lessThan 2 } log:notIncludes { 1 math:lessThan 2 }.\n\
+        { { 1 math:lessThan 2 } log:notIncludes { 1 math:lessThan 2 } } pe:builtin log:notIncludes.", "C5", "did not hold");
+}
+
+#[test]
+fn quoted_inclusion_cannot_equate_numbers_written_differently() {
+    let quoted = "{ :a :p \"01\"^^<http://www.w3.org/2001/XMLSchema#integer> }";
+    rejects_under("", &format!("{quoted} log:includes {{ :a :p 1 }}.\n\
+        {{ {quoted} log:includes {{ :a :p 1 }} }} pe:builtin log:includes."), "C5", "did not hold");
+    rejects_under("", &format!("{quoted} log:notIncludes {{ :a :p {quoted_value} }}.\n\
+        {{ {quoted} log:notIncludes {{ :a :p {quoted_value} }} }} pe:builtin log:notIncludes.",
+        quoted_value = "\"01\"^^<http://www.w3.org/2001/XMLSchema#integer>"), "C5", "did not hold");
 }
 
 #[test]

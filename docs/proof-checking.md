@@ -69,7 +69,7 @@ Scoped built-ins whose scope is a quoted graph — `log:includes`, `log:notInclu
 
 An obligation is a step the checker accepts without re-establishing it. Each is listed with its kind and conclusion:
 
-- `impure built-in`: `time:localTime`, `log:content`, `log:semantics`, `log:semanticsOrError`, `list:map`, and `log:conclusion`, which obtain a clock value, external document, fact-set lookup, or result from running the reasoner itself. An external read nested in an executed negative-test, collection, or universal-test clause is also an obligation; quoting the clause does not make that read pure.
+- `impure built-in`: `time:localTime`, `log:content`, `log:semantics`, `log:semanticsOrError`, `list:map`, and `log:conclusion`, which obtain a clock value, external document, fact-set lookup, or result from running the reasoner itself. An external read nested in a clause that is executed — a negative test over the current graph, a collection, or a universal test — is also an obligation; quoting the clause does not make that read pure. A negative test over a quoted graph only matches quoted statements, so a read nested there is not executed.
 - `absent`: `log:notIncludes` over the current graph. Its scope is anything but a quoted graph, or the stand-in graph `{ <http://example.org/a> <http://example.org/b> <http://example.org/c> }` an unbound subject is bound to after the current graph has been tested.
 - `collected`: `log:collectAllIn` and `log:forAllIn` over the current graph.
 - `current graph`: `log:includes` over the current graph.

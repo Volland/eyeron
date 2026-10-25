@@ -66,12 +66,15 @@ fn current_graph_test(triple: &Triple) -> Option<&'static str> {
     }
 }
 
-/// Negative tests, collections, and universal tests execute clauses, so an
-/// external read nested there remains an obligation.
+/// Negative tests over the current graph, collections, and universal tests
+/// execute clauses, so an external read nested there remains an obligation.
+/// Over a quoted graph a negative test only matches quoted statements.
 fn reads_outside_proof(triple: &Triple) -> bool {
     let Term::Iri(name) = &triple.p else { return false };
     if IMPURE_BUILTINS.contains(&name.as_str()) { return true; }
-    if name.as_str() == LOG_NOT_INCLUDES {
+    if name.as_str() == LOG_NOT_INCLUDES
+        && (!matches!(triple.s, Term::Formula(_)) || crate::reasoner::is_not_includes_witness(&triple.s))
+    {
         if let Term::Formula(graph) = &triple.o { return graph.iter().any(reads_outside_proof); }
     }
     if matches!(name.as_str(), LOG_COLLECT_ALL_IN | LOG_FOR_ALL_IN) {
