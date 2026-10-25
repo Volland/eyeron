@@ -287,6 +287,22 @@ fn a_test_on_a_quoted_graph_is_re_decided_rather_than_trusted() {
 }
 
 #[test]
+fn a_rule_cannot_conclude_a_built_in_statement_that_does_not_hold() {
+    let source = "{} => { { :a :b :c } log:includes { :d :e :f } }.";
+    let proof = "{ :a :b :c } log:includes { :d :e :f }.\n\
+        { { :a :b :c } log:includes { :d :e :f } } pe:rule 1.";
+    rejects_under(source, proof, "C5", "re-evaluation rejects");
+    let source = ":n :value 4. { :n :value ?v } => { (1 2) math:sum ?v }.";
+    let proof = "(1 2) math:sum 4.\n\
+        { (1 2) math:sum 4 } pe:rule 1; pe:binding [ pe:var \"v\"; pe:value 4 ]; pe:uses { :n :value 4 }.\n\
+        { :n :value 4 } pe:fact \"test.n3\".";
+    rejects_under(source, proof, "C5", "re-evaluation rejects");
+    // The same rule deriving a statement that holds checks.
+    let report = check(":n :value 3. { :n :value ?v } => { (1 2) math:sum ?v }.", &proof.replace('4', "3")).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
 fn a_negation_over_the_current_graph_is_held_to_the_proofs_own_evidence() {
     let source = ":a :source :x. :a a :Blocked. { ?x :source :x. ?S log:notIncludes { ?x a :Blocked } } => { ?x a :Free }.";
     let proof = ":a a :Free.\n\

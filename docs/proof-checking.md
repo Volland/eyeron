@@ -24,7 +24,7 @@ A step has a conclusion triple, one justification, bindings, and an ordered list
 | **C2: well-foundedness** | The resolved step dependencies, including carried-rule provenance, MUST be acyclic. |
 | **C3: justification** | Each step MUST have exactly one supported justification of a well-formed kind. Only rule steps may have premises or bindings. Bindings MUST identify variables of that rule, without aliases assigning the same variable twice. `unproven` and a built-in named for another predicate fail. No statement may be claimed twice. |
 | **C4: coverage** | Every premise, carried rule, and claim MUST resolve to a step conclusion or a source assertion. |
-| **C5: re-decision** | Each built-in step MUST hold when re-evaluated on its recorded arguments (5.3), unless it is a trust obligation (6). |
+| **C5: re-decision** | Each built-in step MUST hold when re-evaluated on its recorded arguments (5.3), unless it is a trust obligation (6). A rule step MUST NOT conclude a closed statement of a pure built-in that re-evaluation rejects. |
 | **C6: boundary consistency** | The proof's evidence MUST NOT contradict what its obligations assume (6), and MUST NOT satisfy the premise of a source inference fuse. |
 | **C7: relevance** | Every step MUST serve a claim: some claim depends on it. With `log:query` rules in the source, every claim MUST be an instance of a query's conclusion. |
 | **C8: witness integrity** | Each introduced existential MUST have a fresh blank witness under a concrete universal assignment. One existential in one firing MUST retain one witness across all its conclusions; distinct existentials or firings MUST NOT share it. This also applies to instances of universal source assertions, including direct premise and claim resolution. |

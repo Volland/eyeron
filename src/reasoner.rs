@@ -159,6 +159,8 @@ struct RunReport {
     error_seen: HashSet<ReasonerError>,
     match_steps: usize,
     completed_backward_goals: HashMap<String, Vec<Triple>>,
+    /// The first firing that derived a statement a built-in rejects.
+    contradiction: Option<FiredFuse>,
 }
 
 impl RunReport {
@@ -960,13 +962,18 @@ impl Default for ReasonerOptions {
     }
 }
 
-/// A `{ .. } => false` rule whose premise became provable.
+/// A `{ .. } => false` rule whose premise became provable, or a rule that
+/// derived a built-in statement the built-in rejects.
 #[derive(Debug, Clone)]
 pub struct FiredFuse {
     pub rule: Rule,
     /// The rule's premise with the matching bindings applied, which is the
     /// actual forbidden situation rather than the shape of one.
     pub instance: Vec<Triple>,
+    /// The derived statement a pure built-in decides false. A built-in's
+    /// statements are exactly those it holds for, so deriving one it rejects
+    /// is a contradiction, as if the rule had concluded `false`.
+    pub contradiction: Option<Triple>,
 }
 
 #[derive(Debug, Clone)]
@@ -1397,7 +1404,9 @@ fn reason_with_plan(
             agenda_cursor = 0;
         }
 
-        if let Some(fired) = fired_fuse(&active_rules, &closure, &fact_index, options, &mut report) {
+        if let Some(fired) = report.contradiction.take()
+            .or_else(|| fired_fuse(&active_rules, &closure, &fact_index, options, &mut report))
+        {
             fuse = Some(fired);
             break;
         }
@@ -1590,6 +1599,19 @@ fn register_quantified_assertion(
     true
 }
 
+/// Records the first firing that derives a statement a built-in rejects; the
+/// run stops on it at the next fuse check.
+fn note_contradiction(rule: &Rule, bindings: &Bindings, t: &Triple, report: &mut RunReport) {
+    if report.contradiction.is_some() || !contradicts_builtin(t) { return; }
+    let mut blank_map = BTreeMap::<Name, Term>::new();
+    let instance = rule
+        .premise
+        .iter()
+        .map(|triple| instantiate_triple(triple, bindings, &mut blank_map).unwrap_or_else(|| triple.clone()))
+        .collect();
+    report.contradiction = Some(FiredFuse { rule: rule.clone(), instance, contradiction: Some(t.clone()) });
+}
+
 fn emit_conclusions(
     rule: &Rule,
     bindings: &Bindings,
@@ -1627,6 +1649,7 @@ fn emit_conclusions(
                     continue;
                 }
                 for expanded in triples {
+                    note_contradiction(rule, bindings, &expanded, report);
                     let proof = shared_rule.as_ref().map(|rule| derived_fact_record(expanded.clone(), rule, bindings));
                     if insert_materialized_triple(
                         expanded,
@@ -1648,6 +1671,7 @@ fn emit_conclusions(
             continue;
         }
 
+        note_contradiction(rule, bindings, &t, report);
         let proof = shared_rule.as_ref().map(|rule| derived_fact_record(t.clone(), rule, bindings));
         if insert_materialized_triple(
             t,
@@ -2032,9 +2056,49 @@ fn fired_fuse(
             .iter()
             .map(|triple| instantiate_triple(triple, &bindings, &mut blank_map).unwrap_or_else(|| triple.clone()))
             .collect();
-        return Some(FiredFuse { rule: rule.clone(), instance });
+        return Some(FiredFuse { rule: rule.clone(), instance, contradiction: None });
     }
     None
+}
+
+/// Whether `t` is a closed statement that a pure built-in decides false.
+/// Statements with a free variable or blank node are left alone, as are
+/// `rdf:first`/`rdf:rest`, which also describe lists as ordinary data,
+/// built-ins that read outside their arguments, and scoped tests over the
+/// current graph, whose truth depends on everything derived.
+pub(crate) fn contradicts_builtin(t: &Triple) -> bool {
+    let Term::Iri(name) = &t.p else { return false };
+    // Checked on every derived fact, so the namespace goes first.
+    if !(name.starts_with("http://www.w3.org/2000/10/swap/") || name.starts_with("https://eyereasoner.github.io/"))
+        || !is_builtin_iri(name)
+    {
+        return false;
+    }
+    let scope = match name.as_ref() {
+        LOG_INCLUDES | LOG_NOT_INCLUDES => Some(&t.s),
+        LOG_COLLECT_ALL_IN | LOG_FOR_ALL_IN => Some(&t.o),
+        _ => None,
+    };
+    if scope.is_some_and(|scope| !matches!(scope, Term::Formula(_))) {
+        return false;
+    }
+    fn closed(term: &Term) -> bool {
+        match term {
+            Term::Var(_) | Term::Blank(_) => false,
+            Term::List(items) => items.iter().all(closed),
+            Term::Formula(graph) => !graph_has_free_var(graph),
+            _ => true,
+        }
+    }
+    fn reads_outside(term: &Term) -> bool {
+        match term {
+            Term::Iri(iri) => crate::proof_check_n3::IMPURE_BUILTINS.contains(&iri.as_ref()),
+            Term::List(items) => items.iter().any(reads_outside),
+            Term::Formula(graph) => graph.iter().any(|t| [&t.s, &t.p, &t.o].into_iter().any(reads_outside)),
+            _ => false,
+        }
+    }
+    closed(&t.s) && closed(&t.o) && ![&t.s, &t.p, &t.o].into_iter().any(reads_outside) && !verify_builtin_triple(t)
 }
 
 fn rule_from_triple(t: &Triple) -> Option<Rule> {

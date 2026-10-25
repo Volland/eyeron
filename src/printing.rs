@@ -212,6 +212,22 @@ fn implication_to_n3(t: &Triple, prefixes: &BTreeMap<String, String>) -> String 
 /// graph it describes -- nothing was derived, the run stopped.
 pub fn fuse_report(prefixes: &BTreeMap<String, String>, fuse: &FiredFuse) -> String {
     let mut out = String::from("# Inference fuse triggered.\n");
+    if let Some(statement) = &fuse.contradiction {
+        let rule = Triple::new(
+            Term::Formula(fuse.rule.premise.clone()),
+            Term::iri(LOG_IMPLIES),
+            Term::Formula(fuse.rule.conclusion.clone()),
+        );
+        for (heading, triple) in [("Derived a built-in statement that does not hold", statement), ("Fired rule", &rule)] {
+            out.push_str(&format!("# {heading}:\n"));
+            for line in triple_to_n3(prefixes, triple).lines() {
+                out.push_str("#   ");
+                out.push_str(line);
+                out.push('\n');
+            }
+        }
+        return out;
+    }
     let schematic = fuse_rule_to_n3(&fuse.rule.premise, prefixes);
     out.push_str("# Fired rule:\n");
     for line in schematic.lines() {

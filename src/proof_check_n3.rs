@@ -23,7 +23,7 @@ const MAX_PROOF_MATCHES: usize = 200_000;
 /// re-evaluating them cannot confirm anything (specification §5.3, §6).
 /// Each reads something outside the proof: the clock, an external document,
 /// the fact set, or the reasoner itself.
-const IMPURE_BUILTINS: &[&str] = &[
+pub(crate) const IMPURE_BUILTINS: &[&str] = &[
     // Read the clock.
     "http://www.w3.org/2000/10/swap/time#localTime",
     // Read the network or the filesystem.
@@ -1111,6 +1111,11 @@ impl ProofDocument for N3Proof {
         }
         match step.kind {
             Kind::Rule if step.rule.is_none() && step.carried.is_none() => under("C3", Err("cites no rule".to_string())),
+            // A built-in's statements are exactly those it holds for, so a
+            // rule cannot derive one it rejects; the run trips a fuse instead.
+            Kind::Rule if crate::reasoner::contradicts_builtin(&step.conclusion) => {
+                under("C5", Err("concludes a built-in statement that re-evaluation rejects".to_string()))
+            }
             Kind::Rule => under("C1", self.rule_applications(step).map(|_| Checked::Verified)),
             Kind::Fact if !step.uses.is_empty() => under("C3", self.check_fact(step)),
             Kind::Fact => under("C1", self.check_fact(step)),

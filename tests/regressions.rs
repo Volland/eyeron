@@ -1609,6 +1609,57 @@ fn a_fuse_that_cannot_fire_leaves_the_rest_of_the_run_alone() {
 }
 
 #[test]
+fn deriving_a_built_in_statement_that_does_not_hold_trips_a_fuse() {
+    // A built-in's statements are exactly those it holds for, so a rule that
+    // concludes one it rejects has derived a contradiction.
+    let source = r#"
+        @prefix : <http://example.org/>.
+        @prefix math: <http://www.w3.org/2000/10/swap/math#>.
+        :n :value 4.
+        { :n :value ?v } => { (1 2) math:sum ?v }.
+    "#;
+
+    let doc = parse_n3(source, None).unwrap();
+    let result = reason_document(&doc, &ReasonerOptions::default());
+    let fuse = result.fuse.as_ref().expect("the contradiction should trip a fuse");
+    assert!(result.derived.is_empty(), "{:?}", result.derived);
+    let report = eyeron::fuse_report(&doc.prefixes, fuse);
+    assert_eq!(
+        report,
+        "# Inference fuse triggered.\n\
+         # Derived a built-in statement that does not hold:\n\
+         #   (1 2) math:sum 4 .\n\
+         # Fired rule:\n\
+         #   {\n\
+         #       :n :value ?v .\n\
+         #   } => {\n\
+         #       (1 2) math:sum ?v .\n\
+         #   } .\n",
+        "{report}"
+    );
+
+    // Statements that hold, are open, read outside their arguments, or test
+    // the current graph stay data.
+    let source = r#"
+        @prefix : <http://example.org/>.
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.
+        @prefix math: <http://www.w3.org/2000/10/swap/math#>.
+        :n :value 3.
+        { :n :value ?v } => {
+            (1 2) math:sum ?v.
+            { :a :b :c } log:includes { :a :b :c }.
+            _:x math:greaterThan ?v.
+            :doc log:content "text".
+            :scope log:notIncludes { :n :value ?v }.
+        }.
+    "#;
+    let doc = parse_n3(source, None).unwrap();
+    let result = reason_document(&doc, &ReasonerOptions::default());
+    assert!(result.fuse.is_none(), "{:?}", result.fuse);
+    assert_eq!(result.derived.len(), 5, "{:?}", result.derived);
+}
+
+#[test]
 fn a_fuse_is_visible_as_data_to_another_fuse() {
     // The liar example: the outer rule forbids the inner rule's existence,
     // and rules are matchable as quoted implication triples. A fuse has to
