@@ -85,12 +85,12 @@
         } {
             ?S ?P ?O .
             {
-            :alice :age 30 .
-            :alice :status :OldStatus .
-            :alice :email "alice@example.org" .
-        } log:notIncludes {
-            ?S ?P ?O .
-        } .
+                :alice :age 30 .
+                :alice :status :OldStatus .
+                :alice :email "alice@example.org" .
+            } log:notIncludes {
+                ?S ?P ?O .
+            } .
         } ({
             :alice a :Person .
         } {
@@ -165,12 +165,12 @@
   } {
       ?S ?P ?O .
       {
-      :alice :age 30 .
-      :alice :status :OldStatus .
-      :alice :email "alice@example.org" .
-  } log:notIncludes {
-      ?S ?P ?O .
-  } .
+          :alice :age 30 .
+          :alice :status :OldStatus .
+          :alice :email "alice@example.org" .
+      } log:notIncludes {
+          ?S ?P ?O .
+      } .
   } ({
       :alice a :Person .
   } {

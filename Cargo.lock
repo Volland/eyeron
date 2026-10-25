@@ -68,7 +68,7 @@ dependencies = [
 
 [[package]]
 name = "eyeron"
-version = "0.8.18"
+version = "0.8.19"
 dependencies = [
  "num-bigint",
  "num-traits",

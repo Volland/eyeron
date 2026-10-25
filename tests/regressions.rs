@@ -105,6 +105,24 @@ fn n3_lists_remain_first_class_in_rule_conclusions() {
 }
 
 #[test]
+fn nested_graph_terms_print_at_their_own_depth() {
+    let source = r#"
+        @prefix : <http://example.org/>.
+        {} => { :t :p { { :a :b :c } :is { :d :e :f } } }.
+    "#;
+
+    let doc = parse_n3(source, None).unwrap();
+    let result = reason_document(&doc, &ReasonerOptions::default());
+    let output = result_to_string(&doc.prefixes, &result.derived);
+
+    assert!(
+        output.contains(":t :p {\n    {\n        :a :b :c .\n    } :is {\n        :d :e :f .\n    } .\n} ."),
+        "{output}"
+    );
+    assert_eq!(parse_n3(&output, None).unwrap().facts, result.derived, "{output}");
+}
+
+#[test]
 fn list_append_infers_head_and_tail_from_known_result() {
     let source = r#"
         @prefix : <http://example.org/>.

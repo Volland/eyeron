@@ -189,8 +189,8 @@
         {
             ?P :hasRole ?R .
             ?SCOPE log:notIncludes {
-            ?P :allow :read_secret_data .
-        } .
+                ?P :allow :read_secret_data .
+            } .
         } => {
             ?P :auth false .
         } .
@@ -229,8 +229,8 @@
         {
             ?P :hasRole ?R .
             ?SCOPE log:notIncludes {
-            ?P :allow :read_secret_data .
-        } .
+                ?P :allow :read_secret_data .
+            } .
         } => {
             ?P :auth false .
         } .

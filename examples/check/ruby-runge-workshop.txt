@@ -22,13 +22,13 @@ Trust obligations (accepted without verifying their truth):
         ?pi <http://example.org/ruby-runge#x> ?xi .
         ?pi <http://example.org/ruby-runge#y> ?yi .
         (?f {
-        (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
-        ?pj <http://example.org/ruby-runge#x> ?xj .
-        ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
-        (0.6 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
-        (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
-        (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
-    } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:lag1 .
+            (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
+            ?pj <http://example.org/ruby-runge#x> ?xj .
+            ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
+            (0.6 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
+            (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
+            (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
+        } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:lag1 .
         ?factors <http://www.w3.org/2000/10/swap/math#product> ?basis .
         (?yi ?basis) <http://www.w3.org/2000/10/swap/math#product> ?term .
     } (0.1568 -0.1456 -0.5824 0.5823999999999999 -0.2912)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:lag0 .
@@ -38,13 +38,13 @@ Trust obligations (accepted without verifying their truth):
         ?pi <http://example.org/ruby-runge#x> ?xi .
         ?pi <http://example.org/ruby-runge#y> ?yi .
         (?f {
-        (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
-        ?pj <http://example.org/ruby-runge#x> ?xj .
-        ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
-        (0.601 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
-        (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
-        (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
-    } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:d1 .
+            (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
+            ?pj <http://example.org/ruby-runge#x> ?xj .
+            ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
+            (0.601 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
+            (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
+            (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
+        } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:d1 .
         ?factors <http://www.w3.org/2000/10/swap/math#product> ?basis .
         (?yi ?basis) <http://www.w3.org/2000/10/swap/math#product> ?term .
     } (0.15665462178362502 -0.1454300602335 -0.5811152906002501 0.5835426727665 -0.291249943716375)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:d0 .
@@ -54,13 +54,13 @@ Trust obligations (accepted without verifying their truth):
         ?pi <http://example.org/ruby-runge#x> ?xi .
         ?pi <http://example.org/ruby-runge#y> ?yi .
         (?f {
-        (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
-        ?pj <http://example.org/ruby-runge#x> ?xj .
-        ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
-        (0.599 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
-        (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
-        (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
-    } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:e1 .
+            (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
+            ?pj <http://example.org/ruby-runge#x> ?xj .
+            ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
+            (0.599 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
+            (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
+            (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
+        } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:e1 .
         ?factors <http://www.w3.org/2000/10/swap/math#product> ?basis .
         (?yi ?basis) <http://www.w3.org/2000/10/swap/math#product> ?term .
     } (0.156943954883625 -0.14576872643350003 -0.58368328940025 0.5812573405664999 -0.29114727961637504)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:e0 .
@@ -70,13 +70,13 @@ Trust obligations (accepted without verifying their truth):
         ?pi <http://example.org/ruby-runge#x> ?xi .
         ?pi <http://example.org/ruby-runge#y> ?yi .
         (?f {
-        (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
-        ?pj <http://example.org/ruby-runge#x> ?xj .
-        ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
-        (0.0 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
-        (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
-        (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
-    } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:ra1 .
+            (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
+            ?pj <http://example.org/ruby-runge#x> ?xj .
+            ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
+            (0.0 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
+            (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
+            (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
+        } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:ra1 .
         ?factors <http://www.w3.org/2000/10/swap/math#product> ?basis .
         (?yi ?basis) <http://www.w3.org/2000/10/swap/math#product> ?term .
     } ("0"^^<http://www.w3.org/2001/XMLSchema#decimal> "0"^^<http://www.w3.org/2001/XMLSchema#decimal> "-1"^^<http://www.w3.org/2001/XMLSchema#decimal> "0"^^<http://www.w3.org/2001/XMLSchema#decimal> "0"^^<http://www.w3.org/2001/XMLSchema#decimal>)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:ra0 .
@@ -86,13 +86,13 @@ Trust obligations (accepted without verifying their truth):
         ?pi <http://example.org/ruby-runge#x> ?xi .
         ?pi <http://example.org/ruby-runge#y> ?yi .
         (?f {
-        (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
-        ?pj <http://example.org/ruby-runge#x> ?xj .
-        ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
-        (1.0 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
-        (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
-        (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
-    } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:rb1 .
+            (_:b1 _:b2 _:b3 _:b4 _:b5) <http://www.w3.org/2000/10/swap/list#member> ?pj .
+            ?pj <http://example.org/ruby-runge#x> ?xj .
+            ?xj <http://www.w3.org/2000/10/swap/math#notEqualTo> ?xi .
+            (1.0 ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?num .
+            (?xi ?xj) <http://www.w3.org/2000/10/swap/math#difference> ?den .
+            (?num ?den) <http://www.w3.org/2000/10/swap/math#quotient> ?f .
+        } ?factors) <http://www.w3.org/2000/10/swap/log#collectAllIn> _:rb1 .
         ?factors <http://www.w3.org/2000/10/swap/math#product> ?basis .
         (?yi ?basis) <http://www.w3.org/2000/10/swap/math#product> ?term .
     } ("0"^^<http://www.w3.org/2001/XMLSchema#decimal> "0"^^<http://www.w3.org/2001/XMLSchema#decimal> "0"^^<http://www.w3.org/2001/XMLSchema#decimal> "1"^^<http://www.w3.org/2001/XMLSchema#decimal> "0"^^<http://www.w3.org/2001/XMLSchema#decimal>)) <http://www.w3.org/2000/10/swap/log#collectAllIn> ?_:rb0 .

@@ -192,10 +192,10 @@
             :normativeWorld1 log:hasAccessTo ?W2 .
         } {
             {
-            {
-                :alcoholicBeverage :sellingTo :nonAdult .
-            } => false .
-        } log:holdsIn ?W2 .
+                {
+                    :alcoholicBeverage :sellingTo :nonAdult .
+                } => false .
+            } log:holdsIn ?W2 .
         }) log:forAllIn _:forAllIn .
     }.
 
@@ -204,10 +204,10 @@
       :normativeWorld1 log:hasAccessTo ?W2 .
   } {
       {
-      {
-          :alcoholicBeverage :sellingTo :nonAdult .
-      } => false .
-  } log:holdsIn ?W2 .
+          {
+              :alcoholicBeverage :sellingTo :nonAdult .
+          } => false .
+      } log:holdsIn ?W2 .
   }) log:forAllIn _:forAllIn .
 }
   pe:builtin log:forAllIn.
@@ -243,10 +243,10 @@
             :normativeWorld2 log:hasAccessTo ?W2 .
         } {
             {
-            {
-                :alcoholicBeverage :sellingTo :nonAdult .
-            } => false .
-        } log:holdsIn ?W2 .
+                {
+                    :alcoholicBeverage :sellingTo :nonAdult .
+                } => false .
+            } log:holdsIn ?W2 .
         }) log:forAllIn _:forAllIn .
     }.
 
@@ -255,10 +255,10 @@
       :normativeWorld2 log:hasAccessTo ?W2 .
   } {
       {
-      {
-          :alcoholicBeverage :sellingTo :nonAdult .
-      } => false .
-  } log:holdsIn ?W2 .
+          {
+              :alcoholicBeverage :sellingTo :nonAdult .
+          } => false .
+      } log:holdsIn ?W2 .
   }) log:forAllIn _:forAllIn .
 }
   pe:builtin log:forAllIn.
@@ -290,10 +290,10 @@
             :normativeWorld1 log:hasAccessTo ?W2 .
         } {
             {
-            {
-                :alcoholicBeverage :sellingTo :nonAdult .
-            } => false .
-        } log:holdsIn ?W2 .
+                {
+                    :alcoholicBeverage :sellingTo :nonAdult .
+                } => false .
+            } log:holdsIn ?W2 .
         }) log:forAllIn _:forAllIn .
     }.
 
@@ -324,9 +324,9 @@
             :normativeWorld2 log:hasAccessTo ?W2 .
         } {
             {
-            {
-                :alcoholicBeverage :sellingTo :nonAdult .
-            } => false .
-        } log:holdsIn ?W2 .
+                {
+                    :alcoholicBeverage :sellingTo :nonAdult .
+                } => false .
+            } log:holdsIn ?W2 .
         }) log:forAllIn _:forAllIn .
     }.

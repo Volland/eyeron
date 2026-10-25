@@ -11,9 +11,9 @@
     {
         {
             (?param {
-            :Let :param ?param .
-            ?param string:lessThan "Louie" .
-        } ?filteredParams) log:collectAllIn ?scope .
+                :Let :param ?param .
+                ?param string:lessThan "Louie" .
+            } ?filteredParams) log:collectAllIn ?scope .
             ?filteredParams list:length 2 .
         } => {
             :result :is ?filteredParams .

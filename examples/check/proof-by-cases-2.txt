@@ -19,14 +19,14 @@ Trust obligations (accepted without verifying their truth):
   collected:
     ({
         ({
-        <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> <https://eyereasoner.github.io/ns#solid> .
-    } {
-        <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> <https://eyereasoner.github.io/ns#liquid> .
-    } {
-        <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> <https://eyereasoner.github.io/ns#gas> .
-    }) <http://www.w3.org/2000/10/swap/list#member> {
-        <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> ?C .
-    } .
+            <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> <https://eyereasoner.github.io/ns#solid> .
+        } {
+            <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> <https://eyereasoner.github.io/ns#liquid> .
+        } {
+            <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> <https://eyereasoner.github.io/ns#gas> .
+        }) <http://www.w3.org/2000/10/swap/list#member> {
+            <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> ?C .
+        } .
     } {
         {
             <https://eyereasoner.github.io/ns#water> <https://eyereasoner.github.io/ns#is> ?C .

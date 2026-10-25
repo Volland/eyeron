@@ -21,18 +21,18 @@ Trust obligations (accepted without verifying their truth):
         <https://eyereasoner.github.io/ns#normativeWorld1> <http://www.w3.org/2000/10/swap/log#hasAccessTo> ?W2 .
     } {
         {
-        {
-            <https://eyereasoner.github.io/ns#alcoholicBeverage> <https://eyereasoner.github.io/ns#sellingTo> <https://eyereasoner.github.io/ns#nonAdult> .
-        } => false .
-    } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
+            {
+                <https://eyereasoner.github.io/ns#alcoholicBeverage> <https://eyereasoner.github.io/ns#sellingTo> <https://eyereasoner.github.io/ns#nonAdult> .
+            } => false .
+        } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
     }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .
   collected:
     ({
         <https://eyereasoner.github.io/ns#normativeWorld2> <http://www.w3.org/2000/10/swap/log#hasAccessTo> ?W2 .
     } {
         {
-        {
-            <https://eyereasoner.github.io/ns#alcoholicBeverage> <https://eyereasoner.github.io/ns#sellingTo> <https://eyereasoner.github.io/ns#nonAdult> .
-        } => false .
-    } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
+            {
+                <https://eyereasoner.github.io/ns#alcoholicBeverage> <https://eyereasoner.github.io/ns#sellingTo> <https://eyereasoner.github.io/ns#nonAdult> .
+            } => false .
+        } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
     }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .

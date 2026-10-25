@@ -2162,8 +2162,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2188,8 +2188,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2216,8 +2216,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2244,8 +2244,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2270,8 +2270,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2298,8 +2298,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2326,8 +2326,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2352,8 +2352,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2380,8 +2380,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2408,8 +2408,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2443,8 +2443,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2471,8 +2471,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2499,8 +2499,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2536,8 +2536,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2564,8 +2564,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2592,8 +2592,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2628,8 +2628,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2656,8 +2656,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2684,8 +2684,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2720,8 +2720,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2748,8 +2748,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2776,8 +2776,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2813,8 +2813,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2841,8 +2841,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2869,8 +2869,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2902,8 +2902,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2930,8 +2930,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2958,8 +2958,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -2993,8 +2993,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -3021,8 +3021,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -3049,8 +3049,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -3086,8 +3086,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -3114,8 +3114,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -3142,8 +3142,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -3177,8 +3177,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -3205,8 +3205,8 @@ _:b1_7d9af4016b63292 :family :AllTranscendentals .
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding

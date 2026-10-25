@@ -386,8 +386,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -412,8 +412,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -440,8 +440,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -468,8 +468,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -494,8 +494,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -522,8 +522,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -550,8 +550,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -587,8 +587,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -615,8 +615,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -643,8 +643,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -678,8 +678,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -706,8 +706,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -734,8 +734,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -770,8 +770,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -798,8 +798,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -826,8 +826,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -862,8 +862,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -890,8 +890,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -918,8 +918,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -954,8 +954,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -982,8 +982,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -1010,8 +1010,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -1043,8 +1043,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -1071,8 +1071,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -1099,8 +1099,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -1134,8 +1134,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding
@@ -1162,8 +1162,8 @@
             ?X :provedBy ?T .
         } => {
             :report :proof {
-            ?X :provedBy ?T .
-        } .
+                ?X :provedBy ?T .
+            } .
         } .
     };
   pe:binding

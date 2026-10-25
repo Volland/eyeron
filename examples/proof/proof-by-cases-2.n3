@@ -31,14 +31,14 @@
     {
         ({
             ({
-            :water :is :solid .
-        } {
-            :water :is :liquid .
-        } {
-            :water :is :gas .
-        }) list:member {
-            :water :is ?C .
-        } .
+                :water :is :solid .
+            } {
+                :water :is :liquid .
+            } {
+                :water :is :gas .
+            }) list:member {
+                :water :is ?C .
+            } .
         } {
             {
                 :water :is ?C .
@@ -67,14 +67,14 @@
 {
   ({
       ({
-      :water :is :solid .
-  } {
-      :water :is :liquid .
-  } {
-      :water :is :gas .
-  }) list:member {
-      :water :is ?C .
-  } .
+          :water :is :solid .
+      } {
+          :water :is :liquid .
+      } {
+          :water :is :gas .
+      }) list:member {
+          :water :is ?C .
+      } .
   } {
       {
           :water :is ?C .

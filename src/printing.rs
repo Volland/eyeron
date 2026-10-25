@@ -328,21 +328,23 @@ fn formula_to_n3(graph: &Graph, prefixes: &BTreeMap<String, String>, indent: usi
     out.push_str("{\n");
     for declaration in declarations { out.push_str(&inner); out.push_str(&declaration); out.push('\n'); }
     for t in &triples {
-        if is_implication_triple(t) {
-            let rendered = implication_to_n3(t, prefixes);
-            for line in rendered.lines() {
-                out.push_str(&inner);
-                out.push_str(line);
-                out.push('\n');
-            }
+        // A nested graph term renders at indent 0, so every line of the
+        // triple, not only its first, moves in to this graph's depth.
+        // Literals escape their newlines, so no line break is inside one.
+        let rendered = if is_implication_triple(t) {
+            implication_to_n3(t, prefixes)
         } else {
-            out.push_str(&inner);
-            out.push_str(&format!(
+            format!(
                 "{} {} {} .\n",
                 term_to_n3(&t.s, prefixes, Position::Subject),
                 term_to_n3(&t.p, prefixes, Position::Predicate),
                 term_to_n3(&t.o, prefixes, Position::Object),
-            ));
+            )
+        };
+        for line in rendered.lines() {
+            out.push_str(&inner);
+            out.push_str(line);
+            out.push('\n');
         }
     }
     out.push_str(&pad);

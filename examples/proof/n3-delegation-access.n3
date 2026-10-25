@@ -224,8 +224,8 @@
             ?U :canRead ?R .
         } => {
             :report :entails {
-            ?U :canRead ?R .
-        } .
+                ?U :canRead ?R .
+            } .
         } .
     };
   pe:binding
@@ -342,8 +342,8 @@
             ?U :canRead ?R .
         } => {
             :report :entails {
-            ?U :canRead ?R .
-        } .
+                ?U :canRead ?R .
+            } .
         } .
     };
   pe:binding
@@ -410,8 +410,8 @@
             ?U :canRead ?R .
         } => {
             :report :entails {
-            ?U :canRead ?R .
-        } .
+                ?U :canRead ?R .
+            } .
         } .
     };
   pe:binding
@@ -486,8 +486,8 @@
             ?U :canRead ?R .
         } => {
             :report :entails {
-            ?U :canRead ?R .
-        } .
+                ?U :canRead ?R .
+            } .
         } .
     };
   pe:binding
@@ -519,20 +519,20 @@
             :policy :trusts ?DocM .
             ?DocM :says ?FM .
             ?FM log:includes {
-            ?U :memberOf ?G .
-        } .
+                ?U :memberOf ?G .
+            } .
             :policy :trusts ?DocP .
             ?DocP :says ?FP .
             ?FP log:includes {
-            ?G :mayRead ?R .
-        } .
+                ?G :mayRead ?R .
+            } .
         } => {
             {
-            ?U :memberOf ?G .
-        } :assertedBy ?DocM .
+                ?U :memberOf ?G .
+            } :assertedBy ?DocM .
             {
-            ?G :mayRead ?R .
-        } :assertedBy ?DocP .
+                ?G :mayRead ?R .
+            } :assertedBy ?DocP .
         } .
     };
   pe:binding
@@ -601,20 +601,20 @@
             :policy :trusts ?DocM .
             ?DocM :says ?FM .
             ?FM log:includes {
-            ?U :memberOf ?G .
-        } .
+                ?U :memberOf ?G .
+            } .
             :policy :trusts ?DocP .
             ?DocP :says ?FP .
             ?FP log:includes {
-            ?G :mayRead ?R .
-        } .
+                ?G :mayRead ?R .
+            } .
         } => {
             {
-            ?U :memberOf ?G .
-        } :assertedBy ?DocM .
+                ?U :memberOf ?G .
+            } :assertedBy ?DocM .
             {
-            ?G :mayRead ?R .
-        } :assertedBy ?DocP .
+                ?G :mayRead ?R .
+            } :assertedBy ?DocP .
         } .
     };
   pe:binding
@@ -683,20 +683,20 @@
             :policy :trusts ?DocM .
             ?DocM :says ?FM .
             ?FM log:includes {
-            ?U :memberOf ?G .
-        } .
+                ?U :memberOf ?G .
+            } .
             :policy :trusts ?DocP .
             ?DocP :says ?FP .
             ?FP log:includes {
-            ?G :mayRead ?R .
-        } .
+                ?G :mayRead ?R .
+            } .
         } => {
             {
-            ?U :memberOf ?G .
-        } :assertedBy ?DocM .
+                ?U :memberOf ?G .
+            } :assertedBy ?DocM .
             {
-            ?G :mayRead ?R .
-        } :assertedBy ?DocP .
+                ?G :mayRead ?R .
+            } :assertedBy ?DocP .
         } .
     };
   pe:binding
@@ -765,20 +765,20 @@
             :policy :trusts ?DocM .
             ?DocM :says ?FM .
             ?FM log:includes {
-            ?U :memberOf ?G .
-        } .
+                ?U :memberOf ?G .
+            } .
             :policy :trusts ?DocP .
             ?DocP :says ?FP .
             ?FP log:includes {
-            ?G :mayRead ?R .
-        } .
+                ?G :mayRead ?R .
+            } .
         } => {
             {
-            ?U :memberOf ?G .
-        } :assertedBy ?DocM .
+                ?U :memberOf ?G .
+            } :assertedBy ?DocM .
             {
-            ?G :mayRead ?R .
-        } :assertedBy ?DocP .
+                ?G :mayRead ?R .
+            } :assertedBy ?DocP .
         } .
     };
   pe:binding

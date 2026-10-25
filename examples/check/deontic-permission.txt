@@ -21,40 +21,40 @@ Trust obligations (accepted without verifying their truth):
         <https://eyereasoner.github.io/ns#w1> <http://www.w3.org/2000/10/swap/log#hasAccessTo> ?W2 .
     } {
         {
-        <https://eyereasoner.github.io/ns#s1> <https://eyereasoner.github.io/ns#p1> <https://eyereasoner.github.io/ns#o1> .
-    } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
+            <https://eyereasoner.github.io/ns#s1> <https://eyereasoner.github.io/ns#p1> <https://eyereasoner.github.io/ns#o1> .
+        } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
     }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .
   collected:
     ({
         <https://eyereasoner.github.io/ns#w1> <http://www.w3.org/2000/10/swap/log#hasAccessTo> ?W2 .
     } {
         {
-        <https://eyereasoner.github.io/ns#s2> <https://eyereasoner.github.io/ns#p2> <https://eyereasoner.github.io/ns#o2> .
-    } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
+            <https://eyereasoner.github.io/ns#s2> <https://eyereasoner.github.io/ns#p2> <https://eyereasoner.github.io/ns#o2> .
+        } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
     }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .
   collected:
     ({
         <https://eyereasoner.github.io/ns#w2> <http://www.w3.org/2000/10/swap/log#hasAccessTo> ?W2 .
     } {
         {
-        <https://eyereasoner.github.io/ns#s1> <https://eyereasoner.github.io/ns#p1> <https://eyereasoner.github.io/ns#o1> .
-    } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
+            <https://eyereasoner.github.io/ns#s1> <https://eyereasoner.github.io/ns#p1> <https://eyereasoner.github.io/ns#o1> .
+        } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
     }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .
   collected:
     ({
         <https://eyereasoner.github.io/ns#w2> <http://www.w3.org/2000/10/swap/log#hasAccessTo> ?W2 .
     } {
         {
-        <https://eyereasoner.github.io/ns#s2> <https://eyereasoner.github.io/ns#p2> <https://eyereasoner.github.io/ns#o2> .
-    } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
+            <https://eyereasoner.github.io/ns#s2> <https://eyereasoner.github.io/ns#p2> <https://eyereasoner.github.io/ns#o2> .
+        } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
     }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .
   collected:
     ({
         <https://eyereasoner.github.io/ns#w2> <http://www.w3.org/2000/10/swap/log#hasAccessTo> ?W2 .
     } {
         {
-        {
-            <https://eyereasoner.github.io/ns#s3> <https://eyereasoner.github.io/ns#p3> <https://eyereasoner.github.io/ns#o3> .
-        } => false .
-    } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
+            {
+                <https://eyereasoner.github.io/ns#s3> <https://eyereasoner.github.io/ns#p3> <https://eyereasoner.github.io/ns#o3> .
+            } => false .
+        } <http://www.w3.org/2000/10/swap/log#holdsIn> ?W2 .
     }) <http://www.w3.org/2000/10/swap/log#forAllIn> _:forAllIn .

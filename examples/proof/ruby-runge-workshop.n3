@@ -34,13 +34,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
             ?pi :x ?xi .
             ?pi :y ?yi .
             (?f {
-            (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-            ?pj :x ?xj .
-            ?xj math:notEqualTo ?xi .
-            (0.6 ?xj) math:difference ?num .
-            (?xi ?xj) math:difference ?den .
-            (?num ?den) math:quotient ?f .
-        } ?factors) log:collectAllIn _:lag1 .
+                (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+                ?pj :x ?xj .
+                ?xj math:notEqualTo ?xi .
+                (0.6 ?xj) math:difference ?num .
+                (?xi ?xj) math:difference ?den .
+                (?num ?den) math:quotient ?f .
+            } ?factors) log:collectAllIn _:lag1 .
             ?factors math:product ?basis .
             (?yi ?basis) math:product ?term .
         } (0.1568 -0.1456 -0.5824 0.5823999999999999 -0.2912)) log:collectAllIn ?_:lag0 .
@@ -59,13 +59,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
       ?pi :x ?xi .
       ?pi :y ?yi .
       (?f {
-      (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-      ?pj :x ?xj .
-      ?xj math:notEqualTo ?xi .
-      (0.6 ?xj) math:difference ?num .
-      (?xi ?xj) math:difference ?den .
-      (?num ?den) math:quotient ?f .
-  } ?factors) log:collectAllIn _:lag1 .
+          (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+          ?pj :x ?xj .
+          ?xj math:notEqualTo ?xi .
+          (0.6 ?xj) math:difference ?num .
+          (?xi ?xj) math:difference ?den .
+          (?num ?den) math:quotient ?f .
+      } ?factors) log:collectAllIn _:lag1 .
       ?factors math:product ?basis .
       (?yi ?basis) math:product ?term .
   } (0.1568 -0.1456 -0.5824 0.5823999999999999 -0.2912)) log:collectAllIn ?_:lag0 .
@@ -95,13 +95,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
             ?pi :x ?xi .
             ?pi :y ?yi .
             (?f {
-            (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-            ?pj :x ?xj .
-            ?xj math:notEqualTo ?xi .
-            (0.601 ?xj) math:difference ?num .
-            (?xi ?xj) math:difference ?den .
-            (?num ?den) math:quotient ?f .
-        } ?factors) log:collectAllIn _:d1 .
+                (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+                ?pj :x ?xj .
+                ?xj math:notEqualTo ?xi .
+                (0.601 ?xj) math:difference ?num .
+                (?xi ?xj) math:difference ?den .
+                (?num ?den) math:quotient ?f .
+            } ?factors) log:collectAllIn _:d1 .
             ?factors math:product ?basis .
             (?yi ?basis) math:product ?term .
         } (0.15665462178362502 -0.1454300602335 -0.5811152906002501 0.5835426727665 -0.291249943716375)) log:collectAllIn ?_:d0 .
@@ -120,13 +120,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
       ?pi :x ?xi .
       ?pi :y ?yi .
       (?f {
-      (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-      ?pj :x ?xj .
-      ?xj math:notEqualTo ?xi .
-      (0.601 ?xj) math:difference ?num .
-      (?xi ?xj) math:difference ?den .
-      (?num ?den) math:quotient ?f .
-  } ?factors) log:collectAllIn _:d1 .
+          (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+          ?pj :x ?xj .
+          ?xj math:notEqualTo ?xi .
+          (0.601 ?xj) math:difference ?num .
+          (?xi ?xj) math:difference ?den .
+          (?num ?den) math:quotient ?f .
+      } ?factors) log:collectAllIn _:d1 .
       ?factors math:product ?basis .
       (?yi ?basis) math:product ?term .
   } (0.15665462178362502 -0.1454300602335 -0.5811152906002501 0.5835426727665 -0.291249943716375)) log:collectAllIn ?_:d0 .
@@ -156,13 +156,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
             ?pi :x ?xi .
             ?pi :y ?yi .
             (?f {
-            (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-            ?pj :x ?xj .
-            ?xj math:notEqualTo ?xi .
-            (0.601 ?xj) math:difference ?num .
-            (?xi ?xj) math:difference ?den .
-            (?num ?den) math:quotient ?f .
-        } ?factors) log:collectAllIn _:d1 .
+                (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+                ?pj :x ?xj .
+                ?xj math:notEqualTo ?xi .
+                (0.601 ?xj) math:difference ?num .
+                (?xi ?xj) math:difference ?den .
+                (?num ?den) math:quotient ?f .
+            } ?factors) log:collectAllIn _:d1 .
             ?factors math:product ?basis .
             (?yi ?basis) math:product ?term .
         } (0.15665462178362502 -0.1454300602335 -0.5811152906002501 0.5835426727665 -0.291249943716375)) log:collectAllIn ?_:d0 .
@@ -189,13 +189,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
             ?pi :x ?xi .
             ?pi :y ?yi .
             (?f {
-            (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-            ?pj :x ?xj .
-            ?xj math:notEqualTo ?xi .
-            (0.599 ?xj) math:difference ?num .
-            (?xi ?xj) math:difference ?den .
-            (?num ?den) math:quotient ?f .
-        } ?factors) log:collectAllIn _:e1 .
+                (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+                ?pj :x ?xj .
+                ?xj math:notEqualTo ?xi .
+                (0.599 ?xj) math:difference ?num .
+                (?xi ?xj) math:difference ?den .
+                (?num ?den) math:quotient ?f .
+            } ?factors) log:collectAllIn _:e1 .
             ?factors math:product ?basis .
             (?yi ?basis) math:product ?term .
         } (0.156943954883625 -0.14576872643350003 -0.58368328940025 0.5812573405664999 -0.29114727961637504)) log:collectAllIn ?_:e0 .
@@ -211,13 +211,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
       ?pi :x ?xi .
       ?pi :y ?yi .
       (?f {
-      (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-      ?pj :x ?xj .
-      ?xj math:notEqualTo ?xi .
-      (0.599 ?xj) math:difference ?num .
-      (?xi ?xj) math:difference ?den .
-      (?num ?den) math:quotient ?f .
-  } ?factors) log:collectAllIn _:e1 .
+          (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+          ?pj :x ?xj .
+          ?xj math:notEqualTo ?xi .
+          (0.599 ?xj) math:difference ?num .
+          (?xi ?xj) math:difference ?den .
+          (?num ?den) math:quotient ?f .
+      } ?factors) log:collectAllIn _:e1 .
       ?factors math:product ?basis .
       (?yi ?basis) math:product ?term .
   } (0.156943954883625 -0.14576872643350003 -0.58368328940025 0.5812573405664999 -0.29114727961637504)) log:collectAllIn ?_:e0 .
@@ -247,13 +247,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
             ?pi :x ?xi .
             ?pi :y ?yi .
             (?f {
-            (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-            ?pj :x ?xj .
-            ?xj math:notEqualTo ?xi .
-            (0.599 ?xj) math:difference ?num .
-            (?xi ?xj) math:difference ?den .
-            (?num ?den) math:quotient ?f .
-        } ?factors) log:collectAllIn _:e1 .
+                (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+                ?pj :x ?xj .
+                ?xj math:notEqualTo ?xi .
+                (0.599 ?xj) math:difference ?num .
+                (?xi ?xj) math:difference ?den .
+                (?num ?den) math:quotient ?f .
+            } ?factors) log:collectAllIn _:e1 .
             ?factors math:product ?basis .
             (?yi ?basis) math:product ?term .
         } (0.156943954883625 -0.14576872643350003 -0.58368328940025 0.5812573405664999 -0.29114727961637504)) log:collectAllIn ?_:e0 .
@@ -276,13 +276,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
             ?pi :x ?xi .
             ?pi :y ?yi .
             (?f {
-            (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-            ?pj :x ?xj .
-            ?xj math:notEqualTo ?xi .
-            (0.0 ?xj) math:difference ?num .
-            (?xi ?xj) math:difference ?den .
-            (?num ?den) math:quotient ?f .
-        } ?factors) log:collectAllIn _:ra1 .
+                (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+                ?pj :x ?xj .
+                ?xj math:notEqualTo ?xi .
+                (0.0 ?xj) math:difference ?num .
+                (?xi ?xj) math:difference ?den .
+                (?num ?den) math:quotient ?f .
+            } ?factors) log:collectAllIn _:ra1 .
             ?factors math:product ?basis .
             (?yi ?basis) math:product ?term .
         } ("0"^^xsd:decimal "0"^^xsd:decimal "-1"^^xsd:decimal "0"^^xsd:decimal "0"^^xsd:decimal)) log:collectAllIn ?_:ra0 .
@@ -298,13 +298,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
       ?pi :x ?xi .
       ?pi :y ?yi .
       (?f {
-      (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-      ?pj :x ?xj .
-      ?xj math:notEqualTo ?xi .
-      (0.0 ?xj) math:difference ?num .
-      (?xi ?xj) math:difference ?den .
-      (?num ?den) math:quotient ?f .
-  } ?factors) log:collectAllIn _:ra1 .
+          (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+          ?pj :x ?xj .
+          ?xj math:notEqualTo ?xi .
+          (0.0 ?xj) math:difference ?num .
+          (?xi ?xj) math:difference ?den .
+          (?num ?den) math:quotient ?f .
+      } ?factors) log:collectAllIn _:ra1 .
       ?factors math:product ?basis .
       (?yi ?basis) math:product ?term .
   } ("0"^^xsd:decimal "0"^^xsd:decimal "-1"^^xsd:decimal "0"^^xsd:decimal "0"^^xsd:decimal)) log:collectAllIn ?_:ra0 .
@@ -330,13 +330,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
             ?pi :x ?xi .
             ?pi :y ?yi .
             (?f {
-            (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-            ?pj :x ?xj .
-            ?xj math:notEqualTo ?xi .
-            (1.0 ?xj) math:difference ?num .
-            (?xi ?xj) math:difference ?den .
-            (?num ?den) math:quotient ?f .
-        } ?factors) log:collectAllIn _:rb1 .
+                (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+                ?pj :x ?xj .
+                ?xj math:notEqualTo ?xi .
+                (1.0 ?xj) math:difference ?num .
+                (?xi ?xj) math:difference ?den .
+                (?num ?den) math:quotient ?f .
+            } ?factors) log:collectAllIn _:rb1 .
             ?factors math:product ?basis .
             (?yi ?basis) math:product ?term .
         } ("0"^^xsd:decimal "0"^^xsd:decimal "0"^^xsd:decimal "1"^^xsd:decimal "0"^^xsd:decimal)) log:collectAllIn ?_:rb0 .
@@ -352,13 +352,13 @@ _:b6_457ef41901b6dec1 :yb "1"^^xsd:decimal .
       ?pi :x ?xi .
       ?pi :y ?yi .
       (?f {
-      (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
-      ?pj :x ?xj .
-      ?xj math:notEqualTo ?xi .
-      (1.0 ?xj) math:difference ?num .
-      (?xi ?xj) math:difference ?den .
-      (?num ?den) math:quotient ?f .
-  } ?factors) log:collectAllIn _:rb1 .
+          (_:b1 _:b2 _:b3 _:b4 _:b5) list:member ?pj .
+          ?pj :x ?xj .
+          ?xj math:notEqualTo ?xi .
+          (1.0 ?xj) math:difference ?num .
+          (?xi ?xj) math:difference ?den .
+          (?num ?den) math:quotient ?f .
+      } ?factors) log:collectAllIn _:rb1 .
       ?factors math:product ?basis .
       (?yi ?basis) math:product ?term .
   } ("0"^^xsd:decimal "0"^^xsd:decimal "0"^^xsd:decimal "1"^^xsd:decimal "0"^^xsd:decimal)) log:collectAllIn ?_:rb0 .
