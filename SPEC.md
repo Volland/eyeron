@@ -1,4 +1,4 @@
-# <img src="https://josd.github.io/images/eye.png" alt="" width="32" height="32"> Eyeron specification
+# <img src="assets/eye.png" alt="" width="32" height="32"> Eyeron specification
 
 **Status of this document.** This document specifies the Notation3 (N3)
 language as Eyeron implements it: its terms, rules, and quantifier scopes, how

@@ -1,4 +1,4 @@
-# <img src="https://josd.github.io/images/eye.png" alt="" width="32" height="32"> Eyeron guide
+# <img src="assets/eye.png" alt="" width="32" height="32"> Eyeron guide
 
 Give Eyeron a few facts and rules, ask a question, and follow the answer back to its evidence. This guide takes you from a first conclusion to saved proofs, browser experiments, and your own Rust application.
 

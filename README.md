@@ -1,4 +1,4 @@
-# <img src="https://josd.github.io/images/eye.png" alt="" width="48" height="48" align="middle"> Eyeron
+# <img src="assets/eye.png" alt="" width="48" height="48" align="middle"> Eyeron
 
 Eyeron is a Rust reasoner for **Notation3 (N3)**. It derives conclusions from
 facts and rules, writes N3 proofs, and checks those proofs. It runs as a
