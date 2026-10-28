@@ -181,7 +181,7 @@ The result identifies four supporting documents:
 
 Here, `dpv:hasJustification` identifies the supporting documents found by the audit. `prov:hadPrimarySource` supplies the assertion-to-document mappings.
 
-The bundled [audit input](../input/verifiable-decision-audit.n3) is a saved copy of the [decision proof](../proof/verifiable-decision.n3), so the example can also run without generating a new one.
+The bundled [audit input](../input/verifiable-decision-audit.n3) is a saved copy of the decision proof that `eyeron -p examples/verifiable-decision.n3` writes, so the example can also run without generating a new one. The test suite keeps that copy equal to the current proof.
 
 ---
 
@@ -211,7 +211,7 @@ It also does not authenticate issuers, check whether evidence has expired, or es
 
 The audit itself can produce a proof, but some operations in Eyeron's checker remain explicit **trust obligations**: assumptions whose truth the checker does not verify. Always read the report.
 
-See the [proof-checking contract](../../docs/proof-checking.md) for the precise boundary.
+See the [proof-checking contract](../../SPEC.md#9-proofs-and-verification) for the precise boundary.
 
 ---
 

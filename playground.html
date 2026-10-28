@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>The Eyeron N3 Playground</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css" />
     <style>
       * { box-sizing: border-box; }
       :root { color-scheme: light; --bg: #f5f5f7; --panel: #fff; --border: #d1d5db; --text: #111827; --muted: #6b7280; --accent: #2563eb; }
@@ -60,11 +59,29 @@
       .proof-input { margin-top: 1rem; }
       .share-result { flex: 1 1 100%; min-width: 0; }
       .share-result input { width: 100%; }
-      .CodeMirror { height: 32rem; border: 1px solid var(--border); border-radius: 0.5rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.87rem; line-height: 1.45; }
-      .CodeMirror-gutters { background: #f9fafb; border-right: 1px solid #e5e7eb; }
-      #proof-panel .CodeMirror { height: 15rem; }
-      .additional-input .CodeMirror { height: 18rem; }
-      .output-card .CodeMirror { height: 24rem; }
+      /* An editor is a transparent textarea over a colored copy of its text.
+         Both share one grid cell, font, and wrapping, so the caret and the
+         colors stay aligned; the layer changes colors only, never weight or
+         slant, which would move the text under the caret. */
+      .editor { display: grid; height: 32rem; overflow: auto; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--panel); }
+      .editor > textarea, .editor > .highlight { grid-area: 1 / 1; min-height: 100%; margin: 0; padding: 0.5rem 0.65rem; border: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.87rem; line-height: 1.45; tab-size: 4; white-space: pre-wrap; overflow-wrap: anywhere; }
+      .editor > textarea { overflow: hidden; resize: none; background: transparent; color: transparent; caret-color: var(--text); }
+      .editor > textarea::selection { color: transparent; background: #22bde747; }
+      .editor > textarea:focus-visible { outline: none; }
+      .editor:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .editor > .highlight { pointer-events: none; color: var(--text); }
+      #proof-panel .editor { height: 15rem; }
+      .additional-input .editor { height: 18rem; }
+      .output-card .editor { height: 24rem; }
+      .t-comment { color: var(--muted); }
+      .t-keyword { color: #b3261e; }
+      .t-var { color: #0b6f8c; }
+      .t-blank { color: #a0469b; }
+      .t-string { color: #2b7a2f; }
+      .t-iri { color: #6c3fb5; }
+      .t-number { color: #9a5200; }
+      .t-brace { color: var(--accent); }
+      .t-punct { color: var(--muted); }
       .messages { margin: 0.85rem 0 0; max-height: 18rem; padding: 0.75rem; border-radius: 0.5rem; background: #fef2f2; color: #991b1b; font-size: 0.82rem; line-height: 1.45; white-space: pre-wrap; overflow: auto; overflow-wrap: anywhere; }
       .run-toolbar { grid-area: actions; align-self: stretch; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; align-content: start; flex-wrap: wrap; gap: 0.6rem 1.25rem; box-shadow: 0 3px 8px #1118270a; }
       .run-toolbar .status { flex: 1 1 12rem; min-width: 0; margin: 0; overflow-wrap: anywhere; }
@@ -97,8 +114,9 @@
         .options-card .toggle { min-height: 44px; }
         .toggle { min-height: 44px; }
         .flags { gap: 0 1rem; }
-        .CodeMirror { height: 22rem; height: clamp(16rem, 50svh, 28rem); font-size: 16px; }
-        .additional-input .CodeMirror, #proof-panel .CodeMirror { height: 16rem; }
+        .editor { height: 22rem; height: clamp(16rem, 50svh, 28rem); }
+        .editor > textarea, .editor > .highlight { font-size: 16px; }
+        .additional-input .editor, #proof-panel .editor { height: 16rem; }
       }
     </style>
   </head>
@@ -174,8 +192,6 @@
         </div>
       </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/turtle/turtle.min.js"></script>
     <script type="module">
       const bundledExamplesN3 = [
         "access-control-policy.n3",
@@ -275,6 +291,7 @@
         "euler-identity.n3",
         "ev-range-worlds.n3",
         "eventual-interoperability-interaction-patterns.n3",
+        "examiners.n3",
         "existential-rule.n3",
         "exoplanet-validation-worlds.n3",
         "explicit-existential-rule.n3",
@@ -538,13 +555,98 @@
       ];
 
       const byId = (id) => document.getElementById(id);
-      const editorOptions = { mode: 'turtle', lineNumbers: true, lineWrapping: true };
-      const input = CodeMirror.fromTextArea(byId('input'), editorOptions);
-      const proof = CodeMirror.fromTextArea(byId('proof-input'), editorOptions);
-      const output = CodeMirror.fromTextArea(byId('output'), { ...editorOptions, readOnly: true });
-      input.getInputField().setAttribute('aria-label', 'N3 input');
-      proof.getInputField().setAttribute('aria-label', 'Saved N3 proof');
-      output.getInputField().setAttribute('aria-label', 'Command output');
+      // One pass over N3 text, in the lexer's token kinds: comments, long and
+      // short strings, IRIs, keywords and arrows, variables, blank nodes,
+      // prefixed names, language tags, numbers, bare words, and punctuation.
+      const n3Tokens = new RegExp([
+        /(?<comment>#[^\n]*)/,
+        /(?<string>"""[\s\S]*?(?:"""|$)|'''[\s\S]*?(?:'''|$)|"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*')/,
+        /(?<iri><[^\s<>"{}|^`\\]*>)/,
+        /(?<keyword>@(?:prefix|base|forAll|forSome|keywords|version)\b|=>|<=|=)/,
+        /(?<variable>\?[\p{L}\p{N}_-]+)/,
+        /(?<blank>_:[\p{L}\p{N}_-]+(?:\.[\p{L}\p{N}_-]+)*)/,
+        /(?<name>(?:\p{L}[\p{L}\p{N}_-]*(?:\.[\p{L}\p{N}_-]+)*)?:(?:[\p{L}\p{N}_%-]+(?:[.:][\p{L}\p{N}_%-]+)*)?)/,
+        /(?<language>@[A-Za-z]+(?:-[A-Za-z0-9]+)*)/,
+        /(?<number>[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:[eE][+-]?\d+)?)/,
+        /(?<word>\p{L}[\p{L}\p{N}_-]*)/,
+        /(?<brace>[{}])/,
+        /(?<punct>[()[\].;,]|\^\^)/,
+      ].map((part) => part.source).join('|'), 'gu');
+      const n3Words = /^(?:a|is|of|has|true|false|prefix|base|version)$/i;
+      const tokenClasses = { comment: 't-comment', string: 't-string', iri: 't-iri', keyword: 't-keyword', variable: 't-var',
+        blank: 't-blank', name: 't-iri', language: 't-string', number: 't-number', brace: 't-brace', punct: 't-punct' };
+      // Coloring a very large document would stall typing; it is shown plain.
+      const maxHighlighted = 200000;
+
+      function escapeHtml(text) {
+        return text.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+      }
+
+      /** N3 sources and results share one lexical coloring. */
+      function highlight(text) {
+        let html = '';
+        let at = 0;
+        for (const match of text.matchAll(n3Tokens)) {
+          const [kind] = Object.entries(match.groups).find(([, value]) => value !== undefined);
+          const className = kind === 'word' ? (n3Words.test(match[0]) ? 't-keyword' : '') : tokenClasses[kind];
+          html += escapeHtml(text.slice(at, match.index));
+          html += className ? `<span class="${className}">${escapeHtml(match[0])}</span>` : escapeHtml(match[0]);
+          at = match.index + match[0].length;
+        }
+        return html + escapeHtml(text.slice(at));
+      }
+
+      // The subset of an editor the page uses: value, change events, a
+      // read-only switch, and whether its text is N3 to color.
+      function createEditor(textarea, { label, readOnly = false } = {}) {
+        const frame = document.createElement('div');
+        frame.className = 'editor';
+        const layer = document.createElement('pre');
+        layer.className = 'highlight';
+        layer.setAttribute('aria-hidden', 'true');
+        textarea.replaceWith(frame);
+        frame.append(layer, textarea);
+        textarea.spellcheck = false;
+        textarea.readOnly = readOnly;
+        if (label) textarea.setAttribute('aria-label', label);
+        const listeners = [];
+        let colored = true;
+        let pending = [];
+        let frameRequested = false;
+        function paint() {
+          frameRequested = false;
+          if (pending.length) { textarea.value += pending.join(''); pending = []; }
+          const text = textarea.value;
+          // A trailing space keeps a final empty line as tall as the textarea's.
+          if (colored && text.length <= maxHighlighted) layer.innerHTML = highlight(text) + ' ';
+          else layer.textContent = text + ' ';
+        }
+        textarea.addEventListener('input', () => { paint(); for (const listener of listeners) listener(); });
+        paint();
+        return {
+          getValue: () => { if (pending.length) paint(); return textarea.value; },
+          setValue(text) {
+            pending = [];
+            textarea.value = text;
+            paint();
+            for (const listener of listeners) listener();
+          },
+          // Streamed output arrives in many small pieces; paint once a frame.
+          append(text) {
+            pending.push(text);
+            if (!frameRequested) { frameRequested = true; requestAnimationFrame(paint); }
+          },
+          on(event, listener) { if (event === 'change') listeners.push(listener); },
+          setOption(name, value) {
+            if (name === 'readOnly') textarea.readOnly = value;
+            if (name === 'mode') { colored = value === 'n3'; paint(); }
+          },
+        };
+      }
+
+      const input = createEditor(byId('input'), { label: 'N3 input' });
+      const proof = createEditor(byId('proof-input'), { label: 'Saved N3 proof' });
+      const output = createEditor(byId('output'), { label: 'Command output', readOnly: true });
       const defaultProgram = '@prefix : <http://example.org/socrates#> .\n\n:Socrates a :Human .\n\n{\n    ?person a :Human .\n} => {\n    ?person a :Mortal .\n} .\n';
       const stateKey = 'eyeron.playground.cli.v1';
       const gistTokenKey = 'eyeron.playground.github.gistToken.v1';
@@ -586,7 +688,6 @@
         input.setValue(sources[0].text);
         byId('input-source').textContent = sources[0].name;
         byId('input-source').hidden = sources[0].name === '-';
-        for (const editor of additionalEditors) editor.toTextArea();
         additionalEditors = [];
         byId('additional-inputs').replaceChildren();
         for (const source of sources.slice(1)) {
@@ -600,8 +701,7 @@
           const textarea = document.createElement('textarea');
           section.append(heading, origin, textarea);
           byId('additional-inputs').append(section);
-          const editor = CodeMirror.fromTextArea(textarea, { ...editorOptions, readOnly: busy });
-          editor.getInputField().setAttribute('aria-label', 'Additional input: ' + source.name);
+          const editor = createEditor(textarea, { label: 'Additional input: ' + source.name, readOnly: busy });
           editor.setValue(source.text);
           editor.on('change', () => { if (!restoring) { source.text = editor.getValue(); scheduleSave(); } });
           additionalEditors.push(editor);
@@ -632,7 +732,6 @@
       function updateOptions() {
         const checking = byId('mode').value === '--check-proof';
         byId('proof-panel').hidden = !checking;
-        if (checking) requestAnimationFrame(() => proof.refresh());
         byId('command').textContent = 'eyeron ' + argumentsForRun().map(quoteArgument).join(' ');
         scheduleSave();
       }
@@ -867,8 +966,7 @@
               failReady = null;
               resolve();
             } else if (message.type === 'output') {
-              const line = output.lastLine();
-              output.replaceRange(message.text, { line, ch: output.getLine(line).length });
+              output.append(message.text);
               if (message.text) byId('save-output').disabled = false;
             } else if (message.type === 'done') {
               if (finishRun) finishRun(message.report);
@@ -913,7 +1011,7 @@
         }
         setBusy(true);
         output.setValue('');
-        output.setOption('mode', args.some((arg) => ['--ast', '--prove-and-check', '--check-proof', '--help', '--version'].includes(arg)) ? null : 'turtle');
+        output.setOption('mode', args.some((arg) => ['--ast', '--prove-and-check', '--check-proof', '--help', '--version'].includes(arg)) ? null : 'n3');
         byId('messages').hidden = true;
         byId('messages').textContent = '';
         const started = performance.now();

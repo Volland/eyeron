@@ -1,0 +1,54 @@
+# Counting a course's examiners
+#
+# Wittgenstein participates in the philosophy course that Russell and
+# Wittgenstein both teach. Participants are students, and a teacher who is not
+# a student is an examiner. Every course with a participant also needs some
+# examiner, so that rule's conclusion has a blank node. Russell already
+# satisfies it, so eyeron introduces no fresh examiner and counts exactly one.
+# The example shows scoped negation, an existential that is introduced only
+# when no known fact satisfies it, and a count over the result.
+# See https://arxiv.org/abs/2607.28778
+
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+@prefix : <https://example.org/course#> .
+
+# Facts
+:philosophy :teacher :russell .
+:philosophy :teacher :wittgenstein .
+:philosophy :participant :wittgenstein .
+
+# Participants are students.
+{
+    ?course :participant ?person .
+} => {
+    ?person a :Student .
+} .
+
+# A teacher who is not a student is an examiner.
+{
+    ?course :teacher ?person .
+    ?scope log:notIncludes {
+        ?person a :Student .
+    } .
+} => {
+    ?course :examiner ?person .
+} .
+
+# A course with a participant has some examiner.
+{
+    ?course :participant ?person .
+} => {
+    ?course :examiner _:examiner .
+} .
+
+# Count the examiners of each course with a participant.
+{
+    ?course :participant ?anyone .
+    (?examiner {
+        ?course :examiner ?examiner .
+    } ?examiners) log:collectAllIn ?scope .
+    ?examiners list:length ?count .
+} => {
+    ?course :numberOfExaminers ?count .
+} .

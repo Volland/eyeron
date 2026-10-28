@@ -25,18 +25,20 @@ user-facing text direct.
 - `playground.html`: hand-written browser playground; `pkg/` holds the
   committed wasm build it loads.
 - `examples/*.n3`: runnable examples. `examples/output/` holds output goldens
-  (`.n3` or `.md`), `examples/proof/` proof goldens, `examples/check/` the
-  corresponding CLI proof-check reports (`.txt`), and `examples/input/`
-  companion inputs loaded with the example of the same stem (`.n3`, else
-  `.trig`), and `examples/deck/` Markdown walkthroughs.
+  (`.n3` or `.md`), `examples/input/` companion inputs loaded with the
+  example of the same stem (`.n3`, else `.trig`), and `examples/deck/`
+  Markdown walkthroughs. Proofs are not stored: the proof-checking suite
+  generates each example's proof and checks it.
 - `tests/`: integration tests. `examples.rs`, `proof_checking.rs`, and
   `w3c_rdf.rs` are custom harnesses (`harness = false`); `regressions.rs` and
   `quantification.rs` hold focused behavior tests; `proof_validation.rs`
   holds forged proofs the checker must reject; `notation3tests/` and
   `w3c_rdf/rdf-tests/` are vendored conformance suites.
 - `reports/w3c-rdf-earl.ttl`: EARL report, rewritten by the W3C RDF suite.
-- `docs/guide.md` (CLI, formats, APIs, development), `docs/n3.md` (language
-  and runtime reference), `docs/proof-checking.md` (proof contract).
+- `README.md` (short entry point), `GUIDE.md` (CLI, formats, playground,
+  APIs, development), `SPEC.md` (RFC-style specification: language,
+  evaluation, built-ins, and the C1–C9 proof contract), and `docs/images/`
+  (the guide's illustrations).
 - `scripts/test-all`, `release`, `deny.toml`, `.github/workflows/`: full test
   run, releases, dependency policy, CI, Pages, and GitHub releases.
 
@@ -70,8 +72,8 @@ parts rather than flooding the terminal.
 
 ## Language and examples
 
-- Read the relevant section of `docs/n3.md` before changing language
-  behavior, and `docs/proof-checking.md` before changing proofs. Keep the
+- Read the relevant section of `SPEC.md` before changing language behavior,
+  and its Section 9 before changing proofs. Keep the
   implementation, docs, examples, and tests consistent.
 - Graph terms are opaque and keep literal lexical identity: inside a quoted
   graph `"01"^^xsd:integer` is not `1`, while `()` is `rdf:nil`. Numeric
@@ -93,22 +95,21 @@ parts rather than flooding the terminal.
   comments without banners, and no trailing whitespace. `examples/socrates.n3`
   is the reference. Reformatting is whitespace and comments only, so every
   golden must stay unchanged.
-- Every example that derives anything has an output golden and a proof
-  golden. When adding an example, add it to `bundledExamplesN3` in
+- Every example has an output golden, and `tests/proof_checking.rs`
+  generates the proof of every example that derives anything and checks it
+  under C1–C9. When adding an example, add it to `bundledExamplesN3` in
   `playground.html`; a companion input goes in `examples/input/` and in
   `bundledCompanionInputs`. `tests/playground.rs` checks both lists.
 - Ordinary test runs only read goldens. After an intentional output change,
   `EYERON_UPDATE_GOLDENS=1 cargo test --release --test examples` rewrites the
-  output (`.n3`) and proof goldens that no longer match, exactly as the
-  harness produces them (with no base IRI). Review the diff: no output golden
-  should change unless intended, and `cargo test --release --test
-  proof_checking` must still pass.
+  output (`.n3`) goldens that no longer match, exactly as the harness
+  produces them (with no base IRI). Review the diff: no output golden should
+  change unless intended, and `cargo test --release --test proof_checking`
+  must still pass.
 
-- Query examples return their answers directly. Keep proof explanations in
-  `examples/proof/` and C1–C9 verification reports in `examples/check/`, rather
-  than printing a hand-written Answer/Reason/Check report. Refresh check
-  reports with `EYERON_UPDATE_GOLDENS=1 cargo test --release --test proof_checking`;
-  ordinary runs compare them without writing.
+- Query examples return their answers directly. `-p` explains them and `-c`
+  verifies that explanation under C1–C9, so an example never prints a
+  hand-written Answer/Reason/Check report.
 
 ## Implementation and verification
 
@@ -117,10 +118,12 @@ that say why. Prefer small, direct changes over new machinery, and fix the
 code that produces a wrong result rather than patching its output.
 
 Proof checking must stay sound: a forged proof must never report `checked`.
-The conditions C1–C9 are defined in `docs/proof-checking.md`; proof checking
+The conditions C1–C9 are defined in `SPEC.md` Section 9; proof checking
 does not require compatibility with sibling engines. Matching
 against a recorded step is one-way, so only the rule's variables bind. An
-existential witness must be a fresh blank node tied to one firing. Built-ins
+existential witness must be a fresh blank node tied to one firing, and its
+introduction assumes no fact already satisfied its piece: an `unsatisfied`
+obligation that evidence independent of the firing contradicts (C6). Built-ins
 are re-decided with closed arguments, including tests on quoted graphs; only
 those that read outside the proof, and tests over the current graph, are
 obligations, and the latter must not be contradicted by the proof's own

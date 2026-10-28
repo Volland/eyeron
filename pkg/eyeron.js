@@ -308,11 +308,11 @@ function __wbg_get_imports() {
         __wbg___wbindgen_throw_41e9ee4f547fc59a: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
-        __wbg_call_072e7173f0d446f1: function() { return handleError(function (arg0, arg1, arg2, arg3) {
+        __wbg_call_d559d2e39305d465: function() { return handleError(function (arg0, arg1, arg2, arg3) {
             const ret = getObject(arg0).call(getObject(arg1), getStringFromWasm0(arg2, arg3));
             return addHeapObject(ret);
         }, arguments); },
-        __wbg_now_72026337739ff567: function() {
+        __wbg_now_018207980f3aef87: function() {
             const ret = Date.now();
             return ret;
         },

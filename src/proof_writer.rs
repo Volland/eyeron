@@ -529,7 +529,7 @@ fn graph_for_triple(triple: &Triple, prefixes: &BTreeMap<String, String>) -> Str
 /// a list the reader cannot reproduce would say nothing: the proof carries
 /// that rule itself instead. The generated rule is also a derived
 /// statement, so the proof contains a step deriving it, and a checker can
-/// hold the citation to that (`docs/proof-checking.md` §5.1).
+/// hold the citation to that (`SPEC.md` §9.5.1).
 pub(crate) fn rule_reference(rule: &Rule, numbering: &RuleNumbering, prefixes: &BTreeMap<String, String>) -> String {
     if rule.source.is_some() {
         if let Some(number) = numbering.number(rule) {

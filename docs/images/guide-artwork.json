@@ -1,6 +1,6 @@
 {
   "generator": "Built-in image_gen tool",
-  "usage": "Original illustrations for docs/guide.md. Encoded as WebP without changing dimensions.",
+  "usage": "Original illustrations for GUIDE.md. Encoded as WebP without changing dimensions.",
   "images": [
     {
       "file": "guide-welcome.webp",

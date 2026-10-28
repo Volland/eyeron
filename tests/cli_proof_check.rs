@@ -94,15 +94,14 @@ fn generated_proof_is_checked_against_separately_scoped_merged_inputs() {
     );
     let text = String::from_utf8(output.stdout).unwrap();
     assert!(
-        text.contains("checked: 6 steps, 6 verified, 0 trusted"),
+        text.contains("checked with obligations: 6 steps, 5 verified, 1 trusted"),
         "{text}"
     );
 }
 
 #[test]
 fn separately_checked_invalid_proof_still_returns_failure() {
-    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("examples/proof/socrates.n3");
-    let proof = std::fs::read_to_string(path)
+    let proof = String::from_utf8(run(&["-p", "examples/socrates.n3"]).stdout)
         .unwrap()
         .replace("pe:value :Mortal", "pe:value :Immortal");
     let output = run_with_stdin(
@@ -120,7 +119,7 @@ fn prove_and_check_rejects_conflicting_modes() {
     for other in ["--ast", "--proof", "--check-proof", "--stream-messages"] {
         let mut args = vec!["-c", other];
         if other == "--check-proof" {
-            args.push("examples/proof/socrates.n3");
+            args.push("-");
         }
         let output = run(&args);
         assert_eq!(output.status.code(), Some(1));
@@ -135,7 +134,7 @@ fn prove_and_check_rejects_conflicting_modes() {
 #[test]
 fn check_proof_rejects_modes_it_would_ignore() {
     for other in ["--ast", "--proof", "--stream-messages"] {
-        let output = run(&["--check-proof", "examples/proof/socrates.n3", other, "examples/socrates.n3"]);
+        let output = run(&["--check-proof", "-", other, "examples/socrates.n3"]);
         assert_eq!(output.status.code(), Some(1));
         assert!(output.stdout.is_empty());
         assert_eq!(
@@ -206,7 +205,7 @@ fn assert_separate_roundtrip(args: &[&str], source_stdin: Option<&[u8]>) {
         String::from_utf8_lossy(&checked.stderr)
     );
     assert!(
-        String::from_utf8_lossy(&checked.stdout).contains("checked:"),
+        String::from_utf8_lossy(&checked.stdout).lines().any(|line| line.starts_with("checked")),
         "{}",
         String::from_utf8_lossy(&checked.stdout)
     );

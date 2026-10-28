@@ -26,7 +26,7 @@ pub struct CliOptions {
     pub max_backward_depth: Option<usize>,
     pub files: Vec<String>,
     /// `--check-proof FILE`: check that proof document against the program
-    /// given as the positional arguments (`docs/proof-checking.md`).
+    /// given as the positional arguments (`SPEC.md` Section 9).
     pub check_proof: Option<String>,
 }
 

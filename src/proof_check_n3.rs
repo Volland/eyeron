@@ -1,5 +1,5 @@
 //! Reader and step checker for Notation3 proof documents (specification
-//! §8).
+//! §9.8).
 //!
 //! A proof is an N3 document, so it is read with the ordinary N3 parser and
 //! its top-level steps are lifted into the abstract model. Checking a
@@ -20,7 +20,7 @@ const PE: &str = "https://eyereasoner.github.io/pe#";
 const MAX_PROOF_MATCHES: usize = 200_000;
 
 /// Built-ins whose value is not a function of the triple they appear in, so
-/// re-evaluating them cannot confirm anything (specification §5.3, §6).
+/// re-evaluating them cannot confirm anything (specification §9.5.3, §9.6).
 /// Each reads something outside the proof: the clock, an external document,
 /// the fact set, or the reasoner itself.
 pub(crate) const IMPURE_BUILTINS: &[&str] = &[
@@ -48,7 +48,7 @@ const LOG_CONJUNCTION: &str = "http://www.w3.org/2000/10/swap/log#conjunction";
 /// the current graph rather than a quoted one: the subject of `log:includes` and
 /// `log:notIncludes`, the object of `log:collectAllIn` and `log:forAllIn`.
 /// Whether such a test held depends on everything derived, which no proof
-/// records, so it is an obligation (§6) — but one the proof's own evidence
+/// records, so it is an obligation (§9.6) — but one the proof's own evidence
 /// can still contradict (C6). `None` for any other built-in, or a quoted
 /// scope, which makes the test a function of its arguments (C5).
 fn current_graph_test(triple: &Triple) -> Option<&'static str> {
@@ -114,7 +114,7 @@ struct Step {
     kind: Kind,
     rule: Option<usize>,
     /// A rule the engine generated while reasoning, carried by the step
-    /// because no document contains it (§5.1).
+    /// because no document contains it (§9.5.1).
     carried: Option<(crate::ast::Graph, crate::ast::Graph, Triple)>,
     builtin: Option<Term>,
     bindings: Vec<(String, Term)>,
@@ -157,6 +157,9 @@ type Firing = (String, Vec<(crate::ast::Name, Term)>);
 
 struct Application {
     firing: Firing,
+    /// The position of the head triple the step instantiates, for a rule
+    /// application.
+    head: Option<usize>,
     witnesses: Vec<(crate::ast::Name, Term)>,
     /// Individuals already available to the application cannot be fresh.
     occupied: BTreeSet<crate::ast::Name>,
@@ -243,7 +246,7 @@ pub fn check_proof_document(source: &crate::ast::Document, proof: &str) -> Resul
 impl N3Proof {
     pub fn read_document(document: &crate::ast::Document, proof: &str) -> Result<Self> {
         // `reason` numbers the rules it was given, having dropped the query
-        // rules; a checker must number them the same way (§5.1).
+        // rules; a checker must number them the same way (§9.5.1).
         let rules: Vec<crate::ast::Rule> = document.rules.iter().filter(|rule| !rule.is_query).cloned().collect();
         // N3 treats a rule as data, so a rule written in the document is
         // itself a statement the document gives. That includes the query
@@ -466,7 +469,7 @@ impl N3Proof {
         Ok(bindings)
     }
 
-    /// §5.1: re-perform the one rule application this step records.
+    /// §9.5.1: re-perform the one rule application this step records.
     fn rule_applications(&self, step: &Step) -> std::result::Result<Vec<Application>, String> {
         // A generated rule is carried by the step; a written one is taken
         // from the source, never from the document.
@@ -500,7 +503,7 @@ impl N3Proof {
         }
         // One environment across every premise and the conclusion, so a
         // variable the bindings did not mention is still forced to take one
-        // consistent value (§5.1). Only the rule's own variables bind: the
+        // consistent value (§9.5.1). Only the rule's own variables bind: the
         // step may not instantiate itself to meet the rule halfway.
         for (position, (premise, used)) in premise.iter().zip(step.uses.iter()).enumerate() {
             if !match_triple(premise, used, &mut bindings) {
@@ -515,7 +518,7 @@ impl N3Proof {
             occupied = triple_blank_labels(&step.uses);
             for value in bindings.values() { blank_labels(value, &mut occupied); }
         }
-        let applications: Vec<_> = conclusion.iter().filter_map(|candidate| {
+        let applications: Vec<_> = conclusion.iter().enumerate().filter_map(|(head, candidate)| {
             let mut trial = bindings.clone();
             // Equal labels in the two quoted sides have separate scopes.
             for label in &conclusion.existentials { trial.remove(format!("_:{}", label).as_str()); }
@@ -528,7 +531,7 @@ impl N3Proof {
                     !conclusion.existentials.iter().any(|label| name.as_str() == format!("_:{}", label))));
                 assignment.into_iter().collect()
             };
-            Some(Application { firing: (identity.clone(), assignment), witnesses, occupied: occupied.clone() })
+            Some(Application { firing: (identity.clone(), assignment), head: Some(head), witnesses, occupied: occupied.clone() })
         }).collect();
         if applications.is_empty() {
             return Err(format!("does not follow from {}: it concludes none of what this step claims", number));
@@ -544,7 +547,7 @@ impl N3Proof {
             let witnesses = existentials.into_iter().map(|(name, value)| (name[2..].into(), value)).collect();
             let mut occupied = BTreeSet::new();
             for (_, value) in &assignment { blank_labels(value, &mut occupied); }
-            Some(Application { firing: ("source assertions".into(), assignment), witnesses, occupied })
+            Some(Application { firing: ("source assertions".into(), assignment), head: None, witnesses, occupied })
         })
     }
 
@@ -558,6 +561,99 @@ impl N3Proof {
             || self.given.iter().any(|candidate| ground_statements_equal(candidate, statement))
     }
 
+    /// The conclusion of the forward rule a step applies, when that rule
+    /// introduces existentials only where no fact already satisfies them:
+    /// it has premises and is not a query (§4.2).
+    fn lean_conclusion<'s>(&'s self, step: &'s Step) -> Option<&'s crate::ast::Graph> {
+        let (premise, conclusion) = match &step.carried {
+            Some((premise, conclusion, statement)) => {
+                if statement.p != Term::iri(crate::ast::LOG_IMPLIES) || self.query_application(step) { return None; }
+                (premise, conclusion)
+            }
+            None => {
+                let rule = step.rule.and_then(|number| self.rules.get(number.wrapping_sub(1)))?;
+                if !rule.is_forward || rule.is_fuse { return None; }
+                (&rule.premise, &rule.conclusion)
+            }
+        };
+        (!premise.is_empty() && conclusion.universals.is_empty() && !conclusion.existentials.is_empty()).then_some(conclusion)
+    }
+
+    /// The application a step introduces existentials in, if it does:
+    /// every way of reading the step instantiates an existential.
+    fn introduction<'s>(&'s self, step: &'s Step) -> Option<(&'s crate::ast::Graph, Application)> {
+        let conclusion = self.lean_conclusion(step)?;
+        let mut applications = self.rule_applications(step).ok()?;
+        if applications.iter().any(|application| application.witnesses.is_empty()) { return None; }
+        Some((conclusion, applications.swap_remove(0)))
+    }
+
+    /// C6 for introductions: each assumes no fact satisfied its piece, the
+    /// head triples sharing its existentials, under the firing's frontier
+    /// values. Evidence that does so contradicts the assumption, unless it
+    /// is the firing's own: a statement that mentions one of its witnesses,
+    /// or that depends on such a statement. Returns how many pieces were
+    /// examined.
+    fn unsatisfied_existentials(&self, evidence: &crate::reasoner::Evidence,
+        introductions: &[(&Step, &crate::ast::Graph, Application)], contradictions: &mut Vec<(String, String)>) -> usize {
+        let mut witnesses: BTreeMap<&Firing, BTreeSet<crate::ast::Name>> = BTreeMap::new();
+        for (_, _, application) in introductions {
+            let entry = witnesses.entry(&application.firing).or_default();
+            for (_, value) in &application.witnesses { blank_labels(value, entry); }
+        }
+        let mut examined = BTreeSet::new();
+        for (step, conclusion, application) in introductions {
+            let Some(head) = application.head else { continue };
+            let Some(piece) = crate::reasoner::existential_pieces(conclusion).into_iter().find(|piece| piece.contains(&head)) else { continue };
+            if !examined.insert((&application.firing, piece.clone())) { continue; }
+            let mut mapping: BTreeMap<Term, Term> = application.firing.1.iter()
+                .filter(|(name, _)| !name.starts_with("_:"))
+                .map(|(name, value)| (Term::Var(name.clone()), value.clone())).collect();
+            for label in &conclusion.existentials {
+                mapping.insert(Term::Blank(label.clone()), Term::var(format!("__exists_{}", label)));
+            }
+            let pattern: Vec<Triple> = piece.iter().map(|&position| {
+                let triple = &conclusion[position];
+                Triple::new(replace_terms(&triple.s, &mapping), replace_terms(&triple.p, &mapping), replace_terms(&triple.o, &mapping))
+            }).collect();
+            let own = &witnesses[&application.firing];
+            for solution in evidence.satisfying(&pattern) {
+                let solved: BTreeMap<Term, Term> = solution.iter().map(|(name, value)| (Term::Var(name.clone()), value.clone())).collect();
+                let support: Vec<Triple> = pattern.iter().map(|triple| Triple::new(
+                    replace_terms(&triple.s, &solved), replace_terms(&triple.p, &solved), replace_terms(&triple.o, &solved))).collect();
+                if support.iter().all(|triple| !self.depends_on_witnesses(triple, own)) {
+                    contradictions.push((describe(&step.conclusion), format!(
+                        "introduces an existential, but the proof's own evidence already satisfies it: {}", describe(&support[0]))));
+                    break;
+                }
+            }
+        }
+        examined.len()
+    }
+
+    /// Whether `statement` mentions one of `witnesses` or is derived from
+    /// a statement that does.
+    fn depends_on_witnesses(&self, statement: &Triple, witnesses: &BTreeSet<crate::ast::Name>) -> bool {
+        let mentions = |triple: &Triple| {
+            let mut labels = BTreeSet::new();
+            for term in [&triple.s, &triple.p, &triple.o] { blank_labels(term, &mut labels); }
+            !labels.is_disjoint(witnesses)
+        };
+        if mentions(statement) { return true; }
+        let Resolution::Step(start) = self.resolve(statement) else { return false };
+        let mut seen = BTreeSet::from([start]);
+        let mut pending = vec![start];
+        while let Some(index) = pending.pop() {
+            if mentions(&self.steps[index].conclusion) { return true; }
+            for dependency in ProofDocument::dependencies(self, index) {
+                if let Resolution::Step(next) = dependency {
+                    if seen.insert(next) { pending.push(next); }
+                }
+            }
+        }
+        false
+    }
+
     fn check_fact(&self, step: &Step) -> Verdict {
         if !step.uses.is_empty() {
             return Err("a source fact step must not have premises".to_string());
@@ -569,7 +665,7 @@ impl N3Proof {
         }
     }
 
-    /// §5.3: re-evaluate the built-in on the step's own triple.
+    /// §9.5.3: re-evaluate the built-in on the step's own triple.
     fn check_builtin(&self, step: &Step) -> Verdict {
         let Some(Term::Iri(name)) = step.builtin.clone() else {
             return Err("names no built-in".to_string());
@@ -1116,7 +1212,15 @@ impl ProofDocument for N3Proof {
             Kind::Rule if crate::reasoner::contradicts_builtin(&step.conclusion) => {
                 under("C5", Err("concludes a built-in statement that re-evaluation rejects".to_string()))
             }
-            Kind::Rule => under("C1", self.rule_applications(step).map(|_| Checked::Verified)),
+            // An introduction assumes that no fact already satisfied its
+            // existentials, which depends on the whole current graph (§9.6).
+            Kind::Rule => under("C1", self.rule_applications(step).map(|applications| {
+                if self.lean_conclusion(step).is_some() && applications.iter().all(|application| !application.witnesses.is_empty()) {
+                    Checked::Trusted("unsatisfied")
+                } else {
+                    Checked::Verified
+                }
+            })),
             Kind::Fact if !step.uses.is_empty() => under("C3", self.check_fact(step)),
             Kind::Fact => under("C1", self.check_fact(step)),
             Kind::Builtin if step.builtin.as_ref() != Some(&step.conclusion.p) => under("C3", self.check_builtin(step)),
@@ -1131,7 +1235,11 @@ impl ProofDocument for N3Proof {
         let tests: Vec<&Step> = self.steps.iter()
             .filter(|step| step.kind == Kind::Builtin && current_graph_test(&step.conclusion).is_some() && !reads_outside_proof(&step.conclusion))
             .collect();
-        if tests.is_empty() && self.fuses.is_empty() {
+        let introductions: Vec<(&Step, &crate::ast::Graph, Application)> = self.steps.iter()
+            .filter(|step| step.kind == Kind::Rule)
+            .filter_map(|step| self.introduction(step).map(|(conclusion, application)| (step, conclusion, application)))
+            .collect();
+        if tests.is_empty() && self.fuses.is_empty() && introductions.is_empty() {
             return (0, Vec::new());
         }
         let evidence = crate::reasoner::Evidence::new(
@@ -1142,6 +1250,7 @@ impl ProofDocument for N3Proof {
                 contradictions.push((describe(&step.conclusion), detail));
             }
         }
+        let examined_introductions = self.unsatisfied_existentials(&evidence, &introductions, &mut contradictions);
         // A fuse forbids its premise outright, so evidence satisfying one
         // records a situation the source rules out.
         for fuse in &self.fuses {
@@ -1157,7 +1266,7 @@ impl ProofDocument for N3Proof {
                 Err(detail) => contradictions.push((describe(&statement), format!("could not finish checking this inference fuse: {}", detail))),
             }
         }
-        (tests.len() + self.fuses.len(), contradictions)
+        (tests.len() + self.fuses.len() + examined_introductions, contradictions)
     }
 
     fn claim_relevance(&self, index: usize) -> std::result::Result<(), String> {

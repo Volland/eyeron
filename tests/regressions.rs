@@ -337,6 +337,85 @@ fn existential_rule_still_introduces_distinct_blank_nodes() {
 }
 
 #[test]
+fn an_existential_already_satisfied_by_a_fact_is_not_introduced() {
+    let out = reason("@prefix : <http://example.org/>.\n\
+        :c :participant :w. :c :examiner :r.\n\
+        { ?c :participant ?p } => { ?c :examiner _:x }.").unwrap();
+    assert!(!out.contains("_:"), "{}", out);
+}
+
+#[test]
+fn an_existential_waits_for_the_rules_that_could_satisfy_it() {
+    let out = reason(include_str!("../examples/examiners.n3")).unwrap();
+    assert!(out.contains(":philosophy :examiner :russell"), "{}", out);
+    assert!(out.contains(":philosophy :numberOfExaminers 1"), "{}", out);
+    assert!(!out.contains("_:"), "{}", out);
+}
+
+#[test]
+fn a_rule_that_could_satisfy_an_existential_decides_before_it_whatever_the_source_order() {
+    let source = "@prefix : <http://example.org/>.\n\
+        @prefix log: <http://www.w3.org/2000/10/swap/log#>.\n\
+        :c :teacher :r. :c :participant :w.\n\
+        { ?c :participant ?p } => { ?c :examiner _:x }.\n\
+        { ?k :participant ?q } => { ?q a :Student }.\n\
+        { ?c :teacher ?t. ?scope log:notIncludes { ?t a :Student } } => { ?c :examiner ?t }.\n\
+        { ?p :kind :Role } => { [ a :Type; :goodOf ?p ] }.\n\
+        :Judge :kind :Role. :w :hasType :Judge.\n\
+        { ?x :hasType :Judge } => { ?x :typed [ a :Type; :goodOf :Judge ] }.";
+    let document = parse_n3_with_source(source, None, Some("test.n3")).unwrap();
+    let result = reason_document(&document, &ReasonerOptions { proof: true, ..Default::default() });
+    let out = result_to_string(&document.prefixes, &result.derived);
+    assert!(out.contains(":c :examiner :r"), "{}", out);
+    assert!(!out.contains(":c :examiner _:"), "{}", out);
+    assert_eq!(out.matches(" a :Type").count(), 1, "{}", out);
+    let report = eyeron::proof_check_n3::check_proof_document(&document, &proof_to_n3(&document.prefixes, &result)).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+}
+
+#[test]
+fn an_existential_is_introduced_once_per_frontier_assignment() {
+    let out = reason("@prefix : <http://example.org/>.\n\
+        :c :participant :a, :b. :d :participant :a.\n\
+        { ?c :participant ?p } => { ?c :examiner _:x. _:x a :Examiner }.").unwrap();
+    assert_eq!(out.matches(":c :examiner _:").count(), 1, "{}", out);
+    assert_eq!(out.matches(":d :examiner _:").count(), 1, "{}", out);
+    assert_eq!(out.matches("a :Examiner").count(), 2, "{}", out);
+}
+
+#[test]
+fn a_blank_node_bound_to_the_frontier_is_an_individual_in_the_satisfaction_test() {
+    let out = reason("@prefix : <http://example.org/>.\n\
+        :p1 :manager :bob. :p2 :manager _:auto.\n\
+        { ?p :manager ?m } => { ?m :supervisor _:s. _:s :supervises ?m }.").unwrap();
+    assert!(out.contains(":bob :supervisor _:"), "{}", out);
+    assert!(out.contains(":supervises :bob"), "{}", out);
+    assert_eq!(out.matches(":supervises _:").count(), 1, "{}", out);
+}
+
+#[test]
+fn premise_free_blank_nodes_are_data_and_always_introduced() {
+    let out = reason("@prefix : <http://example.org/>.\n\
+        :a :p :b.\n\
+        {} => { :a :p _:x }.").unwrap();
+    assert!(out.contains(":a :p _:"), "{}", out);
+}
+
+#[test]
+fn a_proof_of_a_withheld_existential_checks_and_one_of_an_introduction_has_an_obligation() {
+    for (source, introduced) in [
+        ("@prefix : <http://example.org/>.\n:c :participant :w. :c :examiner :r.\n{ ?c :participant ?p } => { ?c :examiner _:x }.\n{ ?c :examiner ?e } => { ?c :examined true }.", false),
+        ("@prefix : <http://example.org/>.\n:c :participant :w.\n{ ?c :participant ?p } => { ?c :examiner _:x }.", true),
+    ] {
+        let document = parse_n3_with_source(source, None, Some("test.n3")).unwrap();
+        let result = reason_document(&document, &ReasonerOptions { proof: true, ..Default::default() });
+        let report = eyeron::proof_check_n3::check_proof_document(&document, &proof_to_n3(&document.prefixes, &result)).unwrap();
+        assert!(report.valid(), "{:?}", report.failures);
+        assert_eq!(report.obligations.iter().any(|obligation| obligation.kind == "unsatisfied"), introduced, "{:?}", report.obligations);
+    }
+}
+
+#[test]
 fn dog_license_collect_all_is_scoped_by_subject() {
     let out = reason(include_str!("../examples/dog.n3")).unwrap();
     assert!(out.contains(":alice :mustHave :dogLicense"), "{}", out);
@@ -1257,13 +1336,13 @@ fn absurdly_nested_terms_are_a_parse_error_rather_than_a_stack_overflow() {
 
 #[test]
 fn proof_mode_derives_exactly_what_plain_mode_derives() {
-    // `tests/examples.rs` checks each example's output golden and its proof
-    // golden off a single reasoning run, which is only sound if turning
-    // proof collection on cannot change what is derived. That is this
-    // test's job, established once here over the machinery the examples
-    // exercise -- forward and backward rules, builtins, rules that generate
-    // rules, negation as failure and scoped aggregation -- rather than
-    // re-established by a second run of every example.
+    // `tests/examples.rs` checks each example's output golden from a plain
+    // run, and `tests/proof_checking.rs` checks the proof of a run with
+    // proof collection on. Together they describe one derivation only if
+    // turning proof collection on cannot change what is derived. That is
+    // this test's job, established once here over the machinery the
+    // examples exercise -- forward and backward rules, builtins, rules that
+    // generate rules, negation as failure and scoped aggregation.
     let examples = [
         "socrates",
         "ancestor",
@@ -2099,7 +2178,7 @@ fn quoted_graphs_keep_literal_spelling_but_read_the_empty_list_as_nil() {
         { :y :f { :a :p rdf:nil } } => { :r2 :ok true }.
         { :x :f ?g. ?g log:equalTo { :a :p 1.00 } } => { :r3 :ok true }.
     "#;
-    // Graph terms are opaque (docs/n3.md): `1.0` and `1.00` are different
+    // Graph terms are opaque (SPEC.md §2.3): `1.0` and `1.00` are different
     // graphs, while `()` is the very term `rdf:nil`.
     let output = reason(source).unwrap();
     assert!(!output.contains(":r1"), "{output}");

@@ -62,7 +62,7 @@ function browser() {
     URL: BrowserURL, Blob, Worker, Date: { now: () => ++clock },
     location: { href: 'https://example.org/eyeron/playground' },
     byId: (id) => { if (!elements.has(id)) elements.set(id, {}); return elements.get(id); },
-    output: { lastLine: () => 0, getLine: () => '', replaceRange: (text) => { stdout += text; } },
+    output: { append: (text) => { stdout += text; } },
   });
   vm.runInContext('let worker = null, workerReady = null, workerUrl = null, failReady = null, finishRun = null, failRun = null;\n' + loader, context);
   return {

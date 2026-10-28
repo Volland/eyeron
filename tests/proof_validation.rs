@@ -238,6 +238,25 @@ fn an_existential_is_witnessed_by_a_fresh_blank_for_one_firing_only() {
 }
 
 #[test]
+fn an_existential_is_not_introduced_where_a_fact_already_satisfies_it() {
+    let source = ":c :participant :w. :c :examiner :r. { ?c :participant ?p } => { ?c :examiner _:x }.";
+    let forged = ":c :examiner _:e.\n\
+        { :c :examiner _:e } pe:rule 1; pe:binding [ pe:var \"c\"; pe:value :c ], [ pe:var \"p\"; pe:value :w ]; pe:uses { :c :participant :w }.\n\
+        { :c :participant :w } pe:fact \"test.n3\".";
+    rejects_under(source, forged, "C6", "already satisfies it");
+
+    // What the firing itself leads to does not count against it.
+    let source = ":a a :Human. { ?S a :Human } => { ?S :hasParent _:p }. { ?S :hasParent ?P } => { ?S :hasParent :Somebody }.";
+    let proof = ":a :hasParent :Somebody.\n\
+        { :a :hasParent :Somebody } pe:rule 2; pe:binding [ pe:var \"S\"; pe:value :a ], [ pe:var \"P\"; pe:value _:w ]; pe:uses { :a :hasParent _:w }.\n\
+        { :a :hasParent _:w } pe:rule 1; pe:binding [ pe:var \"S\"; pe:value :a ]; pe:uses { :a a :Human }.\n\
+        { :a a :Human } pe:fact \"test.n3\".";
+    let report = check(source, proof).unwrap();
+    assert!(report.valid(), "{:?}", report.failures);
+    assert!(report.obligations.iter().any(|obligation| obligation.kind == "unsatisfied"), "{:?}", report.obligations);
+}
+
+#[test]
 fn a_builtin_step_must_state_its_values() {
     rejects(
         ":x :vals (1 2). { ?x :vals (?a ?b). (?a ?b) math:sum ?c } => { ?x :total ?c }.",

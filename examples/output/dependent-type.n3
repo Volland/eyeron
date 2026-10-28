@@ -7,7 +7,3 @@ _:b2_c61da8ff03e55a86 :goodOf ex:Cobbler .
 ex:bob :hasType _:b3_4d0ffe581bfcf4e3 .
 _:b3_4d0ffe581bfcf4e3 a :Type .
 _:b3_4d0ffe581bfcf4e3 :goodOf ex:Physician .
-_:b1_1a2f127c09a265fc a :Type .
-_:b1_1a2f127c09a265fc :goodOf ex:Cobbler .
-_:b1_4bae27bed1f63c89 a :Type .
-_:b1_4bae27bed1f63c89 :goodOf ex:Physician .

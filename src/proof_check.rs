@@ -1,4 +1,4 @@
-//! Proof checking: `docs/proof-checking.md`'s reference implementation.
+//! Proof checking: the reference implementation of `SPEC.md` Section 9.
 //!
 //! The validity conditions are checked *here*, once, over an abstract
 //! view of a proof document (`Document`). A reader presents N3 proof syntax
@@ -6,7 +6,7 @@
 //!
 //! Nothing in this module reasons. It never searches for a derivation, only
 //! re-performs the ones the document recorded — which is what keeps a
-//! checker small enough to be worth trusting (specification §2).
+//! checker small enough to be worth trusting (specification §9.2).
 
 
 use std::collections::BTreeMap;
@@ -36,7 +36,7 @@ impl Kind {
     }
 }
 
-/// The validity conditions of specification §4, in report order.
+/// The validity conditions of specification §9.4, in report order.
 pub const CONDITIONS: [(&str, &str); 9] = [
     ("C1", "resolution"),
     ("C2", "well-foundedness"),
@@ -53,7 +53,7 @@ fn condition_index(condition: &str) -> usize {
     CONDITIONS.iter().position(|(id, _)| *id == condition).expect("a known condition")
 }
 
-/// Where a premise or carried-rule dependency resolves (§4 C4).
+/// Where a premise or carried-rule dependency resolves (§9.4 C4).
 #[derive(Clone)]
 pub enum Resolution {
     /// To the conclusion of this step, of which it is an instance.
@@ -66,9 +66,9 @@ pub enum Resolution {
 
 /// What checking one step established.
 pub enum Checked {
-    /// The recorded inference was re-performed and matched (§5).
+    /// The recorded inference was re-performed and matched (§9.5).
     Verified,
-    /// Recorded as an obligation rather than re-established (§6); the
+    /// Recorded as an obligation rather than re-established (§9.6); the
     /// string says which obligation.
     Trusted(&'static str),
 }
@@ -120,7 +120,7 @@ impl Report {
         self.failures.push(Failure { condition, conclusion, detail });
     }
 
-    /// The verdict line the specification's §9 requires.
+    /// The verdict line the specification's §9.9 requires.
     pub fn verdict(&self) -> String {
         let steps = format!("{} steps, {} verified, {} trusted", self.steps, self.verified, self.obligations.len());
         if !self.valid() {
@@ -165,8 +165,8 @@ pub trait Document {
         Vec::new()
     }
 
-    /// Re-perform step `index`'s recorded inference (§5), or classify it as
-    /// an obligation (§6), under the condition that governs its kind of
+    /// Re-perform step `index`'s recorded inference (§9.5), or classify it as
+    /// an obligation (§9.6), under the condition that governs its kind of
     /// justification: C1 for rules and facts, C5 for built-ins, C3 when the
     /// justification itself is missing.
     fn check_step(&self, index: usize) -> StepCheck;
@@ -204,7 +204,7 @@ pub struct StepCheck {
 }
 
 /// Check `document` against the source program it was read with, applying
-/// the conditions of specification §4.
+/// the conditions of specification §9.4.
 pub fn check(document: &dyn Document) -> Report {
     let mut report = Report { steps: document.step_count(), ..Report::default() };
 

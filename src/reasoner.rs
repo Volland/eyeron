@@ -1221,6 +1221,10 @@ fn reason_with_plan(
     // Per rule, the (closure length, rule count, saturated) the rule was last
     // matched against, for the loop below.
     let mut last_slow_run = vec![None::<(usize, usize, bool)>; active_rules.len()];
+    let mut rule_order = general_rule_order(&active_rules);
+    // Agenda matches of rules that introduce existentials, held until the
+    // closure is saturated, when whether a piece is satisfied is decided.
+    let mut queued_introductions = vec![Vec::<Bindings>::new(); active_rules.len()];
 
     'fixpoint: loop {
         if iteration >= options.max_iterations {
@@ -1278,8 +1282,8 @@ fn reason_with_plan(
                         &mut derived,
                         &mut proofs,
                         &mut pending_rules,
-                        options.proof,
-                        options.max_term_bytes,
+                        &active_rules,
+                        options,
                         &mut report,
                     );
 
@@ -1315,6 +1319,10 @@ fn reason_with_plan(
                     &mut rule_bindings,
                 );
                 report.absorb(budget);
+                if introduces_existentials(&rule) {
+                    queued_introductions[rule_index].extend(rule_bindings);
+                    continue;
+                }
 
                 let mut pending_rules = Vec::<Rule>::new();
                 for bindings in rule_bindings {
@@ -1328,8 +1336,8 @@ fn reason_with_plan(
                         &mut derived,
                         &mut proofs,
                         &mut pending_rules,
-                        options.proof,
-                        options.max_term_bytes,
+                        &active_rules,
+                        options,
                         &mut report,
                     );
 
@@ -1355,11 +1363,34 @@ fn reason_with_plan(
         let mut pending_rules = Vec::<Rule>::new();
         // A rule promoted from data mid-run extends the rule set.
         last_slow_run.resize(active_rules.len(), None);
-        for idx in 0..rule_count_at_start {
+        queued_introductions.resize(active_rules.len(), Vec::new());
+        if rule_order.len() != rule_count_at_start { rule_order = general_rule_order(&active_rules); }
+        for &idx in &rule_order {
+            if closure_saturated && !queued_introductions[idx].is_empty() {
+                let rule = active_rules[idx].clone();
+                for bindings in std::mem::take(&mut queued_introductions[idx]) {
+                    emit_conclusions(
+                        &rule,
+                        &bindings,
+                        &mut closure,
+                        &mut fact_index,
+                        &mut seen,
+                        &mut generated_rule_facts,
+                        &mut derived,
+                        &mut proofs,
+                        &mut pending_rules,
+                        &active_rules,
+                        options,
+                        &mut report,
+                    );
+                }
+            }
             if agenda_index.indexed.contains(&idx) { continue; }
             let rule = active_rules[idx].clone();
             if !rule.is_forward || rule.is_fuse { continue; }
-            if !closure_saturated && rule.premise.iter().any(is_deferred_scoped_premise) {
+            if !closure_saturated
+                && (rule.premise.iter().any(is_deferred_scoped_premise) || introduces_existentials(&rule))
+            {
                 continue;
             }
             // Matching a rule body is a function of the closure, the rule set
@@ -1391,8 +1422,8 @@ fn reason_with_plan(
                     &mut derived,
                     &mut proofs,
                     &mut pending_rules,
-                    options.proof,
-                    options.max_term_bytes,
+                    &active_rules,
+                    options,
                     &mut report,
                 );
             }
@@ -1612,6 +1643,164 @@ fn note_contradiction(rule: &Rule, bindings: &Bindings, t: &Triple, report: &mut
     report.contradiction = Some(FiredFuse { rule: rule.clone(), instance, contradiction: Some(t.clone()) });
 }
 
+/// The order the general path matches rules in: source order, except that
+/// a deferred rule whose conclusion could satisfy an existential piece of
+/// another deferred rule goes before it. Introducing the larger piece first
+/// leaves the smaller one satisfied rather than witnessed twice, and a
+/// negation that names an existing individual decides before an existential
+/// that individual satisfies. Rules that could satisfy each other keep their
+/// source order.
+fn general_rule_order(rules: &[Rule]) -> Vec<usize> {
+    if !rules.iter().any(introduces_existentials) { return (0..rules.len()).collect(); }
+    let deferred: Vec<usize> = (0..rules.len())
+        .filter(|&i| {
+            let rule = &rules[i];
+            rule.is_forward && !rule.is_fuse
+                && (rule.premise.iter().any(is_deferred_scoped_premise) || introduces_existentials(rule))
+        })
+        .collect();
+    let mut before: BTreeMap<usize, BTreeSet<usize>> = BTreeMap::new();
+    for &later in &deferred {
+        if !introduces_existentials(&rules[later]) { continue; }
+        let pieces = existential_pieces(&rules[later].conclusion);
+        for &earlier in &deferred {
+            if earlier != later && pieces.iter().any(|piece| conclusion_may_satisfy(&rules[earlier].conclusion, &rules[later].conclusion, piece)) {
+                before.entry(later).or_default().insert(earlier);
+            }
+        }
+    }
+    let mut remaining: BTreeSet<usize> = deferred.iter().copied().collect();
+    let mut sorted = Vec::with_capacity(deferred.len());
+    while !remaining.is_empty() {
+        let ready = remaining.iter().copied()
+            .find(|i| before.get(i).is_none_or(|earlier| earlier.is_disjoint(&remaining)))
+            .unwrap_or_else(|| *remaining.iter().next().unwrap());
+        remaining.remove(&ready);
+        sorted.push(ready);
+    }
+    let mut sorted = sorted.into_iter();
+    let deferred: BTreeSet<usize> = deferred.into_iter().collect();
+    (0..rules.len()).map(|i| if deferred.contains(&i) { sorted.next().unwrap() } else { i }).collect()
+}
+
+/// Whether every triple of `piece` in `target` could be an instance of
+/// some triple of `conclusion`, with variables and blank nodes on both sides
+/// matching anything.
+fn conclusion_may_satisfy(conclusion: &Graph, target: &Graph, piece: &[usize]) -> bool {
+    fn open(term: &Term, side: &str) -> Term {
+        match term {
+            Term::Var(name) => Term::var(format!("{side}{name}")),
+            Term::Blank(name) => Term::var(format!("{side}_:{name}")),
+            Term::List(items) => Term::List(items.iter().map(|item| open(item, side)).collect()),
+            other => other.clone(),
+        }
+    }
+    let open_triple = |t: &Triple, side: &str| Triple::new(open(&t.s, side), open(&t.p, side), open(&t.o, side));
+    piece.iter().all(|&position| {
+        let wanted = open_triple(&target[position], "__later_");
+        conclusion.iter().any(|candidate| unify_triple(&wanted, &open_triple(candidate, "__earlier_"), &mut Bindings::new()))
+    })
+}
+
+/// Whether firing `rule` can introduce existentials, which it does only
+/// where no fact already satisfies them. A rule without premises states data
+/// with blank nodes, which is always taken as given.
+fn introduces_existentials(rule: &Rule) -> bool {
+    rule.is_forward
+        && !rule.is_fuse
+        && !rule.is_query
+        && !rule.premise.is_empty()
+        && rule.conclusion.universals.is_empty()
+        && !rule.conclusion.existentials.is_empty()
+}
+
+/// The conclusion's existential pieces: positions of the head triples that
+/// share existentials, transitively. Head triples without an existential
+/// belong to no piece.
+pub(crate) fn existential_pieces(conclusion: &Graph) -> Vec<Vec<usize>> {
+    fn labels(term: &Term, existentials: &BTreeSet<Name>, out: &mut BTreeSet<Name>) {
+        match term {
+            Term::Blank(name) if existentials.contains(name) => { out.insert(name.clone()); }
+            Term::List(items) => for item in items { labels(item, existentials, out) },
+            // A blank inside a quoted graph belongs to that graph.
+            _ => {}
+        }
+    }
+    let mut pieces: Vec<(BTreeSet<Name>, Vec<usize>)> = Vec::new();
+    for (position, triple) in conclusion.iter().enumerate() {
+        let mut used = BTreeSet::new();
+        for term in [&triple.s, &triple.p, &triple.o] {
+            labels(term, &conclusion.existentials, &mut used);
+        }
+        if used.is_empty() { continue; }
+        let mut piece = (used, vec![position]);
+        while let Some(i) = pieces.iter().position(|(names, _)| !names.is_disjoint(&piece.0)) {
+            let (names, positions) = pieces.remove(i);
+            piece.0.extend(names);
+            piece.1.extend(positions);
+        }
+        pieces.push(piece);
+    }
+    pieces.into_iter().map(|(_, mut positions)| { positions.sort_unstable(); positions }).collect()
+}
+
+/// Head triples this firing does not derive, because the existential piece
+/// they belong to is already satisfied: some fact of the current graph
+/// matches the piece under the firing's frontier values, its existentials
+/// matching anything. Introducing existentials only where nothing known
+/// fits keeps the result lean, and a piece is introduced at most once per
+/// frontier assignment, since its first introduction satisfies it.
+#[allow(clippy::too_many_arguments)]
+fn withheld_existential_conclusions(
+    rule: &Rule,
+    bindings: &Bindings,
+    blank_map: &BTreeMap<Name, Term>,
+    closure: &[Triple],
+    fact_index: &FactIndex,
+    seen: &ClosureSet,
+    rules: &[Rule],
+    options: &ReasonerOptions,
+    report: &mut RunReport,
+) -> BTreeSet<usize> {
+    let mut withheld = BTreeSet::new();
+    if !introduces_existentials(rule) { return withheld; }
+    let local = bindings_without_bound(&rule.conclusion, bindings);
+    for piece in existential_pieces(&rule.conclusion) {
+        // Re-matching a firing that already introduced its piece derives
+        // the same witnesses again, which nothing needs to test.
+        let mut witnesses = blank_map.clone();
+        let repeated = piece.iter().all(|&position| {
+            instantiate_triple(&rule.conclusion[position], bindings, &mut witnesses)
+                .is_some_and(|t| seen.contains(closure, &t))
+        });
+        if repeated {
+            withheld.extend(piece);
+            continue;
+        }
+        // The piece's existentials become pattern variables; a blank node
+        // the frontier is bound to is a concrete individual.
+        let pattern: Vec<Triple> = piece.iter().map(|&position| resolve_pattern_triple(&rule.conclusion[position], &local)).collect();
+        let mut concrete = Bindings::new();
+        for t in &pattern {
+            for term in [&t.s, &t.p, &t.o] { bind_concrete_blanks(term, &mut concrete); }
+        }
+        let mut budget = SearchBudget::new(options, std::mem::take(&mut report.completed_backward_goals));
+        let satisfied = current_graph_matches_pattern(
+            &pattern,
+            &concrete,
+            closure,
+            Some(fact_index),
+            rules,
+            0,
+            &mut HashSet::new(),
+            &mut budget,
+        );
+        report.absorb(budget);
+        if satisfied { withheld.extend(piece); }
+    }
+    withheld
+}
+
 fn emit_conclusions(
     rule: &Rule,
     bindings: &Bindings,
@@ -1622,10 +1811,12 @@ fn emit_conclusions(
     derived: &mut Vec<Triple>,
     proofs: &mut Vec<DerivedFact>,
     pending_rules: &mut Vec<Rule>,
-    capture_proof: bool,
-    max_term_bytes: usize,
+    rules: &[Rule],
+    options: &ReasonerOptions,
     report: &mut RunReport,
 ) -> bool {
+    let capture_proof = options.proof;
+    let max_term_bytes = options.max_term_bytes;
     let mut rules_changed = false;
     // One handle per firing, shared by every fact this firing derives. A
     // rule with several conclusions derives several facts at once, and a
@@ -1638,7 +1829,9 @@ fn emit_conclusions(
         return register_quantified_assertion(graph, generated_rule_facts, pending_rules, proof, proofs);
     }
 
-    for head in &rule.conclusion {
+    let withheld = withheld_existential_conclusions(rule, bindings, &blank_map, closure, fact_index, seen, rules, options, report);
+    for (position, head) in rule.conclusion.iter().enumerate() {
+        if withheld.contains(&position) { continue; }
         let Some(t) = instantiate_triple(head, bindings, &mut blank_map) else { continue; };
 
         if is_unquote_instruction(&t) {
@@ -3233,7 +3426,7 @@ impl ExplainState {
 /// so `log:collectAllIn` can legitimately collect more than it did then.
 /// Recording such a premise as unproven would claim the chain is broken
 /// when it is not; it is a trust obligation, which is what
-/// `docs/proof-checking.md` §6.1 calls it.
+/// `SPEC.md` §9.6 calls it.
 pub fn builtin_reads_outside_its_triple(predicate: &Term) -> bool {
     let Term::Iri(iri) = predicate else { return false };
     matches!(
@@ -3299,6 +3492,19 @@ impl Evidence {
         let mut budget = SearchBudget::for_proof(1);
         let mut out = Vec::new();
         match_premise_at(pattern, &self.facts, Some(&self.index), &[], 0, Bindings::new(), 0, &mut HashSet::new(), &mut budget, &mut out);
+        out
+    }
+
+    /// As `solutions`, with the pattern's blank nodes standing for
+    /// themselves: only its variables bind.
+    pub fn satisfying(&self, pattern: &[Triple]) -> Vec<Bindings> {
+        let mut concrete = BTreeMap::new();
+        for t in pattern {
+            for term in [&t.s, &t.p, &t.o] { bind_concrete_blanks(term, &mut concrete); }
+        }
+        let mut budget = SearchBudget::for_proof(1);
+        let mut out = Vec::new();
+        match_premise_at(pattern, &self.facts, Some(&self.index), &[], 0, concrete, 0, &mut HashSet::new(), &mut budget, &mut out);
         out
     }
 

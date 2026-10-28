@@ -1,6 +1,6 @@
 # Guide illustrations
 
-These original cartoons accompany [`../guide.md`](../guide.md):
+These original cartoons accompany [`GUIDE.md`](../../GUIDE.md):
 
 | File | Story |
 | --- | --- |

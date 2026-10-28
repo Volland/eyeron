@@ -85,7 +85,8 @@ fn browser_modes_that_exit_early_do_not_need_to_read_stdin() {
 
 #[test]
 fn browser_checks_saved_proofs_and_rejects_a_forged_claim() {
-    let saved = fs::read_to_string("examples/proof/socrates.n3").unwrap();
+    let generated = Command::new(env!("CARGO_BIN_EXE_eyeron")).args(["-p", "examples/socrates.n3"]).output().unwrap();
+    let saved = String::from_utf8(generated.stdout).unwrap();
     let checked = compare(&["--check-proof", "-", "examples/socrates.n3"], &saved, Some(("-", &saved)));
     assert!(checked.contains("checked: 3 steps"));
     let forged = "<http://example.org/forged> <http://example.org/claim> true .";

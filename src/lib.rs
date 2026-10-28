@@ -12,7 +12,7 @@ pub mod parser;
 pub mod printing;
 /// Writing an N3 proof document for what the reasoner derived.
 pub mod proof_writer;
-/// Checking a proof document: `docs/proof-checking.md`'s reference
+/// Checking a proof document: `SPEC.md` Section 9's reference
 /// implementation, and its N3 reader.
 pub mod proof_check;
 pub mod proof_check_n3;
